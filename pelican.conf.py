@@ -31,3 +31,8 @@ DEFAULT_PAGINATION = 10
 #RELATIVE_URLS = True
 
 ARTICLE_PERMALINK_STRUCTURE = '/%Y/%m/'
+
+# copy CNAME to output root
+FILES_TO_COPY = (
+    ('extra/CNAME', 'CNAME'),
+)
