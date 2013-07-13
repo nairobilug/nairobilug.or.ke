@@ -36,3 +36,5 @@ ARTICLE_PERMALINK_STRUCTURE = '/%Y/%m/'
 FILES_TO_COPY = (
     ('extra/CNAME', 'CNAME'),
 )
+
+GITHUB_URL = 'http://github.com/nairobilug/'
