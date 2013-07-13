@@ -30,7 +30,14 @@ DEFAULT_PAGINATION = 10
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
 
-ARTICLE_PERMALINK_STRUCTURE = '/%Y/%m/'
+ARTICLE_URL = '{date:%Y}/{date:%m}/{slug}.html'
+ARTICLE_LANG_URL = '{date:%Y}/{date:%m}/{slug}-{lang}.html'
+PAGE_URL = '{date:%Y}/{date:%m}/pages/{slug}.html'
+PAGE_LANG_URL = '{date:%Y}/{date:%m}/pages/{slug}-{lang}.html'
+ARTICLE_SAVE_AS = '{date:%Y}/{date:%m}/{slug}.html'
+ARTICLE_LANG_SAVE_AS = '{date:%Y}/{date:%m}/{slug}-{lang}.html'
+PAGE_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}.html'
+PAGE_LANG_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}-{lang}.html'
 
 # copy CNAME to output root
 FILES_TO_COPY = (
