@@ -2,3 +2,14 @@
 *.pyc
 *.swp
 output/
+
+# fredmanglis added this after comparing the outpu
+# of running the install of Pelican in a directory
+# to avoid commiting unnecessary crap...
+# Edit appropriately
+bin/
+*.sh
+include/
+lib/
+local/
+Makefile
