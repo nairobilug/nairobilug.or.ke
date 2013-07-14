@@ -1,5 +1,5 @@
 Title: My second post
-Date: 2013-07-14 22:33
+Date: 2013-07-14 11:00
 Category: Pelican
 Tags: pelican, publishing
 Slug: my-second-post
