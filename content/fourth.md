@@ -19,6 +19,7 @@ Then there is all the rest of you people who saw fit to join the LUG and further
 ##And Now, A List##
 
 I could not resist doing this... here is a list of the nicks on irc as I type this:
+
 * Alfontefonte
 * highPriestLOL
 * raywan|away
