@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = u'Multiple'
 SITENAME = u'Nairobi GNU/Linux Users Group'
-SITEURL = 'http://nairobilug.github.io/nairobilug.or.ke'
+SITEURL = ''
 
 TIMEZONE = 'Africa/Nairobi'
 
