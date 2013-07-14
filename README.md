@@ -4,7 +4,7 @@ http://nairobilug.or.ke
 
 ## GENERATE BLAWG
 
-    pelican -s ../nairobilug.or.ke/pelican.conf.py ../nairobilug.or.ke/content/ -o ../nairobilug.or.ke/output
+    pelican -s pelican.conf.py content -o output
 
 ## IT WORKS SHIPIT!!!!11
 
