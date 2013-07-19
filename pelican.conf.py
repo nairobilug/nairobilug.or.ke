@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = u'Multiple'
-SITENAME = u'Nairobi GNU/Linux Users Group'
+AUTHOR = 'Multiple'
+SITENAME = 'Nairobi GNU/Linux Users Group'
 SITEURL = 'http://nairobilug.or.ke'
 
 TIMEZONE = 'Africa/Nairobi'
 
-DEFAULT_LANG = u'en'
+DEFAULT_LANG = 'en'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -41,7 +41,7 @@ ARTICLE_LANG_SAVE_AS = '{date:%Y}/{date:%m}/{slug}-{lang}.html'
 PAGE_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}.html'
 PAGE_LANG_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}-{lang}.html'
 
-# copy CNAME to output root
+# Copy CNAME to output root
 FILES_TO_COPY = (
     ('extra/CNAME', 'CNAME'),
 )
