@@ -1,12 +1,5 @@
-.codehilite pre {
-  display: block;
-  padding: .5em;
-  background: rgba(253,251,228,0.64);
-  color: #657b83;
-}
-
 .hll {
-background-color:#FFFFCC;
+background-color:#eee;
 }
 .c {
 color:#408090;
