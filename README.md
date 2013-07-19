@@ -41,8 +41,8 @@ And now you should see the blog at: http://localhost:8000
 #### Teh THEME <>
 Using the [chunk](https://github.com/nairobilug/pelican-chunk) pelican theme:
 
-  git clone https://github.com/nairobilug/pelican-chunk chunk
-  pelican-themes --install chunk # <- PATH_TO_CHUNK_FOLDER
+    git clone https://github.com/nairobilug/pelican-chunk chunk
+    pelican-themes --install chunk
 
 Enjoy a refreshing Diet Coke.
 
