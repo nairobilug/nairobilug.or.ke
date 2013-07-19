@@ -2,13 +2,18 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = u'Multiple'
-SITENAME = u'Nairobi GNU/Linux Users Group'
+AUTHOR = 'Multiple'
+SINGLE_AUTHOR = False
+
+SITENAME = 'Nairobi GNU/Linux Users Group'
 SITEURL = 'http://nairobilug.or.ke'
+SITESUBTITLE = 'Find us at #nairobilug on Freenode'
 
 TIMEZONE = 'Africa/Nairobi'
 
-DEFAULT_LANG = u'en'
+DEFAULT_LANG = 'en'
+
+THEME = 'chunk'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -17,9 +22,9 @@ TRANSLATION_FEED_ATOM = None
 
 # Blogroll
 LINKS = (
-    ('Mjanja Tech', 'http://mjanja.co.ke'),
+    ('David Karibe', 'http://karibe.co.ke/'),
+    ('Mjanja Tech', 'http://mjanja.co.ke/'),
     ('Moshe Njema', 'http://nj3ma.wordpress.com/'),
-    ('David Karibe', 'http://karibe.co.ke/')
 )
 
 # Social widget
@@ -41,9 +46,11 @@ ARTICLE_LANG_SAVE_AS = '{date:%Y}/{date:%m}/{slug}-{lang}.html'
 PAGE_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}.html'
 PAGE_LANG_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}-{lang}.html'
 
-# copy CNAME to output root
+# Copy CNAME to output root
 FILES_TO_COPY = (
     ('extra/CNAME', 'CNAME'),
 )
 
 GITHUB_URL = 'http://github.com/nairobilug/'
+
+FOOTER_TEXT = 'Replace Pelican Credit!'
