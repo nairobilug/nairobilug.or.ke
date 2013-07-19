@@ -38,6 +38,14 @@ You can use any web server to view the generated HTML.  For example, Python's bu
 
 And now you should see the blog at: http://localhost:8000
 
+#### Teh THEME <>
+Using the [chunk](https://github.com/nairobilug/pelican-chunk) pelican theme:
+
+  git clone https://github.com/nairobilug/pelican-chunk chunk
+  pelican-themes --install chunk # <- PATH_TO_CHUNK_FOLDER
+
+Enjoy a refreshing Diet Coke.
+
 ## Workflow for blog posts
 If you're interested in writing a blog post for the site, you need to:
 

@@ -3,12 +3,17 @@
 from __future__ import unicode_literals
 
 AUTHOR = 'Multiple'
+SINGLE_AUTHOR = False
+
 SITENAME = 'Nairobi GNU/Linux Users Group'
 SITEURL = 'http://nairobilug.or.ke'
+SITESUBTITLE = 'Find us at #nairobilug on Freenode'
 
 TIMEZONE = 'Africa/Nairobi'
 
 DEFAULT_LANG = 'en'
+
+THEME = 'chunk'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -47,3 +52,5 @@ FILES_TO_COPY = (
 )
 
 GITHUB_URL = 'http://github.com/nairobilug/'
+
+FOOTER_TEXT = 'Replace Pelican Credit!'
