@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = u'Multiple'
 SITENAME = u'Nairobi GNU/Linux Users Group'
-SITEURL = ''
+SITEURL = 'http://nairobilug.or.ke'
 
 TIMEZONE = 'Africa/Nairobi'
 
@@ -16,18 +16,21 @@ CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
 # Blogroll
-LINKS =  (('Mjanja Tech', 'http://mjanja.co.ke'),
-          ('Moshe Njema', 'http://nj3ma.wordpress.com/'),
-          ('David Karibe', 'http://karibe.co.ke/'))
+LINKS = (
+    ('Mjanja Tech', 'http://mjanja.co.ke'),
+    ('Moshe Njema', 'http://nj3ma.wordpress.com/'),
+    ('David Karibe', 'http://karibe.co.ke/')
+)
 
 # Social widget
-SOCIAL = (('You can add links in your config file', '#'),
-          ('Another social link', '#'),)
+SOCIAL = (
+    ('Nairobi GNU/Linux mailing list', 'https://groups.google.com/forum/#!forum/nairobi-gnu'),
+)
 
 DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+RELATIVE_URLS = True
 
 ARTICLE_URL = '{date:%Y}/{date:%m}/{slug}.html'
 ARTICLE_LANG_URL = '{date:%Y}/{date:%m}/{slug}-{lang}.html'
