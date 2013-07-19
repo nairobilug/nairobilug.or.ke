@@ -17,9 +17,9 @@ TRANSLATION_FEED_ATOM = None
 
 # Blogroll
 LINKS = (
-    ('Mjanja Tech', 'http://mjanja.co.ke'),
+    ('David Karibe', 'http://karibe.co.ke/'),
+    ('Mjanja Tech', 'http://mjanja.co.ke/'),
     ('Moshe Njema', 'http://nj3ma.wordpress.com/'),
-    ('David Karibe', 'http://karibe.co.ke/')
 )
 
 # Social widget
