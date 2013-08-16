@@ -3,7 +3,7 @@ Date: 2013-07-14 11:30
 Category: Pelican
 Tags: pelican, publishing
 Slug: my-third-post
-Author: Raymond Wanyoike
+Author: Raymond W
 Summary: My third post using Pelican
 
 This is my third post using Pelican. Now have a list!
