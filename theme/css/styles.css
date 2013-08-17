@@ -1,0 +1,243 @@
+@import url(pygments.css);
+@import url(http://reset5.googlecode.com/hg/reset.min.css);
+
+/* General stuff. */
+
+body {
+    width: 800px;
+}
+
+html { /* This stuff is for the sticky footer. */
+    min-height:100%;
+    position:relative;
+    font-size: 18px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background-color:#fafafa;
+    font-family:'Open Sans';
+    margin: 20px auto 100px auto; /* For sticky footer. */
+}
+
+/* Site header. */
+
+.sitebanner {
+    position: relative;
+    font-size: 18;
+    top: 15px;
+}
+
+.siteheader {
+    margin-bottom: 30px;
+    overflow: visible;
+    height: 200px;
+}
+
+.siteimage {
+    float: left;
+    width: 230px;
+}
+
+.sitetitle {
+    font-family: 'Merriweather';
+    font-weight: 300;
+    font-size: 4em;
+    padding-left: 10px; /* Hack to dodge :hover issue. */
+    position: relative; /* Hack to dodge :hover issue. */
+    left: -10px; /* Hack to dodge :hover issue. */
+}
+
+.sitesubtitle {
+    color: #000;
+    font-size: 1em;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    /* padding-left: 30px; */
+}
+
+/* The navbar. */
+
+.menu {
+    font-size: 1.3em;
+    /* padding-left: 30px; */
+}
+
+.menu li {
+    display: inline;
+    margin-right: 10px;
+}
+
+/* Article list on index page. */
+
+.posttitle {
+    font-size: 1.6em;
+}
+
+.posttitle a {
+    padding-left: 10px; /* Hack to dodge :hover issue. */
+    position: relative; /* Hack to dodge :hover issue. */
+    left: -10px; /* Hack to dodge :hover issue. */
+}
+
+.postinfo {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #666;
+    font-size: .7em;
+}
+
+.postsummary {
+    font-family: Merriweather;
+    font-weight: 300;
+}
+
+.post {
+    margin-bottom: 20px;
+}
+
+/* Links. */
+
+a { /* Generic link styling, greyish and underlined. */
+    color: #2E2E2E;
+    text-decoration: underline;
+    -o-transition:color .2s ease-in-out;
+    -webkit-transition:color .2s ease-in-out;
+    -moz-transition:color .2s ease-in-out;
+    transition:color .2s ease-in-out;
+}
+
+.nodec {
+    /* Links that aren't just in content areas shouldn't be underlined */
+    text-decoration: none;
+}
+
+a:hover { /* Hover style: transition to orange. Cool! */
+    -o-transition:color .2s ease-in-out;
+    -webkit-transition:color .2s ease-in-out;
+    -moz-transition:color .2s ease-in-out;
+    transition:color .2s ease-in-out;
+    color: orange;
+}
+
+/* Generic to all content. */
+
+.content ol, .content ul {
+    position: relative;
+    left: 40px;
+    padding-bottom: 20px;
+}
+
+/* Make super and subscipts look reasonable. */
+
+sup, sub {
+    vertical-align: 0;
+    position: relative;
+}
+
+sup {
+    bottom: 1ex;
+    font-size: 0.6em;
+}
+
+sub {
+    top: 0.8ex;
+    font-size: 0.6em;
+}
+
+/* Article */
+
+.article {
+    margin-top: 30px;
+}
+
+/* Lists */
+
+.article * li {
+    line-height: 1.1em;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+}
+
+/* Paragraphs. */
+
+.article p {
+    line-height: 1.3em;
+    margin-bottom: 1.5em;
+}
+
+/* Headers. */
+
+.article h1 {
+    padding-bottom: 1em;
+    font-size: 1.4em;
+}
+
+.article h2 {
+    padding-bottom: 0.9em;
+    font-size: 1.2em;
+}
+
+.article h3 {
+    padding-bottom: 0.8em;
+    font-size: 1em;
+}
+
+/* Footnotes. */
+
+.article .footnote {
+    font-size: 0.8em;
+}
+
+/* Images */
+
+.content * img {
+    display: block;
+    margin: 0 auto 0 auto;
+    max-width: 600px;
+    height: auto;
+}
+
+/* Blockquotes */
+
+.article blockquote {
+    font-size: 0.9em;
+    font-style: italic;
+    border-left: 3px solid #ccc;
+    margin-left: 30px;
+    padding-left: 10px;
+    margin-bottom: 30px;
+}
+
+/* Code */
+
+.codehilite, .highlight { /* Put code blocks in the right place. */
+    width: 600px;
+    margin: 0 0 0 50px;
+    margin-bottom: 20px;
+    overflow: auto;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+.article pre {
+    font-family: 'Source Code Pro';
+    font-size: .85em;
+    margin: auto;
+    padding: 1em;
+}
+
+.article code {
+    font-family: 'Source Code Pro';
+    font-size: .85em;
+}
+
+/* Footer at page bottom */
+
+footer {
+    bottom: 0;
+    color: grey;
+    font-size: .7em;
+    height: 30px;
+    position: absolute;
+}
