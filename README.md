@@ -7,6 +7,7 @@ In order to build this, you need to have [Pelican](http://blog.getpelican.com/) 
 For reference, a list of commonly-used distro package names is:
 
   - Arch Linux: `python-virtualenvwrapper`
+  - Mac OS X (brew): `pyenv-virtualenv` for virtualenv and then follow the [mkvirtualenvwrapper instructions](http://virtualenvwrapper.readthedocs.org/en/latest/install.html)
 
 If your distro isn't listed, you'll have to do a bit of homework (and then make a pull request to fix these docs).
 
