@@ -1,0 +1,3 @@
+[submodule "crowsfoot"]
+	path = crowsfoot
+	url = git@github.com:nairobilug/pelican-crowsfoot.git
