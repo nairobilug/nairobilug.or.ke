@@ -24,8 +24,18 @@ Use `pip` to install the list of dependencies into your virtual environment:
 
     pip install -r https://raw.github.com/nairobilug/nairobilug.or.ke/master/requirements.txt
 
+#### Preparations
+The theme we're using, `crowsfoot`, is a "git submodule", which means it is maintained as its own separate git repository (with its own git history, github project, etc).  submodules are stored in the `.gitmodules` file, and we first need to initialize and clone it before we can build.
+
+Navigate to where you cloned the [repo](http://github.com/nairobilug/nairobilug.or.ke) and then:
+
+    git submodule init
+    git submodule update
+
+You only need to do the initialization the first time you build.  After that, you can simply use the update command to get the latest changes to the submodule.
+
 #### GENERATE BLAWG
-Navigate to where you cloned the [repo](http://github.com/nairobilug/nairobilug.or.ke) and then use Pelican to build it:
+Now that the theme exists, we can build:
 
     pelican -s pelican.conf.py content -o output
 
