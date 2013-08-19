@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = 'Multiple'
-SITENAME = 'Nairobi GNU/Linux Users Group'
+SITENAME = 'Nairobi LUG'
 SITEURL = 'http://nairobilug.or.ke'
 
 TIMEZONE = 'Africa/Nairobi'
