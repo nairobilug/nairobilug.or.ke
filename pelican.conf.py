@@ -27,6 +27,11 @@ SOCIAL = (
     ('Nairobi GNU/Linux mailing list', 'https://groups.google.com/forum/#!forum/nairobi-gnu'),
 )
 
+# Crowsfoot settings
+GITHUB_ADDRESS = 'https://github.com/nairobilug'
+PROFILE_IMAGE_URL = 'static/images/profile.png'
+SITESUBTITLE = 'Nairobi GNU/Linux Users Group'
+
 DEFAULT_PAGINATION = 10
 
 THEME = 'crowsfoot'
