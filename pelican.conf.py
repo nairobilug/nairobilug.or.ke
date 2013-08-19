@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = 'Multiple'
-SITENAME = 'Nairobi GNU/Linux Users Group'
+SITENAME = 'Nairobi LUG'
 SITEURL = 'http://nairobilug.or.ke'
 
 TIMEZONE = 'Africa/Nairobi'
@@ -27,6 +27,11 @@ SOCIAL = (
     ('Nairobi GNU/Linux mailing list', 'https://groups.google.com/forum/#!forum/nairobi-gnu'),
 )
 
+# Crowsfoot settings
+GITHUB_ADDRESS = 'https://github.com/nairobilug'
+PROFILE_IMAGE_URL = 'static/images/profile.png'
+SITESUBTITLE = 'Nairobi GNU/Linux Users Group'
+
 DEFAULT_PAGINATION = 10
 
 THEME = 'crowsfoot'
@@ -47,5 +52,3 @@ PAGE_LANG_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}-{lang}.html'
 FILES_TO_COPY = (
     ('extra/CNAME', 'CNAME'),
 )
-
-GITHUB_URL = 'http://github.com/nairobilug/'
