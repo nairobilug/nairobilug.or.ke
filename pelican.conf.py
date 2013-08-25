@@ -3,17 +3,13 @@
 from __future__ import unicode_literals
 
 AUTHOR = 'Multiple'
-SINGLE_AUTHOR = False
-
-SITENAME = 'Nairobi GNU/Linux Users Group'
+SITENAME = 'Nairobi LUG'
 SITEURL = 'http://nairobilug.or.ke'
 SITESUBTITLE = 'Find us at #nairobilug on Freenode'
 
 TIMEZONE = 'Africa/Nairobi'
 
 DEFAULT_LANG = 'en'
-
-THEME = 'chunk'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -32,7 +28,14 @@ SOCIAL = (
     ('Nairobi GNU/Linux mailing list', 'https://groups.google.com/forum/#!forum/nairobi-gnu'),
 )
 
+# Crowsfoot settings
+GITHUB_ADDRESS = 'https://github.com/nairobilug'
+PROFILE_IMAGE_URL = 'static/images/profile.png'
+SITESUBTITLE = 'Nairobi GNU/Linux Users Group'
+
 DEFAULT_PAGINATION = 10
+
+THEME = 'crowsfoot'
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
@@ -50,7 +53,3 @@ PAGE_LANG_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}-{lang}.html'
 FILES_TO_COPY = (
     ('extra/CNAME', 'CNAME'),
 )
-
-GITHUB_URL = 'http://github.com/nairobilug/'
-
-FOOTER_TEXT = 'Replace Pelican Credit!'
