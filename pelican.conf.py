@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 AUTHOR = 'Multiple'
 SITENAME = 'Nairobi LUG'
 SITEURL = 'http://nairobilug.or.ke'
+SITESUBTITLE = 'Find us at #nairobilug on Freenode'
 
 TIMEZONE = 'Africa/Nairobi'
 
@@ -29,7 +30,8 @@ SOCIAL = (
 
 # Crowsfoot settings
 GITHUB_ADDRESS = 'https://github.com/nairobilug'
-PROFILE_IMAGE_URL = 'static/images/profile.png'
+TWITTER_ADDRESS = 'https://twitter.com/nairobilug'
+PROFILE_IMAGE_URL = 'https://1.gravatar.com/avatar/8e936023d8f7a911a528c78957edbc93?s=200'
 SITESUBTITLE = 'Nairobi GNU/Linux Users Group'
 
 DEFAULT_PAGINATION = 10
@@ -52,3 +54,5 @@ PAGE_LANG_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}-{lang}.html'
 FILES_TO_COPY = (
     ('extra/CNAME', 'CNAME'),
 )
+
+FEED_RSS = 'feed/rss.xml'

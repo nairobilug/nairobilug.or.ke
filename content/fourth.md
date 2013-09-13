@@ -4,7 +4,7 @@ Category: Pelican
 Tags: pelican, publishing
 Slug: my-fourth-post
 Author: Muriithi Frederick Muriuki
-Summary: A test post to get the hang of pelican
+Summary: A test post to get the hang of Pelican
 
 ### In The Spirit of Pelican
 
