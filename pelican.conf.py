@@ -54,3 +54,5 @@ PAGE_LANG_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}-{lang}.html'
 FILES_TO_COPY = (
     ('extra/CNAME', 'CNAME'),
 )
+
+FEED_RSS = 'feed/rss.xml'
