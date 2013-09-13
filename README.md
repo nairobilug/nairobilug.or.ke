@@ -7,7 +7,7 @@ In order to build this, you need to have [Pelican](http://blog.getpelican.com/) 
 For reference, a list of commonly-used distro package names is:
 
   - Arch Linux: `python-virtualenvwrapper`
-  - Mac OS X (brew): `pyenv-virtualenv` for virtualenv and then follow the [mkvirtualenvwrapper instructions](http://virtualenvwrapper.readthedocs.org/en/latest/install.html)
+  - Mac OS X (brew): `pyenv-virtualenv` for virtualenv and then follow the [virtualenvwrapper instructions](http://virtualenvwrapper.readthedocs.org/en/latest/install.html)
 
 If your distro isn't listed, you'll have to do a bit of homework (and then make a pull request to fix these docs).
 
@@ -24,8 +24,18 @@ Use `pip` to install the list of dependencies into your virtual environment:
 
     pip install -r https://raw.github.com/nairobilug/nairobilug.or.ke/master/requirements.txt
 
+#### Preparations
+The theme we're using, `crowsfoot`, is a "git submodule", which means it is maintained as its own separate git repository (with its own git history, github project, etc).  submodules are stored in the `.gitmodules` file, and we first need to initialize and clone it before we can build.
+
+Navigate to where you cloned the [repo](http://github.com/nairobilug/nairobilug.or.ke) and then:
+
+    git submodule init
+    git submodule update
+
+You only need to do the initialization the first time you build.  After that, you can simply use the update command to get the latest changes to the submodule.
+
 #### GENERATE BLAWG
-Navigate to where you cloned the [repo](http://github.com/nairobilug/nairobilug.or.ke) and then use Pelican to build it:
+Now that the theme exists, we can build:
 
     pelican -s pelican.conf.py content -o output
 
