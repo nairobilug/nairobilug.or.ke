@@ -32,6 +32,7 @@ GITHUB_ADDRESS = 'https://github.com/nairobilug'
 # Set the gravatar avatar to 200 px
 PROFILE_IMAGE_URL = 'http://gravatar.com/avatar/8e936023d8f7a911a528c78957edbc93?s=200'
 SITESUBTITLE = 'Nairobi GNU/Linux Users Group'
+TWITTER_ADDRESS = 'https://twitter.com/nairobilug'
 
 DEFAULT_PAGINATION = 10
 THEME = 'crowsfoot'
