@@ -33,8 +33,8 @@ PROFILE_IMAGE_URL = 'static/images/profile.png'
 SITESUBTITLE = 'Nairobi GNU/Linux Users Group'
 
 DEFAULT_PAGINATION = 10
-
 THEME = 'crowsfoot'
+FEED_RSS = 'feed/rss.xml'
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
