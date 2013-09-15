@@ -31,6 +31,7 @@ SOCIAL = (
 GITHUB_ADDRESS = 'https://github.com/nairobilug'
 PROFILE_IMAGE_URL = '/static/images/profile.png'
 SITESUBTITLE = 'Nairobi GNU/Linux Users Group'
+TWITTER_ADDRESS = 'https://twitter.com/nairobilug'
 
 DEFAULT_PAGINATION = 10
 THEME = 'crowsfoot'
