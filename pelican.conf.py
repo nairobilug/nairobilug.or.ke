@@ -29,7 +29,7 @@ SOCIAL = (
 
 # Crowsfoot settings
 GITHUB_ADDRESS = 'https://github.com/nairobilug'
-PROFILE_IMAGE_URL = 'static/images/profile.png'
+PROFILE_IMAGE_URL = '/static/images/profile.png'
 SITESUBTITLE = 'Nairobi GNU/Linux Users Group'
 
 DEFAULT_PAGINATION = 10
