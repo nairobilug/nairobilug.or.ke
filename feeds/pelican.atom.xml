@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>A Pelican Blog</title><link href="/" rel="alternate"></link><link href="/feeds/pelican.atom.xml" rel="self"></link><id>/</id><updated>2013-07-14T20:22:00Z</updated><entry><title>The Fourth Post</title><link href="/my-fourth-post.html" rel="alternate"></link><updated>2013-07-14T20:22:00Z</updated><author><name>Muriithi Frederick Muriuki</name></author><id>tag:,2013-07-14:my-fourth-post.html</id><summary type="html">&lt;h3&gt;In The Spirit of Pelican&lt;/h3&gt;
+&lt;p&gt;I have to start by commending everyone involved in the Nairobi Linux User Group (nairobilug) for their various efforts to get all of us to this point.&lt;/p&gt;
+&lt;p&gt;First off, I wish to thank &lt;em&gt;Mr. Alan Orth&lt;/em&gt; for introducing us (or was it just me?) to Pelican, and providing the tutorial for getting it running. Also, for setting up the system so that we can all collaborate to add content to the site.&lt;/p&gt;
+&lt;p&gt;I would also like to thank the visionary fellows who had the light-bulb moment to start off the &lt;em&gt;LUG&lt;/em&gt;. Here, I specifically target &lt;em&gt;nj3ma&lt;/em&gt; and &lt;em&gt;eebrah&lt;/em&gt;. You spoke of it in university, but I was too busy chasing tail and the A's :D&lt;/p&gt;
+&lt;p&gt;Then there is all the rest of you people who saw fit to join the LUG and further light the fire. I am grateful to have met all of you in person. And for those of you I have yet to meet in person, I look forward to meeting you.&lt;/p&gt;
+&lt;h3&gt;And Now, a code block&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;aorth&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;noma&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;uname&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sr&lt;/span&gt;
+&lt;span class="n"&gt;Linux&lt;/span&gt; &lt;span class="mf"&gt;3.9.9&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ARCH&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;And now, a list&lt;/h3&gt;
+&lt;p&gt;I could not resist doing this... here is a list of the nicks on irc as I type this:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Alfontefonte&lt;/li&gt;
+&lt;li&gt;highPriestLOL&lt;/li&gt;
+&lt;li&gt;raywan|away&lt;/li&gt;
+&lt;li&gt;@eebrah|away&lt;/li&gt;
+&lt;li&gt;Dr3amc0d3r_&lt;/li&gt;
+&lt;li&gt;karfes&lt;/li&gt;
+&lt;li&gt;varud&lt;/li&gt;
+&lt;li&gt;@stickyboy&lt;/li&gt;
+&lt;li&gt;fredmanglis&lt;/li&gt;
+&lt;li&gt;r0ckwilda|away&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Shout out to all of you great peoples!!!&lt;/p&gt;</summary><category term="pelican"></category><category term="publishing"></category></entry><entry><title>My third post</title><link href="/my-third-post.html" rel="alternate"></link><updated>2013-07-14T11:30:00Z</updated><author><name>Raymond Wanyoike</name></author><id>tag:,2013-07-14:my-third-post.html</id><summary type="html">&lt;p&gt;This is my third post using Pelican. Now have a list!&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;????&lt;/li&gt;
+&lt;li&gt;PROFIT!!!&lt;/li&gt;
+&lt;li&gt;This Post Has Been Removed By SOPA. Skip to Step. 1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Great success?&lt;/p&gt;</summary><category term="pelican"></category><category term="publishing"></category></entry><entry><title>My second post</title><link href="/my-second-post.html" rel="alternate"></link><updated>2013-07-14T11:00:00Z</updated><author><name>Alan Orth</name></author><id>tag:,2013-07-14:my-second-post.html</id><summary type="html">&lt;p&gt;This is my second post using Pelican.  Now have a list!&lt;/p&gt;</summary><category term="pelican"></category><category term="publishing"></category></entry><entry><title>My first post</title><link href="/my-first-post.html" rel="alternate"></link><updated>2013-07-10T22:33:00Z</updated><author><name>Alan Orth</name></author><id>tag:,2013-07-10:my-first-post.html</id><summary type="html">&lt;p&gt;This is my first post using Pelican.  Now have a list!&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Linux&lt;/li&gt;
+&lt;li&gt;???&lt;/li&gt;
+&lt;li&gt;profit!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Great success!&lt;/p&gt;</summary><category term="pelican"></category><category term="publishing"></category></entry></feed>
