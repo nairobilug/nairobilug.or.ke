@@ -49,6 +49,9 @@ PAGE_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}.html'
 PAGE_LANG_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}-{lang}.html'
 
 # Copy CNAME to output root
-FILES_TO_COPY = (
-    ('extra/CNAME', 'CNAME'),
-)
+STATIC_PATHS = [
+    'extra/CNAME',
+    ]
+EXTRA_PATH_METADATA = {
+    'extra/CNAME': {'path': 'CNAME'},
+    }
