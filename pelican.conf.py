@@ -34,7 +34,7 @@ SITESUBTITLE = 'Nairobi GNU/Linux Users Group'
 
 DEFAULT_PAGINATION = 10
 
-THEME = 'crowsfoot'
+THEME = 'crowsfoot/crowsfoot'
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
