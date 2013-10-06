@@ -1,12 +1,11 @@
-Title: The Fourth Post
+Title: In The Spirit of Pelican
 Date: 2013-07-14 20:22
 Category: Pelican
 Tags: pelican, publishing
-Slug: my-fourth-post
+Slug: in-the-spirit-of-pelican
 Author: Muriithi Frederick Muriuki
-Summary: A test post to get the hang of pelican
+Summary: I have to start by commending everyone involved in the Nairobi Linux User Group (nairobilug) for their various efforts to get all of us to this point.
 
-### In The Spirit of Pelican
 
 I have to start by commending everyone involved in the Nairobi Linux User Group (nairobilug) for their various efforts to get all of us to this point.
 
