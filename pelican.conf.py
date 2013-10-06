@@ -27,6 +27,9 @@ SOCIAL = (
     ('Nairobi GNU/Linux mailing list', 'https://groups.google.com/forum/#!forum/nairobi-gnu'),
 )
 
+# Enable Disqus comments
+DISQUS_SITENAME = "nairobilug"
+
 # Crowsfoot settings
 GITHUB_ADDRESS = 'https://github.com/nairobilug'
 PROFILE_IMAGE_URL = '/static/images/profile.png'
