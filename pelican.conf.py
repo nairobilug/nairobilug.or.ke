@@ -30,6 +30,10 @@ SOCIAL = (
 # Enable Disqus comments
 DISQUS_SITENAME = "nairobilug"
 
+# Enable Google Analytics
+GOOGLE_ANALYTICS_ID = 'UA-730843-9'
+GOOGLE_ANALYTICS_DOMAIN = 'nairobilug.or.ke'
+
 # Crowsfoot settings
 GITHUB_ADDRESS = 'https://github.com/nairobilug'
 PROFILE_IMAGE_URL = '/static/images/profile.png'
