@@ -16,7 +16,7 @@ html { /* This stuff is for the sticky footer. */
 
 body {
     background-color:#fafafa;
-    font-family:'Open Sans';
+    font-family:'Open Sans', sans-serif;
     margin: 20px auto 100px auto; /* For sticky footer. */
 }
 
