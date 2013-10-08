@@ -15,6 +15,10 @@ CATEGORY_FEED_ATOM = None
 FEED_ALL_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
+# Top nav menu items
+MENUITEMS = ( 
+    ('Home',SITEURL),
+)
 # Blogroll
 LINKS = (
     ('David Karibe', 'http://karibe.co.ke/'),
