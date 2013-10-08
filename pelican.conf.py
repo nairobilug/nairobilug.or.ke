@@ -19,6 +19,9 @@ TRANSLATION_FEED_ATOM = None
 MENUITEMS = ( 
     ('Home',SITEURL),
 )
+
+DISPLAY_PAGES_ON_MENU = True
+
 # Blogroll
 LINKS = (
     ('David Karibe', 'http://karibe.co.ke/'),
