@@ -17,7 +17,7 @@ TRANSLATION_FEED_ATOM = None
 
 # Top nav menu items
 MENUITEMS = ( 
-    ('Home',SITEURL),
+    ('Home','/'),
 )
 
 DISPLAY_PAGES_ON_MENU = True

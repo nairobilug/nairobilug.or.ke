@@ -2,8 +2,8 @@ Title: About Us
 Date: 2013-10-8 13:00
 Tags: meetup, nairobilug, about
 Category: About
-Slug: About-Us
-Author: Ken King'ori
+Slug: about-us
+Author: Multiple
 Summary: Nairobi GNU/Linux User Group Meetup and Community Details.
 
 The Nairobi GNU/Linux Users Group is a not-for-profit community serving the greater Nairobi area. We are a collection of people dedicated to GNU/Linux, Free Software, Open Source, and other related topics.
