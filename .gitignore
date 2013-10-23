@@ -1,5 +1,4 @@
 *.pid
 *.pyc
 *.swp
-*~
 output/
