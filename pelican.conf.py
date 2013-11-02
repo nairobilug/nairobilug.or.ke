@@ -66,6 +66,7 @@ PAGE_URL = '{date:%Y}/{date:%m}/pages/{slug}.html'
 # Copy CNAME to output root
 STATIC_PATHS = [
     'extra/CNAME',
+    'images',
     ]
 EXTRA_PATH_METADATA = {
     'extra/CNAME': {'path': 'CNAME'},
