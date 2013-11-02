@@ -70,3 +70,6 @@ STATIC_PATHS = [
 EXTRA_PATH_METADATA = {
     'extra/CNAME': {'path': 'CNAME'},
     }
+
+# Enable code highlighting     
+MD_EXTENSIONS = (['codehilite(css_class=codehilite)'])    
