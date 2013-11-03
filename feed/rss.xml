@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nairobi LUG</title><link>http://nairobilug.or.ke/</link><description>Nairobi GNU/Linux Users Group</description><atom:link href="http://nairobilug.or.ke/feed/rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 02 Oct 2013 12:00:00 +0300</lastBuildDate><item><title>October NairobiLUG Meetup</title><link>http://nairobilug.or.ke/2013/10/october-nairobilug-meetup.html</link><description>&lt;p&gt;We will be holding our October GNU/Linux User Group Meetup on 5th October between 04.00 – 06.00 pm EAT (GMT +3) at KFC Kimathi Street. We traditionally meet the first Saturday of every month.&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nairobi LUG</title><link>http://nairobilug.or.ke/</link><description>Nairobi GNU/Linux Users Group</description><atom:link href="http://nairobilug.or.ke/feed/rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 02 Nov 2013 22:33:00 +0300</lastBuildDate><item><title>Meetup Summary (November, 2013)</title><link>http://nairobilug.or.ke/2013/11/meetup-november-2013.html</link><description>&lt;p&gt;A major highlight of the November, 2013 meetup was having fourteen people show up; this was perhaps the most successful meetup since we began in 2012... Other than that, there were lots of lively discussions of technology goings ons, releases, politics etc.&lt;/p&gt;
+&lt;h3&gt;Some topic highlights (from memory):&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Fedora 20 beta (and therefore final) &lt;a href="https://lists.fedoraproject.org/pipermail/devel/2013-October/190689.html"&gt;being delayed by one week&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://blogs.cisco.com/collaboration/open-source-h-264-removes-barriers-webrtc"&gt;Cisco releasing a BSD-licensed H.264 implementation&lt;/a&gt; (as well as binaries) and footing the licensing bill for users of the binary (ie, Mozilla Firefox, who &lt;a href="https://blog.mozilla.org/blog/2013/10/30/video-interoperability-on-the-web-gets-a-boost-from-ciscos-h-264-codec/"&gt;has said&lt;/a&gt; they will integrate this)&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.openbsd.org/54.html"&gt;OpenBSD 5.4 release&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The debate over Debian voting to replace SysV Init with either &lt;a href="http://slashdot.org/story/13/10/28/1621219/debian-to-replace-sysvinit-switch-to-systemd-or-upstart"&gt;Upstart or systemd&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;How to best use the recently-registered &lt;a href="https://twitter.com/nairobilug"&gt;@nairobilug&lt;/a&gt; twitter account&lt;/li&gt;
+&lt;li&gt;How POSIX is limiting innovation (and the creep of "Linux-isms" into POSIX)&lt;/li&gt;
+&lt;li&gt;RAID vs JBOD&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;telnet&lt;/code&gt; as a TCP/IP swiss army knife&lt;/li&gt;
+&lt;li&gt;Processes vs threads&lt;/li&gt;
+&lt;li&gt;The epic ending of last month's Nairobi GNU/Linux Users Group book club book, &lt;em&gt;The Picture of Dorian Gray&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The possibility of going whitewater rafting in Uganda in December (as the Nairobi GNU/Linux Users Group "Outdoor Explorers", a related, but unofficial affiliate of the LUG)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If I missed anything, leave it in the comments (or send a pull request ;).&lt;/p&gt;
+&lt;h3&gt;Proof we were there&lt;/h3&gt;
+&lt;p&gt;Discussing all teh things...&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Group shot" src="/images/meetup-november-2013.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
+&lt;h3&gt;December meetup&lt;/h3&gt;
+&lt;p&gt;Remember, we meet the first Saturday of the month, meaning December's meetup should be December 1st.  See you there!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Sat, 02 Nov 2013 22:33:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2013-11-02:2013/11/meetup-november-2013.html</guid><category>KFC</category><category>meetups</category></item><item><title>October NairobiLUG Meetup</title><link>http://nairobilug.or.ke/2013/10/october-nairobilug-meetup.html</link><description>&lt;p&gt;We will be holding our October GNU/Linux User Group Meetup on 5th October between 04.00 – 06.00 pm EAT (GMT +3) at KFC Kimathi Street. We traditionally meet the first Saturday of every month.&lt;/p&gt;
 &lt;h3&gt;Speakers&lt;/h3&gt;
 &lt;p&gt;We have this crazy format where everyone gets to speak! We talk about what we are doing with Linux and happenings in the FOSS scene locally and beyond in the past month.&lt;/p&gt;
 &lt;h3&gt;RSVP&lt;/h3&gt;
