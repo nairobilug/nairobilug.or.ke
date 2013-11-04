@@ -30,4 +30,4 @@ Discussing all teh things...
 ![Group shot](/images/meetup-november-2013.jpg "Nairobi GNU/Linux Users Group members")
 
 ### December meetup
-Remember, we meet the first Saturday of the month, meaning December's meetup should be December 1st.  See you there!
+Remember, we meet the first Saturday of the month, meaning December's meetup should be December 7th.  See you there!
