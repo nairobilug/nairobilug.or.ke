@@ -6,7 +6,7 @@ Slug: meetup-january-2014
 Author: Alan Orth
 Summary: Highlights from the January, 2014 meetup.
 
-A major highlight of the November, 2014 meetup was having sixteen people show up (a new record!).  Other than that, there were lots of lively discussions of technology goings ons, releases, politics etc.
+A major highlight of the January, 2014 meetup was having sixteen people show up (a new record!).  Other than that, there were lots of lively discussions of technology goings ons, releases, politics etc.
 
 ### Some topic highlights (from memory):
 
