@@ -1,8 +1,8 @@
 Title: Meetup Summary (February, 2014)
-Date: 2014-01-11 16:00
+Date: 2014-02-1 16:00
 Category: Meetups
 Tags: KFC, meetup
-Slug: meetup-February-2014
+Slug: meetup-february-2014
 Author: Njagi Mwaniki
 Summary: Highlights from the February, 2014 meetup.
 
