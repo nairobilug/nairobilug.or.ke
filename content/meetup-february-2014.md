@@ -1,5 +1,5 @@
 Title: Meetup Summary (February, 2014)
-Date: 2014-02-1 16:00
+Date: 2014-02-6 16:00
 Category: Meetups
 Tags: KFC, meetup
 Slug: meetup-february-2014
@@ -7,7 +7,7 @@ Author: Njagi Mwaniki
 Summary: Highlights from the February, 2014 meetup.
 
 
-16 guys showed up (stagnated).
+16 guys showed up (staggered).
 I had a friend attend for the first time and he liked it.
 
 
@@ -42,5 +42,5 @@ Here are some cool pics from the event that was.
  
 ![Group shot1](/images/meetup-february-2014-1.jpg  "Nairobi GNU/Linux Users Group members")
  
-Guys had a great time. See you at KFC Kimathi Street on March 1st 2014.
+Guys had a great time. See you at KFC Kimathi Street on March 1st, 2014.
 Happy hacking!!
