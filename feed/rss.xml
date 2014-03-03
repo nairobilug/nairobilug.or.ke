@@ -30,7 +30,38 @@
 &lt;/ul&gt;
 &lt;p&gt;Proof that it happened:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Group shot" src="/images/meetup-march-2014.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
-&lt;p&gt;See you for the next meeting (April 5th, 2014!)&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Sun, 02 Mar 2014 21:01:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2014-03-02:2014/03/meetup-march-2014.html</guid><category>KFC</category><category>meetup</category></item><item><title>Meetup Summary (February, 2014)</title><link>http://nairobilug.or.ke/2014/02/meetup-february-2014.html</link><description>&lt;p&gt;16 guys showed up (staggered).
+&lt;p&gt;See you for the next meeting (April 5th, 2014!)&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Sun, 02 Mar 2014 21:01:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2014-03-02:2014/03/meetup-march-2014.html</guid><category>KFC</category><category>meetup</category></item><item><title>Scars in Web App Trenches</title><link>http://nairobilug.or.ke/2014/02/scars-in-web-app-trenches.html</link><description>&lt;p&gt;Hey there.&lt;/p&gt;
+&lt;p&gt;I have been developing web applications for a while now, working freelance on oDesk, and from my work, I can state I do have some experience in doing this. Now, I will not claim to be a web-app ninja, but I will try to state my case as objectively as I can, but you decide how much salt you'll take it with. Deal?&lt;/p&gt;
+&lt;h2&gt;HTML - The M is for Markup&lt;/h2&gt;
+&lt;p&gt;From what I have come to understand from the gurus and ninjas in this field, HTML was built as a markup language. It was meant to give meaning to the content of the page, e.g.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;lt; h1 &amp;gt; is greater than &amp;lt; h2 &amp;gt;, which in turn is greater than &amp;lt; h3 &amp;gt; etc&lt;/li&gt;
+&lt;li&gt;&amp;lt; form &amp;gt; represents an electronic form where you can fill in and submit data&lt;/li&gt;
+&lt;li&gt;&amp;lt; button &amp;gt; and &amp;lt; input type='button' ... &amp;gt; represent input elements that can be used to activate certain actions like submit forms, etc&lt;/li&gt;
+&lt;li&gt;&amp;lt; a &amp;gt; - the anchor tag, is meant to represent links to a different part of the page, other pages, or another site&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;and many others. . . (For awesome HTML, CSS and Javascript tutorials, click &lt;a href="http://htmldog.com/"&gt;here&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;Now, if there is one thing that I have found painful in my work, it is when people make use on the anchor tag to submit forms.&lt;/p&gt;
+&lt;p&gt;Why?&lt;/p&gt;
+&lt;p&gt;I am one of those people still living in a third world country (and if things keep going the way they are, we just might have to come up with a whole new class beneath that for the country), and as such, bandwidth is expensive (I dare say, artificially so).&lt;/p&gt;
+&lt;p&gt;Now, we all know that the tag &amp;lt; input type='submit' ... &amp;gt; will submit any form it is in, no questions asked, but 'NOOOOOOOOO!', we have to bloat that up by getting rid of it, replacing it with a link, and then using the jQuery library to submit the form. A form submission, I tell you!&lt;/p&gt;
+&lt;h3&gt;But The Web is Javascript!&lt;/h3&gt;
+&lt;p&gt;For all that have this argument, I refer you &lt;a href="http://motherfuckingwebsite.com/"&gt;here&lt;/a&gt;. Now, tell me you cannot see the content in that site. Then, riddle me this, before Javascript, jQuery, and others came along, pray tell, how were people submitting their html forms?&lt;/p&gt;
+&lt;p&gt;Now understand this &lt;strong&gt;I love Javascript&lt;/strong&gt; and though I am not a jQuery ninja, I cannot argue against it's merits, but if we are going to use javascript everywhere, we might as well start killing mosquitoes with handguns, or slings, or catapults (take your pick).&lt;/p&gt;
+&lt;h2&gt;Back to the Basics&lt;/h2&gt;
+&lt;p&gt;Hear me out, before you fetch the noose. I am making a simple suggestion here, based on the experience I have had with web applications, and even some plain websites.&lt;/p&gt;
+&lt;p&gt;When I land on your site, almost always, I am searching for information about your company, skill, etc. You, on the other hand, decide to make me have to struggle further to find the friggin content by putting those silly pictures, animations and shiznit in my path. Then, to insult me further, you make it so that, if I turn javascript off (It's off by default on my browser), I cannot see your content.
+As if you have not hurt me enough, you make all your forms submit only via javascript/jQuery.&lt;/p&gt;
+&lt;p&gt;DEAR &lt;deity&gt;! I cannot count the number of times I have left websites and gone looking for other options due to this.&lt;/p&gt;
+&lt;p&gt;First, you eat away my bandwidth with silly content, then you force me to use even more of my bandwidth, just to get functionality that is already built into html.&lt;/p&gt;
+&lt;h2&gt;Collaboration&lt;/h2&gt;
+&lt;p&gt;Let us view another scenario. You have to collaborate with a person in a different timezone building a web application. Now, you are a javascript, jQuery, etc ninja, and you can build anything in it. Her/him, not so much, but they are good at their PHP, Ruby, Python, C or whatever language they use on the backend.&lt;/p&gt;
+&lt;p&gt;Now, I do not know what you think, but I dare say, it is easier to pass to each other data, than force the backend to rely on the design of the frontend. Think also, of when you decide you want to change the look and feel of the website, then you have to make changes to both the front and backends, introducing new bugs, and possibly throwing away months of work debugging the data communication etc.&lt;/p&gt;
+&lt;p&gt;Now, if you had simply passed data between the frontend and backend, say using &lt;strong&gt;json, xml, plain text, plain html&lt;/strong&gt; and others, then you can change the frontend any time without worrying about the backend, since the data interchange format is standardised, agreed upon, and &lt;strong&gt;DE&lt;/strong&gt;fucking&lt;strong&gt;BUGGED!&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The backend guy/gal, can now concentrate on building and testing the backend, even with plain, unstyled, ugly, but functional html, and you can concentrate on styling (CSS) and behaviour (Javascript), without breaking the backend every time you make a tiny little change to the front end.&lt;/p&gt;
+&lt;p&gt;Now, think of your client, and how happy they are, every time they contact you to change the look and feel of the website, and you do that in a few weeks without breaking the backend, and they think you are a god!
+Yeah, keep doing the shit you're doing, and that will never happen.&lt;/p&gt;
+&lt;p&gt;I'm angry, and so are you. Let me know what you think in the comments. Try to be civil, though I probably haven't.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Muriithi Frederick Muriuki</dc:creator><pubDate>Mon, 17 Feb 2014 13:00:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2014-02-17:2014/02/scars-in-web-app-trenches.html</guid><category>web applications</category><category>web development</category></item><item><title>Meetup Summary (February, 2014)</title><link>http://nairobilug.or.ke/2014/02/meetup-february-2014.html</link><description>&lt;p&gt;16 guys showed up (staggered).
 I had a friend attend for the first time and he liked it.&lt;/p&gt;
 &lt;h3&gt;3D printer&lt;/h3&gt;
 &lt;p&gt;Well great news guys have decided to build a 3D printer. Updates on that will be blogged about sooner than later I hope. I for one are very excited that we're doing such.&lt;/p&gt;
