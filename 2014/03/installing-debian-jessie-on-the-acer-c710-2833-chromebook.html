@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+      <title>Nairobi LUG</title>
+      <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700' rel='stylesheet' type='text/css' />
+      <link href='http://fonts.googleapis.com/css?family=Merriweather:300' rel='stylesheet' type='text/css'/>
+      <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:200,400,700' rel='stylesheet' type='text/css'/>
+      <link rel="stylesheet" type="text/css" href="../../theme/css/icons.css"/>
+      <link rel="stylesheet" type="text/css" href="../../theme/css/styles.css"/>
+      <meta charset="utf-8" />
+        <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Nairobi LUG RSS Feed" />
+        <script>
+          (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'UA-730843-9', 'nairobilug.or.ke');
+          ga('send', 'pageview');
+        </script>
+  </head>
+
+  <body id="index">
+    <!-- header -->
+    <header class="siteheader">
+      <!-- site image -->
+        <div class= "siteimage">
+          <a class="nodec" href=/images/profile.png>
+            <img width="200" height="200" src=/images/profile.png>
+          </a>
+        </div>
+
+      <div class = "sitebanner">
+        <h1><a class="sitetitle nodec" href="../..">Nairobi LUG</a></h1>
+        <h3 class ="sitesubtitle">Nairobi GNU/Linux Users Group</h3>
+        <!-- nav -->
+        <nav class="menu">
+          <ul>
+            <!-- menu items-->
+              <li><a class="nodec" href="/">Home</a></li>
+            <!--pages-->
+                <li><a class="nodec" href="../../2013/10/pages/about-us.html">About Us</a></li>
+            <!-- services icons -->
+              <li><a class="nodec icon-github" href="https://github.com/nairobilug"></a></li>
+              <li><a class="nodec icon-twitter" href="https://twitter.com/nairobilug"></a></li>
+              <li><a class="nodec icon-rss" href="/feed/rss.xml"></a></li>
+          </ul>
+        </nav>
+      </div> <!-- sitebanner -->
+    </header>
+
+    <!-- content -->
+
+<section class="content">
+
+  <h3 class="posttitle">
+    <a class="nodec" href="/2014/03/installing-debian-jessie-on-the-acer-c710-2833-chromebook.html" rel="bookmark" title="Permalink to Installing Debian Jessie on the Acer C710-2833 Chromebook">
+      Installing Debian Jessie on the Acer C710-2833 Chromebook
+    </a>
+  </h3>
+
+  <div class="postinfo">
+    <p class="published" title="2014-03-19T19:15:00">
+      Wed 19 March 2014
+    </p>
+
+    <address class="vcard author">
+      By <a class="nodec" href="../../author/muriithi-frederick-muriuki.html">Muriithi Frederick Muriuki</a>
+    </address>
+  </div><!-- .postinfo -->
+
+  <div class="article">
+    <h2>Introduction</h2>
+<p>Hey there.</p>
+<p>I have recently had need to get a machine for work that is easy to lug around, affordable and has a decent battery life. While I already have a laptop (Presario CQ62), it has grown old and its battery life is in the shitter.</p>
+<p>After shopping around, I settled for the Acer C710-2833 Chromebook (I would have picked a newer model, but there is not one in our market yet, and importing one would have made it quickly unaffordable - thank the new government).</p>
+<p>Now, while Chrome OS - the operating system that comes with the machines - is a nice (great?) operating system, for a freelance developer like me, it renders the machine useless for much of my day to day work. I found the need therefore to make it useful for me.</p>
+<h2>Preparation</h2>
+<p><em>DISCLAIMER</em> FROM THIS POINT FORWARD, ANYTHING YOU DO WITH YOUR MACHINE IS YOUR FAULT. IF IT BREAKS, OR YOU BRICK IT, OR CAUSE A NUCLEAR HOLOCAUST, OR ANYTHING ELSE FOR THAT MATTER, YOU CAN ONLY BLAME YOURSELF.</p>
+<p>Now that that is out of the way, shall we proceed.</p>
+<p>First off, let us start with where you can acquire the machine in Kenya. I got my machine at Ebrahim Electronics Limited along Kimathi Street. The machine costs a whooping Kshs 19,000. Also, do not forget to carry the manuals with you like I did.</p>
+<p>I would recommend you also get yourself a flash-disk at this point.</p>
+<p>So now you have your spanking new machine. Make sure to claim your free 100GB storage on google drive before you proceed. Also, BACKUP any user data you might have put on the machine</p>
+<h2>Reading Material</h2>
+<p>The process that is involved is tricky, and while I try to give a roadmap, I will not give the instructions, rather, I will point to the various resources I found useful</p>
+<p>SERIOUSLY, DO NOT JUST JUMP IN AND START COPYING AND PASTING COMMANDS! YOU WILL BRICK YOUR MACHINE. YOU HAVE BEEN WARNED.</p>
+<h3>Getting to Developer Mode</h3>
+<p>The chromebooks have two modes:</p>
+<ul>
+<li>Normal user mode</li>
+<li>Developer mode</li>
+</ul>
+<p>Read <a href="http://www.chromium.org/chromium-os/chromiumos-design-docs/developer-mode">this</a>, and <a href="http://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices/acer-c7-chromebook">this</a> for more information on developer mode</p>
+<h3>CoreBoot</h3>
+<p>These links are about coreboot. PLEASE READ THROUGH THEM A COUPLE OF TIMES before attempting anything
+For an introduction to coreboot see <a href="https://johnlewis.ie/mediawiki/index.php?title=Coreboot_on_Chromebooks">here</a>.</p>
+<p><a href="http://johnlewis.ie/coreboot-on-chromebooks/pre-built-firmware/">Here</a> you can find a list of the existing coreboot firmware. DO NOT RUSH JUST YET. Read on.</p>
+<h2>Installing</h2>
+<h3>Getting the ISO</h3>
+<p>We now need to download an iso image to use as the installation source. It is important that you research and figure out what processor your machine uses. For the C710-2833, it uses the <a href="http://ark.intel.com/products/56056/Intel-Celeron-Processor-847-2M-Cache-1_10-GHz">Intel Celeron 847</a>. This is an x86_64 architecture, otherwise known as amd64.</p>
+<p>Armed with that knowledge, get to <a href="http://www.debian.org/">http://www.debian.org</a> and get the relevant image.</p>
+<p>At this time, it is recommended that you get Debian Jessie <a href="http://www.debian.org/devel/debian-installer/">here</a></p>
+<h3>Ready To Go</h3>
+<p>Now, you have read up on coreboot, you have the image all that remains is the process.</p>
+<p>Start off <a href="https://wiki.debian.org/InstallingDebianOn/Acer/C710-2615-Chromebook">here</a> - you will get some information on the current status of your machine. It is also where you will finish your journey.</p>
+<p>Once you have read through that at least twice, now start the actual installation. The process to follow is <a href="https://johnlewis.ie/mediawiki/index.php?title=Flashing_stock_firmware_to_a_coreboot_build_on_Acer_C7_%28C710%29">here</a></p>
+<p>For the core boot, I used the 'Grub2 for Intel Celeron 847' with an md5 sum of '9c5993518ddf97ab4c4cf7e0a2f84570'. I picked it because I have used grub2 before and felt comfortable starting off in a farmiliar place. You are welcome to try a different one if you know what you are doing.</p>
+<p>If you follow the instructions carefully, you should get through without problems.</p>
+<h3>Finally</h3>
+<p>Now you have Debian on your system, it is time to do the post-installation steps. As I told you, those are found on the page you <a href="https://wiki.debian.org/InstallingDebianOn/Acer/C710-2615-Chromebook">started off with</a>.</p>
+<p>Great! Now go ye and be productive!</p>
+  </div><!-- .content -->
+
+</section>
+
+    
+    <div id="disqus_thread">
+    <script type="text/javascript">
+        var disqus_shortname = 'nairobilug';
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] ||
+             document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>
+        Please enable JavaScript to view the
+        <a href="http://disqus.com/?ref_noscript=nairobilug">
+            comments powered by Disqus.
+        </a>
+    </noscript>
+    <a href="http://disqus.com" class="dsq-brlink">
+        blog comments powered by <span class="logo-disqus">Disqus</span>
+    </a>
+    </div>
+	
+
+
+    <!-- footer -->
+    <footer>
+      <p>
+        © Multiple, license <a href=""> </a>
+        unless otherwise noted.
+        Generated by <a href= "http://docs.getpelican.com/">Pelican</a> with
+        <a href="http://github.com/porterjamesj/crowsfoot">crowsfoot</a> theme.
+      </p>
+    </footer>
+  </body>
+</html>
