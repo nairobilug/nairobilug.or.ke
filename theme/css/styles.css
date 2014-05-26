@@ -16,7 +16,7 @@ html { /* This stuff is for the sticky footer. */
 
 body {
     background-color:#fafafa;
-    font-family:'Open Sans', sans-serif;
+    font-family: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin: 20px auto 100px auto; /* For sticky footer. */
 }
 
@@ -24,7 +24,7 @@ body {
 
 .sitebanner {
     position: relative;
-    font-size: 18;
+    font-size: 18px;
     top: 15px;
 }
 
@@ -40,7 +40,7 @@ body {
 }
 
 .sitetitle {
-    font-family: 'Merriweather';
+    font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
     font-weight: 300;
     font-size: 4em;
     padding-left: 10px; /* Hack to dodge :hover issue. */
@@ -88,7 +88,7 @@ body {
 }
 
 .postsummary {
-    font-family: Merriweather;
+    font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
     font-weight: 300;
 }
 
@@ -221,14 +221,14 @@ sub {
 }
 
 .article pre {
-    font-family: 'Source Code Pro';
+    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
     font-size: .85em;
     margin: auto;
     padding: 1em;
 }
 
 .article code {
-    font-family: 'Source Code Pro';
+    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
     font-size: .85em;
 }
 
