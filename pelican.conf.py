@@ -16,22 +16,16 @@ FEED_ALL_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
 # Top nav menu items
-MENUITEMS = ( 
+MENU_ITEMS = (
     ('Home','/'),
+    ('Mailing list', 'https://groups.google.com/forum/#!forum/nairobi-gnu'),
 )
-
-DISPLAY_PAGES_ON_MENU = True
 
 # Blogroll
 LINKS = (
     ('David Karibe', 'http://karibe.co.ke/'),
     ('Mjanja Tech', 'http://mjanja.co.ke/'),
     ('Moshe Njema', 'http://nj3ma.wordpress.com/'),
-)
-
-# Social widget
-SOCIAL = (
-    ('Nairobi GNU/Linux mailing list', 'https://groups.google.com/forum/#!forum/nairobi-gnu'),
 )
 
 # Enable Disqus comments
@@ -41,10 +35,10 @@ DISQUS_SITENAME = "nairobilug"
 GOOGLE_ANALYTICS_ID = 'UA-730843-9'
 GOOGLE_ANALYTICS_DOMAIN = 'nairobilug.or.ke'
 
-# Crowsfoot settings
+# Alchemy theme settings
 GITHUB_ADDRESS = 'https://github.com/nairobilug'
-PROFILE_IMAGE_URL = '/images/profile.png'
-SITESUBTITLE = 'Nairobi GNU/Linux Users Group'
+PROFILE_IMAGE = '/images/profile.png'
+SITE_SUBTEXT = 'Nairobi GNU/Linux Users Group'
 TWITTER_ADDRESS = 'https://twitter.com/nairobilug'
 
 DEFAULT_PAGINATION = 10

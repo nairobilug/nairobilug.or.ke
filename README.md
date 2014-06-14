@@ -25,7 +25,7 @@ Use `pip` to install the list of dependencies into your virtual environment:
     pip install -r https://raw.github.com/nairobilug/nairobilug.or.ke/master/requirements.txt
 
 #### Preparations
-The theme we're using, `crowsfoot`, is a "git submodule", which means it is maintained as its own separate git repository (with its own git history, github project, etc).  submodules are stored in the `.gitmodules` file, and we first need to initialize and clone it before we can build.
+The theme we're using, `pelican-alchemy`, is a "git submodule", which means it is maintained as its own separate git repository (with its own git history, github project, etc).  submodules are stored in the `.gitmodules` file, and we first need to initialize and clone it before we can build.
 
 Navigate to where you cloned the [repo](http://github.com/nairobilug/nairobilug.or.ke) and then:
 
