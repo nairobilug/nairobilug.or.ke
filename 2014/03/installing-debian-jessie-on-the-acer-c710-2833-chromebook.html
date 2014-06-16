@@ -86,7 +86,7 @@
 <p>After shopping around, I settled for the Acer C710-2833 Chromebook (I would have picked a newer model, but there is not one in our market yet, and importing one would have made it quickly unaffordable - thank the new government).</p>
 <p>Now, while Chrome OS - the operating system that comes with the machines - is a nice (great?) operating system, for a freelance developer like me, it renders the machine useless for much of my day to day work. I found the need therefore to make it useful for me.</p>
 <h2>Preparation</h2>
-<p><em>DISCLAIMER</em> FROM THIS POINT FORWARD, ANYTHING YOU DO WITH YOUR MACHINE IS YOUR FAULT. IF IT BREAKS, OR YOU BRICK IT, OR CAUSE A NUCLEAR HOLOCAUST, OR ANYTHING ELSE FOR THAT MATTER, YOU CAN ONLY BLAME YOURSELF.</p>
+<p><strong>DISCLAIMER</strong>: FROM THIS POINT FORWARD, ANYTHING YOU DO WITH YOUR MACHINE IS YOUR FAULT. IF IT BREAKS, OR YOU BRICK IT, OR CAUSE A NUCLEAR HOLOCAUST, OR ANYTHING ELSE FOR THAT MATTER, YOU CAN ONLY BLAME YOURSELF.</p>
 <p>Now that that is out of the way, shall we proceed.</p>
 <p>First off, let us start with where you can acquire the machine in Kenya. I got my machine at Ebrahim Electronics Limited along Kimathi Street. The machine costs a whooping Kshs 19,000. Also, do not forget to carry the manuals with you like I did.</p>
 <p>I would recommend you also get yourself a flash-disk at this point.</p>
@@ -114,11 +114,33 @@ For an introduction to coreboot see <a href="https://johnlewis.ie/mediawiki/inde
 <p>Now, you have read up on coreboot, you have the image all that remains is the process.</p>
 <p>Start off <a href="https://wiki.debian.org/InstallingDebianOn/Acer/C710-2615-Chromebook">here</a> - you will get some information on the current status of your machine. It is also where you will finish your journey.</p>
 <p>Once you have read through that at least twice, now start the actual installation. The process to follow is <a href="https://johnlewis.ie/mediawiki/index.php?title=Flashing_stock_firmware_to_a_coreboot_build_on_Acer_C7_%28C710%29">here</a></p>
-<p>For the core boot, I used the 'Grub2 for Intel Celeron 847' with an md5 sum of '9c5993518ddf97ab4c4cf7e0a2f84570'. I picked it because I have used grub2 before and felt comfortable starting off in a farmiliar place. You are welcome to try a different one if you know what you are doing.</p>
+<p>For the core boot, I used the 'Grub2 for Intel Celeron 847' with an md5 sum of <code>9c5993518ddf97ab4c4cf7e0a2f84570</code>. I picked it because I have used grub2 before and felt comfortable starting off in a farmiliar place. You are welcome to try a different one if you know what you are doing.</p>
 <p>If you follow the instructions carefully, you should get through without problems.</p>
 <h3>Finally</h3>
 <p>Now you have Debian on your system, it is time to do the post-installation steps. As I told you, those are found on the page you <a href="https://wiki.debian.org/InstallingDebianOn/Acer/C710-2615-Chromebook">started off with</a>.</p>
 <p>Great! Now go ye and be productive!</p>
+<hr />
+<h2>EDITS</h2>
+<p>April 21, 2014: Sometimes the trackpad does not work - to correct that, you could do the following (from <a href="http://marstella.net/?p=278">marstella.net</a> also, thanks to eebrah)</p>
+<ol>
+<li>
+<p>Edit <code>/etc/modprobe.d/blacklist.conf</code> and include the following line</p>
+<div class="codehilite"><pre><span class="n">blacklist</span> <span class="n">chromeos_laptop</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>Edit <code>/etc/modules</code> and include the following lines:</p>
+<div class="codehilite"><pre><span class="n">i2c</span><span class="o">-</span><span class="n">i801</span>
+<span class="n">i2c</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">chromeos_laptop</span>
+<span class="n">cyapa</span>
+</pre></div>
+
+
+</li>
+</ol>
         </div>
     </div>
     <hr class="separator">
