@@ -77,3 +77,18 @@ If you follow the instructions carefully, you should get through without problem
 Now you have Debian on your system, it is time to do the post-installation steps. As I told you, those are found on the page you [started off with](https://wiki.debian.org/InstallingDebianOn/Acer/C710-2615-Chromebook).
 
 Great! Now go ye and be productive!
+
+###EDITS
+
+April 21, 2014: Sometimes the trackpad does not work -  to correct that, you could do the following (from [marstella.net](http://marstella.net/?p=278) also, thanks to eebrah)
+
+1. Edit /etc/modprobe.d/blacklist.conf and include the following line
+
+	blacklist chromeos_laptop
+
+2. Edit /etc/modules and include the following lines:
+
+	i2c-i801
+	i2c-dev
+	chromeos_laptop
+	cyapa
