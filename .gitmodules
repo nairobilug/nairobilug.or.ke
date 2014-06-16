@@ -1,6 +1,3 @@
-[submodule "crowsfoot"]
-	path = crowsfoot
-	url = git@github.com:nairobilug/pelican-crowsfoot.git
 [submodule "pelican-alchemy"]
 	path = pelican-alchemy
 	url = https://github.com/nairobilug/pelican-alchemy.git
