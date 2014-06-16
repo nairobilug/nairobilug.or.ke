@@ -42,7 +42,7 @@ SITE_SUBTEXT = 'Nairobi GNU/Linux Users Group'
 TWITTER_ADDRESS = 'https://twitter.com/nairobilug'
 
 DEFAULT_PAGINATION = 10
-THEME = 'pelican-alchemy/alchemy'
+THEME = 'theme/alchemy'
 FEED_RSS = 'feed/rss.xml'
 
 # Uncomment following line if you want document-relative URLs when developing
