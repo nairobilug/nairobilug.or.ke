@@ -15,7 +15,7 @@ For reference, a list of commonly-used distro package names are:
 If your distro isn't listed, you'll have to do a bit of homework (and then make a pull request to fix these docs).
 
 
-#### Create a virtualenv
+#### Create a Virtualenv
 
 Once you have `virtualenvwrapper` installed, create a virtual environment to hold Pelican and its dependencies:
 
@@ -75,6 +75,6 @@ If you're interested in writing a blog post for the site, you need to:
 
 ## Contact
 
-If you have any questions, drop by #nairobilug on Freenode. Happy blogging!
+If you have any questions, drop by **#nairobilug** on Freenode. Happy blogging!
 
 [![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/nairobilug.png)](https://kiwiirc.com/client/irc.freenode.net/#nairobilug)
