@@ -1,3 +1,6 @@
+from future import unicode_literals
+
+
 # Pelican settings ------------------------------------------------------------
 
 # Basic settings
@@ -38,7 +41,12 @@ EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}}
 
 PROFILE_IMAGE = '/images/profile.png'
 SHOW_ARTICLE_AUTHOR = True
+PAGES_ON_MENU = True
 SITE_SUBTEXT = 'Nairobi GNU/Linux Users Group'
+META_DESCRIPTION = '''Nairobi GNU/Linux Users Group is a not-for-profit community
+                   serving the greater Nairobi area, Kenya. We are a collection
+                   of people dedicated to GNU/Linux, Free Software, Open Source,
+                   and other related topics.'''
 
 # LICENSE_URL = ''
 # LICENSE_NAME = ''
