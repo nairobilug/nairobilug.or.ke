@@ -3,7 +3,7 @@
 This is the repository which hosts the code for the [Nairobi GNU/Linux Users Group](http://nairobilug.or.ke) blog. We wanted a fun, nerdy and democratic way to give our community an online presence, so here we are.
 
 
-## Wanna build it?
+## Wanna Build It?
 
 In order to build this, you need to have [Pelican](http://getpelican.com/) installed. The easiest way to do this is to use Python virtual environments; `virtualenv` will work, but we recommended you use `virtualenvwrapper` (a set of extensions to `virtualenv`).
 
@@ -25,7 +25,7 @@ Once you have `virtualenvwrapper` installed, create a virtual environment to hol
 This creates a virtual environment where Python is explicitly set to version 2, and then activates it. If you want to exit the virtual environment, you just type `deactivate`.
 
 
-#### Install Pelican and friends
+#### Install Pelican and Friends
 
 Use `pip` to install the list of dependencies into your virtual environment:
 
@@ -44,7 +44,7 @@ Navigate to where you've cloned this [repo](http://github.com/nairobilug/nairobi
 You only need to do the initialization the first time you build. After that, you can simply use the update command to get the latest submodule changes.
 
 
-#### GENERATE teh BLAWG
+#### GENERATE BLAWG
 
 Now that the theme exists, we can build:
 
@@ -53,7 +53,7 @@ Now that the theme exists, we can build:
 This takes the Markdown files from the `content` folder and generates static HTML pages inside the `output` directory. That's it. No MySQL, no PHP, etc...
 
 
-#### It works, SHIPIT!!1
+#### It Works, SHIP!T
 
 You can use any web server to view the generated HTML. For example, Python's built-in simple HTTP server:
 
@@ -63,7 +63,7 @@ You can use any web server to view the generated HTML. For example, Python's bui
 And now you should see the blog at: [http://localhost:8000](http://localhost:8000)
 
 
-## Workflow for blog posts
+## Workflow for Posts
 
 If you're interested in writing a blog post for the site, you need to:
 

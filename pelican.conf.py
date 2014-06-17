@@ -40,7 +40,6 @@ PROFILE_IMAGE = '/images/profile.png'
 SHOW_ARTICLE_AUTHOR = True
 SITE_SUBTEXT = 'Nairobi GNU/Linux Users Group'
 
-# TODO: Discuss on IRC
 # LICENSE_URL = ''
 # LICENSE_NAME = ''
 
