@@ -1,53 +1,23 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
 
+# Pelican settings ------------------------------------------------------------
+
+# Basic settings
 AUTHOR = 'Multiple'
 SITENAME = 'Nairobi LUG'
 SITEURL = 'http://nairobilug.or.ke'
-
-DEFAULT_LANG = 'en'
 TIMEZONE = 'Africa/Nairobi'
 
-# Feed generation is usually not desired when developing
-CATEGORY_FEED_ATOM = None
-FEED_ALL_ATOM = None
-TRANSLATION_FEED_ATOM = None
-
-# Top nav menu items
-MENU_ITEMS = (
-    ('Home','/'),
-    ('Mailing list', 'https://groups.google.com/forum/#!forum/nairobi-gnu'),
-)
-
-# Blogroll
-LINKS = (
-    ('David Karibe', 'http://karibe.co.ke/'),
-    ('Mjanja Tech', 'http://mjanja.co.ke/'),
-    ('Moshe Njema', 'http://nj3ma.wordpress.com/'),
-)
-
-# Enable Disqus comments
-DISQUS_SITENAME = "nairobilug"
-
-# Enable Google Analytics
-GOOGLE_ANALYTICS_ID = 'UA-730843-9'
-GOOGLE_ANALYTICS_DOMAIN = 'nairobilug.or.ke'
-
-# Alchemy theme settings
-GITHUB_ADDRESS = 'https://github.com/nairobilug'
-PROFILE_IMAGE = '/images/profile.png'
-SITE_SUBTEXT = 'Nairobi GNU/Linux Users Group'
-TWITTER_ADDRESS = 'https://twitter.com/nairobilug'
-
+DEFAULT_LANG = 'en'
 DEFAULT_PAGINATION = 10
-THEME = 'pelican-alchemy/alchemy'
+THEME = 'theme/alchemy'
+
+# Feed settings
+FEED_ATOM = 'feed/atom.xml'
 FEED_RSS = 'feed/rss.xml'
 
-# Uncomment following line if you want document-relative URLs when developing
-RELATIVE_URLS = True
-
+# URL settings
 ARTICLE_LANG_SAVE_AS = '{date:%Y}/{date:%m}/{slug}-{lang}.html'
 ARTICLE_LANG_URL = '{date:%Y}/{date:%m}/{slug}-{lang}.html'
 ARTICLE_SAVE_AS = '{date:%Y}/{date:%m}/{slug}.html'
@@ -57,20 +27,46 @@ PAGE_LANG_URL = '{date:%Y}/{date:%m}/pages/{slug}-{lang}.html'
 PAGE_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}.html'
 PAGE_URL = '{date:%Y}/{date:%m}/pages/{slug}.html'
 
-# Copy CNAME to output root
-STATIC_PATHS = [
-    'extra/CNAME',
-    'images',
-    ]
-EXTRA_PATH_METADATA = {
-    'extra/CNAME': {'path': 'CNAME'},
-    }
-
-# Enable code highlighting     
-MD_EXTENSIONS = (['codehilite(css_class=codehilite)'])    
-
-# Clean output directory during build
+# Delete the output directory, before generating new files.
 DELETE_OUTPUT_DIRECTORY = True
+# The static paths you want to have accessible on the output path "static"
+STATIC_PATHS = ['extra/CNAME', 'images']
+# Extra metadata dictionaries keyed by relative path.
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}}
 
-# Show article author on posts
+# Only set this to True when developing/testing
+RELATIVE_URLS = True
+
+
+# Theme settings --------------------------------------------------------------
+
+PROFILE_IMAGE = '/images/profile.png'
 SHOW_ARTICLE_AUTHOR = True
+PAGES_ON_MENU = True
+SITE_SUBTEXT = 'Nairobi GNU/Linux Users Group'
+META_DESCRIPTION = '''Nairobi GNU/Linux Users Group is a not-for-profit community
+                   serving the greater Nairobi area, Kenya. We are a collection
+                   of people dedicated to GNU/Linux, Free Software, Open Source,
+                   and other related topics.'''
+
+# LICENSE_URL = ''
+# LICENSE_NAME = ''
+
+MENU_ITEMS = (
+    ('IRC', 'https://kiwiirc.com/client/irc.freenode.net/#nairobilug'),
+    ('Mailing List', 'https://groups.google.com/forum/#!forum/nairobi-gnu'),
+)
+
+# TODO: Not implemented
+LINKS = (
+    ('David Karibe', 'http://karibe.co.ke/'),
+    ('Mjanja Tech', 'http://mjanja.co.ke/'),
+    ('Moshe Njema', 'http://nj3ma.wordpress.com/'),
+)
+
+GITHUB_ADDRESS = 'https://github.com/nairobilug'
+TWITTER_ADDRESS = 'https://twitter.com/nairobilug'
+
+DISQUS_SITENAME = 'nairobilug'
+GOOGLE_ANALYTICS_DOMAIN = 'nairobilug.or.ke'
+GOOGLE_ANALYTICS_ID = 'UA-730843-9'
