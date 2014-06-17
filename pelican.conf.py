@@ -1,4 +1,4 @@
-from future import unicode_literals
+from __future__ import unicode_literals
 
 
 # Pelican settings ------------------------------------------------------------
@@ -29,12 +29,13 @@ PAGE_URL = '{date:%Y}/{date:%m}/pages/{slug}.html'
 
 # Delete the output directory, before generating new files.
 DELETE_OUTPUT_DIRECTORY = True
-# Only set this to True when developing/testing
-RELATIVE_URLS = False
 # The static paths you want to have accessible on the output path "static"
 STATIC_PATHS = ['extra/CNAME', 'images']
 # Extra metadata dictionaries keyed by relative path.
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}}
+
+# Only set this to True when developing/testing
+RELATIVE_URLS = True
 
 
 # Theme settings --------------------------------------------------------------
@@ -52,7 +53,6 @@ META_DESCRIPTION = '''Nairobi GNU/Linux Users Group is a not-for-profit communit
 # LICENSE_NAME = ''
 
 MENU_ITEMS = (
-    ('Home','/'),
     ('IRC', 'https://kiwiirc.com/client/irc.freenode.net/#nairobilug'),
     ('Mailing List', 'https://groups.google.com/forum/#!forum/nairobi-gnu'),
 )
