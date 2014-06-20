@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
 all:
-	pelican -s pelican.conf.py content -o output
+	pelican content
 
 chapo: all
 	@echo "Making that sweet, sweet chapo"
