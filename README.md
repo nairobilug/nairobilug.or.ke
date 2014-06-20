@@ -37,7 +37,7 @@ You only need to do the initialization the first time you build.  After that, yo
 #### GENERATE BLAWG
 Now that the theme exists, we can build:
 
-    pelican -s pelican.conf.py content -o output
+    pelican content
 
 This takes the Markdown files from the `content` folder and generates static HTML pages inside the `output` directory.  That's it.  No MySQL, no PHP, etc...
 
