@@ -22,7 +22,7 @@ Once you have `virtualenvwrapper` installed, create a virtual environment to hol
     mkvirtualenv -p `which python2` nairobilug
     workon nairobilug
 
-This creates a virtual environment where Python is explicitly set to version 2, and then activates it. If you want to exit the virtual environment, you just type `deactivate`.
+This creates a virtual environment where Python is explicitly set to version 2, and then activates it. If you want to exit the virtual environment, just type `deactivate`.
 
 
 #### Install Pelican & Friends
@@ -34,7 +34,7 @@ Use `pip` to install the list of dependencies into your virtual environment:
 
 #### Preparations
 
-The theme we're using, [`pelican-alchemy`](https://github.com/nairobilug/pelican-alchemy), is a "git submodule", which means it is maintained as its own separate git repository (with its own git history, project, etc). Submodules are stored in the `.gitmodules` file, and we first need to initialize and clone it before we can build.
+The theme we're using, [pelican-alchemy](https://github.com/nairobilug/pelican-alchemy), is a "git submodule", which means it is maintained as its own separate git repository (with its own git history, project, etc). Submodules are stored in the `.gitmodules` file, and we first need to initialize and clone it before we can build.
 
 Navigate to where you've cloned this [repo](http://github.com/nairobilug/nairobilug.or.ke) and then:
 
