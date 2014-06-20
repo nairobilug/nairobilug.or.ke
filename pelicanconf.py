@@ -34,8 +34,6 @@ STATIC_PATHS = ['extra/CNAME', 'images']
 # Extra metadata dictionaries keyed by relative path.
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}}
 
-# Only set this to True when developing/testing
-RELATIVE_URLS = False
 
 # Theme settings --------------------------------------------------------------
 
