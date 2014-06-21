@@ -27,12 +27,21 @@ PAGE_LANG_URL = '{date:%Y}/{date:%m}/pages/{slug}-{lang}.html'
 PAGE_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}.html'
 PAGE_URL = '{date:%Y}/{date:%m}/pages/{slug}.html'
 
-# Delete the output directory, before generating new files.
+# Delete the output directory, before generating new files
 DELETE_OUTPUT_DIRECTORY = True
+
 # The static paths you want to have accessible on the output path "static"
-STATIC_PATHS = ['extra/CNAME', 'images']
-# Extra metadata dictionaries keyed by relative path.
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}}
+STATIC_PATHS = [
+    'images',
+    'extra/CNAME',
+    'extra/favicon.ico',
+]
+
+# Extra metadata dictionaries keyed by relative path
+EXTRA_PATH_METADATA = {
+    'extra/CNAME': {'path': 'CNAME'},
+    'extra/favicon.ico': {'path': 'favicon.ico'},
+}
 
 
 # Theme settings --------------------------------------------------------------
