@@ -37,6 +37,7 @@ EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}}
 
 # Theme settings --------------------------------------------------------------
 
+PAGES_ON_MENU = True
 PROFILE_IMAGE = '/images/profile.png'
 SHOW_ARTICLE_AUTHOR = True
 SITE_SUBTEXT = 'Nairobi GNU/Linux Users Group'
