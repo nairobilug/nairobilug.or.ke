@@ -8,9 +8,10 @@
             <title>    Nairobi LUG &mdash; Installing Debian Jessie on the Acer C710-2833 Chromebook
 </title>
 
+    <link type="application/atom+xml" rel="alternate" href="/feed/atom.xml"  title="Nairobi LUG Atom Feed">
     <link type="application/rss+xml" rel="alternate" href="/feed/rss.xml" title="Nairobi LUG RSS Feed">
 
-            <link rel="stylesheet" href="../../theme/css/style.css">
+            <link rel="stylesheet" href="http://nairobilug.or.ke/theme/css/style.css">
 
             <!--[if lt IE 9]>
               <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -42,19 +43,19 @@
 <header class="header">
     <div class="container">
             <div class="header-image pull-left">
-                <a class="nodec" href="../.."><img src=/images/profile.png></a>
+                <a class="nodec" href="http://nairobilug.or.ke"><img src=/images/profile.png></a>
             </div>
         <div class="header-inner">
             <h1 class="header-name">
-                <a class="nodec" href="../..">Nairobi LUG</a>
+                <a class="nodec" href="http://nairobilug.or.ke">Nairobi LUG</a>
             </h1>
             <h3 class="header-text">Nairobi GNU/Linux Users Group</h3>
             <ul class="header-menu list-inline">
-                    <li><a class="nodec" href="/">Home</a></li>
-                    <li><a class="nodec" href="https://groups.google.com/forum/#!forum/nairobi-gnu">Mailing list</a></li>
+                    <li><a class="nodec" href="https://kiwiirc.com/client/irc.freenode.net/#nairobilug">IRC</a></li>
+                    <li><a class="nodec" href="https://groups.google.com/forum/#!forum/nairobi-gnu">Mailing List</a></li>
                     <li><a class="nodec icon-github" href="https://github.com/nairobilug"></a></li>
                     <li><a class="nodec icon-twitter" href="https://twitter.com/nairobilug"></a></li>
-                    <li><a class="nodec icon-rss" href="/feed/rss.xml"></a></li>
+                    <li><a class="nodec icon-rss" href="/feed/atom.xml"></a></li>
             </ul>
         </div>
     </div>
@@ -70,12 +71,12 @@
             </li>
             <li class="muted">&middot;</li>
             <li class="post-category">
-                <a href="../../category/tech.html">Tech</a>
+                <a href="http://nairobilug.or.ke/category/tech.html">Tech</a>
             </li>
                 <li class="muted">&middot;</li>
                 <li>
                     <address class="post-author">
-                        By <a href="../../author/muriithi-frederick-muriuki.html">Muriithi Frederick Muriuki</a>
+                        By <a href="http://nairobilug.or.ke/author/muriithi-frederick-muriuki.html">Muriithi Frederick Muriuki</a>
                     </address>
                 </li>
         </ul>
@@ -125,14 +126,14 @@ For an introduction to coreboot see <a href="https://johnlewis.ie/mediawiki/inde
 <ol>
 <li>
 <p>Edit <code>/etc/modprobe.d/blacklist.conf</code> and include the following line</p>
-<div class="codehilite"><pre><span class="n">blacklist</span> <span class="n">chromeos_laptop</span>
+<div class="highlight"><pre><span class="n">blacklist</span> <span class="n">chromeos_laptop</span>
 </pre></div>
 
 
 </li>
 <li>
 <p>Edit <code>/etc/modules</code> and include the following lines:</p>
-<div class="codehilite"><pre><span class="n">i2c</span><span class="o">-</span><span class="n">i801</span>
+<div class="highlight"><pre><span class="n">i2c</span><span class="o">-</span><span class="n">i801</span>
 <span class="n">i2c</span><span class="o">-</span><span class="n">dev</span>
 <span class="n">chromeos_laptop</span>
 <span class="n">cyapa</span>
@@ -180,8 +181,8 @@ For an introduction to coreboot see <a href="https://johnlewis.ie/mediawiki/inde
         </div>
     </div>
 </footer> <!-- /.footer -->
-        <script src="../../theme/js/libs/jquery.min.js"></script>
-        <script src="../../theme/js/bootstrap.min.js"></script>
+        <script src="http://nairobilug.or.ke/theme/js/libs/jquery.min.js"></script>
+        <script src="http://nairobilug.or.ke/theme/js/bootstrap.min.js"></script>
     </body> <!-- 42 -->
 
 </html>

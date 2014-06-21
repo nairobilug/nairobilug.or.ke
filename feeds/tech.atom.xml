@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Nairobi LUG</title><link href="http://nairobilug.or.ke/" rel="alternate"></link><link href="http://nairobilug.or.ke/feeds/tech.atom.xml" rel="self"></link><id>http://nairobilug.or.ke/</id><updated>2014-03-19T19:15:00+03:00</updated><entry><title>Installing Debian Jessie on the Acer C710-2833 Chromebook</title><link href="http://nairobilug.or.ke/2014/03/installing-debian-jessie-on-the-acer-c710-2833-chromebook.html" rel="alternate"></link><updated>2014-03-19T19:15:00+03:00</updated><author><name>Muriithi Frederick Muriuki</name></author><id>tag:nairobilug.or.ke,2014-03-19:2014/03/installing-debian-jessie-on-the-acer-c710-2833-chromebook.html</id><summary type="html">&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Hey there.&lt;/p&gt;
+&lt;p&gt;I have recently had need to get a machine for work that is easy to lug around, affordable and has a decent battery life. While I already have a laptop (Presario CQ62), it has grown old and its battery life is in the shitter.&lt;/p&gt;
+&lt;p&gt;After shopping around, I settled for the Acer C710-2833 Chromebook (I would have picked a newer model, but there is not one in our market yet, and importing one would have made it quickly unaffordable - thank the new government).&lt;/p&gt;
+&lt;p&gt;Now, while Chrome OS - the operating system that comes with the machines - is a nice (great?) operating system, for a freelance developer like me, it renders the machine useless for much of my day to day work. I found the need therefore to make it useful for me.&lt;/p&gt;
+&lt;h2&gt;Preparation&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;DISCLAIMER&lt;/strong&gt;: FROM THIS POINT FORWARD, ANYTHING YOU DO WITH YOUR MACHINE IS YOUR FAULT. IF IT BREAKS, OR YOU BRICK IT, OR CAUSE A NUCLEAR HOLOCAUST, OR ANYTHING ELSE FOR THAT MATTER, YOU CAN ONLY BLAME YOURSELF.&lt;/p&gt;
+&lt;p&gt;Now that that is out of the way, shall we proceed.&lt;/p&gt;
+&lt;p&gt;First off, let us start with where you can acquire the machine in Kenya. I got my machine at Ebrahim Electronics Limited along Kimathi Street. The machine costs a whooping Kshs 19,000. Also, do not forget to carry the manuals with you like I did.&lt;/p&gt;
+&lt;p&gt;I would recommend you also get yourself a flash-disk at this point.&lt;/p&gt;
+&lt;p&gt;So now you have your spanking new machine. Make sure to claim your free 100GB storage on google drive before you proceed. Also, BACKUP any user data you might have put on the machine&lt;/p&gt;
+&lt;h2&gt;Reading Material&lt;/h2&gt;
+&lt;p&gt;The process that is involved is tricky, and while I try to give a roadmap, I will not give the instructions, rather, I will point to the various resources I found useful&lt;/p&gt;
+&lt;p&gt;SERIOUSLY, DO NOT JUST JUMP IN AND START COPYING AND PASTING COMMANDS! YOU WILL BRICK YOUR MACHINE. YOU HAVE BEEN WARNED.&lt;/p&gt;
+&lt;h3&gt;Getting to Developer Mode&lt;/h3&gt;
+&lt;p&gt;The chromebooks have two modes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Normal user mode&lt;/li&gt;
+&lt;li&gt;Developer mode&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Read &lt;a href="http://www.chromium.org/chromium-os/chromiumos-design-docs/developer-mode"&gt;this&lt;/a&gt;, and &lt;a href="http://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices/acer-c7-chromebook"&gt;this&lt;/a&gt; for more information on developer mode&lt;/p&gt;
+&lt;h3&gt;CoreBoot&lt;/h3&gt;
+&lt;p&gt;These links are about coreboot. PLEASE READ THROUGH THEM A COUPLE OF TIMES before attempting anything
+For an introduction to coreboot see &lt;a href="https://johnlewis.ie/mediawiki/index.php?title=Coreboot_on_Chromebooks"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://johnlewis.ie/coreboot-on-chromebooks/pre-built-firmware/"&gt;Here&lt;/a&gt; you can find a list of the existing coreboot firmware. DO NOT RUSH JUST YET. Read on.&lt;/p&gt;
+&lt;h2&gt;Installing&lt;/h2&gt;
+&lt;h3&gt;Getting the ISO&lt;/h3&gt;
+&lt;p&gt;We now need to download an iso image to use as the installation source. It is important that you research and figure out what processor your machine uses. For the C710-2833, it uses the &lt;a href="http://ark.intel.com/products/56056/Intel-Celeron-Processor-847-2M-Cache-1_10-GHz"&gt;Intel Celeron 847&lt;/a&gt;. This is an x86_64 architecture, otherwise known as amd64.&lt;/p&gt;
+&lt;p&gt;Armed with that knowledge, get to &lt;a href="http://www.debian.org/"&gt;http://www.debian.org&lt;/a&gt; and get the relevant image.&lt;/p&gt;
+&lt;p&gt;At this time, it is recommended that you get Debian Jessie &lt;a href="http://www.debian.org/devel/debian-installer/"&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;Ready To Go&lt;/h3&gt;
+&lt;p&gt;Now, you have read up on coreboot, you have the image all that remains is the process.&lt;/p&gt;
+&lt;p&gt;Start off &lt;a href="https://wiki.debian.org/InstallingDebianOn/Acer/C710-2615-Chromebook"&gt;here&lt;/a&gt; - you will get some information on the current status of your machine. It is also where you will finish your journey.&lt;/p&gt;
+&lt;p&gt;Once you have read through that at least twice, now start the actual installation. The process to follow is &lt;a href="https://johnlewis.ie/mediawiki/index.php?title=Flashing_stock_firmware_to_a_coreboot_build_on_Acer_C7_%28C710%29"&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;For the core boot, I used the 'Grub2 for Intel Celeron 847' with an md5 sum of &lt;code&gt;9c5993518ddf97ab4c4cf7e0a2f84570&lt;/code&gt;. I picked it because I have used grub2 before and felt comfortable starting off in a farmiliar place. You are welcome to try a different one if you know what you are doing.&lt;/p&gt;
+&lt;p&gt;If you follow the instructions carefully, you should get through without problems.&lt;/p&gt;
+&lt;h3&gt;Finally&lt;/h3&gt;
+&lt;p&gt;Now you have Debian on your system, it is time to do the post-installation steps. As I told you, those are found on the page you &lt;a href="https://wiki.debian.org/InstallingDebianOn/Acer/C710-2615-Chromebook"&gt;started off with&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Great! Now go ye and be productive!&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;EDITS&lt;/h2&gt;
+&lt;p&gt;April 21, 2014: Sometimes the trackpad does not work - to correct that, you could do the following (from &lt;a href="http://marstella.net/?p=278"&gt;marstella.net&lt;/a&gt; also, thanks to eebrah)&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Edit &lt;code&gt;/etc/modprobe.d/blacklist.conf&lt;/code&gt; and include the following line&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;blacklist&lt;/span&gt; &lt;span class="n"&gt;chromeos_laptop&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Edit &lt;code&gt;/etc/modules&lt;/code&gt; and include the following lines:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;i2c&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;i801&lt;/span&gt;
+&lt;span class="n"&gt;i2c&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;
+&lt;span class="n"&gt;chromeos_laptop&lt;/span&gt;
+&lt;span class="n"&gt;cyapa&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="hardware"></category><category term="Chromebook"></category><category term="Debian"></category></entry></feed>
