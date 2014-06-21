@@ -15,7 +15,10 @@ TIMEZONE = 'Africa/Nairobi'
 
 # Feeds
 FEED_ATOM = 'feed/atom.xml'
-FEED_RSS = 'feed/rss.xml'
+FEED_DOMAIN = SITEURL
+FEED_ALL_ATOM = None
+CATEGORY_FEED_ATOM = None
+TRANSLATION_FEED_ATOM = None
 
 # URLs
 ARTICLE_LANG_SAVE_AS = '{date:%Y}/{date:%m}/{slug}-{lang}.html'
