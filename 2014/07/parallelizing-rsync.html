@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+                <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+
+            <title>    Nairobi LUG &mdash; Parallelizing rsync
+</title>
+
+    <link type="application/atom+xml" rel="alternate" href="/feed/atom.xml"  title="Nairobi LUG Atom Feed">
+    <link type="application/rss+xml" rel="alternate" href="/feed/rss.xml" title="Nairobi LUG RSS Feed">
+
+            <link rel="stylesheet" href="http://nairobilug.or.ke/theme/css/style.css">
+
+            <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+              <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+            <![endif]-->
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-730843-9', 'nairobilug.or.ke');
+        ga('send', 'pageview');
+    </script>
+
+        <meta name="author" content="Alan Orth">
+        <meta name="description" content="Using find and xargs to parallelize rsync and speed up transfers of large directory hierarchies">
+    <meta name="tags" contents="linux, rsync, ">
+    </head>
+
+    <body>
+<header class="header">
+    <div class="container">
+            <div class="header-image pull-left">
+                <a class="nodec" href="http://nairobilug.or.ke"><img src=/images/profile.png></a>
+            </div>
+        <div class="header-inner">
+            <h1 class="header-name">
+                <a class="nodec" href="http://nairobilug.or.ke">Nairobi LUG</a>
+            </h1>
+            <h3 class="header-text">Nairobi GNU/Linux Users Group</h3>
+            <ul class="header-menu list-inline">
+                    <li><a class="nodec" href="https://kiwiirc.com/client/irc.freenode.net/#nairobilug">IRC</a></li>
+                    <li><a class="nodec" href="https://groups.google.com/forum/#!forum/nairobi-gnu">Mailing List</a></li>
+                    <li><a class="nodec icon-github" href="https://github.com/nairobilug"></a></li>
+                    <li><a class="nodec icon-twitter" href="https://twitter.com/nairobilug"></a></li>
+                    <li><a class="nodec icon-rss" href="/feed/atom.xml"></a></li>
+            </ul>
+        </div>
+    </div>
+</header> <!-- /.header -->
+        <div class="container">
+    <div class="post full-post">
+        <h1 class="post-title">
+            <a href="/2014/07/parallelizing-rsync.html" title="Permalink to Parallelizing rsync">Parallelizing rsync</a>
+        </h1>
+        <ul class="list-inline">
+            <li class="post-date">
+                <a class="text-muted" href="/2014/07/parallelizing-rsync.html" title="2014-07-11T16:40:00">Fri 11 July 2014</a>
+            </li>
+            <li class="muted">&middot;</li>
+            <li class="post-category">
+                <a href="http://nairobilug.or.ke/category/linux.html">Linux</a>
+            </li>
+                <li class="muted">&middot;</li>
+                <li>
+                    <address class="post-author">
+                        By <a href="http://nairobilug.or.ke/author/alan-orth.html">Alan Orth</a>
+                    </address>
+                </li>
+        </ul>
+        <div class="post-content">
+            <p>Last week I had a massive hardware failure on one of the GlusterFS storage nodes in the <a href="http://hpc.ilri.cgiar.org/">ILRI, Kenya Research Computing cluster</a>; two drives failed simultaneously on the underlying RAID5. As RAID5 can only withstand one drive failure, the entire 31TB array was toast. FML.</p>
+<p>After replacing the failed disks, rebuilding the array, and formatting my bricks, I decided I would use <code>rsync</code> to pre-seed my bricks from the good node before bringing <code>glusterd</code> back up.</p>
+<p><em>tl;dr</em>: <code>rsync</code> is amazing, but it’s single threaded and struggles when you tell it to sync large directory hierarchies.  <a href="#sync_bricks">Here's how you can speed it up</a>.</p>
+<h3>rsync #fail</h3>
+<p>I figured syncing the brick hierarchy from the good node to the bad node was simple enough, so I stopped the <code>glusterd</code> service on the bad node and invoked:</p>
+<div class="highlight"><pre><span class="gp">#</span> rsync -aAXv --delete --exclude<span class="o">=</span>.glusterfs storage0:/path/to/bricks/homes/ storage1:/path/to/bricks/homes/
+</pre></div>
+
+
+<p>After a day or so I noticed I had only copied ~1.5TB (over 1 hop on a dedicated 10GbE switch!), and I realized something must be wrong.  I attached to the <code>rsync</code> process with <code>strace -p</code> and saw a bunch of system calls in one particular user’s directory. I dug deeper:</p>
+<div class="highlight"><pre><span class="gp">#</span> find /path/to/bricks/homes/ukenyatta/maker/genN_datastore/ -type d | wc -l
+<span class="go">1398640</span>
+</pre></div>
+
+
+<p>So this one particular directory in one user's home contained over a million <em>other</em> directories and $god knows how many files, and this command itself took several hours to finish!  To make matters worse, careful trial and error inspection of other user home directories revealed more massive directory structures as well.</p>
+<ul>
+<li>rsync is single threaded</li>
+<li>rsync generates a list of files to be synced before it starts the sync</li>
+<li>MAKER creates a ton of output files/directories</li>
+</ul>
+<p>It's pretty clear (now) that a recursive <code>rsync</code> on my huge directory hierarchy is out of the question!</p>
+<h3>rsync #win</h3>
+<p>I had a look around and saw lots of people complaining about <code>rsync</code> being "slow" and others suggesting tips to speed it up.  One very promising strategy was described on <a href="https://wiki.ncsa.illinois.edu/display/~wglick/Parallel+Rsync">this wiki</a> and there's a great discussion in the comments.</p>
+<p>Basically, he describes a clever use of <code>find</code> and <code>xargs</code> to split up the problem set into smaller pieces that <code>rsync</code> can process more quickly.</p>
+<h3>sync_brick.sh</h3>
+<p>So here's my adaptation of his script for the purpose of syncing failed GlusterFS bricks, <code>sync_brick.sh</code>:</p>
+<div class="highlight"><pre><span class="c">#!/bin/env bash</span>
+<span class="c"># borrowed / adapted from: https://wiki.ncsa.illinois.edu/display/~wglick/Parallel+Rsync</span>
+
+<span class="c"># RSYNC SETUP</span>
+<span class="nv">RSYNC_PROG</span><span class="o">=</span>/usr/bin/rsync
+<span class="c"># note the important use of --relative to use relative paths so we don&#39;t have to specify the exact path on dest</span>
+<span class="nv">RSYNC_OPTS</span><span class="o">=</span><span class="s2">&quot;-aAXv --numeric-ids --progress --human-readable --delete --exclude=.glusterfs --relative&quot;</span>
+<span class="nb">export </span><span class="nv">RSYNC_RSH</span><span class="o">=</span><span class="s2">&quot;ssh -T -c arcfour -o Compression=no -x&quot;</span>
+
+<span class="c"># ENV SETUP</span>
+<span class="nv">SRCDIR</span><span class="o">=</span>/path/to/good/brick
+<span class="nv">DESTDIR</span><span class="o">=</span>/path/to/bad/brick
+<span class="c"># Recommend to match # of CPUs</span>
+<span class="nv">THREADS</span><span class="o">=</span>4
+<span class="nv">BAD_NODE</span><span class="o">=</span>server1
+
+<span class="nb">cd</span> <span class="nv">$SRCDIR</span>
+
+<span class="c"># COPY</span>
+<span class="c"># note the combination of -print0 and -0!</span>
+find <span class="o">{</span>a..z<span class="o">}</span>* <span class="o">{</span>A..Z<span class="o">}</span>* <span class="o">{</span>0..9<span class="o">}</span>* -mindepth 1 -maxdepth 1 -print0 | <span class="se">\</span>
+    xargs -0 -n1 -P<span class="nv">$THREADS</span> -I% <span class="se">\</span>
+        <span class="nv">$RSYNC_PROG</span> <span class="nv">$RSYNC_OPTS</span> <span class="s2">&quot;%&quot;</span> <span class="nv">$BAD_NODE</span>:<span class="nv">$DESTDIR</span>
+</pre></div>
+
+
+<p>Pay attention to the source/destination paths, the number of <code>THREADS</code>, and the <code>BAD_NODE</code> name, then you should be ready to roll.</p>
+<h3>The magic, explained</h3>
+<p>It's a bit of magic, but here are the important parts:</p>
+<ul>
+<li>The <code>-aAXv</code> options to <code>rsync</code> tell it to <strong>archive</strong>, preserve <strong>ACLs</strong>, and preserve <strong>eXtended</strong> attributes.  Extended attributes are <a href="http://joejulian.name/blog/what-is-this-new-glusterfs-directory-in-33">critically important in GlusterFS &gt;= 3.3</a>, and also if you're using SELinux.</li>
+<li>The <code>--exclude=.glusterfs</code> option to <code>rsync</code> tells it to ignore this directory at the root of the directory, as the self-heal daemon -- <code>glustershd</code> -- will rebuild it based on the files' extended attributes once we restart the <code>glusterd</code> service.</li>
+<li>The <code>--relative</code> option to <code>rsync</code> is so we don't have to bother constructing the destination path, as <code>rsync</code> will imply the path is relative to our destination's top.</li>
+<li>The <code>RSYNC_RSH</code> options influence <code>rsync</code>'s use of SSH, basically telling it to use very weak encryption and disable any unnecessary features for non-interactive sessions (tty, X11, etc).</li>
+<li>Using <code>find</code> with <code>-mindepth 1</code> and <code>-maxdepth 1</code> just means we concentrate on files/directories 1 level below each directory in our immediate hierarchy.
+-Using <code>xargs</code> with <code>-n1</code> and <code>-P</code> tells it to use 1 argument per command line, and to launch <code>$THREADS</code> number of processes at a time.</li>
+</ul>
+<p>Hope this helps!</p>
+<p>This was <a href="http://mjanja.co.ke/2014/07/parallelizing-rsync/">originally posted</a> on my personal blog; re-posted here for posterity.</p>
+        </div>
+    </div>
+    <hr class="separator">
+    <div class="col-md-8 col-md-offset-2">
+    <div id="disqus_thread">
+        <script>
+            var disqus_shortname = 'nairobilug';
+            (function() {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] ||
+                 document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>
+            Please enable JavaScript to view the
+            <a href="http://disqus.com/?ref_noscript=nairobilug">
+                comments powered by Disqus.
+            </a>
+        </noscript>
+        <a href="http://disqus.com" class="dsq-brlink">
+            blog comments powered by <span class="logo-disqus">Disqus</span>
+        </a>
+    </div>
+    </div>
+        </div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="text-center">
+            Multiple, <a href="" target="_blank"></a> unless otherwise noted.
+        </p>
+        <div class="text-center">
+            Generated by <a href="http://getpelican.com" target="_blank">Pelican</a> with the <a href="http://github.com/nairobilug/pelican-alchemy">alchemy</a> theme.
+        </div>
+    </div>
+</footer> <!-- /.footer -->
+        <script src="http://nairobilug.or.ke/theme/js/libs/jquery.min.js"></script>
+        <script src="http://nairobilug.or.ke/theme/js/bootstrap.min.js"></script>
+    </body> <!-- 42 -->
+
+</html>
