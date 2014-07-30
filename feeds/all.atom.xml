@@ -1,5 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Nairobi LUG</title><link href="http://nairobilug.or.ke/" rel="alternate"></link><link href="http://nairobilug.or.ke/feeds/all.atom.xml" rel="self"></link><id>http://nairobilug.or.ke/</id><updated>2014-07-11T16:40:00+03:00</updated><entry><title>Parallelizing rsync</title><link href="http://nairobilug.or.ke/2014/07/parallelizing-rsync.html" rel="alternate"></link><updated>2014-07-11T16:40:00+03:00</updated><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-07-11:2014/07/parallelizing-rsync.html</id><summary type="html">&lt;p&gt;Last week I had a massive hardware failure on one of the GlusterFS storage nodes in the &lt;a href="http://hpc.ilri.cgiar.org/"&gt;ILRI, Kenya Research Computing cluster&lt;/a&gt;; two drives failed simultaneously on the underlying RAID5. As RAID5 can only withstand one drive failure, the entire 31TB array was toast. FML.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Nairobi LUG</title><link href="http://nairobilug.or.ke/" rel="alternate"></link><link href="http://nairobilug.or.ke/feeds/all.atom.xml" rel="self"></link><id>http://nairobilug.or.ke/</id><updated>2014-07-29T19:40:00+03:00</updated><entry><title>Using swiftclient for object storage on OpenStack</title><link href="http://nairobilug.or.ke/2014/07/swiftclient-openstack.html" rel="alternate"></link><updated>2014-07-29T19:40:00+03:00</updated><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-07-29:2014/07/swiftclient-openstack.html</id><summary type="html">&lt;p&gt;I wanted to play with my new account on East African OpenStack provider &lt;a href="http://kili.io/"&gt;Kili.io&lt;/a&gt;, specifically to use the OpenStack Swift object storage to do periodic backups from my desktop.  I'd used tools like &lt;a href="http://s3tools.org/s3cmd"&gt;s3cmd&lt;/a&gt; to do backups to Amazon S3 object storage, but it doesn't seem to work with OpenStack's &lt;a href="http://docs.openstack.org/developer/swift/"&gt;Swift&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.swiftstack.com/docs/integration/python-swiftclient.html"&gt;python-swiftclient&lt;/a&gt; seems to be the answer. These are my notes from getting it set up to backup some data from my desktop to my shiny new OpenStack provider.&lt;/p&gt;
+&lt;h3&gt;See also&lt;/h3&gt;
+&lt;p&gt;Related links and documentation:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://docs.openstack.org/grizzly/openstack-object-storage/admin/content/swift-cli-basics.html"&gt;Swift CLI Basic&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://docs.openstack.org/user-guide/content/managing-openstack-object-storage-with-swift-cli.html"&gt;Manage objects and containers&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Download RC file&lt;/h2&gt;
+&lt;p&gt;This is actually the trickiest part of this whole exercise (you're welcome!).  For an outsider, the OpenStack API jargon is a bit overwhelming.  Luckily, I found that OpenStack provides a shell init script which will set all the shell environment variables you need to get started with &lt;code&gt;swiftclient&lt;/code&gt; (and presumably other OpenStack tools).&lt;/p&gt;
+&lt;p&gt;In the dashboard, navigate to &lt;code&gt;Project -&amp;gt; Compute -&amp;gt; Access &amp;amp; Security -&amp;gt; Download OpenStack RC File&lt;/code&gt;.  We'll need this later.&lt;/p&gt;
+&lt;h2&gt;Create and prepare virtualenv&lt;/h2&gt;
+&lt;p&gt;There's no &lt;code&gt;swiftclient&lt;/code&gt; package in my GNU/Linux distribution, so I decided to just install it into a virtual environment straight from pypi/pip.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; mkvirtualenv -p &lt;span class="sb"&gt;`&lt;/span&gt;which python2&lt;span class="sb"&gt;`&lt;/span&gt; swift
+&lt;span class="gp"&gt;$&lt;/span&gt; pip install python-swiftclient python-keystoneclient
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Setup the environment&lt;/h2&gt;
+&lt;p&gt;Source the environment RC script you downloaded from the OpenStack dashboard:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; . ~/Downloads/aorth-openrc.sh
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;It will prompt you for your OpenStack dashboard password.&lt;/p&gt;
+&lt;h2&gt;Test&lt;/h2&gt;
+&lt;p&gt;Check if the settings are correct:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; swift stat
+&lt;span class="go"&gt;       Account: AUTH_8b0c9cff5d094829b0cf7606a0390c1a&lt;/span&gt;
+&lt;span class="go"&gt;    Containers: 0&lt;/span&gt;
+&lt;span class="go"&gt;       Objects: 0&lt;/span&gt;
+&lt;span class="go"&gt;         Bytes: 0&lt;/span&gt;
+&lt;span class="go"&gt; Accept-Ranges: bytes&lt;/span&gt;
+&lt;span class="go"&gt;        Server: nginx/1.4.7&lt;/span&gt;
+&lt;span class="go"&gt;    Connection: keep-alive&lt;/span&gt;
+&lt;span class="go"&gt;   X-Timestamp: 1406586841.02692&lt;/span&gt;
+&lt;span class="go"&gt;    X-Trans-Id: tx5d47eff065074335a3a9f-0053d7c93e&lt;/span&gt;
+&lt;span class="go"&gt;  Content-Type: text/plain; charset=utf-8&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This means the API key and all other settings are ok, and authentication was successful; you're now ready to use OpenStack CLI tools.&lt;/p&gt;
+&lt;h2&gt;Create a container&lt;/h2&gt;
+&lt;p&gt;You could create a container in the OpenStack dashboard (&lt;code&gt;Object Store -&amp;gt; Containers -&amp;gt; Create Container&lt;/code&gt;), but it's much nicer to be able to do this from the commandline using the API.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; swift post Documents
+&lt;span class="gp"&gt;$&lt;/span&gt; swift list
+&lt;span class="go"&gt;Documents&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Upload files&lt;/h2&gt;
+&lt;p&gt;My use case is to backup Documents from my desktop.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; ~/Documents
+&lt;span class="gp"&gt;$&lt;/span&gt; swift upload Documents *
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; I &lt;code&gt;cd&lt;/code&gt; into the directory I want to upload first, because I found that if I wasn't &lt;em&gt;inside&lt;/em&gt; it, I would end up with another layer of hierarchy in my container itself, ie &lt;code&gt;Documents/Documents&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Check the status of the container:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; swift stat Documents
+&lt;span class="go"&gt;       Account: AUTH_9b0a8aff5d584828b5af7656c0385a1c&lt;/span&gt;
+&lt;span class="go"&gt;     Container: Documents&lt;/span&gt;
+&lt;span class="go"&gt;       Objects: 2691&lt;/span&gt;
+&lt;span class="go"&gt;         Bytes: 262663872&lt;/span&gt;
+&lt;span class="go"&gt;      Read ACL:&lt;/span&gt;
+&lt;span class="go"&gt;     Write ACL:&lt;/span&gt;
+&lt;span class="go"&gt;       Sync To:&lt;/span&gt;
+&lt;span class="go"&gt;      Sync Key:&lt;/span&gt;
+&lt;span class="go"&gt; Accept-Ranges: bytes&lt;/span&gt;
+&lt;span class="go"&gt;        Server: nginx/1.4.7&lt;/span&gt;
+&lt;span class="go"&gt;    Connection: keep-alive&lt;/span&gt;
+&lt;span class="go"&gt;   X-Timestamp: 1406586841.13379&lt;/span&gt;
+&lt;span class="go"&gt;    X-Trans-Id: txbf31671156c64147bd9ad-0053d767c9&lt;/span&gt;
+&lt;span class="go"&gt;  Content-Type: text/plain; charset=utf-8&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Looks good!  ~250MB of data in my &lt;code&gt;Documents&lt;/code&gt; container now, which just about matches the size of the folder on my disk. &lt;/p&gt;
+&lt;h2&gt;Bonus points&lt;/h2&gt;
+&lt;p&gt;Bonus points and future research:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;If I want to call this from a cron job, how do I enter my password?&lt;/li&gt;
+&lt;li&gt;How do I encrypt my backups?&lt;/li&gt;
+&lt;li&gt;Use &lt;code&gt;--skip-identical&lt;/code&gt; to only sync new files&lt;/li&gt;
+&lt;li&gt;What other interfaces are there to this storage, ie can I point a music player at this?&lt;/li&gt;
+&lt;li&gt;Play with public/private read/write ACLs&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="linux"></category><category term="openstack"></category><category term="swift"></category></entry><entry><title>Parallelizing rsync</title><link href="http://nairobilug.or.ke/2014/07/parallelizing-rsync.html" rel="alternate"></link><updated>2014-07-11T16:40:00+03:00</updated><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-07-11:2014/07/parallelizing-rsync.html</id><summary type="html">&lt;p&gt;Last week I had a massive hardware failure on one of the GlusterFS storage nodes in the &lt;a href="http://hpc.ilri.cgiar.org/"&gt;ILRI, Kenya Research Computing cluster&lt;/a&gt;; two drives failed simultaneously on the underlying RAID5. As RAID5 can only withstand one drive failure, the entire 31TB array was toast. FML.&lt;/p&gt;
 &lt;p&gt;After replacing the failed disks, rebuilding the array, and formatting my bricks, I decided I would use &lt;code&gt;rsync&lt;/code&gt; to pre-seed my bricks from the good node before bringing &lt;code&gt;glusterd&lt;/code&gt; back up.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;tl;dr&lt;/em&gt;: &lt;code&gt;rsync&lt;/code&gt; is amazing, but it’s single threaded and struggles when you tell it to sync large directory hierarchies.  &lt;a href="#sync_bricks"&gt;Here's how you can speed it up&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;rsync #fail&lt;/h3&gt;
