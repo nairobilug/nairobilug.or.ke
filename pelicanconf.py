@@ -63,6 +63,10 @@ PAGES_ON_MENU = True
 PROFILE_IMAGE = '/images/profile.png'
 SHOW_ARTICLE_AUTHOR = True
 SITE_SUBTEXT = 'Nairobi GNU/Linux Users Group'
+META_DESCRIPTION = '''Nairobi GNU/Linux Users Group is a not-for-profit
+                   community serving the greater Nairobi area. We are a
+                   collection of people dedicated to GNU/Linux, Free Software,
+                   Open Source, and other related topics.'''
 
 EXTRA_FAVICON = True
 
