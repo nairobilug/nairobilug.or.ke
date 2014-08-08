@@ -21,7 +21,7 @@ Leave comments down below and if I've left anything, feel free to make a pull re
 ### Pictures from Google+
 Picture courtesy of Mungai
 
-![Drinks](/images/meetup-january-2014.jpg "Nairobi GNU/Linux Users Group members")
+![Drinks](/images/meetup-august-2014.jpg "Nairobi GNU/Linux Users Group members")
 
 ### September meetup
 The Nairobi LUG meets every first Saturday of the month. The next meetup will therefore be on the 7th of September. Can't wait :)
