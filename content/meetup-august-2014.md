@@ -13,7 +13,7 @@ Summary: Highlights from the August, 2014 meetup.
 
 * There was a suggestion that the LUG should build a portable 'blood-glucose measuring device that plugs into a phone's audio jack' (I'm sure there's a shorter name for that) as a collaborative project, given the talent in the LUG.
 * There was some discussion on WebRTC and its apparent bright future. Somebody even created a group for the LUG on [talky] (https://talky.io/nairobilug). No nudity please ;).
-* No females were present in the meetup. We seriously need to get nerdy girls to come to the meetups. ~~I think~~ I'm certain there are cool girls out there.. somewhere.
+* No females were present in the meetup. We seriously need to get nerdy girls to come to the meetups. ~~I think~~ I'm certain there are cool girls out there... somewhere.
 
 Leave comments down below and if I've left anything, feel free to make a pull request.
 
