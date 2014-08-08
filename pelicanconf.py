@@ -27,12 +27,31 @@ PAGE_LANG_URL = '{date:%Y}/{date:%m}/pages/{slug}-{lang}.html'
 PAGE_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}.html'
 PAGE_URL = '{date:%Y}/{date:%m}/pages/{slug}.html'
 
-# Delete the output directory, before generating new files.
+# Delete the output directory, before generating new files
 DELETE_OUTPUT_DIRECTORY = True
+
 # The static paths you want to have accessible on the output path "static"
-STATIC_PATHS = ['extra/CNAME', 'images']
-# Extra metadata dictionaries keyed by relative path.
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}}
+STATIC_PATHS = [
+    'images',
+    'extra/CNAME',
+    'extra/favicon.ico',
+    'extra/favicon-16x16.png',
+    'extra/favicon-32x32.png',
+    'extra/favicon-96x96.png',
+    'extra/favicon-160x160.png',
+    'extra/favicon-196x196.png',
+]
+
+# Extra metadata dictionaries keyed by relative path
+EXTRA_PATH_METADATA = {
+    'extra/CNAME': {'path': 'CNAME'},
+    'extra/favicon.ico': {'path': 'favicon.ico'},
+    'extra/favicon-16x16.png': {'path': 'favicon-16x16.png'},
+    'extra/favicon-32x32.png': {'path': 'favicon-32x32.png'},
+    'extra/favicon-96x96.png': {'path': 'favicon-96x96.png'},
+    'extra/favicon-160x160.png': {'path': 'favicon-160x160.png'},
+    'extra/favicon-196x196.png': {'path': 'favicon-196x196.png'},
+}
 
 
 # Theme settings --------------------------------------------------------------
@@ -41,6 +60,8 @@ PAGES_ON_MENU = True
 PROFILE_IMAGE = '/images/profile.png'
 SHOW_ARTICLE_AUTHOR = True
 SITE_SUBTEXT = 'Nairobi GNU/Linux Users Group'
+
+EXTRA_FAVICON = True
 
 # LICENSE_URL = ''
 # LICENSE_NAME = ''
