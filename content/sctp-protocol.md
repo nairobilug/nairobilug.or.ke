@@ -36,13 +36,13 @@ TCP is a byte-oriented protocol, and UDP is message-oriented. The majority of ap
 
 
 ##Resources
-[The Principal Site for SCTP (contains pointers to the RFCs and Internet Drafts for SCTP)](http://www.sctp.org)
+[The Main  Site for SCTP ](http://www.sctp.de)
 
 [The Linux Kernel Project Home Page](https://lists.sourceforge.net/lists/listinfo/lksctp-developers)
 
-[Stream Control Transmission Protocol(SCTP)](http://www.amazon.com/Stream-Control-Transmission-Protocol-SCTP/dp/0201721864.)
+[Stream Control Transmission Protocol(SCTP)](http://en.wikipedia.org/wiki/Stream_Control_Transmission_Protocol)
 
-[Overview of SCTP (Stream Control Transmission Protocol)](www.slideshare.net/PeterREgli/overview-of-sctp-transport-protocol)
+[Overview of SCTP (Stream Control Transmission Protocol)](http://www.slideshare.net/PeterREgli/overview-of-sctp-transport-protocol)
 
 
 
