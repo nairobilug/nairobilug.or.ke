@@ -1,7 +1,7 @@
 Title: Exploring anti-DOS tools for Apache httpd
 Date: 2014-09-13 18:28
 Category: Linux
-Tags: Linux, Tech, Security
+Tags: linux, security, httpd, nginx
 Slug: exploring-anti-DOS-tools-for-Apache-httpd
 Author: John Troon
 Summary: Analyzing how Apache can be crippled by a DOS tool like Slowloris and a side note on Nginx...
