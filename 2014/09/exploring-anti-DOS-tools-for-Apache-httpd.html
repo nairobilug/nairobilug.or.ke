@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+                <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+
+            <title>    Nairobi LUG &mdash; Exploring anti-DOS tools for Apache httpd
+</title>
+
+    <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link type="application/atom+xml" rel="alternate" href="/feed/atom.xml"  title="Nairobi LUG Atom Feed">
+            <link rel="stylesheet" href="http://nairobilug.or.ke/theme/css/style.css">
+
+            <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+              <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+            <![endif]-->
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-730843-9', 'nairobilug.or.ke');
+        ga('send', 'pageview');
+    </script>
+
+        <meta name="author" content="John Troon">
+        <meta name="description" content="Analyzing how Apache can be crippled by a DOS tool like Slowloris and a side note on Nginx...">
+    <meta name="tags" contents="linux, security, httpd, nginx, ">
+    </head>
+
+    <body>
+<header class="header">
+    <div class="container">
+            <div class="header-image pull-left">
+                <a class="nodec" href="http://nairobilug.or.ke"><img src=/images/profile.png></a>
+            </div>
+        <div class="header-inner">
+            <h1 class="header-name">
+                <a class="nodec" href="http://nairobilug.or.ke">Nairobi LUG</a>
+            </h1>
+            <h3 class="header-text">Nairobi GNU/Linux Users Group</h3>
+            <ul class="header-menu list-inline">
+                    <li><a class="nodec" href="https://kiwiirc.com/client/irc.freenode.net/#nairobilug" target="_blank">IRC</a></li>
+                    <li><a class="nodec" href="https://groups.google.com/forum/#!forum/nairobi-gnu" target="_blank">Mailing List</a></li>
+                            <li class="muted">|</li>
+                        <li><a class="nodec" href="http://nairobilug.or.ke/2013/10/pages/about-us.html">About Us</a></li>
+                            <li class="muted">|</li>
+                    <li><a class="nodec icon-github" href="https://github.com/nairobilug"></a></li>
+                    <li><a class="nodec icon-twitter" href="https://twitter.com/nairobilug"></a></li>
+                    <li><a class="nodec icon-rss" href="/feed/atom.xml"></a></li>
+            </ul>
+        </div>
+    </div>
+</header> <!-- /.header -->        <div class="container">
+    <div class="post full-post">
+        <h1 class="post-title">
+            <a href="/2014/09/exploring-anti-DOS-tools-for-Apache-httpd.html" title="Permalink to Exploring anti-DOS tools for Apache httpd">Exploring anti-DOS tools for Apache httpd</a>
+        </h1>
+        <ul class="list-inline">
+            <li class="post-date">
+                <a class="text-muted" href="/2014/09/exploring-anti-DOS-tools-for-Apache-httpd.html" title="2014-09-13T18:28:00">Sat 13 September 2014</a>
+            </li>
+            <li class="muted">&middot;</li>
+            <li class="post-category">
+                <a href="http://nairobilug.or.ke/category/linux.html">Linux</a>
+            </li>
+                <li class="muted">&middot;</li>
+                <li>
+                    <address class="post-author">
+                        By <a href="http://nairobilug.or.ke/author/john-troon.html">John Troon</a>
+                    </address>
+                </li>
+        </ul>
+        <div class="post-content">
+            <p>Slowloris is among the well known "Denial Of Service" (or DOS) <a href="http://resources.infosecinstitute.com/dos-attacks-free-dos-attacking-tools/">tool</a> used by both experienced attackers and script kiddies. This evening, I've been testing <em>mod_evasion</em> and <em>mod_antiloris</em> on Apache httpd /2.2.15 (Oracle Linux 6.5 using Redhat built Kernel).</p>
+<h2>First Setup:</h2>
+<ul>
+<li>Server: 192.168.43.221 (running Apache httpd with <em>mod_evasion</em> loaded)</li>
+<li>Attacking Machine: 192.168.43.39 (Slowloris "DOSing" the server)</li>
+</ul>
+<p><strong>Apache httpd error logs</strong></p>
+<p><img alt="Error from bad requests" src="/images/badheader.png" title="Apache error logs" /></p>
+<p>The loaded module (<em>mod_evasion</em>), can't save Apache httpd from the DOS attack, even loading the site from a browser is somehow impossible.</p>
+<p><img alt="Apache DOSed" src="/images/apachedown.png" title="Can't access via Browser" /></p>
+<p>But this module can prevent a brute-force attack (<em>e.g. an automated script to guess a password field in a web-form</em>) in a web server (running Apache httpd).</p>
+<p><img alt="mod_evasion can prevent Brute-force.." src="/images/bruteforce.png" title="mod_evasion can prevent Brute-force attack" /></p>
+<p>Just to make an interesting comparison, I replaced Apache httpd with Nginx on the same Server (192.168.43.221) and <strong>ta! da!..</strong>
+<img alt="Nginx is not DOSed by Slowloris" src="/images/nginxup.png" title="Nginx is not DOSed by Slowloris" /> Nginx gracefully made it by ignoring the request from  Slowloris. But I noticed a brute-force attack is possible while using Nginx default settings! <strong>Nginx access logs</strong>
+<img alt="Nginx Brute-forced" src="/images/bfnginx.png" title="Nginx can be Brute-forced" /></p>
+<h2>Second Setup:</h2>
+<ul>
+<li>Server: 192.168.43.221 (running Apache httpd with mod_antiloris loaded)</li>
+<li>Attacking Machine: 192.168.43.39 (Sowloris "DOSing" the server)</li>
+</ul>
+<p><em>mod_antiloris</em> played it nice by monitoring the requests coming from the client and rejected extra connections. Accessing the web services from the browser was not interfered.</p>
+<p><img alt="mod_antiloris logs" src="/images/antiloris.png" title="mod_antiloris logs" /></p>
+<p><em>mod_evasion</em> is cool but can't save Apache httpd from Slowloris. On the other hand, <em>mod_antiloris</em> worked fine and denied Slowloris a chance to mess up with the Apache httpd server.</p>
+<h2>Explanation:</h2>
+<p><strong>Putting the Lens on the Logs...</strong> (Apache httpd access log)</p>
+<p><img alt="Apache-httpd access log" src="/images/accesslog.png" title="Apache httpd access logs" /></p>
+<p><em>Why did mod_antiloris pass the test and mod_evasion fail?..</em> <em>Why did Slowloris work on Apache httpd and not on Nginx?</em></p>
+<p>Apache httpd waits for a <strong>complete HTTP request header</strong> to be received, this makes it good to serve web-content even in slow connections. So, by default, the timeout value is 300 seconds and it's reset each time the client sends more packets. Slowloris takes advantage by sending incomplete HTTP request headers and maintains the connection by sending more incomplete request headers resetting the time-out counter.</p>
+<p>Slowloris is written in Perl, it simply plays around with <strong>CR (Carriage Return)</strong> and <strong>LF (Line Feed)</strong> at the end of every incomplete HTTP request header. A blank line after the request header is used to represent the completion of the header in HTTP. Since the request is incomplete and the timeout is 300 seconds, Apache httpd will keep the connection alive waiting for the remaining data, while Slowloris keeps on sending the incomplete HTTP requests resetting the timeout counter.</p>
+<p>As a result, all available connections will be sucked up by Slowloris and cause a Denial of Service. mod_antiloris helped Apache httpd beat Slowloris but you can also use IPtables by setting a connection limit or putting Apache httpd behind Varnish. Another solution I've not tested is using a Hardware Load Balancer that only accepts full HTTP connections.</p>
+<p>Nginx uses a much more event-driven (asynchronous) architecture that can be scaled, instead of the "Maximum Connections" as in Apache httpd. So, in a nutshell, Nginx ignores the requests from Slowloris and processes other "full" connections.</p>
+<p>This is not to claim that Nginx is bullet proof by default, tools like <a href="https://github.com/valyala/goloris">golris</a> can mess with your Nginx server (when running with default settings), though you can always protect this from happening by using Nginx "Http limit connection" module / IPtables / deny POST requests or patch Nginx, so it drops connection if the client sends POST body at a very slow rate.</p>
+<p><strong>But I'll always go with Nginx whenever possible!</strong></p>
+<h3>Conclusion</h3>
+<p>I think Apache httpd should find a way of prioritizing clients sending full HTTP requests to minimize DOS attacks of the (above) described nature...</p>
+<p>Ciao! </p>
+        </div>
+    </div>
+    <hr class="separator">
+    <div class="col-md-8 col-md-offset-2">
+    <div id="disqus_thread">
+        <script>
+            var disqus_shortname = 'nairobilug';
+            (function() {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] ||
+                 document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>
+            Please enable JavaScript to view the
+            <a href="http://disqus.com/?ref_noscript=nairobilug">
+                comments powered by Disqus.
+            </a>
+        </noscript>
+        <a href="http://disqus.com" class="dsq-brlink">
+            blog comments powered by <span class="logo-disqus">Disqus</span>
+        </a>
+    </div>
+    </div>
+        </div>
+<footer class="footer">
+    <div class="container">
+        <p class="text-center">
+            Multiple, <a href="" target="_blank"></a> unless otherwise noted.
+        </p>
+        <div class="text-center">
+            Generated by <a href="http://getpelican.com" target="_blank">Pelican</a> with the <a href="http://github.com/nairobilug/pelican-alchemy">alchemy</a> theme.
+        </div>
+    </div>
+</footer> <!-- /.footer -->
+        <script src="http://nairobilug.or.ke/theme/js/libs/jquery.min.js"></script>
+        <script src="http://nairobilug.or.ke/theme/js/bootstrap.min.js"></script>
+    </body> <!-- 42 -->
+
+</html>
