@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+                <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+
+            <title>    Nairobi LUG &mdash; Update hosts via Ansible to mitigate bash "Shellshock" vulnerability
+</title>
+
+    <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link type="application/atom+xml" rel="alternate" href="/feed/atom.xml"  title="Nairobi LUG Atom Feed">
+            <link rel="stylesheet" href="http://nairobilug.or.ke/theme/css/style.css">
+
+            <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+              <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+            <![endif]-->
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-730843-9', 'nairobilug.or.ke');
+        ga('send', 'pageview');
+    </script>
+
+        <meta name="author" content="Alan Orth">
+        <meta name="description" content="Patching your systems is painlessly easy if you manage your server infrastructure with something like Ansible.">
+    <meta name="tags" contents="linux, ansible, bash, security, ">
+    </head>
+
+    <body>
+<header class="header">
+    <div class="container">
+            <div class="header-image pull-left">
+                <a class="nodec" href="http://nairobilug.or.ke"><img src=/images/profile.png></a>
+            </div>
+        <div class="header-inner">
+            <h1 class="header-name">
+                <a class="nodec" href="http://nairobilug.or.ke">Nairobi LUG</a>
+            </h1>
+            <h3 class="header-text">Nairobi GNU/Linux Users Group</h3>
+            <ul class="header-menu list-inline">
+                    <li><a class="nodec" href="https://kiwiirc.com/client/irc.freenode.net/#nairobilug" target="_blank">IRC</a></li>
+                    <li><a class="nodec" href="https://groups.google.com/forum/#!forum/nairobi-gnu" target="_blank">Mailing List</a></li>
+                            <li class="muted">|</li>
+                        <li><a class="nodec" href="http://nairobilug.or.ke/2013/10/pages/about-us.html">About Us</a></li>
+                            <li class="muted">|</li>
+                    <li><a class="nodec icon-github" href="https://github.com/nairobilug"></a></li>
+                    <li><a class="nodec icon-twitter" href="https://twitter.com/nairobilug"></a></li>
+                    <li><a class="nodec icon-rss" href="/feed/atom.xml"></a></li>
+            </ul>
+        </div>
+    </div>
+</header> <!-- /.header -->        <div class="container">
+    <div class="post full-post">
+        <h1 class="post-title">
+            <a href="/2014/09/ansible-shellshock.html" title="Permalink to Update hosts via Ansible to mitigate bash "Shellshock" vulnerability">Update hosts via Ansible to mitigate bash "Shellshock" vulnerability</a>
+        </h1>
+        <ul class="list-inline">
+            <li class="post-date">
+                <a class="text-muted" href="/2014/09/ansible-shellshock.html" title="2014-09-29T10:40:00">Mon 29 September 2014</a>
+            </li>
+            <li class="muted">&middot;</li>
+            <li class="post-category">
+                <a href="http://nairobilug.or.ke/category/linux.html">Linux</a>
+            </li>
+                <li class="muted">&middot;</li>
+                <li>
+                    <address class="post-author">
+                        By <a href="http://nairobilug.or.ke/author/alan-orth.html">Alan Orth</a>
+                    </address>
+                </li>
+        </ul>
+        <div class="post-content">
+            <p>On September 24, 2014 someone <a href="http://seclists.org/oss-sec/2014/q3/649" title="CVE-2014-6271: remote code execution through bash">posted</a> on the oss-sec mailing list about a <code>bash</code> vulnerability that likely affects several decades of <code>bash</code>  versions (something like <code>1.14</code> - <code>4.3</code>!).  The vulnerability -- aptly named "Shellshock" -- can lead to remote code execution on un-patched hosts, for example <a href="http://www.nimbo.com/blog/shellshock-heartbleed-2-0">web servers parsing HTTP environment variables via CGI GET requests</a>, <a href="https://community.qualys.com/blogs/laws-of-vulnerabilities/2014/09/24/bash-shellshock-vulnerability" title="BASH Shellshock vulnerability - Update3">sshd configurations using <code>ForceCommand</code></a>, <a href="https://www.trustedsec.com/september-2014/shellshock-dhcp-rce-proof-concept/" title="Shellshock DHCP RCE PoC">DHCP clients</a>, etc.</p>
+<p>Anyways, I'll leave the infosec community to <a href="https://www.dfranke.us/posts/2014-09-27-shell-shock-exploitation-vectors.html" title="Shell Shock Exploitation Vectors">expound on attack vectors</a>.  The point of this post is really to illustrate that you should be using an infrastructure orchestration tool like <a href="http://www.ansible.com/home" title="Ansible homepage">Ansible</a> to manage your servers.</p>
+<h3>Painless patching with Ansible</h3>
+<p>Patching your systems is painlessly easy if you manage your server infrastructure with something like Ansible.  Using a one-off command you can easily update all "web" servers, for example:</p>
+<div class="highlight"><pre><span class="gp">$</span> ansible web -m apt -a <span class="s2">&quot;name=bash state=latest update_cache=yes&quot;</span> -K -s
+</pre></div>
+
+
+<p>That's great, but what if you have both Ubuntu and CentOS hosts in the "web" group?  CentOS doesn't use <code>apt</code> for package management, so this has effectively only updated hosts running Debian-family GNU/Linux distros.</p>
+<h3>Playbooks: the power of Ansible</h3>
+<p>When you have more than a handful of servers, the combinations of DNS names, IP addresses, roles, and distros becomes overwhelming.  With Ansible you define your inventory of hosts, allocate them into groups, and then write "playbooks" to mold your servers into functional roles, ie web, database, compute, proxy, etc servers; the <a href="https://xkcd.com/910/" title="XKCD coming about naming servers">personal relationship</a> between sysadmin and server is gone.</p>
+<p>Here's a simple playbook I wrote which takes into account the different OS families in our infrastructure and updates the <code>bash</code> package on each host.</p>
+<p><em>shellshock.yml</em>:</p>
+<div class="highlight"><pre><span class="nn">---</span>
+<span class="c1"># To update hosts for &quot;Shellshock&quot; bash vulnerability</span>
+<span class="c1"># See: https://en.wikipedia.org/wiki/Shellshock_(software_bug)</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">hosts</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">all</span>
+  <span class="l-Scalar-Plain">sudo</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">yes</span>
+  <span class="l-Scalar-Plain">tasks</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Update on Debian-based distros</span>
+      <span class="l-Scalar-Plain">apt</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">name=bash state=latest update_cache=yes</span>
+      <span class="l-Scalar-Plain">when</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ansible_os_family == &quot;Debian&quot;</span>
+
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Update on RedHat-based distros</span>
+      <span class="l-Scalar-Plain">yum</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">name=bash state=latest</span>
+      <span class="l-Scalar-Plain">when</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ansible_os_family == &quot;RedHat&quot;</span>
+
+<span class="c1"># vim: set sw=2 ts=2:</span>
+</pre></div>
+
+
+<p>And then run the playbook with:</p>
+<div class="highlight"><pre><span class="gp">$</span> ansible-playbook shellshock.yml -K -s
+</pre></div>
+
+
+<p>In our case we patched twenty-five CentOS 6.x, Debian 6, Debian 7, Ubuntu 12.04, and Ubuntu 14.04 hosts living locally, in Amazon EC2, and in Linode.  With one command.  In less than five minutes!</p>
+<h3>Stay vigilant!</h3>
+<p>Vendors started pushing patched versions of <code>bash</code> on September 26th, two days after the initial disclosure.  Two days after those patched versions were released there were <a href="http://lcamtuf.blogspot.com/2014/09/bash-bug-apply-unofficial-patch-now.html" title="Bash bug: apply Florian">new variations of this bug discovered</a>, and new packages issued (and we patched our systems again!).</p>
+<p>As of now, five days after initial disclosure, there exist five <abbr title="Common Vulnerabilities and Exposures">CVE</abbr> identifiers for this bug!  So keep an eye on social media (<a href="https://twitter.com/search?q=%23shellshock" title="#shellshock on Twitter">#shellshock</a>?), <a href="https://news.ycombinator.com/" title="Hacker News">Hacker News</a>, and <a href="https://shellshocker.net/" title="Shellshock monitoring">sites monitoring this bug</a>, because more new vectors may emerge!</p>
+<p>This was <a href="http://mjanja.co.ke/2014/09/update-hosts-via-ansible-to-mitigate-bash-shellshock-vulnerability/">originally posted</a> on my personal blog; re-posted here for posterity.</p>
+        </div>
+    </div>
+    <hr class="separator">
+    <div class="col-md-8 col-md-offset-2">
+    <div id="disqus_thread">
+        <script>
+            var disqus_shortname = 'nairobilug';
+            (function() {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] ||
+                 document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>
+            Please enable JavaScript to view the
+            <a href="http://disqus.com/?ref_noscript=nairobilug">
+                comments powered by Disqus.
+            </a>
+        </noscript>
+        <a href="http://disqus.com" class="dsq-brlink">
+            blog comments powered by <span class="logo-disqus">Disqus</span>
+        </a>
+    </div>
+    </div>
+        </div>
+<footer class="footer">
+    <div class="container">
+        <p class="text-center">
+            Multiple, <a href="" target="_blank"></a> unless otherwise noted.
+        </p>
+        <div class="text-center">
+            Generated by <a href="http://getpelican.com" target="_blank">Pelican</a> with the <a href="http://github.com/nairobilug/pelican-alchemy">alchemy</a> theme.
+        </div>
+    </div>
+</footer> <!-- /.footer -->
+        <script src="http://nairobilug.or.ke/theme/js/libs/jquery.min.js"></script>
+        <script src="http://nairobilug.or.ke/theme/js/bootstrap.min.js"></script>
+    </body> <!-- 42 -->
+
+</html>
