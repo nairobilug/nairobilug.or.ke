@@ -58,4 +58,4 @@ Vendors started pushing patched versions of `bash` on September 26th, two days a
 
 As of now, five days after initial disclosure, there exist five <abbr title="Common Vulnerabilities and Exposures">CVE</abbr> identifiers for this bug!  So keep an eye on social media ([#shellshock](https://twitter.com/search?q=%23shellshock "#shellshock on Twitter")?), [Hacker News](https://news.ycombinator.com/ "Hacker News"), and [sites monitoring this bug](https://shellshocker.net/ "Shellshock monitoring"), because more new vectors may emerge!
 
-This was [originally posted](http://mjanja.co.ke/2014/09/update-hosts-via-ansible-to-mitigate-bash-shellshock-vulnerability/) on my personal blog; re-posted here for posterity.
+This was [originally posted](https://mjanja.ch/2014/09/update-hosts-via-ansible-to-mitigate-bash-shellshock-vulnerability/) on my personal blog; re-posted here for posterity.

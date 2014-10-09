@@ -51,4 +51,4 @@ You can see that hardware-accelerated AES is pretty consistently **twice** as fa
 
 **Note:** It seems Arch Linux's OpenSSL is built with AES-NI support but not as an *engine*, so `openssl speed` could be misleading (ie, you'd see no difference with or without the capabilities masked).  To get the AES-NI support you need to use `-evp` ("envelope") mode, which is some sort of [high-level interface](http://wiki.openssl.org/index.php/EVP) for crypto functions in OpenSSL.
 
-This was originally [posted on](http://mjanja.co.ke/2013/11/disabling-aes-ni-on-linux-openssl/) on my personal blog; re-posted here for posterity.
+This was originally [posted on](https://mjanja.ch/2013/11/disabling-aes-ni-on-linux-openssl/) on my personal blog; re-posted here for posterity.
