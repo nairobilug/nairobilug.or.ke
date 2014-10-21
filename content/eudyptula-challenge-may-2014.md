@@ -20,4 +20,4 @@ While none of us are new to GNU/Linux or development, it still took us several h
 ## Little penguins...
 BTW, _[Eudyptula](https://en.wikipedia.org/wiki/Eudyptula)_ is the scientific classification for a genus of penguins containing two species; the little blue penguin and the white-flippered penguin. The more you know.™ ;)
 
-This was originally [posted on](http://mjanja.co.ke/2014/05/hacking-on-the-eudyptula-challenge/) on my personal blog; re-posted here for posterity.
+This was originally [posted on](https://mjanja.ch/2014/05/hacking-on-the-eudyptula-challenge/) on my personal blog; re-posted here for posterity.

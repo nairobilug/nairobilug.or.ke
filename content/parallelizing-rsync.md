@@ -79,4 +79,4 @@ It's a bit of magic, but here are the important parts:
 
 Hope this helps!
 
-This was [originally posted](http://mjanja.co.ke/2014/07/parallelizing-rsync/) on my personal blog; re-posted here for posterity.
+This was [originally posted](https://mjanja.ch/2014/07/parallelizing-rsync/) on my personal blog; re-posted here for posterity.
