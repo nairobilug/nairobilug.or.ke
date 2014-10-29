@@ -1,93 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-                <meta charset="utf-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+      <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-            <title>    Nairobi LUG &mdash; Using swiftclient for object storage on OpenStack
+    <title>  Nairobi LUG &mdash; Using swiftclient for object storage on OpenStack
 </title>
 
-    <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196">
-    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-    <link type="application/atom+xml" rel="alternate" href="/feed/atom.xml"  title="Nairobi LUG Atom Feed">
-            <link rel="stylesheet" href="http://nairobilug.or.ke/theme/css/style.css">
+      <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196">
+      <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+      <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+      <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+      <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
 
-            <!--[if lt IE 9]>
-              <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-              <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-            <![endif]-->
 
-    <script>
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-730843-9', 'nairobilug.or.ke');
-        ga('send', 'pageview');
-    </script>
+      <link type="application/atom+xml" rel="alternate" href="/feed/atom.xml"  title="Nairobi LUG Atom Feed">
 
-        <meta name="author" content="Alan Orth">
-        <meta name="description" content="Using swiftclient to backup data to OpenStack Swift object storage">
-    <meta name="tags" contents="linux, openstack, swift, ">
-    </head>
+    <link rel="stylesheet" href="http://nairobilug.or.ke/theme/css/style.css">
 
-    <body>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-730843-9', 'nairobilug.or.ke');
+    ga('send', 'pageview');
+  </script>
+
+    <meta name="author" content="Alan Orth">
+    <meta name="description" content="Using swiftclient to backup data to OpenStack Swift object storage">
+  <meta name="tags" contents="linux, openstack, swift, ">
+</head>
+
+<body>
 <header class="header">
-    <div class="container">
-            <div class="header-image pull-left">
-                <a class="nodec" href="http://nairobilug.or.ke"><img src=/images/profile.png></a>
-            </div>
-        <div class="header-inner">
-            <h1 class="header-name">
-                <a class="nodec" href="http://nairobilug.or.ke">Nairobi LUG</a>
-            </h1>
-            <h3 class="header-text">Nairobi GNU/Linux Users Group</h3>
-            <ul class="header-menu list-inline">
-                    <li><a class="nodec" href="https://kiwiirc.com/client/irc.freenode.net/#nairobilug" target="_blank">IRC</a></li>
-                    <li><a class="nodec" href="https://groups.google.com/forum/#!forum/nairobi-gnu" target="_blank">Mailing List</a></li>
-                            <li class="muted">|</li>
-                        <li><a class="nodec" href="http://nairobilug.or.ke/2013/10/pages/about-us.html">About Us</a></li>
-                            <li class="muted">|</li>
-                    <li><a class="nodec icon-github" href="https://github.com/nairobilug"></a></li>
-                    <li><a class="nodec icon-twitter" href="https://twitter.com/nairobilug"></a></li>
-                    <li><a class="nodec icon-rss" href="/feed/atom.xml"></a></li>
-            </ul>
-        </div>
+  <div class="container">
+      <div class="header-image pull-left">
+        <a class="nodec" href="http://nairobilug.or.ke"><img src=/images/profile.png></a>
+      </div>
+    <div class="header-inner">
+      <h1 class="header-name">
+        <a class="nodec" href="http://nairobilug.or.ke">Nairobi LUG</a>
+      </h1>
+      <h3 class="header-text">Nairobi GNU/Linux Users Group</h3>
+      <ul class="header-menu list-inline">
+          <li><a class="nodec" href="https://kiwiirc.com/client/irc.freenode.net/#nairobilug" target="_blank">IRC</a></li>
+          <li><a class="nodec" href="https://groups.google.com/forum/#!forum/nairobi-gnu" target="_blank">Mailing List</a></li>
+              <li class="muted">|</li>
+            <li><a class="nodec" href="http://nairobilug.or.ke/2013/10/pages/about-us.html">About Us</a></li>
+              <li class="muted">|</li>
+          <li><a class="nodec icon-github" href="https://github.com/nairobilug"></a></li>
+          <li><a class="nodec icon-twitter" href="https://twitter.com/nairobilug"></a></li>
+          <li><a class="nodec icon-rss" href="/feed/atom.xml"></a></li>
+      </ul>
     </div>
-</header> <!-- /.header -->        <div class="container">
-    <div class="post full-post">
-        <h1 class="post-title">
-            <a href="/2014/07/swiftclient-openstack.html" title="Permalink to Using swiftclient for object storage on OpenStack">Using swiftclient for object storage on OpenStack</a>
-        </h1>
-        <ul class="list-inline">
-            <li class="post-date">
-                <a class="text-muted" href="/2014/07/swiftclient-openstack.html" title="2014-07-29T19:40:00">Tue 29 July 2014</a>
-            </li>
-            <li class="muted">&middot;</li>
-            <li class="post-category">
-                <a href="http://nairobilug.or.ke/category/linux.html">Linux</a>
-            </li>
-                <li class="muted">&middot;</li>
-                <li>
-                    <address class="post-author">
-                        By <a href="http://nairobilug.or.ke/author/alan-orth.html">Alan Orth</a>
-                    </address>
-                </li>
-        </ul>
-        <div class="post-content">
-            <p>I wanted to play with my new account on East African OpenStack provider <a href="http://kili.io/">Kili.io</a>, specifically to use the OpenStack Swift object storage to do periodic backups from my desktop.  I'd used tools like <a href="http://s3tools.org/s3cmd">s3cmd</a> to do backups to Amazon S3 object storage, but it doesn't seem to work with OpenStack's <a href="http://docs.openstack.org/developer/swift/">Swift</a>.</p>
+  </div>
+</header> <!-- /.header -->  <div class="container">
+  <div class="post full-post">
+    <h1 class="post-title">
+      <a href="/2014/07/swiftclient-openstack.html" title="Permalink to Using swiftclient for object storage on OpenStack">Using swiftclient for object storage on OpenStack</a>
+    </h1>
+    <ul class="list-inline">
+      <li class="post-date">
+        <a class="text-muted" href="/2014/07/swiftclient-openstack.html" title="2014-07-29T19:40:00">Tue 29 July 2014</a>
+      </li>
+      <li class="muted">&middot;</li>
+      <li class="post-category">
+        <a href="http://nairobilug.or.ke/category/linux.html">Linux</a>
+      </li>
+        <li class="muted">&middot;</li>
+        <li>
+          <address class="post-author">
+            By <a href="http://nairobilug.or.ke/author/alan-orth.html">Alan Orth</a>
+          </address>
+        </li>
+    </ul>
+    <div class="post-content">
+      <p>I wanted to play with my new account on East African OpenStack provider <a href="http://kili.io/">Kili.io</a>, specifically to use the OpenStack Swift object storage to do periodic backups from my desktop.  I'd used tools like <a href="http://s3tools.org/s3cmd">s3cmd</a> to do backups to Amazon S3 object storage, but it doesn't seem to work with OpenStack's <a href="http://docs.openstack.org/developer/swift/">Swift</a>.</p>
 <p><a href="https://www.swiftstack.com/docs/integration/python-swiftclient.html">python-swiftclient</a> seems to be the answer. These are my notes from getting it set up to backup some data from my desktop to my shiny new OpenStack provider.</p>
 <h3>See also</h3>
 <p>Related links and documentation:</p>
@@ -174,46 +177,46 @@
 <li>What other interfaces are there to this storage, ie can I point a music player at this?</li>
 <li>Play with public/private read/write ACLs</li>
 </ul>
-        </div>
     </div>
-    <hr class="separator">
-    <div class="col-md-8 col-md-offset-2">
-    <div id="disqus_thread">
-        <script>
-            var disqus_shortname = 'nairobilug';
-            (function() {
-                var dsq = document.createElement('script');
-                dsq.type = 'text/javascript';
-                dsq.async = true;
-                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] ||
-                 document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-        <noscript>
-            Please enable JavaScript to view the
-            <a href="http://disqus.com/?ref_noscript=nairobilug">
-                comments powered by Disqus.
-            </a>
-        </noscript>
-        <a href="http://disqus.com" class="dsq-brlink">
-            blog comments powered by <span class="logo-disqus">Disqus</span>
-        </a>
-    </div>
-    </div>
-        </div>
+  </div>
+  <hr class="separator">
+  <div class="col-md-8 col-md-offset-2">
+  <div id="disqus_thread">
+    <script>
+      var disqus_shortname = 'nairobilug';
+      (function() {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] ||
+         document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href="http://disqus.com/?ref_noscript=nairobilug">
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a href="http://disqus.com" class="dsq-brlink">
+      blog comments powered by <span class="logo-disqus">Disqus</span>
+    </a>
+  </div>
+  </div>
+  </div>
 <footer class="footer">
-    <div class="container">
-        <p class="text-center">
-            Multiple, <a href="" target="_blank"></a> unless otherwise noted.
-        </p>
-        <div class="text-center">
-            Generated by <a href="http://getpelican.com" target="_blank">Pelican</a> with the <a href="http://github.com/nairobilug/pelican-alchemy">alchemy</a> theme.
-        </div>
+  <div class="container">
+    <p class="text-center">
+      Multiple, <a href="" target="_blank"></a> unless otherwise noted.
+    </p>
+    <div class="text-center">
+      Generated by <a href="http://getpelican.com" target="_blank">Pelican</a> with the <a href="http://github.com/nairobilug/pelican-alchemy">alchemy</a> theme.
     </div>
+  </div>
 </footer> <!-- /.footer -->
-        <script src="http://nairobilug.or.ke/theme/js/libs/jquery.min.js"></script>
-        <script src="http://nairobilug.or.ke/theme/js/bootstrap.min.js"></script>
-    </body> <!-- 42 -->
+  <script src="http://nairobilug.or.ke/theme/js/jquery.min.js"></script>
+  <script src="http://nairobilug.or.ke/theme/js/bootstrap.min.js"></script>
+</body> <!-- 42 -->
 
 </html>
