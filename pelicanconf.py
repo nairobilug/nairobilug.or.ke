@@ -13,6 +13,9 @@ DEFAULT_PAGINATION = 10
 THEME = 'theme/alchemy'
 TIMEZONE = 'Africa/Nairobi'
 
+# Set to True when testing locally
+RELATIVE_URLS = False
+
 # Feeds
 FEED_ATOM = 'feed/atom.xml'
 FEED_DOMAIN = SITEURL
