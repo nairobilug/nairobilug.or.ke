@@ -2,6 +2,8 @@
 
 This is the repository which hosts the code for the [Nairobi GNU/Linux Users Group](http://nairobilug.or.ke) blog. We wanted a fun, nerdy and democratic way to give our community an online presence, so here we are.
 
+[![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/nairobilug.png)](https://kiwiirc.com/client/irc.freenode.net/#nairobilug)
+
 
 ## Wanna Build It?
 
@@ -76,5 +78,3 @@ If you're interested in writing a blog post for the site, you need to:
 ## Contact
 
 If you have any questions, drop by **#nairobilug** on Freenode. Happy blogging!
-
-[![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/nairobilug.png)](https://kiwiirc.com/client/irc.freenode.net/#nairobilug)
