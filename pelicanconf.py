@@ -63,7 +63,7 @@ EXTRA_PATH_METADATA = {
 # Theme settings --------------------------------------------------------------
 
 PAGES_ON_MENU = True
-PROFILE_IMAGE = '/images/profile.png'
+PROFILE_IMAGE = '/images/profile.svg width="200" height="200"'
 SHOW_ARTICLE_AUTHOR = True
 SITE_SUBTEXT = 'Nairobi GNU/Linux Users Group'
 META_DESCRIPTION = '''Nairobi GNU/Linux Users Group is a not-for-profit
@@ -90,6 +90,7 @@ LINKS = (
 
 GITHUB_ADDRESS = 'https://github.com/nairobilug'
 TWITTER_ADDRESS = 'https://twitter.com/nairobilug'
+GPLUS_ADDRESS = 'https://plus.google.com/communities/107260210367217532462'
 
 DISQUS_SITENAME = 'nairobilug'
 GOOGLE_ANALYTICS_DOMAIN = 'nairobilug.or.ke'
