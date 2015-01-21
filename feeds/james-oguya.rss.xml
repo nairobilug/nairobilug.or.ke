@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nairobi LUG</title><link>http://nairobilug.or.ke/</link><description></description><atom:link href="http://nairobilug.or.ke/feeds/james-oguya.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 02 Jan 2015 11:00:00 +0300</lastBuildDate><item><title>Ansible 'Prompt' Handlers</title><link>http://nairobilug.or.ke/2015/01/ansible-prompt-handlers.html</link><description>&lt;p&gt;An awesome feature in &lt;a href="https://chef.io"&gt;Chef&lt;/a&gt; that is not available in &lt;a href="http://ansible.com"&gt;Ansible&lt;/a&gt; is immediate notification i.e. &lt;code&gt;notifies :immediately&lt;/code&gt;.
+Ansible has &lt;a href="http://docs.ansible.com/playbooks_intro.html#handlers-running-operations-on-change"&gt;notification handlers&lt;/a&gt; but they are only triggered at the end of the current playbook unlike &lt;a href="https://docs.chef.io/resource_common.html#notifies-syntax"&gt;Chef's notifications&lt;/a&gt; which can be triggered immediately! Moreover, you can configure Chef's notifications to be triggered at specific times e.g. at the very end of a chef-client run i.e. &lt;code&gt;notifies :delayed&lt;/code&gt; or immediately i.e. &lt;code&gt;notifies :immediately&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Now, why I'm going into all these boring theories? Well, when installing tomcat on Ubuntu, dpkg starts it automatically once the process is complete. But in my case, I wanted to stop tomcat7 service first, configure it, deploy its webapps &amp;amp; finally start it. So on my ansible tasks file, after installing tomcat7 I added a notification action to call a task that stops tomcat7 service. Here's a snippet from the ansible task file:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;tomcat.yml&lt;/em&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
+&lt;span class="x"&gt;  sudo: yes&lt;/span&gt;
+&lt;span class="x"&gt;  tasks:&lt;/span&gt;
+&lt;span class="x"&gt;    - name: Install tomcat7&lt;/span&gt;
+&lt;span class="x"&gt;      apt: name=&lt;/span&gt;&lt;span class="cp"&gt;{{&lt;/span&gt; &lt;span class="nv"&gt;item&lt;/span&gt; &lt;span class="cp"&gt;}}&lt;/span&gt;&lt;span class="x"&gt; install_recommends=no update_cache=yes  state=present&lt;/span&gt;
+&lt;span class="x"&gt;      with_items:&lt;/span&gt;
+&lt;span class="x"&gt;        - tomcat7&lt;/span&gt;
+&lt;span class="x"&gt;        - tomcat7-admin&lt;/span&gt;
+&lt;span class="x"&gt;      notify:&lt;/span&gt;
+&lt;span class="x"&gt;        - Temporarily stop tomcat7&lt;/span&gt;
+
+&lt;span class="x"&gt;  handlers:&lt;/span&gt;
+&lt;span class="x"&gt;      - name: Temporarily stop tomcat7&lt;/span&gt;
+&lt;span class="x"&gt;      service: name=tomcat7 state=stopped&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;OK so the task file looks great, but did it work ? Unfortunately, no! Ansible notifications trigger tasks in handlers section to run only at the end of a playbook.
+So I had to come up with a quick fix for this issue.&lt;/p&gt;
+&lt;h3&gt;'Prompt' handlers&lt;/h3&gt;
+&lt;p&gt;My quick fix involved registering a variable in the task that installs tomcat packages i.e. &lt;code&gt;register: tomcat_installed&lt;/code&gt;, then the next task to stop tomcat service would be executed only if the registered variable has changed i.e. if tomcat7 has been installed - &lt;code&gt;when: tomcat_installed|changed&lt;/code&gt;.
+Basically, ansible notifications use a similar concept to this.&lt;/p&gt;
+&lt;p&gt;Here's a snippet from the playbook showing the quick fix:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;tomcat.yml&lt;/em&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
+&lt;span class="x"&gt;  sudo: yes&lt;/span&gt;
+&lt;span class="x"&gt;  tasks:&lt;/span&gt;
+&lt;span class="x"&gt;      - name: Install tomcat7&lt;/span&gt;
+&lt;span class="x"&gt;        apt: name=&lt;/span&gt;&lt;span class="cp"&gt;{{&lt;/span&gt; &lt;span class="nv"&gt;item&lt;/span&gt; &lt;span class="cp"&gt;}}&lt;/span&gt;&lt;span class="x"&gt; install_recommends=no update_cache=yes state=present&lt;/span&gt;
+&lt;span class="x"&gt;        with_items:&lt;/span&gt;
+&lt;span class="x"&gt;          - tomcat7&lt;/span&gt;
+&lt;span class="x"&gt;          - tomcat7-admin&lt;/span&gt;
+&lt;span class="x"&gt;        register: tomcat_installed&lt;/span&gt;
+
+&lt;span class="x"&gt;      - name: Temporarily stop tomcat7&lt;/span&gt;
+&lt;span class="x"&gt;        service: name=tomcat7 state=stopped&lt;/span&gt;
+&lt;span class="x"&gt;        when: tomcat_installed|changed&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As you can see from the snippet, I've not used a handler. Yes that's right, inorder to achieve the effect of an 'immediate' handler, I moved the task that stops tomcat7 service from the handler section to the tasks section.&lt;/p&gt;
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;Though I'm sure there are better solutions out there, I think the concept behind my quick fix can be useful in tackling other ansible-related issues.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">James Oguya</dc:creator><pubDate>Fri, 02 Jan 2015 11:00:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2015-01-02:2015/01/ansible-prompt-handlers.html</guid><category>linux</category><category>ansible</category><category>tomcat</category></item></channel></rss>

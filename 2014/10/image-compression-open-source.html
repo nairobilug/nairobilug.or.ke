@@ -18,7 +18,7 @@
 
       <link type="application/atom+xml" rel="alternate" href="/feed/atom.xml"  title="Nairobi LUG Atom Feed">
 
-    <link rel="stylesheet" href="http://nairobilug.or.ke/theme/css/style.css">
+    <link rel="stylesheet" href="../../theme/css/style.css">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -50,18 +50,18 @@
 <header class="header">
   <div class="container">
       <div class="header-image pull-left">
-        <a class="nodec" href="http://nairobilug.or.ke"><img src=/images/profile.svg width="200" height="200"></a>
+        <a class="nodec" href="../.."><img src=/images/profile.svg width="200" height="200"></a>
       </div>
     <div class="header-inner">
       <h1 class="header-name">
-        <a class="nodec" href="http://nairobilug.or.ke">Nairobi LUG</a>
+        <a class="nodec" href="../..">Nairobi LUG</a>
       </h1>
       <h3 class="header-text">Nairobi GNU/Linux Users Group</h3>
       <ul class="header-menu list-inline">
           <li><a class="nodec" href="https://kiwiirc.com/client/irc.freenode.net/#nairobilug" target="_blank">IRC</a></li>
           <li><a class="nodec" href="https://groups.google.com/forum/#!forum/nairobi-gnu" target="_blank">Mailing List</a></li>
               <li class="muted">|</li>
-            <li><a class="nodec" href="http://nairobilug.or.ke/2013/10/pages/about-us.html">About Us</a></li>
+            <li><a class="nodec" href="../../2013/10/pages/about-us.html">About Us</a></li>
               <li class="muted">|</li>
           <li><a class="nodec icon-github" href="https://github.com/nairobilug"></a></li>
           <li><a class="nodec icon-twitter" href="https://twitter.com/nairobilug"></a></li>
@@ -80,12 +80,12 @@
       </li>
       <li class="muted">&middot;</li>
       <li class="post-category">
-        <a href="http://nairobilug.or.ke/category/linux.html">Linux</a>
+        <a href="../../category/linux.html">Linux</a>
       </li>
         <li class="muted">&middot;</li>
         <li>
           <address class="post-author">
-            By <a href="http://nairobilug.or.ke/author/alan-orth.html">Alan Orth</a>
+            By <a href="../../author/alan-orth.html">Alan Orth</a>
           </address>
         </li>
     </ul>
@@ -98,16 +98,16 @@
 <p><img alt="Alan eating halloumi" src="/images/alan-halloumi.jpg" title="Alan eating halloumi" /></p>
 <p>Straight from the fancy DSLR camera the image is <em>3.6 megabytes</em> -- much too large to share practically on the web.  Amazingly, after uploading to Compressor.io the image is reduced to <em>1.6 megabytes</em>.  That's an impressive feat considering the image wasn't downscaled and is visually indistinguishable from the original!</p>
 <p>As it turns out, it's actually pretty easy to achieve this level of savings:</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">jpegtran</span> <span class="o">-</span><span class="n">copy</span> <span class="n">none</span> <span class="o">-</span><span class="n">progressive</span> <span class="o">-</span><span class="n">outfile</span> <span class="n">DSC_0685</span><span class="o">-</span><span class="n">trimmed</span><span class="p">.</span><span class="n">JPG</span> <span class="n">DSC_0685</span><span class="p">.</span><span class="n">JPG</span>
-<span class="err">$</span> <span class="n">gm</span> <span class="n">mogrify</span> <span class="n">DSC_0685</span><span class="o">-</span><span class="n">trimmed</span><span class="p">.</span><span class="n">JPG</span> <span class="o">-</span><span class="n">quality</span> <span class="mi">80</span>
+<div class="highlight"><pre><span class="nv">$ </span>jpegtran -copy none -progressive -outfile DSC_0685-trimmed.JPG DSC_0685.JPG
+<span class="nv">$ </span>gm mogrify DSC_0685-trimmed.JPG -quality 80
 </pre></div>
 
 
 <p>The result is actually <em>better</em> than Compressor.io:</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">ls</span> <span class="o">-</span><span class="n">lht</span> <span class="n">DSC_0685</span><span class="o">*</span>
-<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">aorth</span> <span class="n">staff</span> <span class="mf">1.4</span><span class="n">M</span> <span class="n">Oct</span> <span class="mi">14</span> <span class="mi">21</span><span class="o">:</span><span class="mi">52</span> <span class="n">DSC_0685</span><span class="o">-</span><span class="n">trimmed</span><span class="p">.</span><span class="n">JPG</span>
-<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">aorth</span> <span class="n">staff</span> <span class="mf">1.6</span><span class="n">M</span> <span class="n">Oct</span> <span class="mi">14</span> <span class="mi">20</span><span class="o">:</span><span class="mi">47</span> <span class="n">DSC_0685</span><span class="o">-</span><span class="n">compressor</span><span class="p">.</span><span class="n">jpg</span>
-<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">aorth</span> <span class="n">staff</span> <span class="mf">3.6</span><span class="n">M</span> <span class="n">Jun</span> <span class="mi">28</span> <span class="mi">11</span><span class="o">:</span><span class="mi">21</span> <span class="n">DSC_0685</span><span class="p">.</span><span class="n">JPG</span>
+<div class="highlight"><pre><span class="nv">$ </span>ls -lht DSC_0685*
+-rw-r--r-- <span class="m">1</span> aorth staff 1.4M Oct <span class="m">14</span> 21:52 DSC_0685-trimmed.JPG
+-rw-r--r-- <span class="m">1</span> aorth staff 1.6M Oct <span class="m">14</span> 20:47 DSC_0685-compressor.jpg
+-rw-r--r-- <span class="m">1</span> aorth staff 3.6M Jun <span class="m">28</span> 11:21 DSC_0685.JPG
 </pre></div>
 
 
@@ -116,7 +116,7 @@
 <h3>Extra points</h3>
 <p>Even though the file size has reduced by an amazing 60%, the image is actually still pretty massive -- both in terms of file size as well as dimensions.  At <em>4608x3072 pixels</em> (14MP), the image is still too large for the average computer, tablet, or phone to consume practically.  Keep in mind that, in 2014, most high-end smart phones have a resolution of "only" <em>1920x1080 pixels</em>!</p>
 <p>Given that high-end smart phones literally can't even fit more than 50% of this image on the screen, it's safe to assume that we can scale down the dimensions by a factor of at least 50% without sacrificing too much... I'll sympathize with the bandwidth deprived and go for 40%:</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">gm</span> <span class="n">convert</span> <span class="n">DSC_0685</span><span class="o">-</span><span class="n">trimmed</span><span class="p">.</span><span class="n">JPG</span> <span class="o">-</span><span class="n">resize</span> <span class="mi">40</span><span class="o">%</span> <span class="o">-</span><span class="n">quality</span> <span class="mi">80</span> <span class="o">-</span><span class="n">interlace</span> <span class="n">Line</span> <span class="n">DSC_0685</span><span class="o">-</span><span class="n">trimmed</span><span class="o">-</span><span class="n">scaled</span><span class="p">.</span><span class="n">JPG</span>
+<div class="highlight"><pre><span class="nv">$ </span>gm convert DSC_0685-trimmed.JPG -resize 40% -quality <span class="m">80</span> -interlace Line DSC_0685-trimmed-scaled.JPG
 </pre></div>
 
 
@@ -163,8 +163,8 @@
     </div>
   </div>
 </footer> <!-- /.footer -->
-  <script src="http://nairobilug.or.ke/theme/js/jquery.min.js"></script>
-  <script src="http://nairobilug.or.ke/theme/js/bootstrap.min.js"></script>
+  <script src="../../theme/js/jquery.min.js"></script>
+  <script src="../../theme/js/bootstrap.min.js"></script>
 </body> <!-- 42 -->
 
 </html>

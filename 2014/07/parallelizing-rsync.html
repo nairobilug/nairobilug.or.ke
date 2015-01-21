@@ -18,7 +18,7 @@
 
       <link type="application/atom+xml" rel="alternate" href="/feed/atom.xml"  title="Nairobi LUG Atom Feed">
 
-    <link rel="stylesheet" href="http://nairobilug.or.ke/theme/css/style.css">
+    <link rel="stylesheet" href="../../theme/css/style.css">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -50,18 +50,18 @@
 <header class="header">
   <div class="container">
       <div class="header-image pull-left">
-        <a class="nodec" href="http://nairobilug.or.ke"><img src=/images/profile.svg width="200" height="200"></a>
+        <a class="nodec" href="../.."><img src=/images/profile.svg width="200" height="200"></a>
       </div>
     <div class="header-inner">
       <h1 class="header-name">
-        <a class="nodec" href="http://nairobilug.or.ke">Nairobi LUG</a>
+        <a class="nodec" href="../..">Nairobi LUG</a>
       </h1>
       <h3 class="header-text">Nairobi GNU/Linux Users Group</h3>
       <ul class="header-menu list-inline">
           <li><a class="nodec" href="https://kiwiirc.com/client/irc.freenode.net/#nairobilug" target="_blank">IRC</a></li>
           <li><a class="nodec" href="https://groups.google.com/forum/#!forum/nairobi-gnu" target="_blank">Mailing List</a></li>
               <li class="muted">|</li>
-            <li><a class="nodec" href="http://nairobilug.or.ke/2013/10/pages/about-us.html">About Us</a></li>
+            <li><a class="nodec" href="../../2013/10/pages/about-us.html">About Us</a></li>
               <li class="muted">|</li>
           <li><a class="nodec icon-github" href="https://github.com/nairobilug"></a></li>
           <li><a class="nodec icon-twitter" href="https://twitter.com/nairobilug"></a></li>
@@ -80,12 +80,12 @@
       </li>
       <li class="muted">&middot;</li>
       <li class="post-category">
-        <a href="http://nairobilug.or.ke/category/linux.html">Linux</a>
+        <a href="../../category/linux.html">Linux</a>
       </li>
         <li class="muted">&middot;</li>
         <li>
           <address class="post-author">
-            By <a href="http://nairobilug.or.ke/author/alan-orth.html">Alan Orth</a>
+            By <a href="../../author/alan-orth.html">Alan Orth</a>
           </address>
         </li>
     </ul>
@@ -100,7 +100,7 @@
 
 
 <p>After a day or so I noticed I had only copied ~1.5TB (over 1 hop on a dedicated 10GbE switch!), and I realized something must be wrong.  I attached to the <code>rsync</code> process with <code>strace -p</code> and saw a bunch of system calls in one particular user’s directory. I dug deeper:</p>
-<div class="highlight"><pre><span class="gp">#</span> find /path/to/bricks/homes/ukenyatta/maker/genN_datastore/ -type d | wc -l
+<div class="highlight"><pre><span class="gp">#</span> find /path/to/bricks/homes/ukenyatta/maker/genN_datastore/ -type d <span class="p">|</span> wc -l
 <span class="go">1398640</span>
 </pre></div>
 
@@ -137,7 +137,7 @@
 
 <span class="c"># COPY</span>
 <span class="c"># note the combination of -print0 and -0!</span>
-find <span class="o">{</span>a..z<span class="o">}</span>* <span class="o">{</span>A..Z<span class="o">}</span>* <span class="o">{</span>0..9<span class="o">}</span>* -mindepth 1 -maxdepth 1 -print0 | <span class="se">\</span>
+find <span class="o">{</span>a..z<span class="o">}</span>* <span class="o">{</span>A..Z<span class="o">}</span>* <span class="o">{</span>0..9<span class="o">}</span>* -mindepth <span class="m">1</span> -maxdepth <span class="m">1</span> -print0 <span class="p">|</span> <span class="se">\</span>
     xargs -0 -n1 -P<span class="nv">$THREADS</span> -I% <span class="se">\</span>
         <span class="nv">$RSYNC_PROG</span> <span class="nv">$RSYNC_OPTS</span> <span class="s2">&quot;%&quot;</span> <span class="nv">$BAD_NODE</span>:<span class="nv">$DESTDIR</span>
 </pre></div>
@@ -194,8 +194,8 @@ find <span class="o">{</span>a..z<span class="o">}</span>* <span class="o">{</sp
     </div>
   </div>
 </footer> <!-- /.footer -->
-  <script src="http://nairobilug.or.ke/theme/js/jquery.min.js"></script>
-  <script src="http://nairobilug.or.ke/theme/js/bootstrap.min.js"></script>
+  <script src="../../theme/js/jquery.min.js"></script>
+  <script src="../../theme/js/bootstrap.min.js"></script>
 </body> <!-- 42 -->
 
 </html>

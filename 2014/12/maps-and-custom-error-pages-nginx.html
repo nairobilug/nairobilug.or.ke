@@ -18,7 +18,7 @@
 
       <link type="application/atom+xml" rel="alternate" href="/feed/atom.xml"  title="Nairobi LUG Atom Feed">
 
-    <link rel="stylesheet" href="http://nairobilug.or.ke/theme/css/style.css">
+    <link rel="stylesheet" href="../../theme/css/style.css">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -50,18 +50,18 @@
 <header class="header">
   <div class="container">
       <div class="header-image pull-left">
-        <a class="nodec" href="http://nairobilug.or.ke"><img src=/images/profile.svg width="200" height="200"></a>
+        <a class="nodec" href="../.."><img src=/images/profile.svg width="200" height="200"></a>
       </div>
     <div class="header-inner">
       <h1 class="header-name">
-        <a class="nodec" href="http://nairobilug.or.ke">Nairobi LUG</a>
+        <a class="nodec" href="../..">Nairobi LUG</a>
       </h1>
       <h3 class="header-text">Nairobi GNU/Linux Users Group</h3>
       <ul class="header-menu list-inline">
           <li><a class="nodec" href="https://kiwiirc.com/client/irc.freenode.net/#nairobilug" target="_blank">IRC</a></li>
           <li><a class="nodec" href="https://groups.google.com/forum/#!forum/nairobi-gnu" target="_blank">Mailing List</a></li>
               <li class="muted">|</li>
-            <li><a class="nodec" href="http://nairobilug.or.ke/2013/10/pages/about-us.html">About Us</a></li>
+            <li><a class="nodec" href="../../2013/10/pages/about-us.html">About Us</a></li>
               <li class="muted">|</li>
           <li><a class="nodec icon-github" href="https://github.com/nairobilug"></a></li>
           <li><a class="nodec icon-twitter" href="https://twitter.com/nairobilug"></a></li>
@@ -80,12 +80,12 @@
       </li>
       <li class="muted">&middot;</li>
       <li class="post-category">
-        <a href="http://nairobilug.or.ke/category/linux.html">Linux</a>
+        <a href="../../category/linux.html">Linux</a>
       </li>
         <li class="muted">&middot;</li>
         <li>
           <address class="post-author">
-            By <a href="http://nairobilug.or.ke/author/alan-orth.html">Alan Orth</a>
+            By <a href="../../author/alan-orth.html">Alan Orth</a>
           </address>
         </li>
     </ul>
@@ -94,31 +94,31 @@
 <p>I eventually stumbled upon the <a href="http://nginx.org/en/docs/http/ngx_http_map_module.html">nginx map module</a> which, combined with a custom error page, ended up being an elegant, fun solution to this problem.</p>
 <h3>Elegant maps</h3>
 <p>Here is a snippet from <em>/etc/nginx/conf.d/default.conf</em> which shows the important bits:</p>
-<div class="highlight"><pre><span class="n">server</span> <span class="p">{</span>
-<span class="p">...</span>
+<div class="highlight"><pre><span class="nt">server</span> <span class="p">{</span>
+<span class="o">...</span>
 
-    <span class="n">location</span> <span class="o">/</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="err">$</span><span class="n">denied</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="err">#</span> <span class="n">HTTP</span> <span class="mi">503</span><span class="o">:</span> <span class="n">service</span> <span class="n">unavailable</span>
-            <span class="k">return</span> <span class="mi">503</span><span class="p">;</span>
+    <span class="n">location</span> <span class="o">/</span> <span class="err">{</span>
+        <span class="n">if</span> <span class="p">(</span><span class="err">$</span><span class="n">denied</span> <span class="o">!=</span> <span class="m">0</span><span class="p">)</span> <span class="err">{</span>
+            <span class="err">#</span> <span class="n">HTTP</span> <span class="m">503</span><span class="o">:</span> <span class="n">service</span> <span class="n">unavailable</span>
+            <span class="n">return</span> <span class="m">503</span><span class="p">;</span>
          <span class="p">}</span>
 
-         <span class="err">#</span> <span class="n">Send</span> <span class="n">requests</span> <span class="n">to</span> <span class="n">Tomcat</span>
-         <span class="n">proxy_pass</span> <span class="n">http</span><span class="o">:</span><span class="c1">//127.0.0.1:8443;</span>
+         <span class="err">#</span> <span class="nt">Send</span> <span class="nt">requests</span> <span class="nt">to</span> <span class="nt">Tomcat</span>
+         <span class="nt">proxy_pass</span> <span class="nt">http</span><span class="o">://</span><span class="nt">127</span><span class="nc">.0.0.1</span><span class="nd">:8443</span><span class="o">;</span>
+    <span class="err">}</span>
+
+    <span class="nt">error_page</span> <span class="nt">503</span> <span class="k">@maintenance</span><span class="p">;</span>
+
+    <span class="nt">location</span> <span class="k">@maintenance</span> <span class="p">{</span>
+        <span class="nt">root</span> <span class="o">/</span><span class="nt">tmp</span><span class="o">;</span>
+        <span class="nt">rewrite</span> <span class="o">^(.*)$</span> <span class="o">/</span><span class="nt">maintenance</span><span class="nc">.html</span> <span class="nt">break</span><span class="o">;</span>
     <span class="p">}</span>
+<span class="err">}</span>
 
-    <span class="n">error_page</span> <span class="mi">503</span> <span class="err">@</span><span class="n">maintenance</span><span class="p">;</span>
-
-    <span class="n">location</span> <span class="err">@</span><span class="n">maintenance</span> <span class="p">{</span>
-        <span class="n">root</span> <span class="o">/</span><span class="n">tmp</span><span class="p">;</span>
-        <span class="n">rewrite</span> <span class="o">^</span><span class="p">(.</span><span class="o">*</span><span class="p">)</span><span class="err">$</span> <span class="o">/</span><span class="n">maintenance</span><span class="p">.</span><span class="n">html</span> <span class="k">break</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="n">map</span> <span class="err">$</span><span class="n">remote_addr</span> <span class="err">$</span><span class="n">denied</span> <span class="p">{</span>
-    <span class="k">default</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="mf">2.18.216.110</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="mf">192.64.147.150</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nt">map</span> <span class="o">$</span><span class="nt">remote_addr</span> <span class="o">$</span><span class="nt">denied</span> <span class="p">{</span>
+    <span class="k">default</span> <span class="m">1</span><span class="p">;</span>
+    <span class="m">2</span><span class="o">.</span><span class="m">18</span><span class="o">.</span><span class="m">216</span><span class="o">.</span><span class="m">110</span> <span class="m">0</span><span class="p">;</span>
+    <span class="m">192</span><span class="o">.</span><span class="m">64</span><span class="o">.</span><span class="m">147</span><span class="o">.</span><span class="m">150</span> <span class="m">0</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -166,8 +166,8 @@
     </div>
   </div>
 </footer> <!-- /.footer -->
-  <script src="http://nairobilug.or.ke/theme/js/jquery.min.js"></script>
-  <script src="http://nairobilug.or.ke/theme/js/bootstrap.min.js"></script>
+  <script src="../../theme/js/jquery.min.js"></script>
+  <script src="../../theme/js/bootstrap.min.js"></script>
 </body> <!-- 42 -->
 
 </html>
