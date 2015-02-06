@@ -13,6 +13,13 @@ DEFAULT_PAGINATION = 10
 THEME = 'theme/alchemy'
 TIMEZONE = 'Africa/Nairobi'
 
+
+
+#Plugin things
+#PLUGIN_PATHS = ['/pelican-plugins']
+PLUGINS = ['sitemap']
+
+
 # Set to True when testing locally
 RELATIVE_URLS = False
 
