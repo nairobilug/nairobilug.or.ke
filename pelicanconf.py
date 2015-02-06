@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 # Basic
 SITENAME = 'Nairobi LUG'
-SITEURL = 'http://nairobilug.or.ke'
+SITEURL = 'https://nairobilug.or.ke'
 
 AUTHOR = 'Multiple'
 DEFAULT_LANG = 'en'
