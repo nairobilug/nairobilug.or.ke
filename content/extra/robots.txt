@@ -5,6 +5,7 @@
 # some misbehaved spiders out there that go _way_ too fast. If you're
 # irresponsible, your access to the site may be blocked.
 #
+Sitemap: https://nairobilug.or.ke/sitemap.xml
 
 # advertising-related bots:
 User-agent: Mediapartners-Google*
