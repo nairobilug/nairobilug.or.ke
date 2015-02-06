@@ -93,5 +93,4 @@ TWITTER_ADDRESS = 'https://twitter.com/nairobilug'
 GPLUS_ADDRESS = 'https://plus.google.com/communities/107260210367217532462'
 
 DISQUS_SITENAME = 'nairobilug'
-GOOGLE_ANALYTICS_DOMAIN = 'nairobilug.or.ke'
 GOOGLE_ANALYTICS_ID = 'UA-59440070-1'
