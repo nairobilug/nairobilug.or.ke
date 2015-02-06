@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 # Basic
 SITENAME = 'Nairobi LUG'
-SITEURL = 'http://nairobilug.or.ke'
+SITEURL = 'https://nairobilug.or.ke'
 
 AUTHOR = 'Multiple'
 DEFAULT_LANG = 'en'
@@ -93,5 +93,4 @@ TWITTER_ADDRESS = 'https://twitter.com/nairobilug'
 GPLUS_ADDRESS = 'https://plus.google.com/communities/107260210367217532462'
 
 DISQUS_SITENAME = 'nairobilug'
-GOOGLE_ANALYTICS_DOMAIN = 'nairobilug.or.ke'
-GOOGLE_ANALYTICS_ID = 'UA-730843-9'
+GOOGLE_ANALYTICS_ID = 'UA-59440070-1'
