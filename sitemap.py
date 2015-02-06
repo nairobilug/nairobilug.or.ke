@@ -84,14 +84,16 @@ class SitemapGenerator(object):
         config = settings.get('SITEMAP', {
             'format': 'xml',
             'priorities': {
-                'articles': 0.5,
-                'indexes': 0.5,
-                'pages': 0.5
+                'index': 1.0,
+                'articles': 0.8,
+                'pages': 0.5,
+                'others': 0.4
             },
             'changefreqs': {
-                'articles': 'monthly',
-                'indexes': 'daily',
-                'pages': 'monthly'
+                'index': 'daily',
+                'articles': 'weekly',
+                'pages': 'monthly',
+                'others': 'monthly',
             }
         })
 
