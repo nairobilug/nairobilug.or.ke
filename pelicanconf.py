@@ -50,6 +50,7 @@ STATIC_PATHS = [
     'extra/favicon-96x96.png',
     'extra/favicon-160x160.png',
     'extra/favicon-196x196.png',
+    'extra/robots.txt',
 ]
 
 # Extra metadata dictionaries keyed by relative path
@@ -61,6 +62,7 @@ EXTRA_PATH_METADATA = {
     'extra/favicon-96x96.png': {'path': 'favicon-96x96.png'},
     'extra/favicon-160x160.png': {'path': 'favicon-160x160.png'},
     'extra/favicon-196x196.png': {'path': 'favicon-196x196.png'},
+    'extra/robots.txt': {'path': 'robots.txt'},
 }
 
 
