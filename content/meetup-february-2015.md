@@ -1,20 +1,22 @@
 Title: Meetup Summary (February, 2015)
 Date: 2015-02-07 16:30
-Cartegory: Meetups
-Tags: KFC, meetup
-Slug: meetup-February-2015
+Category: Meetups
+Tags: KFC, meetups
+Slug: meetup-february-2015
 Author: Alois Mbutura
 Summary: Highlights from the February, 2015 meetup.
 
-16 people showed up, as always some people were late,others were not.Afew noobs,ahem...frank ,others not as new whom I had not seen for a while were present,they must be embracing the spirit of the lug.BIG Special shoutout to Maureiq...she was the only female member in the meetup but she enjoyed it,Yes...smart girls are fun.
+Twenty people showed up, and as always some people were late, others were not. A few new people (ahem, Frank!), and others not as new whom I had not seen for a while. Big special shoutout to Maureiq, the only female member in the meetup.
 
-###As it happened,insider info
+### As it happened, insider info
 
-* There was talk that everyone should try to watch the movie citizen four.An Eye opening documentary on privacy,surveillance and obviously the bigger picture.
-* Jason talked of making an open source platform for doing route interconnection machine learning platform to decide how to effectively decide on what matatus to take and in what order that would yield the highest probability to reach a destination that couldn't be reached from a single direct matatu or a fixed route public vehicle from a general place say x .
-* Allan mentioned that the reason that Mozilla, or any modern browser has been so slow was that everyone was using the same adblock add-on that and suggested people switch to [u-block](https://github.com/gorhill/uBlock) to effectively use less RAM by upto two-thirds in some tests.
-* Lots of other questions,laughs and more...among friends.
+* There was talk that everyone should try to watch the movie [Citizenfour](http://www.imdb.com/title/tt4044364) -- an eye opening documentary on privacy, surveillance and obviously the bigger picture.
+* Jason talked of making an open source platform -- ma3map [client](https://github.com/ma3map/ma3map-client_android) and [server](https://github.com/ma3map/ma3map-server) -- for doing route interconnection and using machine learning to decide how to effectively recommend which matatus to take (and in which order).
+* Alan mentioned that the reason that Mozilla Firefox (or any other browser) has been so slow in the last few years is [likely due to everyone using the AdBlock Plus add-on](https://blog.mozilla.org/nnethercote/2014/05/14/adblock-pluss-effect-on-firefoxs-memory-usage), and suggested people switch to [µBlock](https://github.com/gorhill/uBlock). µBlock uses up to [two or three times less RAM](https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared) than AdBlock Plus on both Firefox and Chrome.
+* Lots of other questions, laughs and more.
 
-This is my first time posting so if i may have ommitted anything important,feel free to alter my [post](https://github.com/nairobilug/nairobilug.or.ke) then make a pull request.Big thanks to All the people who taught me on [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet#links)...this post wouldn't have been without the advice.
+This is my first time posting so if I may have ommitted anything important, feel free to alter my [post](https://github.com/nairobilug/nairobilug.or.ke) and then make a pull request. Big thanks to all the people who taught me [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet#links)... without which this post wouldn't have been possible.
 
-See you all March 7th.Meetups are usually on the first saturday of every month at KFC,kimathi street @16:30 ,tag a friend along.
+### Next time
+
+See you all on March 7th. Meetups are usually on the first Saturday of every month at KFC, Kimathi street at 16:30. Bring a friend!
