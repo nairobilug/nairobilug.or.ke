@@ -7,27 +7,47 @@ This is the repository which hosts the code for the [Nairobi GNU/Linux Users Gro
 
 ## Wanna Build It?
 
-In order to build this, you need to have [Pelican](http://getpelican.com/) installed. The easiest way to do this is to use Python virtual environments; `virtualenv` will work, but we recommended you use `virtualenvwrapper` (a set of extensions to `virtualenv`).
+In order to build this, you need to have [Pelican](http://getpelican.com/) installed. The easiest way to do this is to use Python virtual environments via [pyenv](https://github.com/yyuu/pyenv) and the [pyenv-virtualenv](https://github.com/yyuu/pyenv-virtualenv) plugin.
 
-For reference, a list of commonly-used distro package names are:
+### pyenv quick install
+Clone the `pyenv` and `pyenv-virtualenv` to your home folder:
 
-  - Arch Linux: `python-virtualenvwrapper`
-  - OS X (brew): `pyenv-virtualenvwrapper`
+```console
+$ git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+$ git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+```
 
-If your distro isn't listed, you'll have to do a bit of homework (and then make a pull request to fix these docs).
+Add the following snippet to your shell's init script, ie  `~/.bashrc`:
+
+```bash
+# Enable pyenv
+# See: https://github.com/yyuu/pyenv#basic-github-checkout
+if [[ -d ~/.pyenv ]]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+
+    eval "$(pyenv init -)"
+    # optionally enable pyenv-virtualenv
+    # See: https://github.com/yyuu/pyenv-virtualenv
+    if [[ -d ~/.pyenv/plugins/pyenv-virtualenv ]]; then
+        eval "$(pyenv virtualenv-init -)"
+    fi
+fi
+```
+
+This tells your shell to initialize `pyenv` and `pyenv-virtualenv` on startup, so close and re-open your shell to activate it.
+
+### Create a virtualenv
+
+Once you have `pyenv` installed, create a virtual environment to hold Pelican and its dependencies:
+
+    $ pyenv virtualenv nairobilug
+    $ pyenv activate nairobilug
+
+This creates a virtual environment and then activates it. If you want to exit the virtual environment, just type `deactivate`.
 
 
-#### Create a Virtualenv
-
-Once you have `virtualenvwrapper` installed, create a virtual environment to hold Pelican and its dependencies:
-
-    mkvirtualenv -p `which python2` nairobilug
-    workon nairobilug
-
-This creates a virtual environment where Python is explicitly set to version 2, and then activates it. If you want to exit the virtual environment, just type `deactivate`.
-
-
-#### Install Pelican & Friends
+### Install Pelican & friends
 
 Use `pip` to install the list of dependencies into your virtual environment:
 
