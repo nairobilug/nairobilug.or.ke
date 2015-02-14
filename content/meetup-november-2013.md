@@ -1,7 +1,7 @@
 Title: Meetup Summary (November, 2013)
 Date: 2013-11-2 22:33
 Category: Meetups
-Tags: KFC, meetups
+Tags: KFC, meetup
 Slug: meetup-november-2013
 Author: Alan Orth
 Summary: Highlights from the November, 2013 meetup.
