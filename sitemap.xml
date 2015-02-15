@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/</loc>
-<lastmod>2015-02-07T01:02:31-00:00</lastmod>
+<lastmod>2015-02-15T19:30:54-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://nairobilug.or.ke/archives.html</loc>
-<lastmod>2015-02-07T01:02:31-00:00</lastmod>
+<lastmod>2015-02-15T19:30:54-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://nairobilug.or.ke/tags.html</loc>
-<lastmod>2015-02-07T01:02:31-00:00</lastmod>
+<lastmod>2015-02-15T19:30:54-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://nairobilug.or.ke/categories.html</loc>
-<lastmod>2015-02-07T01:02:31-00:00</lastmod>
+<lastmod>2015-02-15T19:30:54-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -34,6 +34,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://nairobilug.or.ke/2013/10/pages/about-us.html</loc>
 <lastmod>2013-10-08T13:00:00+03:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://nairobilug.or.ke/2015/02/meetup-february-2015.html</loc>
+<lastmod>2015-02-07T16:30:00+03:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -208,7 +215,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/category/meetups.html</loc>
-<lastmod>2015-01-19T20:40:00+02:27</lastmod>
+<lastmod>2015-02-07T16:30:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -264,7 +271,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/tag/kfc.html</loc>
-<lastmod>2015-01-19T20:40:00+02:27</lastmod>
+<lastmod>2015-02-07T16:30:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -376,7 +383,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/tag/meetups.html</loc>
-<lastmod>2013-11-02T22:33:00+02:27</lastmod>
+<lastmod>2015-02-07T16:30:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -440,6 +447,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://nairobilug.or.ke/author/alan-orth.html</loc>
 <lastmod>2015-01-21T16:40:00+02:27</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://nairobilug.or.ke/author/alois-mbutura.html</loc>
+<lastmod>2015-02-07T16:30:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
