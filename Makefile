@@ -9,3 +9,5 @@ chapo: all
 
 clean:
 	rm -r output/*
+
+.PHONY: all chapo clean
