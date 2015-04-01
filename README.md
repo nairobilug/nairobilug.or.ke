@@ -35,7 +35,9 @@ if [[ -d ~/.pyenv ]]; then
 fi
 ```
 
-This tells your shell to initialize `pyenv` and `pyenv-virtualenv` on startup, so close and re-open your shell to activate it.
+This tells your shell to initialize `pyenv` and `pyenv-virtualenv` on
+startup, so close and re-open your shell to activate it (or run
+`source ~/.bashrc` OR `source ~/.zshrc` to save yourself the wait time).
 
 ### Create a virtualenv
 
