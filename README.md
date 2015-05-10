@@ -1,9 +1,9 @@
-## Nairobi GNU/Linux Users Group Blog
+## Nairobi GNU/Linux Users Group blog
 This is the repository which hosts the code for the [Nairobi GNU/Linux Users Group](https://nairobilug.or.ke) blog. We wanted a fun, nerdy and democratic way to give our community an online presence, so here we are.
 
 [![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/nairobilug.png)](https://kiwiirc.com/client/irc.freenode.net/#nairobilug)
 
-### Wanna Build It?
+### How to build
 In order to build this, you need to have [Pelican](http://getpelican.com/) installed. The easiest way to do this is to use Python virtual environments via [pyenv](https://github.com/yyuu/pyenv) and the [pyenv-virtualenv](https://github.com/yyuu/pyenv-virtualenv) plugin.
 
 #### pyenv quick install
@@ -47,7 +47,7 @@ Use `pip` to install the list of dependencies into your virtual environment:
 
     pip install -r https://raw.github.com/nairobilug/nairobilug.or.ke/master/requirements.txt
 
-#### Preparations
+#### Theme initialization
 The theme we're using, [pelican-alchemy](https://github.com/nairobilug/pelican-alchemy), is a "git submodule", which means it is maintained as its own separate git repository (with its own git history, project, etc). Submodules are stored in the `.gitmodules` file, and we first need to initialize and clone it before we can build.
 
 Navigate to where you've cloned this [repo](http://github.com/nairobilug/nairobilug.or.ke) and then:
@@ -57,14 +57,14 @@ Navigate to where you've cloned this [repo](http://github.com/nairobilug/nairobi
 
 You only need to do the initialization the first time you build. After that, you can simply use the update command to get the latest submodule changes.
 
-#### GENERATE teh BLAWG
+#### Generate the blog
 Now that the theme exists, we can build:
 
     pelican content
 
 This takes the Markdown files from the `content` folder and generates static HTML pages inside the `output` directory. That's it. No MySQL, no PHP, etc...
 
-#### It Works, SHIPIT!!1
+#### View the results
 You can use any web server to view the generated HTML. For example, Python's built-in simple HTTP server:
 
     cd output
@@ -72,7 +72,7 @@ You can use any web server to view the generated HTML. For example, Python's bui
 
 And now you should see the blog at: [http://localhost:8000](http://localhost:8000)
 
-### Workflow for Blog Posts
+### Workflow for blog posts
 If you're interested in writing a blog post for the site, you need to:
 
   - Fork the [repo](http://github.com/nairobilug/nairobilug.or.ke)
