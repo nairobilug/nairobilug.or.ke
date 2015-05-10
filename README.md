@@ -1,15 +1,15 @@
-# Nairobi GNU/Linux Users Group Blog
+## Nairobi GNU/Linux Users Group Blog
 
 This is the repository which hosts the code for the [Nairobi GNU/Linux Users Group](https://nairobilug.or.ke) blog. We wanted a fun, nerdy and democratic way to give our community an online presence, so here we are.
 
 [![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/nairobilug.png)](https://kiwiirc.com/client/irc.freenode.net/#nairobilug)
 
 
-## Wanna Build It?
+### Wanna Build It?
 
 In order to build this, you need to have [Pelican](http://getpelican.com/) installed. The easiest way to do this is to use Python virtual environments via [pyenv](https://github.com/yyuu/pyenv) and the [pyenv-virtualenv](https://github.com/yyuu/pyenv-virtualenv) plugin.
 
-### pyenv quick install
+#### pyenv quick install
 Clone the `pyenv` and `pyenv-virtualenv` to your home folder:
 
 ```console
@@ -39,7 +39,7 @@ This tells your shell to initialize `pyenv` and `pyenv-virtualenv` on
 startup, so close and re-open your shell to activate it (or run
 `source ~/.bashrc` OR `source ~/.zshrc` to save yourself the wait time).
 
-### Create a virtualenv
+#### Create a virtualenv
 
 Once you have `pyenv` installed, create a virtual environment to hold Pelican and its dependencies:
 
@@ -49,7 +49,7 @@ Once you have `pyenv` installed, create a virtual environment to hold Pelican an
 This creates a virtual environment and then activates it. If you want to exit the virtual environment, just type `deactivate`.
 
 
-### Install Pelican & friends
+#### Install Pelican & friends
 
 Use `pip` to install the list of dependencies into your virtual environment:
 
@@ -87,7 +87,7 @@ You can use any web server to view the generated HTML. For example, Python's bui
 And now you should see the blog at: [http://localhost:8000](http://localhost:8000)
 
 
-## Workflow for Blog Posts
+### Workflow for Blog Posts
 
 If you're interested in writing a blog post for the site, you need to:
 
@@ -97,6 +97,6 @@ If you're interested in writing a blog post for the site, you need to:
   - Make a pull request against the `master` branch
 
 
-## Contact
+### Contact
 
 If you have any questions, drop by **#nairobilug** on Freenode. Happy blogging!
