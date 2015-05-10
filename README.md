@@ -9,10 +9,8 @@ In order to build this, you need to have [Pelican](http://getpelican.com/) insta
 #### pyenv quick install
 Clone the `pyenv` and `pyenv-virtualenv` to your home folder:
 
-```console
-$ git clone https://github.com/yyuu/pyenv.git ~/.pyenv
-$ git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
-```
+    $ git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+    $ git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
 
 Add the following snippet to your shell's init script, ie  `~/.bashrc`:
 
@@ -45,30 +43,30 @@ This creates a virtual environment and then activates it. If you want to exit th
 #### Install Pelican & friends
 Use `pip` to install the list of dependencies into your virtual environment:
 
-    pip install -r https://raw.github.com/nairobilug/nairobilug.or.ke/master/requirements.txt
+    $ pip install -r https://raw.github.com/nairobilug/nairobilug.or.ke/master/requirements.txt
 
 #### Theme initialization
 The theme we're using, [pelican-alchemy](https://github.com/nairobilug/pelican-alchemy), is a "git submodule", which means it is maintained as its own separate git repository (with its own git history, project, etc). Submodules are stored in the `.gitmodules` file, and we first need to initialize and clone it before we can build.
 
 Navigate to where you've cloned this [repo](http://github.com/nairobilug/nairobilug.or.ke) and then:
 
-    git submodule init
-    git submodule update
+    $ git submodule init
+    $ git submodule update
 
 You only need to do the initialization the first time you build. After that, you can simply use the update command to get the latest submodule changes.
 
 #### Generate the blog
 Now that the theme exists, we can build:
 
-    pelican content
+    $ pelican content
 
 This takes the Markdown files from the `content` folder and generates static HTML pages inside the `output` directory. That's it. No MySQL, no PHP, etc...
 
 #### View the results
 You can use any web server to view the generated HTML. For example, Python's built-in simple HTTP server:
 
-    cd output
-    python -m SimpleHTTPServer
+    $ cd output
+    $ python -m SimpleHTTPServer
 
 And now you should see the blog at: [http://localhost:8000](http://localhost:8000)
 
