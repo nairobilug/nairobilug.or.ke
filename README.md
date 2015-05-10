@@ -1,6 +1,8 @@
 ## Nairobi GNU/Linux Users Group blog
 This is the repository which hosts the code for the [Nairobi GNU/Linux Users Group](https://nairobilug.or.ke) blog. We wanted a fun, nerdy and democratic way to give our community an online presence, so here we are.
 
+![Screenshot](/screenshot@2x.png?raw=true "Screenshot")
+
 [![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/nairobilug.png)](https://kiwiirc.com/client/irc.freenode.net/#nairobilug)
 
 ### How to build
