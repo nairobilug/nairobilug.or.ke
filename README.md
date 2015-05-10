@@ -45,7 +45,7 @@ This creates a virtual environment and then activates it. If you want to exit th
 #### Install Pelican & friends
 Use `pip` to install the list of dependencies into your virtual environment:
 
-    $ pip install -r https://raw.github.com/nairobilug/nairobilug.or.ke/master/requirements.txt
+    $ pip install -r requirements.txt
 
 #### Theme initialization
 The theme we're using, [pelican-alchemy](https://github.com/nairobilug/pelican-alchemy), is a "git submodule", which means it is maintained as its own separate git repository (with its own git history, project, etc). Submodules are stored in the `.gitmodules` file, and we first need to initialize and clone it before we can build.
