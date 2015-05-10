@@ -7,12 +7,12 @@ This is the repository which hosts the code for the [Nairobi GNU/Linux Users Gro
 In order to build this, you need to have [Pelican](http://getpelican.com/) installed. The easiest way to do this is to use Python virtual environments via [pyenv](https://github.com/yyuu/pyenv) and the [pyenv-virtualenv](https://github.com/yyuu/pyenv-virtualenv) plugin.
 
 #### pyenv quick install
-Clone the `pyenv` and `pyenv-virtualenv` to your home folder:
+Clone the `pyenv` and `pyenv-virtualenv` repositories to your home folder:
 
     $ git clone https://github.com/yyuu/pyenv.git ~/.pyenv
     $ git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
 
-Add the following snippet to your shell's init script, ie  `~/.bashrc`:
+Add the following snippet to your shell's init script, ie `~/.bashrc` or `~/.zshrc`:
 
 ```bash
 # Enable pyenv
@@ -68,7 +68,7 @@ You can use any web server to view the generated HTML. For example, Python's bui
     $ cd output
     $ python -m SimpleHTTPServer
 
-And now you should see the blog at: [http://localhost:8000](http://localhost:8000)
+And now you should see the blog at [http://localhost:8000](http://localhost:8000).
 
 ### Workflow for blog posts
 If you're interested in writing a blog post for the site, you need to:
