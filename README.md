@@ -73,10 +73,10 @@ And now you should see the blog at [http://localhost:8000](http://localhost:8000
 ### Workflow for blog posts
 If you're interested in writing a blog post for the site, you need to:
 
-  - Fork the [repo](http://github.com/nairobilug/nairobilug.or.ke)
-  - Hack hack hack
-  - Push the changes to your repo; preferably to a topic branch, like `why-i-love-linux`
-  - Make a pull request against the `master` branch
+  - Fork the [nairobilug/nairobilug.or.ke](http://github.com/nairobilug/nairobilug.or.ke) repository
+  - Write a blog post in Markdown format in the `content` directory
+  - Push the changes to a topic branch, like `why-i-love-linux`, on *your* fork of the repository
+  - Make a pull request against the `master` branch of nairobilug/nairobilug.or.ke
 
 ### Contact
 If you have any questions, drop by **#nairobilug** on Freenode. Happy blogging!
