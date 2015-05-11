@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Nairobi LUG</title><link href="https://nairobilug.or.ke/" rel="alternate"></link><link href="https://nairobilug.or.ke/feeds/alan-orth.atom.xml" rel="self"></link><id>https://nairobilug.or.ke/</id><updated>2015-04-25T21:01:00+03:00</updated><entry><title>Ramping up the Ethiopia LUG</title><link href="https://nairobilug.or.ke/2015/04/ramping-up-ethiopia-lug.html" rel="alternate"></link><updated>2015-04-25T21:01:00+03:00</updated><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-04-25:2015/04/ramping-up-ethiopia-lug.html</id><summary type="html">&lt;p&gt;Today I had the pleasure of participating in a rare meeting of the Ethiopia GNU/Linux Users Group at the &lt;a href="http://www.iceaddis.com"&gt;iceaddis&lt;/a&gt; co-working space in Addis Ababa. In all the years I've lived in Kenya, and all the times I've been to Ethiopia, I've never heard anything about Linux or open-source software groups in the community. But alas, they do exist! I enlisted the help of some friends in Addis and planned to arrange a meeting the next time I went to Ethiopia.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Nairobi LUG</title><link href="https://nairobilug.or.ke/" rel="alternate"></link><link href="https://nairobilug.or.ke/feeds/alan-orth.atom.xml" rel="self"></link><id>https://nairobilug.or.ke/</id><updated>2015-05-10T16:40:00+03:00</updated><entry><title>Simultaneously pushing to two remotes in a git repository</title><link href="https://nairobilug.or.ke/2015/05/pushing-two-git-remotes.html" rel="alternate"></link><updated>2015-05-10T16:40:00+03:00</updated><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-05-10:2015/05/pushing-two-git-remotes.html</id><summary type="html">&lt;p&gt;Sometimes you need to push commits to two remotes in a git repository -- either for a cheap "backup" of sorts, or for some public / private repository scheme you may have in your organization, etc.&lt;/p&gt;
+&lt;p&gt;Let's say you have a repository hosted on GitHub &lt;em&gt;and&lt;/em&gt; BitBucket (hey, GitHub is king today, but you never know!). You could add a remote for each and push to them individually:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git push github
+&lt;span class="nv"&gt;$ &lt;/span&gt;git push bitbucket
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This works fine but it's a bit manual. Also, assuming you want both remotes to essentially be mirrors of each other, there's a better way.&lt;/p&gt;
+&lt;h3&gt;A better way&lt;/h3&gt;
+&lt;p&gt;If you're using any relatively modern version of git (1.9?) you can manipulate the remote to include two push URLs. Instead of adding a second remote, you simply add a second push URL to the existing remote.&lt;/p&gt;
+&lt;p&gt;For example, adding a BitBucket URL to the remote called "origin":&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git remote &lt;span class="nb"&gt;set&lt;/span&gt;-url origin --add git@bitbucket.org:alanorth/repo.git
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;After that the remote looks like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git remote -v
+origin  git@github.com:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;fetch&lt;span class="o"&gt;)&lt;/span&gt;
+origin  git@github.com:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;push&lt;span class="o"&gt;)&lt;/span&gt;
+origin  git@bitbucket.org:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;push&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now there are two push URLs, so every time you push it will go to both remotes, while pull or update operations will only come from the URL labeled "fetch".&lt;/p&gt;
+&lt;p&gt;You're welcome. ;)&lt;/p&gt;
+&lt;p&gt;This was &lt;a href="https://mjanja.ch/2015/05/simultaneously-pushing-to-two-remotes-in-a-git-repository/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="git"></category></entry><entry><title>Ramping up the Ethiopia LUG</title><link href="https://nairobilug.or.ke/2015/04/ramping-up-ethiopia-lug.html" rel="alternate"></link><updated>2015-04-25T21:01:00+03:00</updated><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-04-25:2015/04/ramping-up-ethiopia-lug.html</id><summary type="html">&lt;p&gt;Today I had the pleasure of participating in a rare meeting of the Ethiopia GNU/Linux Users Group at the &lt;a href="http://www.iceaddis.com"&gt;iceaddis&lt;/a&gt; co-working space in Addis Ababa. In all the years I've lived in Kenya, and all the times I've been to Ethiopia, I've never heard anything about Linux or open-source software groups in the community. But alas, they do exist! I enlisted the help of some friends in Addis and planned to arrange a meeting the next time I went to Ethiopia.&lt;/p&gt;
 &lt;p&gt;Much to my surprise the Linux Users Group has been in existence for a few years, and even has a fairly active &lt;a href="https://groups.google.com/forum/#!forum/linux-ethiopia"&gt;mailing list&lt;/a&gt; (albeit a bit off topic!). The list is active enough that, when we sent word of the meeting, several people replied stating interest and one actually showed up to the meeting!&lt;/p&gt;
 &lt;p&gt;The meeting was small, short, and sweet. In addition to our one Internet person, I brought a few of my Addis friends and colleagues. Seven people taking time out of their Saturday to talk about free, libre, open-source software and community. Not a bad start!&lt;/p&gt;
 &lt;h3&gt;A good start&lt;/h3&gt;
