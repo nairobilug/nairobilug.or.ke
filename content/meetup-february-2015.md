@@ -1,7 +1,7 @@
 Title: Meetup Summary (February, 2015)
 Date: 2015-02-07 16:30
 Category: Meetups
-Tags: KFC, meetups
+Tags: KFC, meetup
 Slug: meetup-february-2015
 Author: Alois Mbutura
 Summary: Highlights from the February, 2015 meetup.
