@@ -14,6 +14,6 @@ A lot was discussed. Opera Mini, and whether the Nairobi LUG blog should be acce
 
 ### GPL Violation
 
-One topic that was discussed that I feel like I need to highlight is the GPL and how some Kenyan companies are violating it. BRCK, for instance, runs a fork of OpenWRT yet NONE of its code is open (at least the forked OpenWRT code should be). OpenWRT is a GNU Linux distribution that comprises of at least two high profile projects (the Linux kernel and BusyBox) that are licensed under the GPL. All projects that are derivatives of OpenWRT therefore are technically licensed under the GPL. I reached out to the BRCK team but I still haven't gotten a response from them. It's time 'they' know we are not fine with them violating the GPL!
+One topic that was discussed that I feel like I need to highlight is the [GPL](https://www.gnu.org/copyleft/gpl.html) and how some Kenyan companies are violating it. [BRCK](https://www.brck.com/), for instance, runs a fork of [OpenWRT](https://openwrt.org/) yet NONE of its code is open (at least the forked OpenWRT code should be). OpenWRT is a GNU Linux distribution that comprises of at least two high profile projects (the [Linux kernel](https://kernel.org/) and [BusyBox](http://www.busybox.net/)) that are licensed under the GPL. All projects that are derivatives of OpenWRT therefore are technically licensed under the GPL. I reached out to the BRCK team but I still haven't gotten a response from them. It's time 'they' know we are not fine with them violating the GPL!
 
 VIVA GPL!!
