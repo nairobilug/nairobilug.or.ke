@@ -123,4 +123,6 @@ BRCK is not the "enemy", but they -- of all people -- should know better. We exp
 
 In the end none of this matters unless someone is willing to take BRCK to court over non-compliance. Even if someone was willing to do so, I think it would be sad if it had to come to that. Instead, I hope this serves as a lesson in GPL v2 compliance for Kenyan organizations in the future, and indeed a public record of my findings.
 
+**Update (2015-05-19):** BRCK has [responded](http://forums.brck.com/t/where-is-the-openwrt-fork-source-at/482/11) and posted [licensing information and source code](https://www.brck.com/open-source-compliance/) on their website.
+
 This was [originally posted](https://mjanja.ch/2015/05/brck-in-violation-of-the-gpl/) on my personal blog; re-posted here for posterity.
