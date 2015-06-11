@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nairobi LUG</title><link>https://nairobilug.or.ke/</link><description></description><atom:link href="https://nairobilug.or.ke/feeds/alan-orth.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 08 Jun 2015 15:21:00 +0300</lastBuildDate><item><title>Replacing cron jobs with systemd timers</title><link>https://nairobilug.or.ke/2015/06/cron-systemd-timers.html</link><description>&lt;p&gt;systemd has a timer function that can be used to run tasks periodically -- yes, like &lt;code&gt;cron&lt;/code&gt;. There's nothing really wrong with cron, but have you ever tried to debug a cron job on a server? The script runs fine from the command line, but nothing seems to happen when it runs from cron. You quickly type &lt;code&gt;date&lt;/code&gt; to see how many seconds until the next minute, adjust the cron job, and wait. Nothing. Repeat. &lt;em&gt;*facedesk*&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This is the systemd value proposition in this context: &lt;em&gt;timers can be run on demand&lt;/em&gt; from the command line, and &lt;em&gt;their output is logged to the systemd journal&lt;/em&gt; where you can see it like any other systemd units.&lt;/p&gt;
+&lt;h2&gt;System backups using a timer&lt;/h2&gt;
+&lt;p&gt;As an example, I have a simple shell script -- &lt;code&gt;system-backup.sh&lt;/code&gt; -- that uses &lt;code&gt;rsync&lt;/code&gt; to back up my system to an external USB hard drive once per day. Converting this job to use systemd timers requires the creation of both a &lt;em&gt;timer&lt;/em&gt; and a &lt;em&gt;service&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;/etc/systemd/system/system-backup.timer&lt;/em&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Perform system backup&lt;/span&gt;
+
+&lt;span class="k"&gt;[Timer]&lt;/span&gt;
+&lt;span class="na"&gt;OnCalendar&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;daily&lt;/span&gt;
+
+&lt;span class="k"&gt;[Install]&lt;/span&gt;
+&lt;span class="na"&gt;WantedBy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;timers.target&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;em&gt;/etc/systemd/system/system-backup.service&lt;/em&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Perform system backup&lt;/span&gt;
+
+&lt;span class="k"&gt;[Service]&lt;/span&gt;
+&lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;simple&lt;/span&gt;
+&lt;span class="na"&gt;Nice&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;19&lt;/span&gt;
+&lt;span class="na"&gt;IOSchedulingClass&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;2&lt;/span&gt;
+&lt;span class="na"&gt;IOSchedulingPriority&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;7&lt;/span&gt;
+&lt;span class="na"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/root/system-backup.sh&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Start and enable the timer:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo systemctl start system-backup.timer
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo systemctl &lt;span class="nb"&gt;enable &lt;/span&gt;system-backup.timer
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Starting the timer is necessary because otherwise it wouldn't be active until the next time you rebooted (assuming it was enabled, that is). You can verify that the timer has been started using either of the following commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo systemctl status system-backup.timer
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo systemctl list-timers --all
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;What this gets you&lt;/h2&gt;
+&lt;p&gt;Using &lt;code&gt;OnCalendar=daily&lt;/code&gt; this job will run every day at midnight, similar to cron's &lt;code&gt;@daily&lt;/code&gt; keyword. If you ever want to run the job manually you can invoke its service on demand:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo systemctl start system-backup.service
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Unless you're handling stdout manually in your script (like appending to a log file), any output from will go to the systemd journal. You can see the logs just like you'd do for any other system unit file using &lt;code&gt;journalctl&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For example, to see logs from this timer since yesterday:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo journalctl -u system-backup --since&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;yesterday&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I find this much more elegant than appending to, looking through, and rotating log files manually. Furthermore, I like the ability to set CPU and I/O scheduling priorities in the service itself rather than relying on external &lt;code&gt;nice&lt;/code&gt; and &lt;code&gt;ionice&lt;/code&gt; binaries in the script. :)&lt;/p&gt;
+&lt;h2&gt;More information&lt;/h2&gt;
+&lt;p&gt;See the following for more information:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;man systemd.timer&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;man systemd.service&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;man journalctl&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This was &lt;a href="https://mjanja.ch/2015/06/replacing-cron-jobs-with-systemd-timers/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Mon, 08 Jun 2015 15:21:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2015-06-08:2015/06/cron-systemd-timers.html</guid><category>linux</category><category>systemd</category><category>cron</category></item><item><title>BRCK in violation of the GPL</title><link>https://nairobilug.or.ke/2015/05/brck-violating-gpl.html</link><description>&lt;p&gt;During a recent meeting of the Nairobi GNU/Linux Users Group we discussed &lt;a href="https://www.brck.com" title="BRCK | Rugged, Portable WiFi Hotspot &amp;amp; Battery Extender"&gt;BRCK&lt;/a&gt;, the Kenya-based makers of a slick, "rugged", battery-powered-GSM-router thing of the same name, and their apparent violation of the GNU General
+Public License (GPL). The lively discussion ended up making its way to the web in the form of a &lt;a href="https://nairobilug.or.ke/2015/05/meetup-may-2015.html"&gt;blog
+post&lt;/a&gt; on the group's blog.&lt;/p&gt;
+&lt;p&gt;Their product is based on &lt;a href="https://openwrt.org/"&gt;OpenWRT&lt;/a&gt; -- the GNU/Linux distribution geared towards embedded systems -- which is &lt;a href="http://wiki.openwrt.org/about/license"&gt;licensed&lt;/a&gt; under the GPL v2. I believe this is problematic for BRCK for a number of reasons that I will enumerate below. When we reached out to BRCK they claimed that they were not in violation because they use "stock unmodified OpenWRT" source code. This claim is repeated verbatim in a &lt;a href="http://forums.brck.com/t/where-is-the-openwrt-fork-source-at/482/8"&gt;thread on their forum&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I had intended this post to be a discussion of the spirit of the GPL ending with me expressing disappointment in BRCK for cowering behind perceived technicalities of the license. After sitting down to read the license, however, it became immediately apparent to me that they are indeed in violation. &lt;em&gt;*sigh*&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;The GNU General Public License&lt;/h2&gt;
+&lt;p&gt;I'll save the discussion about the spirit of the GPL for later, but here's the gist:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[...] if you distribute copies of such a program, whether gratis or
+for a fee, you must give the recipients all the rights that you have.
+You must make sure that they, too, receive or can get the source code.
+And you must show them these terms so they know their rights.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;That's from the preamble of the &lt;a href="https://www.gnu.org/licenses/gpl2.txt"&gt;GPL Version 2&lt;/a&gt;. The license goes on to outline the terms and conditions for copying, distribution and modification.&lt;/p&gt;
+&lt;p&gt;After several readings of the text it is my opinion that BRCK is &lt;em&gt;in violation of Sections 1, 2, and 3&lt;/em&gt; of the GPL v2 and that &lt;em&gt;their rights to distribute OpenWRT-derived works should be terminated under Section 4&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;My analysis follows.&lt;/p&gt;
+&lt;h3&gt;Section 1&lt;/h3&gt;
+&lt;p&gt;Section 1 deals with the distribution of source code. Specifically:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You may copy and distribute verbatim copies of the Program's source
+code as you receive it, in any medium, provided that you conspicuously
+and appropriately publish on each copy an appropriate copyright notice
+and disclaimer of warranty; keep intact all the notices that refer to
+this License and to the absence of any warranty; and give any other
+recipients of the Program a copy of this License along with the
+Program.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This is very important because compliance with Section 1 is required by subsequent Sections of the license. Use of the language "&lt;em&gt;may copy&lt;/em&gt;" merely grants BRCK the permission to distribute program source code which is explicitly required by Sections 2 and 3. In addition, Section 1 states that the copyright notice and license from the original work must be preserved.&lt;/p&gt;
+&lt;p&gt;While BRCK does not provide source code for their work, they do offer public &lt;a href="https://www.brck.com/firmware/"&gt;downloads of their firmware binaries&lt;/a&gt;. Unfortunately there is neither a &lt;code&gt;LICENSE.txt&lt;/code&gt; file nor any mention of the the GPL in the archive provided:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ls -l brckv1_20141114.zip
+-rw-r----- &lt;span class="m"&gt;1&lt;/span&gt; aorth staff &lt;span class="m"&gt;5547580&lt;/span&gt; May &lt;span class="m"&gt;17&lt;/span&gt; 14:01 brckv1_20141114.zip
+&lt;span class="nv"&gt;$ &lt;/span&gt;shasum brckv1_20141114.zip
+d6dcbb1d61e99bf2b35133c5e6897a352518da0c  brckv1_20141114.zip
+&lt;span class="nv"&gt;$ &lt;/span&gt;unzip brckv1_20141114.zip
+&lt;span class="nv"&gt;$ &lt;/span&gt;grep -r -E &lt;span class="s1"&gt;&amp;#39;gpl|GPL&amp;#39;&lt;/span&gt; brckv1_20141114/* &lt;span class="p"&gt;|&lt;/span&gt; wc -l
+       0
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;brckv1_20141114.zip&lt;/code&gt; was retrieved on May 17, 2015 and had the file size and SHA1 fingerprint shown above.&lt;/p&gt;
+&lt;h3&gt;Section 2&lt;/h3&gt;
+&lt;p&gt;Section 2 deals with modifications to the program. Specifically:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;a) You must cause the modified files to carry prominent notices
+stating that you changed the files and the date of any change.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;At first this Section doesn't seem to apply, as BRCK claims to be using "stock unmodified OpenWRT", but I find their claim dubious for two reasons:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The OpenWRT project doesn't provide source code producing firmware for any device called "BRCK", so it is unclear from which source code the firmware builds are created.&lt;/li&gt;
+&lt;li&gt;BRCK themselves allude to "optimizing" for a 4MB image size, which implies modification.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Nevertheless, if BRCK does indeed use "stock unmodified OpenWRT" source code then the &lt;a href="https://www.kernel.org/doc/pending/gplv2-howto.html"&gt;Linux kernel's GPL v2 compliance guide&lt;/a&gt; suggests:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The minimum sufficient answer includes the version number, whether or
+not it was modified, and where we can get it from. I.E. something
+like: "We used Linux 2.6.22.4, from www.kernel.org, and we didn't
+modify it." If you didn't modify a package, say so. Even when you used
+unmodified source code, the GPL requires you to _identify_ the
+source code you used, clearly and explicitly, at least in response to
+direct questions about it.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;One &lt;a href="https://copyleft.org/guide/comprehensive-gpl-guidech6.html"&gt;popular interpretation&lt;/a&gt; of the GPL v2 states that Section 2 "&lt;em&gt;[...] seeks to ensure that those receiving modified versions know the history of changes to the software.&lt;/em&gt;"&lt;/p&gt;
+&lt;p&gt;As BRCK neither publishes the corresponding source code for their modified binaries, nor explicitly states the exact "unmodified" versions used, they are in clear violation of Section 2.&lt;/p&gt;
+&lt;h3&gt;Section 3&lt;/h3&gt;
+&lt;p&gt;Section 3 deals with the distribution of derived works in object code or executable form. Specifically:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;a) Accompany it with the complete corresponding machine-readable
+source code, which must be distributed under the terms of Sections 1
+and 2 above&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It goes on to state:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;For an executable work, complete source code means all the source code
+for all modules it contains, plus any associated interface definition
+files, plus the scripts used to control compilation and installation
+of the executable.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Not only does BRCK need to provide the complete source code for their OpenWRT-derived work itself, they need to provide the bits used to produce their firmware builds &lt;em&gt;from&lt;/em&gt; that source code.&lt;/p&gt;
+&lt;h3&gt;Sections 4 and 5&lt;/h3&gt;
+&lt;p&gt;Section 5 stipulates implicit acceptance of the license terms upon distribution of the work, and Section 4 is crystal clear on the termination of the rights in case of non-compliance:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;You may not copy, modify, sublicense, or distribute the Program
+except as expressly provided under this License. Any attempt otherwise
+to copy, modify, sublicense or distribute the Program is void, and
+will automatically terminate your rights under this License. [...]&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;By my reading this means BRCK's rights to distribute OpenWRT-derived works are void.&lt;/p&gt;
+&lt;h2&gt;Compliance&lt;/h2&gt;
+&lt;p&gt;Interpretation of the license is a bit confusing at first, but very accessible if you actually read it. Put simply: copyleft obligations of the GPL v2 are triggered upon &lt;em&gt;distribution&lt;/em&gt; of binary works derived from a GPL-licensed program.&lt;/p&gt;
+&lt;p&gt;As BRCK is distributing an OpenWRT-derived work in object code form, Section 3 requires that they provide &lt;em&gt;complete corresponding machine-readable source code&lt;/em&gt; used to produce the object code they are distributing. Section 1 grants them the permission to provide this code and stipulates that it must preserve the copyright notice and license of the original work.&lt;/p&gt;
+&lt;p&gt;The implications of Section 2 are less clear, depending on whether or not BRCK is actually using "stock unmodified OpenWRT" source code. I suppose that's up to them to decide, but I would urge them to keep in mind the spirit of the GPL v2 when making that decision.&lt;/p&gt;
+&lt;h2&gt;BRCK should know better&lt;/h2&gt;
+&lt;p&gt;BRCK is not the "enemy", but they -- of all people -- should know better. We expect this behavior from large corporations, but not from quasi-community-based organizations operating in the technical sector.&lt;/p&gt;
+&lt;p&gt;In the end none of this matters unless someone is willing to take BRCK to court over non-compliance. Even if someone was willing to do so, I think it would be sad if it had to come to that. Instead, I hope this serves as a lesson in GPL v2 compliance for Kenyan organizations in the future, and indeed a public record of my findings.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Update (2015-05-19):&lt;/strong&gt; BRCK has &lt;a href="http://forums.brck.com/t/where-is-the-openwrt-fork-source-at/482/11"&gt;responded&lt;/a&gt; and posted &lt;a href="https://www.brck.com/open-source-compliance/"&gt;licensing information and source code&lt;/a&gt; on their website.&lt;/p&gt;
+&lt;p&gt;This was &lt;a href="https://mjanja.ch/2015/05/brck-in-violation-of-the-gpl/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Mon, 18 May 2015 15:21:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2015-05-18:2015/05/brck-violating-gpl.html</guid><category>licensing</category><category>gpl</category></item><item><title>Simultaneously pushing to two remotes in a git repository</title><link>https://nairobilug.or.ke/2015/05/pushing-two-git-remotes.html</link><description>&lt;p&gt;Sometimes you need to push commits to two remotes in a git repository -- either for a cheap "backup" of sorts, or for some public / private repository scheme you may have in your organization, etc.&lt;/p&gt;
+&lt;p&gt;Let's say you have a repository hosted on GitHub &lt;em&gt;and&lt;/em&gt; BitBucket (hey, GitHub is king today, but you never know!). You could add a remote for each and push to them individually:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git push github
+&lt;span class="nv"&gt;$ &lt;/span&gt;git push bitbucket
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This works fine but it's a bit manual. Also, assuming you want both remotes to essentially be mirrors of each other, there's a better way.&lt;/p&gt;
+&lt;h3&gt;A better way&lt;/h3&gt;
+&lt;p&gt;If you're using any relatively modern version of git (1.9?) you can manipulate the remote to include two push URLs. Instead of adding a second remote, you simply add a second push URL to the existing remote.&lt;/p&gt;
+&lt;p&gt;For example, adding a BitBucket URL to the remote called "origin":&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git remote &lt;span class="nb"&gt;set&lt;/span&gt;-url origin --add git@bitbucket.org:alanorth/repo.git
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;After that the remote looks like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git remote -v
+origin  git@github.com:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;fetch&lt;span class="o"&gt;)&lt;/span&gt;
+origin  git@github.com:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;push&lt;span class="o"&gt;)&lt;/span&gt;
+origin  git@bitbucket.org:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;push&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now there are two push URLs, so every time you push it will go to both remotes, while pull or update operations will only come from the URL labeled "fetch".&lt;/p&gt;
+&lt;p&gt;You're welcome. ;)&lt;/p&gt;
+&lt;p&gt;This was &lt;a href="https://mjanja.ch/2015/05/simultaneously-pushing-to-two-remotes-in-a-git-repository/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Sun, 10 May 2015 16:40:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2015-05-10:2015/05/pushing-two-git-remotes.html</guid><category>linux</category><category>git</category></item><item><title>Ramping up the Ethiopia LUG</title><link>https://nairobilug.or.ke/2015/04/ramping-up-ethiopia-lug.html</link><description>&lt;p&gt;Today I had the pleasure of participating in a rare meeting of the Ethiopia GNU/Linux Users Group at the &lt;a href="http://www.iceaddis.com"&gt;iceaddis&lt;/a&gt; co-working space in Addis Ababa. In all the years I've lived in Kenya, and all the times I've been to Ethiopia, I've never heard anything about Linux or open-source software groups in the community. But alas, they do exist! I enlisted the help of some friends in Addis and planned to arrange a meeting the next time I went to Ethiopia.&lt;/p&gt;
+&lt;p&gt;Much to my surprise the Linux Users Group has been in existence for a few years, and even has a fairly active &lt;a href="https://groups.google.com/forum/#!forum/linux-ethiopia"&gt;mailing list&lt;/a&gt; (albeit a bit off topic!). The list is active enough that, when we sent word of the meeting, several people replied stating interest and one actually showed up to the meeting!&lt;/p&gt;
+&lt;p&gt;The meeting was small, short, and sweet. In addition to our one Internet person, I brought a few of my Addis friends and colleagues. Seven people taking time out of their Saturday to talk about free, libre, open-source software and community. Not a bad start!&lt;/p&gt;
+&lt;h3&gt;A good start&lt;/h3&gt;
+&lt;p&gt;I opened the meeting by giving a brief background of the Nairobi GNU/Linux Users Group; from a few of us trading hashtags on Twitter to regular monthly meetings, an active &lt;a href="https://groups.google.com/forum/#!forum/nairobi-gnu"&gt;mailing list&lt;/a&gt;, &lt;a href="https://kiwiirc.com/client/irc.freenode.net/#nairobilug"&gt;lively IRC channel&lt;/a&gt;, &lt;a href="https://github.com/nairobilug/nairobilug.or.ke"&gt;democratically managed website&lt;/a&gt;, etc. On second thought it wasn't very brief, but I'm sure it was entertaining and insightful. ;)&lt;/p&gt;
+&lt;p&gt;We talked about some ways to ramp up the group:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Networking with other groups like &lt;a href="https://ubuntu-za.org"&gt;Ubuntu ZA&lt;/a&gt; and &lt;a href="http://www.linux.or.ug"&gt;Uganda LUG&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Different formats for users group meetings, like alternating between informal and giving presentations&lt;/li&gt;
+&lt;li&gt;Raising the profile of Linux and free, libre, open-source software in Ethiopia&lt;/li&gt;
+&lt;li&gt;Creating a community of people with common interests who can tip each other off about job opportunities, go rafting down the Nile together, recommend books to each other, etc (seriously!)&lt;/li&gt;
+&lt;li&gt;Relationships with other users groups in Addis, like the &lt;a href="https://addis.meteor.com"&gt;Meteor.js group&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Generally, I drew parallels between the early days of the Nairobi GNU/Linux Users Group and the current state of the Ethiopian group in Addis. My advice was for them to create a website and draw on social media to drive users to their mailing list to keep discussions going.&lt;/p&gt;
+&lt;h3&gt;Eyob's GitHub shirt&lt;/h3&gt;
+&lt;p&gt;Here's a shoutout to Eyob, who saw the message on the mailing list and bothered to show up. I had brought a GitHub shirt with me to give out and it just seemed right to give it to him!&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Eyob with his new GitHub shirt" src="/images/addis-meetup-2015-04-25.jpg" title="Eyob with his new GitHub shirt" /&gt;&lt;/p&gt;
+&lt;p&gt;Hopefully that's motivation for people to show up to meetings from time to time! Also, I think he might be the first one in Addis with a GitHub shirt. w00t?&lt;/p&gt;
+&lt;h3&gt;Linux users' couches&lt;/h3&gt;
+&lt;p&gt;I joked that I'd like to be able to take a road trip from Addis to Cape Town and sleep on Linux users' couches in cities all along the way. It's a bit of an oversimplification, but the point is that we're building networks. Whether you're looking for help on your Ubuntu machine, trying to find potential employees to manage your servers, or just need a place to sleep in Pretoria, we are building networks to connect people.&lt;/p&gt;
+&lt;p&gt;Thanks to everyone that came to the meeting. Stay tuned for the next one! So long, and thanks for all the ቡና!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Sat, 25 Apr 2015 21:01:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2015-04-25:2015/04/ramping-up-ethiopia-lug.html</guid><category>meetup</category></item><item><title>Leveraging the Ansible Python API for infrastructure reporting</title><link>https://nairobilug.or.ke/2015/01/ansible-api-reporting.html</link><description>&lt;p&gt;A few days ago I had to get some basic information from a handful of servers for an inventory report; just basic stuff like hostname, IP address, storage capacity, distro version, etc. I already manage all of my servers with Ansible, and there's a wealth of information available in Ansible's &lt;code&gt;setup&lt;/code&gt; module, so I knew there had to be a clever way to do this.&lt;/p&gt;
+&lt;p&gt;Somehow I stumbled upon &lt;a href="http://docs.ansible.com/developing_api.html"&gt;Ansible's Python API&lt;/a&gt;, which solves this problem elegantly! It helped that other people are doing cool things and &lt;a href="http://jpmens.net/2012/12/13/obtaining-remote-data-with-ansible-s-api/"&gt;writing about their experiences&lt;/a&gt; too.&lt;/p&gt;
+&lt;h2&gt;Enter ansible.runner&lt;/h2&gt;
+&lt;p&gt;According to the documentation, the Python API is:
+&lt;blockquote&gt;[...] very powerful, and is how the ansible CLI and ansible-playbook are implemented.&lt;/blockquote&gt;&lt;/p&gt;
+&lt;p&gt;Indeed! Using &lt;code&gt;ansible.runner&lt;/code&gt; I whipped something up and extracted data from several dozen servers in just a few minutes (and I don't even know Python!):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;./ansible-runner.py
+mjanjavm10, 2, 30, Ubuntu 14.04, 192.168.7.34
+mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I had to massage the data a bit to get clean numbers for RAM and storage capacity, but other than that it was extremely straightforward (as most things with Ansible generally are).&lt;/p&gt;
+&lt;h2&gt;The code&lt;/h2&gt;
+&lt;p&gt;Here's the source code for the &lt;em&gt;ansible-runner.py&lt;/em&gt; script above:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;ansible.runner&lt;/span&gt;
+
+&lt;span class="c"&gt;# hosts to contact&lt;/span&gt;
+&lt;span class="n"&gt;hostlist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;virtual&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="c"&gt;# MiB -&amp;gt; GiB&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;mibs_to_gibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mibs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mibs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt;
+
+&lt;span class="c"&gt;# KiB -&amp;gt; GiB&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;kibs_to_gibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kibs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kibs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt;
+
+&lt;span class="c"&gt;# bytes -&amp;gt; GiB&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;bytes_to_gibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num_bytes&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num_bytes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;parse_results&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;results&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;results&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;contacted&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="n"&gt;memory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mibs_to_gibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_memtotal_mb&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+        &lt;span class="c"&gt;# enumerate all disk devices to get total capacity&lt;/span&gt;
+        &lt;span class="n"&gt;disk_total_capacity&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;disk_device&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_devices&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iterkeys&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+            &lt;span class="n"&gt;disk_sectors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_devices&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;disk_device&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;sectors&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+            &lt;span class="n"&gt;disk_sectors_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_devices&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;disk_device&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;sectorsize&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+            &lt;span class="n"&gt;disk_bytes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;disk_sectors&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;disk_sectors_size&lt;/span&gt;
+
+            &lt;span class="n"&gt;disk_total_capacity&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;bytes_to_gibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;disk_bytes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="n"&gt;os&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt; &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_distribution&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_distribution_version&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+        &lt;span class="n"&gt;ip&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_default_ipv4&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;address&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%.0f&lt;/span&gt;&lt;span class="s"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%2.0f&lt;/span&gt;&lt;span class="s"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;memory&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;disk_total_capacity&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ip&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ansible&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;runner&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Runner&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="n"&gt;module_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;setup&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;module_args&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;remote_user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;provisioning&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;sudo&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;pattern&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;hostlist&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;forks&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="n"&gt;parse_results&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;results&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c"&gt;# vim: set sw=4 ts=4:&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Feel free to use, improve, and share it.&lt;/p&gt;
+&lt;p&gt;This was &lt;a href="https://mjanja.ch/2015/01/leveraging-the-ansible-python-api-for-infrastructure-reporting/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Wed, 21 Jan 2015 16:40:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2015-01-21:2015/01/ansible-api-reporting.html</guid><category>linux</category><category>ansible</category></item><item><title>Maps and custom error pages in nginx</title><link>https://nairobilug.or.ke/2014/12/maps-and-custom-error-pages-nginx.html</link><description>&lt;p&gt;During a recent web application upgrade I had to limit access to the the web servers; I wanted the administrators and myself to be able to access the site, but for everyone else to see an "&lt;em&gt;Under Construction&lt;/em&gt;" page. My initial plan was to test if the &lt;code&gt;$remote_addr&lt;/code&gt; was one of the allowed IPs, and then redirect those clients to a maintenance page, but I couldn't figure out how to test more than one IP address (seriously)!&lt;/p&gt;
+&lt;p&gt;I eventually stumbled upon the &lt;a href="http://nginx.org/en/docs/http/ngx_http_map_module.html"&gt;nginx map module&lt;/a&gt; which, combined with a custom error page, ended up being an elegant, fun solution to this problem.&lt;/p&gt;
+&lt;h3&gt;Elegant maps&lt;/h3&gt;
+&lt;p&gt;Here is a snippet from &lt;em&gt;/etc/nginx/conf.d/default.conf&lt;/em&gt; which shows the important bits:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;
+
+    &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;denied&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+            &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;HTTP&lt;/span&gt; &lt;span class="m"&gt;503&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;unavailable&lt;/span&gt;
+            &lt;span class="n"&gt;return&lt;/span&gt; &lt;span class="m"&gt;503&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+         &lt;span class="p"&gt;}&lt;/span&gt;
+
+         &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nt"&gt;Send&lt;/span&gt; &lt;span class="nt"&gt;requests&lt;/span&gt; &lt;span class="nt"&gt;to&lt;/span&gt; &lt;span class="nt"&gt;Tomcat&lt;/span&gt;
+         &lt;span class="nt"&gt;proxy_pass&lt;/span&gt; &lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;127&lt;/span&gt;&lt;span class="nc"&gt;.0.0.1&lt;/span&gt;&lt;span class="nd"&gt;:8443&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;}&lt;/span&gt;
+
+    &lt;span class="nt"&gt;error_page&lt;/span&gt; &lt;span class="nt"&gt;503&lt;/span&gt; &lt;span class="k"&gt;@maintenance&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="k"&gt;@maintenance&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nt"&gt;root&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="nt"&gt;rewrite&lt;/span&gt; &lt;span class="o"&gt;^(.*)$&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;maintenance&lt;/span&gt;&lt;span class="nc"&gt;.html&lt;/span&gt; &lt;span class="nt"&gt;break&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+
+&lt;span class="nt"&gt;map&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;remote_addr&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;denied&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;default&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;18&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;216&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;110&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="m"&gt;192&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;64&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;147&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;150&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;By default all IP addresses are denied (ie, &lt;code&gt;$denied=1&lt;/code&gt;), but depending on the client's IP address, the &lt;code&gt;$denied&lt;/code&gt; variable can be set to 0. In the root location block I essentially test if the IP address is denied and conditionally return an HTTP 503 (&lt;em&gt;Service Unavailable&lt;/em&gt;), which is handled by a custom &lt;code&gt;error_page&lt;/code&gt; handler with a named location block. So cool!&lt;/p&gt;
+&lt;h3&gt;In retrospect&lt;/h3&gt;
+&lt;p&gt;In retrospect I probably could have used a regex in the &lt;code&gt;$remote_addr&lt;/code&gt; test, but maps are really a more flexible, efficient, and "nginx" way of accomplishing this. On that note, I'm using nginx more and more lately and, in addition to being fast as hell and having better TLS support, it's just more fun to use than Apache. ;)&lt;/p&gt;
+&lt;p&gt;Furthermore, to deploy this I wrote an Ansible playbook which included a list of allowed IPs and reconfigured the nginx vhost by using a Jinja2 template which iterated over the IPs to create the map block above. Very cool, and very easy to reverse when the maintenance was over!&lt;/p&gt;
+&lt;p&gt;This was originally &lt;a href="https://mjanja.ch/2014/12/maps-and-custom-error-pages-in-nginx/"&gt;posted on&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Tue, 09 Dec 2014 17:00:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2014-12-09:2014/12/maps-and-custom-error-pages-nginx.html</guid><category>linux</category><category>nginx</category></item><item><title>Image compression like Compressor.io, but with open-source tools</title><link>https://nairobilug.or.ke/2014/10/image-compression-open-source.html</link><description>&lt;p&gt;When I first tried &lt;a href="https://compressor.io"&gt;Compressor.io&lt;/a&gt; I was shocked; how can they reduce an image's file size by hundreds of kilobytes or more without downscaling the image and no noticeable loss in quality?  Although it's a cool, free tool, it bothered me that, because I didn't know how to do this myself, I was depending on a "cloud" service to do it for me.  Surely that web service is just a snazzy front end for the free, libre, open-source tools we all know and love?&lt;/p&gt;
+&lt;p&gt;I was pretty sure the answers lay in GraphicsMagick / ImageMagick, but with which options?  What was the magic invocation that would produce the same result?&lt;/p&gt;
+&lt;p&gt;&lt;abbr title="Too long; didn't read"&gt;TL;DR&lt;/abbr&gt;: Strip EXIF data, interlace, convert to 80% quality, and scale to ~50% of original image dimensions.&lt;/p&gt;
+&lt;h3&gt;It's easy!&lt;/h3&gt;
+&lt;p&gt;After a bit of Google-fu I learned that this is easier than I had originally thought.  For example, take this picture of me eating a piece of halloumi cheese:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Alan eating halloumi" src="/images/alan-halloumi.jpg" title="Alan eating halloumi" /&gt;&lt;/p&gt;
+&lt;p&gt;Straight from the fancy DSLR camera the image is &lt;em&gt;3.6 megabytes&lt;/em&gt; -- much too large to share practically on the web.  Amazingly, after uploading to Compressor.io the image is reduced to &lt;em&gt;1.6 megabytes&lt;/em&gt;.  That's an impressive feat considering the image wasn't downscaled and is visually indistinguishable from the original!&lt;/p&gt;
+&lt;p&gt;As it turns out, it's actually pretty easy to achieve this level of savings:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;jpegtran -copy none -progressive -outfile DSC_0685-trimmed.JPG DSC_0685.JPG
+&lt;span class="nv"&gt;$ &lt;/span&gt;gm mogrify DSC_0685-trimmed.JPG -quality 80
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The result is actually &lt;em&gt;better&lt;/em&gt; than Compressor.io:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ls -lht DSC_0685*
+-rw-r--r-- &lt;span class="m"&gt;1&lt;/span&gt; aorth staff 1.4M Oct &lt;span class="m"&gt;14&lt;/span&gt; 21:52 DSC_0685-trimmed.JPG
+-rw-r--r-- &lt;span class="m"&gt;1&lt;/span&gt; aorth staff 1.6M Oct &lt;span class="m"&gt;14&lt;/span&gt; 20:47 DSC_0685-compressor.jpg
+-rw-r--r-- &lt;span class="m"&gt;1&lt;/span&gt; aorth staff 3.6M Jun &lt;span class="m"&gt;28&lt;/span&gt; 11:21 DSC_0685.JPG
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The first operation -- &lt;code&gt;jpegtran&lt;/code&gt; -- is "lossless".  That is, it doesn't change the image data itself, instead optimizing the image's compression algorithm and stripping the EXIF data, and converts to &lt;em&gt;&lt;a href="http://www.bookofspeed.com/chapter5.html"&gt;progressive JPEGs&lt;/a&gt;&lt;/em&gt;.  EXIF data, like GPS coordinates, exposure length, ISO, etc are useful to the photographer or image manipulation software, but not essential when uploading to the web.&lt;/p&gt;
+&lt;p&gt;The second operation -- GraphicsMagick -- is "lossy" because it reduces the image to 80% quality.  GraphicsMagick's &lt;code&gt;mogrify&lt;/code&gt; command is very similar to the &lt;code&gt;convert&lt;/code&gt; command, but it &lt;em&gt;edits files in place&lt;/em&gt; (so be careful!).&lt;/p&gt;
+&lt;h3&gt;Extra points&lt;/h3&gt;
+&lt;p&gt;Even though the file size has reduced by an amazing 60%, the image is actually still pretty massive -- both in terms of file size as well as dimensions.  At &lt;em&gt;4608x3072 pixels&lt;/em&gt; (14MP), the image is still too large for the average computer, tablet, or phone to consume practically.  Keep in mind that, in 2014, most high-end smart phones have a resolution of "only" &lt;em&gt;1920x1080 pixels&lt;/em&gt;!&lt;/p&gt;
+&lt;p&gt;Given that high-end smart phones literally can't even fit more than 50% of this image on the screen, it's safe to assume that we can scale down the dimensions by a factor of at least 50% without sacrificing too much... I'll sympathize with the bandwidth deprived and go for 40%:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;gm convert DSC_0685-trimmed.JPG -resize 40% -quality &lt;span class="m"&gt;80&lt;/span&gt; -interlace Line DSC_0685-trimmed-scaled.JPG
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;After this the file is a mere &lt;em&gt;357 kilobytes&lt;/em&gt;, yet still nearly indistinguishable from the original!&lt;/p&gt;
+&lt;p&gt;This command is a bit of a mystery to me, though.  For some reason, in this particular invocation, &lt;code&gt;convert&lt;/code&gt; yields a smaller file size than &lt;code&gt;mogrify&lt;/code&gt;, even with the same exact options.  Also, even though we converted to progressive with &lt;code&gt;jpegtran&lt;/code&gt; earlier, doing it again here seems to have a substantial effect on the resulting file size (12k in this example).  Oh well, I suppose you can't understand everything all at once. ;)&lt;/p&gt;
+&lt;h3&gt;Great success!&lt;/h3&gt;
+&lt;p&gt;So there you have it, now you get that Compressor.io-like effect from the safety of your own home, with free, libre, open-source software!&lt;/p&gt;
+&lt;p&gt;This was &lt;a href="https://mjanja.ch/2014/10/image-compression-like-compressor-io-but-with-open-source-tools/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Thu, 23 Oct 2014 10:40:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2014-10-23:2014/10/image-compression-open-source.html</guid><category>linux</category><category>images</category><category>photography</category></item><item><title>Update hosts via Ansible to mitigate bash "Shellshock" vulnerability</title><link>https://nairobilug.or.ke/2014/09/ansible-shellshock.html</link><description>&lt;p&gt;On September 24, 2014 someone &lt;a href="http://seclists.org/oss-sec/2014/q3/649" title="CVE-2014-6271: remote code execution through bash"&gt;posted&lt;/a&gt; on the oss-sec mailing list about a &lt;code&gt;bash&lt;/code&gt; vulnerability that likely affects several decades of &lt;code&gt;bash&lt;/code&gt;  versions (something like &lt;code&gt;1.14&lt;/code&gt; - &lt;code&gt;4.3&lt;/code&gt;!).  The vulnerability -- aptly named "Shellshock" -- can lead to remote code execution on un-patched hosts, for example &lt;a href="http://www.nimbo.com/blog/shellshock-heartbleed-2-0"&gt;web servers parsing HTTP environment variables via CGI GET requests&lt;/a&gt;, &lt;a href="https://community.qualys.com/blogs/laws-of-vulnerabilities/2014/09/24/bash-shellshock-vulnerability" title="BASH Shellshock vulnerability - Update3"&gt;sshd configurations using &lt;code&gt;ForceCommand&lt;/code&gt;&lt;/a&gt;, &lt;a href="https://www.trustedsec.com/september-2014/shellshock-dhcp-rce-proof-concept/" title="Shellshock DHCP RCE PoC"&gt;DHCP clients&lt;/a&gt;, etc.&lt;/p&gt;
+&lt;p&gt;Anyways, I'll leave the infosec community to &lt;a href="https://www.dfranke.us/posts/2014-09-27-shell-shock-exploitation-vectors.html" title="Shell Shock Exploitation Vectors"&gt;expound on attack vectors&lt;/a&gt;.  The point of this post is really to illustrate that you should be using an infrastructure orchestration tool like &lt;a href="http://www.ansible.com/home" title="Ansible homepage"&gt;Ansible&lt;/a&gt; to manage your servers.&lt;/p&gt;
+&lt;h3&gt;Painless patching with Ansible&lt;/h3&gt;
+&lt;p&gt;Patching your systems is painlessly easy if you manage your server infrastructure with something like Ansible.  Using a one-off command you can easily update all "web" servers, for example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; ansible web -m apt -a &lt;span class="s2"&gt;&amp;quot;name=bash state=latest update_cache=yes&amp;quot;&lt;/span&gt; -K -s
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;That's great, but what if you have both Ubuntu and CentOS hosts in the "web" group?  CentOS doesn't use &lt;code&gt;apt&lt;/code&gt; for package management, so this has effectively only updated hosts running Debian-family GNU/Linux distros.&lt;/p&gt;
+&lt;h3&gt;Playbooks: the power of Ansible&lt;/h3&gt;
+&lt;p&gt;When you have more than a handful of servers, the combinations of DNS names, IP addresses, roles, and distros becomes overwhelming.  With Ansible you define your inventory of hosts, allocate them into groups, and then write "playbooks" to mold your servers into functional roles, ie web, database, compute, proxy, etc servers; the &lt;a href="https://xkcd.com/910/" title="XKCD coming about naming servers"&gt;personal relationship&lt;/a&gt; between sysadmin and server is gone.&lt;/p&gt;
+&lt;p&gt;Here's a simple playbook I wrote which takes into account the different OS families in our infrastructure and updates the &lt;code&gt;bash&lt;/code&gt; package on each host.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;shellshock.yml&lt;/em&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nn"&gt;---&lt;/span&gt;
+&lt;span class="c1"&gt;# To update hosts for &amp;quot;Shellshock&amp;quot; bash vulnerability&lt;/span&gt;
+&lt;span class="c1"&gt;# See: https://en.wikipedia.org/wiki/Shellshock_(software_bug)&lt;/span&gt;
+
+&lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;hosts&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;all&lt;/span&gt;
+  &lt;span class="l-Scalar-Plain"&gt;sudo&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;yes&lt;/span&gt;
+  &lt;span class="l-Scalar-Plain"&gt;tasks&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Update on Debian-based distros&lt;/span&gt;
+      &lt;span class="l-Scalar-Plain"&gt;apt&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;name=bash state=latest update_cache=yes&lt;/span&gt;
+      &lt;span class="l-Scalar-Plain"&gt;when&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;ansible_os_family == &amp;quot;Debian&amp;quot;&lt;/span&gt;
+
+    &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Update on RedHat-based distros&lt;/span&gt;
+      &lt;span class="l-Scalar-Plain"&gt;yum&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;name=bash state=latest&lt;/span&gt;
+      &lt;span class="l-Scalar-Plain"&gt;when&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;ansible_os_family == &amp;quot;RedHat&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# vim: set sw=2 ts=2:&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And then run the playbook with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; ansible-playbook shellshock.yml -K -s
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In our case we patched twenty-five CentOS 6.x, Debian 6, Debian 7, Ubuntu 12.04, and Ubuntu 14.04 hosts living locally, in Amazon EC2, and in Linode.  With one command.  In less than five minutes!&lt;/p&gt;
+&lt;h3&gt;Stay vigilant!&lt;/h3&gt;
+&lt;p&gt;Vendors started pushing patched versions of &lt;code&gt;bash&lt;/code&gt; on September 26th, two days after the initial disclosure.  Two days after those patched versions were released there were &lt;a href="http://lcamtuf.blogspot.com/2014/09/bash-bug-apply-unofficial-patch-now.html" title="Bash bug: apply Florian"&gt;new variations of this bug discovered&lt;/a&gt;, and new packages issued (and we patched our systems again!).&lt;/p&gt;
+&lt;p&gt;As of now, five days after initial disclosure, there exist five &lt;abbr title="Common Vulnerabilities and Exposures"&gt;CVE&lt;/abbr&gt; identifiers for this bug!  So keep an eye on social media (&lt;a href="https://twitter.com/search?q=%23shellshock" title="#shellshock on Twitter"&gt;#shellshock&lt;/a&gt;?), &lt;a href="https://news.ycombinator.com/" title="Hacker News"&gt;Hacker News&lt;/a&gt;, and &lt;a href="https://shellshocker.net/" title="Shellshock monitoring"&gt;sites monitoring this bug&lt;/a&gt;, because more new vectors may emerge!&lt;/p&gt;
+&lt;p&gt;This was &lt;a href="https://mjanja.ch/2014/09/update-hosts-via-ansible-to-mitigate-bash-shellshock-vulnerability/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Mon, 29 Sep 2014 10:40:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2014-09-29:2014/09/ansible-shellshock.html</guid><category>linux</category><category>ansible</category><category>bash</category><category>security</category></item><item><title>Using swiftclient for object storage on OpenStack</title><link>https://nairobilug.or.ke/2014/07/swiftclient-openstack.html</link><description>&lt;p&gt;I wanted to play with my new account on East African OpenStack provider &lt;a href="http://kili.io/"&gt;Kili.io&lt;/a&gt;, specifically to use the OpenStack Swift object storage to do periodic backups from my desktop.  I'd used tools like &lt;a href="http://s3tools.org/s3cmd"&gt;s3cmd&lt;/a&gt; to do backups to Amazon S3 object storage, but it doesn't seem to work with OpenStack's &lt;a href="http://docs.openstack.org/developer/swift/"&gt;Swift&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.swiftstack.com/docs/integration/python-swiftclient.html"&gt;python-swiftclient&lt;/a&gt; seems to be the answer. These are my notes from getting it set up to backup some data from my desktop to my shiny new OpenStack provider.&lt;/p&gt;
+&lt;h3&gt;See also&lt;/h3&gt;
+&lt;p&gt;Related links and documentation:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://docs.openstack.org/grizzly/openstack-object-storage/admin/content/swift-cli-basics.html"&gt;Swift CLI Basic&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://docs.openstack.org/user-guide/content/managing-openstack-object-storage-with-swift-cli.html"&gt;Manage objects and containers&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Download RC file&lt;/h2&gt;
+&lt;p&gt;This is actually the trickiest part of this whole exercise (you're welcome!).  For an outsider, the OpenStack API jargon is a bit overwhelming.  Luckily, I found that OpenStack provides a shell init script which will set all the shell environment variables you need to get started with &lt;code&gt;swiftclient&lt;/code&gt; (and presumably other OpenStack tools).&lt;/p&gt;
+&lt;p&gt;In the dashboard, navigate to &lt;code&gt;Project -&amp;gt; Compute -&amp;gt; Access &amp;amp; Security -&amp;gt; Download OpenStack RC File&lt;/code&gt;.  We'll need this later.&lt;/p&gt;
+&lt;h2&gt;Create and prepare virtualenv&lt;/h2&gt;
+&lt;p&gt;There's no &lt;code&gt;swiftclient&lt;/code&gt; package in my GNU/Linux distribution, so I decided to just install it into a virtual environment straight from pypi/pip.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; mkvirtualenv -p &lt;span class="sb"&gt;`&lt;/span&gt;which python2&lt;span class="sb"&gt;`&lt;/span&gt; swift
+&lt;span class="gp"&gt;$&lt;/span&gt; pip install python-swiftclient python-keystoneclient
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Setup the environment&lt;/h2&gt;
+&lt;p&gt;Source the environment RC script you downloaded from the OpenStack dashboard:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; . ~/Downloads/aorth-openrc.sh
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;It will prompt you for your OpenStack dashboard password.&lt;/p&gt;
+&lt;h2&gt;Test&lt;/h2&gt;
+&lt;p&gt;Check if the settings are correct:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; swift stat
+&lt;span class="go"&gt;       Account: AUTH_8b0c9cff5d094829b0cf7606a0390c1a&lt;/span&gt;
+&lt;span class="go"&gt;    Containers: 0&lt;/span&gt;
+&lt;span class="go"&gt;       Objects: 0&lt;/span&gt;
+&lt;span class="go"&gt;         Bytes: 0&lt;/span&gt;
+&lt;span class="go"&gt; Accept-Ranges: bytes&lt;/span&gt;
+&lt;span class="go"&gt;        Server: nginx/1.4.7&lt;/span&gt;
+&lt;span class="go"&gt;    Connection: keep-alive&lt;/span&gt;
+&lt;span class="go"&gt;   X-Timestamp: 1406586841.02692&lt;/span&gt;
+&lt;span class="go"&gt;    X-Trans-Id: tx5d47eff065074335a3a9f-0053d7c93e&lt;/span&gt;
+&lt;span class="go"&gt;  Content-Type: text/plain; charset=utf-8&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This means the API key and all other settings are ok, and authentication was successful; you're now ready to use OpenStack CLI tools.&lt;/p&gt;
+&lt;h2&gt;Create a container&lt;/h2&gt;
+&lt;p&gt;You could create a container in the OpenStack dashboard (&lt;code&gt;Object Store -&amp;gt; Containers -&amp;gt; Create Container&lt;/code&gt;), but it's much nicer to be able to do this from the commandline using the API.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; swift post Documents
+&lt;span class="gp"&gt;$&lt;/span&gt; swift list
+&lt;span class="go"&gt;Documents&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Upload files&lt;/h2&gt;
+&lt;p&gt;My use case is to backup Documents from my desktop.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; ~/Documents
+&lt;span class="gp"&gt;$&lt;/span&gt; swift upload Documents *
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; I &lt;code&gt;cd&lt;/code&gt; into the directory I want to upload first, because I found that if I wasn't &lt;em&gt;inside&lt;/em&gt; it, I would end up with another layer of hierarchy in my container itself, ie &lt;code&gt;Documents/Documents&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Check the status of the container:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; swift stat Documents
+&lt;span class="go"&gt;       Account: AUTH_9b0a8aff5d584828b5af7656c0385a1c&lt;/span&gt;
+&lt;span class="go"&gt;     Container: Documents&lt;/span&gt;
+&lt;span class="go"&gt;       Objects: 2691&lt;/span&gt;
+&lt;span class="go"&gt;         Bytes: 262663872&lt;/span&gt;
+&lt;span class="go"&gt;      Read ACL:&lt;/span&gt;
+&lt;span class="go"&gt;     Write ACL:&lt;/span&gt;
+&lt;span class="go"&gt;       Sync To:&lt;/span&gt;
+&lt;span class="go"&gt;      Sync Key:&lt;/span&gt;
+&lt;span class="go"&gt; Accept-Ranges: bytes&lt;/span&gt;
+&lt;span class="go"&gt;        Server: nginx/1.4.7&lt;/span&gt;
+&lt;span class="go"&gt;    Connection: keep-alive&lt;/span&gt;
+&lt;span class="go"&gt;   X-Timestamp: 1406586841.13379&lt;/span&gt;
+&lt;span class="go"&gt;    X-Trans-Id: txbf31671156c64147bd9ad-0053d767c9&lt;/span&gt;
+&lt;span class="go"&gt;  Content-Type: text/plain; charset=utf-8&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Looks good!  ~250MB of data in my &lt;code&gt;Documents&lt;/code&gt; container now, which just about matches the size of the folder on my disk. &lt;/p&gt;
+&lt;h2&gt;Bonus points&lt;/h2&gt;
+&lt;p&gt;Bonus points and future research:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;If I want to call this from a cron job, how do I enter my password?&lt;/li&gt;
+&lt;li&gt;How do I encrypt my backups?&lt;/li&gt;
+&lt;li&gt;Use &lt;code&gt;--skip-identical&lt;/code&gt; to only sync new files&lt;/li&gt;
+&lt;li&gt;What other interfaces are there to this storage, ie can I point a music player at this?&lt;/li&gt;
+&lt;li&gt;Play with public/private read/write ACLs&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Tue, 29 Jul 2014 19:40:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2014-07-29:2014/07/swiftclient-openstack.html</guid><category>linux</category><category>openstack</category><category>swift</category></item><item><title>Parallelizing rsync</title><link>https://nairobilug.or.ke/2014/07/parallelizing-rsync.html</link><description>&lt;p&gt;Last week I had a massive hardware failure on one of the GlusterFS storage nodes in the &lt;a href="http://hpc.ilri.cgiar.org/"&gt;ILRI, Kenya Research Computing cluster&lt;/a&gt;; two drives failed simultaneously on the underlying RAID5. As RAID5 can only withstand one drive failure, the entire 31TB array was toast. FML.&lt;/p&gt;
+&lt;p&gt;After replacing the failed disks, rebuilding the array, and formatting my bricks, I decided I would use &lt;code&gt;rsync&lt;/code&gt; to pre-seed my bricks from the good node before bringing &lt;code&gt;glusterd&lt;/code&gt; back up.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;tl;dr&lt;/em&gt;: &lt;code&gt;rsync&lt;/code&gt; is amazing, but it’s single threaded and struggles when you tell it to sync large directory hierarchies.  &lt;a href="#sync_bricks"&gt;Here's how you can speed it up&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;rsync #fail&lt;/h3&gt;
+&lt;p&gt;I figured syncing the brick hierarchy from the good node to the bad node was simple enough, so I stopped the &lt;code&gt;glusterd&lt;/code&gt; service on the bad node and invoked:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;#&lt;/span&gt; rsync -aAXv --delete --exclude&lt;span class="o"&gt;=&lt;/span&gt;.glusterfs storage0:/path/to/bricks/homes/ storage1:/path/to/bricks/homes/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;After a day or so I noticed I had only copied ~1.5TB (over 1 hop on a dedicated 10GbE switch!), and I realized something must be wrong.  I attached to the &lt;code&gt;rsync&lt;/code&gt; process with &lt;code&gt;strace -p&lt;/code&gt; and saw a bunch of system calls in one particular user’s directory. I dug deeper:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;#&lt;/span&gt; find /path/to/bricks/homes/ukenyatta/maker/genN_datastore/ -type d &lt;span class="p"&gt;|&lt;/span&gt; wc -l
+&lt;span class="go"&gt;1398640&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So this one particular directory in one user's home contained over a million &lt;em&gt;other&lt;/em&gt; directories and $god knows how many files, and this command itself took several hours to finish!  To make matters worse, careful trial and error inspection of other user home directories revealed more massive directory structures as well.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;rsync is single threaded&lt;/li&gt;
+&lt;li&gt;rsync generates a list of files to be synced before it starts the sync&lt;/li&gt;
+&lt;li&gt;MAKER creates a ton of output files/directories&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It's pretty clear (now) that a recursive &lt;code&gt;rsync&lt;/code&gt; on my huge directory hierarchy is out of the question!&lt;/p&gt;
+&lt;h3&gt;rsync #win&lt;/h3&gt;
+&lt;p&gt;I had a look around and saw lots of people complaining about &lt;code&gt;rsync&lt;/code&gt; being "slow" and others suggesting tips to speed it up.  One very promising strategy was described on &lt;a href="https://wiki.ncsa.illinois.edu/display/~wglick/Parallel+Rsync"&gt;this wiki&lt;/a&gt; and there's a great discussion in the comments.&lt;/p&gt;
+&lt;p&gt;Basically, he describes a clever use of &lt;code&gt;find&lt;/code&gt; and &lt;code&gt;xargs&lt;/code&gt; to split up the problem set into smaller pieces that &lt;code&gt;rsync&lt;/code&gt; can process more quickly.&lt;/p&gt;
+&lt;h3&gt;sync_brick.sh&lt;/h3&gt;
+&lt;p&gt;So here's my adaptation of his script for the purpose of syncing failed GlusterFS bricks, &lt;code&gt;sync_brick.sh&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/env bash&lt;/span&gt;
+&lt;span class="c"&gt;# borrowed / adapted from: https://wiki.ncsa.illinois.edu/display/~wglick/Parallel+Rsync&lt;/span&gt;
+
+&lt;span class="c"&gt;# RSYNC SETUP&lt;/span&gt;
+&lt;span class="nv"&gt;RSYNC_PROG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/bin/rsync
+&lt;span class="c"&gt;# note the important use of --relative to use relative paths so we don&amp;#39;t have to specify the exact path on dest&lt;/span&gt;
+&lt;span class="nv"&gt;RSYNC_OPTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-aAXv --numeric-ids --progress --human-readable --delete --exclude=.glusterfs --relative&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;RSYNC_RSH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;ssh -T -c arcfour -o Compression=no -x&amp;quot;&lt;/span&gt;
+
+&lt;span class="c"&gt;# ENV SETUP&lt;/span&gt;
+&lt;span class="nv"&gt;SRCDIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/path/to/good/brick
+&lt;span class="nv"&gt;DESTDIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/path/to/bad/brick
+&lt;span class="c"&gt;# Recommend to match # of CPUs&lt;/span&gt;
+&lt;span class="nv"&gt;THREADS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;4
+&lt;span class="nv"&gt;BAD_NODE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;server1
+
+&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$SRCDIR&lt;/span&gt;
+
+&lt;span class="c"&gt;# COPY&lt;/span&gt;
+&lt;span class="c"&gt;# note the combination of -print0 and -0!&lt;/span&gt;
+find &lt;span class="o"&gt;{&lt;/span&gt;a..z&lt;span class="o"&gt;}&lt;/span&gt;* &lt;span class="o"&gt;{&lt;/span&gt;A..Z&lt;span class="o"&gt;}&lt;/span&gt;* &lt;span class="o"&gt;{&lt;/span&gt;0..9&lt;span class="o"&gt;}&lt;/span&gt;* -mindepth &lt;span class="m"&gt;1&lt;/span&gt; -maxdepth &lt;span class="m"&gt;1&lt;/span&gt; -print0 &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+    xargs -0 -n1 -P&lt;span class="nv"&gt;$THREADS&lt;/span&gt; -I% &lt;span class="se"&gt;\&lt;/span&gt;
+        &lt;span class="nv"&gt;$RSYNC_PROG&lt;/span&gt; &lt;span class="nv"&gt;$RSYNC_OPTS&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;%&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;$BAD_NODE&lt;/span&gt;:&lt;span class="nv"&gt;$DESTDIR&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Pay attention to the source/destination paths, the number of &lt;code&gt;THREADS&lt;/code&gt;, and the &lt;code&gt;BAD_NODE&lt;/code&gt; name, then you should be ready to roll.&lt;/p&gt;
+&lt;h3&gt;The magic, explained&lt;/h3&gt;
+&lt;p&gt;It's a bit of magic, but here are the important parts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;-aAXv&lt;/code&gt; options to &lt;code&gt;rsync&lt;/code&gt; tell it to &lt;strong&gt;archive&lt;/strong&gt;, preserve &lt;strong&gt;ACLs&lt;/strong&gt;, and preserve &lt;strong&gt;eXtended&lt;/strong&gt; attributes.  Extended attributes are &lt;a href="http://joejulian.name/blog/what-is-this-new-glusterfs-directory-in-33"&gt;critically important in GlusterFS &amp;gt;= 3.3&lt;/a&gt;, and also if you're using SELinux.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;--exclude=.glusterfs&lt;/code&gt; option to &lt;code&gt;rsync&lt;/code&gt; tells it to ignore this directory at the root of the directory, as the self-heal daemon -- &lt;code&gt;glustershd&lt;/code&gt; -- will rebuild it based on the files' extended attributes once we restart the &lt;code&gt;glusterd&lt;/code&gt; service.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;--relative&lt;/code&gt; option to &lt;code&gt;rsync&lt;/code&gt; is so we don't have to bother constructing the destination path, as &lt;code&gt;rsync&lt;/code&gt; will imply the path is relative to our destination's top.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;RSYNC_RSH&lt;/code&gt; options influence &lt;code&gt;rsync&lt;/code&gt;'s use of SSH, basically telling it to use very weak encryption and disable any unnecessary features for non-interactive sessions (tty, X11, etc).&lt;/li&gt;
+&lt;li&gt;Using &lt;code&gt;find&lt;/code&gt; with &lt;code&gt;-mindepth 1&lt;/code&gt; and &lt;code&gt;-maxdepth 1&lt;/code&gt; just means we concentrate on files/directories 1 level below each directory in our immediate hierarchy.
+-Using &lt;code&gt;xargs&lt;/code&gt; with &lt;code&gt;-n1&lt;/code&gt; and &lt;code&gt;-P&lt;/code&gt; tells it to use 1 argument per command line, and to launch &lt;code&gt;$THREADS&lt;/code&gt; number of processes at a time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Hope this helps!&lt;/p&gt;
+&lt;p&gt;This was &lt;a href="https://mjanja.ch/2014/07/parallelizing-rsync/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Fri, 11 Jul 2014 16:40:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2014-07-11:2014/07/parallelizing-rsync.html</guid><category>linux</category><category>rsync</category></item><item><title>Hacking on the Eudyptula Challenge</title><link>https://nairobilug.or.ke/2014/05/hacking-on-eudyptula.html</link><description>&lt;p&gt;Last weekend a few of us met up at a coffee shop in Nairobi to hack on the &lt;a href="http://eudyptula-challenge.org/"&gt;Eudyptula Challenge&lt;/a&gt;. From their website, the Eudyptula Challenge is:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;... a series of programming exercises for the Linux kernel, that start from a very basic “Hello world” kernel module, moving on up in complexity to getting patches accepted into the main Linux kernel source tree.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;With coffee, anything is possible!&lt;/h2&gt;
+&lt;p&gt;Kaldis Coffee House in downtown Nairobi has free Wi-Fi, coffee, decent food, and it’s not too busy on Saturday mornings, so we got a nice table in the corner and dove in.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Hacking on Eudyptula at Kaldis" src="/images/eudyptula-may-2014.jpg" title="Hacking on Eudyptula at Kaldis" /&gt;&lt;/p&gt;
+&lt;p&gt;While none of us are new to GNU/Linux or development, it still took us several hours to set up our build environments, text editors, email clients, and to read up on the Linux kernel’s build system and programming conventions. We learned a lot, and had a good time doing it!&lt;/p&gt;
+&lt;h2&gt;Little penguins...&lt;/h2&gt;
+&lt;p&gt;BTW, &lt;em&gt;&lt;a href="https://en.wikipedia.org/wiki/Eudyptula"&gt;Eudyptula&lt;/a&gt;&lt;/em&gt; is the scientific classification for a genus of penguins containing two species; the little blue penguin and the white-flippered penguin. The more you know.™ ;)&lt;/p&gt;
+&lt;p&gt;This was originally &lt;a href="https://mjanja.ch/2014/05/hacking-on-the-eudyptula-challenge/"&gt;posted on&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Mon, 26 May 2014 23:00:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2014-05-26:2014/05/hacking-on-eudyptula.html</guid><category>linux</category><category>programming</category></item><item><title>Meetup Summary (March, 2014)</title><link>https://nairobilug.or.ke/2014/03/meetup-march-2014.html</link><description>&lt;p&gt;11 or 12 people showed up, including two first-time members (hi, Ken and friend!).  Off the top of my head, the topics discussed included:&lt;/p&gt;
+&lt;h3&gt;Serious stuff&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Using GPG Public Keys for signing and encrypting emails (standards, terminology, motivation, etc)&lt;ul&gt;
+&lt;li&gt;Several members have, in the last weeks, set up and exchanged keys&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Scheduling a key-signing party where attendees bring their photo IDs and GPG public key IDs so people can verify that their real identity matches their GPG identity on the GPG Public Key Infrastructure and then "sign" eachother's keys&lt;ul&gt;
+&lt;li&gt;Could be Saturday, March 8th?&lt;/li&gt;
+&lt;li&gt;Need to make a push to educate people (via blog post?) so they are prepared for the party (don't come with laptops or expecting to create/publish keys!)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Scheduling a second, more formal LUG meetup every month; perhaps seminars or "lightning" talks&lt;ul&gt;
+&lt;li&gt;The idea would be to give people a forum to share technical things they're doing, and let people practice public speaking skills etc&lt;/li&gt;
+&lt;li&gt;Venue should be somewhere in tao to make it easy for people to be on time, possibly University of Nairobi library (with KENET connections?)&lt;/li&gt;
+&lt;li&gt;Perhaps could be the 3rd Saturday of the month&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Not-so-serious stuff&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Progress of the current Nairobi GNU/Linux Users Group book club book, Stephen King's &lt;em&gt;The Stand&lt;/em&gt;.  sticky and sentinelprime are ~50% through, but emk and raywan haven't started&lt;/li&gt;
+&lt;li&gt;emk's gangsta beard will rival that of Rick Ross soon&lt;/li&gt;
+&lt;li&gt;Proper pronunciation of "Linux" (&lt;a href="http://safalra.com/science/linguistics/linux-pronunciation/"&gt;Linus says "Lih-nux"&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Wat?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Proper pronunciation of "doge"&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Proof that it happened:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Group shot" src="/images/meetup-march-2014.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
+&lt;p&gt;See you for the next meeting (April 5th, 2014!)&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Sun, 02 Mar 2014 21:01:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2014-03-02:2014/03/meetup-march-2014.html</guid><category>KFC</category><category>meetup</category></item><item><title>Meetup Summary (January, 2014)</title><link>https://nairobilug.or.ke/2014/01/meetup-january-2014.html</link><description>&lt;p&gt;A major highlight of the January, 2014 meetup was having sixteen people show up (a new record!).  Other than that, there were lots of lively discussions of technology goings ons, releases, politics etc.&lt;/p&gt;
+&lt;h3&gt;Some topic highlights (from memory):&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;The debate over Debian voting to replace SysV Init with either &lt;a href="http://slashdot.org/story/13/10/28/1621219/debian-to-replace-sysvinit-switch-to-systemd-or-upstart"&gt;Upstart or systemd&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Using GPG for both signatures and encryption of email, and how to manage keychains on multiple computers&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If I missed anything, leave it in the comments (or send a pull request ;).&lt;/p&gt;
+&lt;h3&gt;Proof we were there&lt;/h3&gt;
+&lt;p&gt;Discussing all teh things...&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Group shot" src="/images/meetup-january-2014.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
+&lt;h3&gt;February meetup&lt;/h3&gt;
+&lt;p&gt;Remember, we meet the first Saturday of the month, meaning February's meetup should be February 7th.  See you there!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Sat, 11 Jan 2014 16:00:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2014-01-11:2014/01/meetup-january-2014.html</guid><category>KFC</category><category>meetup</category></item><item><title>Experimenting with AES-NI</title><link>https://nairobilug.or.ke/2013/11/experimenting-with-aesni.html</link><description>&lt;p&gt;Ever since the &lt;a href="https://en.wikipedia.org/wiki/Sandy_Bridge"&gt;Sandy Bridge microarchitecture&lt;/a&gt;, Intel CPUs have been coming with hardware-accelerated &lt;abbr title="Advanced Encryption Standard"&gt;AES&lt;/abbr&gt; support (aka "AES-NI", &lt;em&gt;new instructions&lt;/em&gt;).  I figured it would be interesting see a comparison between AES with and without the hardware acceleration on my &lt;a href="http://ark.intel.com/products/65707"&gt;Intel Core i5-3317U CPU&lt;/a&gt; (Ivy Bridge) on Arch Linux.&lt;/p&gt;
+&lt;p&gt;According to &lt;a href="http://openssl.6102.n7.nabble.com/having-a-lot-of-troubles-trying-to-get-AES-NI-working-td44285.html"&gt;a post&lt;/a&gt; on the OpenSSL Users mailing list, you can force &lt;code&gt;openssl&lt;/code&gt; to avoid hardware AES instructions using the &lt;code&gt;OPENSSL_ia32cap&lt;/code&gt; environment variable.&lt;/p&gt;
+&lt;h2&gt;Benchmarks&lt;/h2&gt;
+&lt;p&gt;First, with AES-NI enabled (the default, on hardware that supports it):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; openssl speed -elapsed -evp aes-128-cbc
+&lt;span class="go"&gt;You have chosen to measure elapsed time instead of user CPU time.&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 16 size blocks: 57196857 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 64 size blocks: 15343650 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 256 size blocks: 3897351 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 1024 size blocks: 978726 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 8192 size blocks: 122310 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;OpenSSL 1.0.1e 11 Feb 2013&lt;/span&gt;
+&lt;span class="go"&gt;built on: Sun Oct 20 14:49:13 CEST 2013&lt;/span&gt;
+&lt;span class="go"&gt;options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx) &lt;/span&gt;
+&lt;span class="go"&gt;compiler: gcc -fPIC -DOPENSSL_PIC -DZLIB -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -Wa,--noexecstack -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -m64 -DL_ENDIAN -DTERMIO -O3 -Wall -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM&lt;/span&gt;
+&lt;span class="go"&gt;The &amp;#39;numbers&amp;#39; are in 1000s of bytes per second processed.&lt;/span&gt;
+&lt;span class="go"&gt;type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes&lt;/span&gt;
+&lt;span class="go"&gt;aes-128-cbc     305049.90k   327331.20k   332573.95k   334071.81k   333987.84k&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then, setting the capability mask to turn off the hardware AES features:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nv"&gt;OPENSSL_ia32cap&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;~0x200000200000000&amp;quot;&lt;/span&gt; openssl speed -elapsed -evp aes-128-cbc
+&lt;span class="go"&gt;You have chosen to measure elapsed time instead of user CPU time.&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 16 size blocks: 27883366 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 64 size blocks: 7736907 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 256 size blocks: 1949328 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 1024 size blocks: 498847 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 8192 size blocks: 62446 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;OpenSSL 1.0.1e 11 Feb 2013&lt;/span&gt;
+&lt;span class="go"&gt;built on: Sun Oct 20 14:49:13 CEST 2013&lt;/span&gt;
+&lt;span class="go"&gt;options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx) &lt;/span&gt;
+&lt;span class="go"&gt;compiler: gcc -fPIC -DOPENSSL_PIC -DZLIB -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -Wa,--noexecstack -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -m64 -DL_ENDIAN -DTERMIO -O3 -Wall -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM&lt;/span&gt;
+&lt;span class="go"&gt;The &amp;#39;numbers&amp;#39; are in 1000s of bytes per second processed.&lt;/span&gt;
+&lt;span class="go"&gt;type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes&lt;/span&gt;
+&lt;span class="go"&gt;aes-128-cbc     148711.29k   165054.02k   166342.66k   170273.11k   170519.21k&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You can see that hardware-accelerated AES is pretty consistently &lt;strong&gt;twice&lt;/strong&gt; as fast as the implementation without &lt;em&gt;aesni&lt;/em&gt;.  So it's not an exponential win, but getting &lt;strong&gt;twice&lt;/strong&gt; the performance is certainly very serious!  This is great for not only for servers using AES encryption (SSL/TLS, hello!), but also for consumers wanting to connect to said servers as well as things like full-disk encryption.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; It seems Arch Linux's OpenSSL is built with AES-NI support but not as an &lt;em&gt;engine&lt;/em&gt;, so &lt;code&gt;openssl speed&lt;/code&gt; could be misleading (ie, you'd see no difference with or without the capabilities masked).  To get the AES-NI support you need to use &lt;code&gt;-evp&lt;/code&gt; ("envelope") mode, which is some sort of &lt;a href="http://wiki.openssl.org/index.php/EVP"&gt;high-level interface&lt;/a&gt; for crypto functions in OpenSSL.&lt;/p&gt;
+&lt;p&gt;This was originally &lt;a href="https://mjanja.ch/2013/11/disabling-aes-ni-on-linux-openssl/"&gt;posted on&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Sun, 10 Nov 2013 13:00:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2013-11-10:2013/11/experimenting-with-aesni.html</guid><category>linux</category><category>crypto</category></item><item><title>Meetup Summary (November, 2013)</title><link>https://nairobilug.or.ke/2013/11/meetup-november-2013.html</link><description>&lt;p&gt;A major highlight of the November, 2013 meetup was having fourteen people show up; this was perhaps the most successful meetup since we began in 2012... Other than that, there were lots of lively discussions of technology goings ons, releases, politics etc.&lt;/p&gt;
+&lt;h3&gt;Some topic highlights (from memory):&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Fedora 20 beta (and therefore final) &lt;a href="https://lists.fedoraproject.org/pipermail/devel/2013-October/190689.html"&gt;being delayed by one week&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://blogs.cisco.com/collaboration/open-source-h-264-removes-barriers-webrtc"&gt;Cisco releasing a BSD-licensed H.264 implementation&lt;/a&gt; (as well as binaries) and footing the licensing bill for users of the binary (ie, Mozilla Firefox, who &lt;a href="https://blog.mozilla.org/blog/2013/10/30/video-interoperability-on-the-web-gets-a-boost-from-ciscos-h-264-codec/"&gt;has said&lt;/a&gt; they will integrate this)&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.openbsd.org/54.html"&gt;OpenBSD 5.4 release&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The debate over Debian voting to replace SysV Init with either &lt;a href="http://slashdot.org/story/13/10/28/1621219/debian-to-replace-sysvinit-switch-to-systemd-or-upstart"&gt;Upstart or systemd&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;How to best use the recently-registered &lt;a href="https://twitter.com/nairobilug"&gt;@nairobilug&lt;/a&gt; twitter account&lt;/li&gt;
+&lt;li&gt;How POSIX is limiting innovation (and the creep of "Linux-isms" into POSIX)&lt;/li&gt;
+&lt;li&gt;RAID vs JBOD&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;telnet&lt;/code&gt; as a TCP/IP swiss army knife&lt;/li&gt;
+&lt;li&gt;Processes vs threads&lt;/li&gt;
+&lt;li&gt;The epic ending of last month's Nairobi GNU/Linux Users Group book club book, &lt;em&gt;The Picture of Dorian Gray&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The possibility of going whitewater rafting in Uganda in December (as the Nairobi GNU/Linux Users Group "Outdoor Explorers", a related, but unofficial affiliate of the LUG)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If I missed anything, leave it in the comments (or send a pull request ;).&lt;/p&gt;
+&lt;h3&gt;Proof we were there&lt;/h3&gt;
+&lt;p&gt;Discussing all teh things...&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Group shot" src="/images/meetup-november-2013.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
+&lt;h3&gt;December meetup&lt;/h3&gt;
+&lt;p&gt;Remember, we meet the first Saturday of the month, meaning December's meetup should be December 7th.  See you there!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alan Orth</dc:creator><pubDate>Sat, 02 Nov 2013 22:33:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2013-11-02:2013/11/meetup-november-2013.html</guid><category>KFC</category><category>meetup</category></item></channel></rss>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="https://nairobilug.or.ke/2013/11/experimenting-with-aesni.html" />
+
+    <title>  Nairobi LUG &mdash; Experimenting with AES-NI
+</title>
+
+      <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196">
+      <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+      <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+      <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+      <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+
+      <link type="application/atom+xml" rel="alternate" href="/feed/atom.xml"  title="Nairobi LUG Atom Feed">
+
+    <link rel="stylesheet" href="https://nairobilug.or.ke/theme/css/style.css">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-59440070-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+    <meta name="author" content="Alan Orth">
+    <meta name="description" content="Experimenting with hardware-accelerated AES on Sandy Bridge+ chipsets">
+  <meta name="tags" contents="linux, crypto, ">
+</head>
+
+<body>
+<header class="header">
+  <div class="container">
+      <div class="header-image pull-left">
+        <a class="nodec" href="https://nairobilug.or.ke"><img src=/images/profile.svg width="200" height="200"></a>
+      </div>
+    <div class="header-inner">
+      <h1 class="header-name">
+        <a class="nodec" href="https://nairobilug.or.ke">Nairobi LUG</a>
+      </h1>
+      <h3 class="header-text">Nairobi GNU/Linux Users Group</h3>
+      <ul class="header-menu list-inline">
+          <li><a class="nodec" href="https://kiwiirc.com/client/irc.freenode.net/#nairobilug" target="_blank">IRC</a></li>
+          <li><a class="nodec" href="https://groups.google.com/forum/#!forum/nairobi-gnu" target="_blank">Mailing List</a></li>
+              <li class="muted">|</li>
+            <li><a class="nodec" href="https://nairobilug.or.ke/2013/10/pages/about-us.html">About Us</a></li>
+              <li class="muted">|</li>
+          <li><a class="nodec icon-github" href="https://github.com/nairobilug"></a></li>
+          <li><a class="nodec icon-twitter" href="https://twitter.com/nairobilug"></a></li>
+          <li><a class="nodec icon-rss" href="/feed/atom.xml"></a></li>
+      </ul>
+    </div>
+  </div>
+</header> <!-- /.header -->  <div class="container">
+  <div class="post full-post">
+    <h1 class="post-title">
+      <a href="/2013/11/experimenting-with-aesni.html" title="Permalink to Experimenting with AES-NI">Experimenting with AES-NI</a>
+    </h1>
+    <ul class="list-inline">
+      <li class="post-date">
+        <a class="text-muted" href="/2013/11/experimenting-with-aesni.html" title="2013-11-10T13:00:00+03:00">Sun 10 November 2013</a>
+      </li>
+      <li class="muted">&middot;</li>
+      <li class="post-category">
+        <a href="https://nairobilug.or.ke/category/linux.html">Linux</a>
+      </li>
+        <li class="muted">&middot;</li>
+        <li>
+            <a href="/tag/linux.html">linux</a>,             <a href="/tag/crypto.html">crypto</a>        </li>
+        <li class="muted">&middot;</li>
+        <li>
+          <address class="post-author">
+            By <a href="https://nairobilug.or.ke/author/alan-orth.html">Alan Orth</a>
+          </address>
+        </li>
+    </ul>
+    <div class="post-content">
+      <p>Ever since the <a href="https://en.wikipedia.org/wiki/Sandy_Bridge">Sandy Bridge microarchitecture</a>, Intel CPUs have been coming with hardware-accelerated <abbr title="Advanced Encryption Standard">AES</abbr> support (aka "AES-NI", <em>new instructions</em>).  I figured it would be interesting see a comparison between AES with and without the hardware acceleration on my <a href="http://ark.intel.com/products/65707">Intel Core i5-3317U CPU</a> (Ivy Bridge) on Arch Linux.</p>
+<p>According to <a href="http://openssl.6102.n7.nabble.com/having-a-lot-of-troubles-trying-to-get-AES-NI-working-td44285.html">a post</a> on the OpenSSL Users mailing list, you can force <code>openssl</code> to avoid hardware AES instructions using the <code>OPENSSL_ia32cap</code> environment variable.</p>
+<h2>Benchmarks</h2>
+<p>First, with AES-NI enabled (the default, on hardware that supports it):</p>
+<div class="highlight"><pre><span class="gp">$</span> openssl speed -elapsed -evp aes-128-cbc
+<span class="go">You have chosen to measure elapsed time instead of user CPU time.</span>
+<span class="go">Doing aes-128-cbc for 3s on 16 size blocks: 57196857 aes-128-cbc&#39;s in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 64 size blocks: 15343650 aes-128-cbc&#39;s in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 256 size blocks: 3897351 aes-128-cbc&#39;s in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 1024 size blocks: 978726 aes-128-cbc&#39;s in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 8192 size blocks: 122310 aes-128-cbc&#39;s in 3.00s</span>
+<span class="go">OpenSSL 1.0.1e 11 Feb 2013</span>
+<span class="go">built on: Sun Oct 20 14:49:13 CEST 2013</span>
+<span class="go">options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx) </span>
+<span class="go">compiler: gcc -fPIC -DOPENSSL_PIC -DZLIB -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -Wa,--noexecstack -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -m64 -DL_ENDIAN -DTERMIO -O3 -Wall -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM</span>
+<span class="go">The &#39;numbers&#39; are in 1000s of bytes per second processed.</span>
+<span class="go">type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes</span>
+<span class="go">aes-128-cbc     305049.90k   327331.20k   332573.95k   334071.81k   333987.84k</span>
+</pre></div>
+
+
+<p>Then, setting the capability mask to turn off the hardware AES features:</p>
+<div class="highlight"><pre><span class="gp">$</span> <span class="nv">OPENSSL_ia32cap</span><span class="o">=</span><span class="s2">&quot;~0x200000200000000&quot;</span> openssl speed -elapsed -evp aes-128-cbc
+<span class="go">You have chosen to measure elapsed time instead of user CPU time.</span>
+<span class="go">Doing aes-128-cbc for 3s on 16 size blocks: 27883366 aes-128-cbc&#39;s in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 64 size blocks: 7736907 aes-128-cbc&#39;s in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 256 size blocks: 1949328 aes-128-cbc&#39;s in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 1024 size blocks: 498847 aes-128-cbc&#39;s in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 8192 size blocks: 62446 aes-128-cbc&#39;s in 3.00s</span>
+<span class="go">OpenSSL 1.0.1e 11 Feb 2013</span>
+<span class="go">built on: Sun Oct 20 14:49:13 CEST 2013</span>
+<span class="go">options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx) </span>
+<span class="go">compiler: gcc -fPIC -DOPENSSL_PIC -DZLIB -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -Wa,--noexecstack -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -m64 -DL_ENDIAN -DTERMIO -O3 -Wall -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM</span>
+<span class="go">The &#39;numbers&#39; are in 1000s of bytes per second processed.</span>
+<span class="go">type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes</span>
+<span class="go">aes-128-cbc     148711.29k   165054.02k   166342.66k   170273.11k   170519.21k</span>
+</pre></div>
+
+
+<p>You can see that hardware-accelerated AES is pretty consistently <strong>twice</strong> as fast as the implementation without <em>aesni</em>.  So it's not an exponential win, but getting <strong>twice</strong> the performance is certainly very serious!  This is great for not only for servers using AES encryption (SSL/TLS, hello!), but also for consumers wanting to connect to said servers as well as things like full-disk encryption.</p>
+<p><strong>Note:</strong> It seems Arch Linux's OpenSSL is built with AES-NI support but not as an <em>engine</em>, so <code>openssl speed</code> could be misleading (ie, you'd see no difference with or without the capabilities masked).  To get the AES-NI support you need to use <code>-evp</code> ("envelope") mode, which is some sort of <a href="http://wiki.openssl.org/index.php/EVP">high-level interface</a> for crypto functions in OpenSSL.</p>
+<p>This was originally <a href="https://mjanja.ch/2013/11/disabling-aes-ni-on-linux-openssl/">posted on</a> on my personal blog; re-posted here for posterity.</p>
+    </div>
+  </div>
+  <hr class="separator">
+  <div class="col-md-8 col-md-offset-2">
+  <div id="disqus_thread">
+    <script>
+      var disqus_shortname = 'nairobilug';
+      (function() {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] ||
+         document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript=nairobilug">
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a href="https://disqus.com" class="dsq-brlink">
+      blog comments powered by <span class="logo-disqus">Disqus</span>
+    </a>
+  </div>
+  </div>
+  </div>
+<footer class="footer">
+  <div class="container">
+    <p class="text-center">
+      Multiple, <a href="" target="_blank"></a> unless otherwise noted.
+    </p>
+    <div class="text-center">
+      Generated by <a href="http://getpelican.com" target="_blank">Pelican</a> with the <a href="http://github.com/nairobilug/pelican-alchemy">alchemy</a> theme.
+    </div>
+  </div>
+</footer> <!-- /.footer -->
+  <script src="https://nairobilug.or.ke/theme/js/jquery.min.js"></script>
+  <script src="https://nairobilug.or.ke/theme/js/bootstrap.min.js"></script>
+</body> <!-- 42 -->
+
+</html>

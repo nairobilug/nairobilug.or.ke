@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="https://nairobilug.or.ke/2015/06/cron-systemd-timers.html" />
+
+    <title>  Nairobi LUG &mdash; Replacing cron jobs with systemd timers
+</title>
+
+      <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196">
+      <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+      <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+      <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+      <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+
+      <link type="application/atom+xml" rel="alternate" href="/feed/atom.xml"  title="Nairobi LUG Atom Feed">
+
+    <link rel="stylesheet" href="https://nairobilug.or.ke/theme/css/style.css">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-59440070-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+    <meta name="author" content="Alan Orth">
+    <meta name="description" content="Using systemd's timer functionality to to replace (and improve) cron jobs">
+  <meta name="tags" contents="linux, systemd, cron, ">
+</head>
+
+<body>
+<header class="header">
+  <div class="container">
+      <div class="header-image pull-left">
+        <a class="nodec" href="https://nairobilug.or.ke"><img src=/images/profile.svg width="200" height="200"></a>
+      </div>
+    <div class="header-inner">
+      <h1 class="header-name">
+        <a class="nodec" href="https://nairobilug.or.ke">Nairobi LUG</a>
+      </h1>
+      <h3 class="header-text">Nairobi GNU/Linux Users Group</h3>
+      <ul class="header-menu list-inline">
+          <li><a class="nodec" href="https://kiwiirc.com/client/irc.freenode.net/#nairobilug" target="_blank">IRC</a></li>
+          <li><a class="nodec" href="https://groups.google.com/forum/#!forum/nairobi-gnu" target="_blank">Mailing List</a></li>
+              <li class="muted">|</li>
+            <li><a class="nodec" href="https://nairobilug.or.ke/2013/10/pages/about-us.html">About Us</a></li>
+              <li class="muted">|</li>
+          <li><a class="nodec icon-github" href="https://github.com/nairobilug"></a></li>
+          <li><a class="nodec icon-twitter" href="https://twitter.com/nairobilug"></a></li>
+          <li><a class="nodec icon-rss" href="/feed/atom.xml"></a></li>
+      </ul>
+    </div>
+  </div>
+</header> <!-- /.header -->  <div class="container">
+  <div class="post full-post">
+    <h1 class="post-title">
+      <a href="/2015/06/cron-systemd-timers.html" title="Permalink to Replacing cron jobs with systemd timers">Replacing cron jobs with systemd timers</a>
+    </h1>
+    <ul class="list-inline">
+      <li class="post-date">
+        <a class="text-muted" href="/2015/06/cron-systemd-timers.html" title="2015-06-08T15:21:00+03:00">Mon 08 June 2015</a>
+      </li>
+      <li class="muted">&middot;</li>
+      <li class="post-category">
+        <a href="https://nairobilug.or.ke/category/linux.html">Linux</a>
+      </li>
+        <li class="muted">&middot;</li>
+        <li>
+            <a href="/tag/linux.html">linux</a>,             <a href="/tag/systemd.html">systemd</a>,             <a href="/tag/cron.html">cron</a>        </li>
+        <li class="muted">&middot;</li>
+        <li>
+          <address class="post-author">
+            By <a href="https://nairobilug.or.ke/author/alan-orth.html">Alan Orth</a>
+          </address>
+        </li>
+    </ul>
+    <div class="post-content">
+      <p>systemd has a timer function that can be used to run tasks periodically -- yes, like <code>cron</code>. There's nothing really wrong with cron, but have you ever tried to debug a cron job on a server? The script runs fine from the command line, but nothing seems to happen when it runs from cron. You quickly type <code>date</code> to see how many seconds until the next minute, adjust the cron job, and wait. Nothing. Repeat. <em>*facedesk*</em></p>
+<p>This is the systemd value proposition in this context: <em>timers can be run on demand</em> from the command line, and <em>their output is logged to the systemd journal</em> where you can see it like any other systemd units.</p>
+<h2>System backups using a timer</h2>
+<p>As an example, I have a simple shell script -- <code>system-backup.sh</code> -- that uses <code>rsync</code> to back up my system to an external USB hard drive once per day. Converting this job to use systemd timers requires the creation of both a <em>timer</em> and a <em>service</em>.</p>
+<p><em>/etc/systemd/system/system-backup.timer</em>:</p>
+<div class="highlight"><pre><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Perform system backup</span>
+
+<span class="k">[Timer]</span>
+<span class="na">OnCalendar</span><span class="o">=</span><span class="s">daily</span>
+
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">timers.target</span>
+</pre></div>
+
+
+<p><em>/etc/systemd/system/system-backup.service</em>:</p>
+<div class="highlight"><pre><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Perform system backup</span>
+
+<span class="k">[Service]</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
+<span class="na">Nice</span><span class="o">=</span><span class="s">19</span>
+<span class="na">IOSchedulingClass</span><span class="o">=</span><span class="s">2</span>
+<span class="na">IOSchedulingPriority</span><span class="o">=</span><span class="s">7</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/root/system-backup.sh</span>
+</pre></div>
+
+
+<p>Start and enable the timer:</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo systemctl start system-backup.timer
+<span class="nv">$ </span>sudo systemctl <span class="nb">enable </span>system-backup.timer
+</pre></div>
+
+
+<p>Starting the timer is necessary because otherwise it wouldn't be active until the next time you rebooted (assuming it was enabled, that is). You can verify that the timer has been started using either of the following commands:</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo systemctl status system-backup.timer
+<span class="nv">$ </span>sudo systemctl list-timers --all
+</pre></div>
+
+
+<h2>What this gets you</h2>
+<p>Using <code>OnCalendar=daily</code> this job will run every day at midnight, similar to cron's <code>@daily</code> keyword. If you ever want to run the job manually you can invoke its service on demand:</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo systemctl start system-backup.service
+</pre></div>
+
+
+<p>Unless you're handling stdout manually in your script (like appending to a log file), any output from will go to the systemd journal. You can see the logs just like you'd do for any other system unit file using <code>journalctl</code>.</p>
+<p>For example, to see logs from this timer since yesterday:</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo journalctl -u system-backup --since<span class="o">=</span><span class="s2">&quot;yesterday&quot;</span>
+</pre></div>
+
+
+<p>I find this much more elegant than appending to, looking through, and rotating log files manually. Furthermore, I like the ability to set CPU and I/O scheduling priorities in the service itself rather than relying on external <code>nice</code> and <code>ionice</code> binaries in the script. :)</p>
+<h2>More information</h2>
+<p>See the following for more information:</p>
+<ul>
+<li><code>man systemd.timer</code></li>
+<li><code>man systemd.service</code></li>
+<li><code>man journalctl</code></li>
+</ul>
+<p>This was <a href="https://mjanja.ch/2015/06/replacing-cron-jobs-with-systemd-timers/">originally posted</a> on my personal blog; re-posted here for posterity.</p>
+    </div>
+  </div>
+  <hr class="separator">
+  <div class="col-md-8 col-md-offset-2">
+  <div id="disqus_thread">
+    <script>
+      var disqus_shortname = 'nairobilug';
+      (function() {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] ||
+         document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript=nairobilug">
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a href="https://disqus.com" class="dsq-brlink">
+      blog comments powered by <span class="logo-disqus">Disqus</span>
+    </a>
+  </div>
+  </div>
+  </div>
+<footer class="footer">
+  <div class="container">
+    <p class="text-center">
+      Multiple, <a href="" target="_blank"></a> unless otherwise noted.
+    </p>
+    <div class="text-center">
+      Generated by <a href="http://getpelican.com" target="_blank">Pelican</a> with the <a href="http://github.com/nairobilug/pelican-alchemy">alchemy</a> theme.
+    </div>
+  </div>
+</footer> <!-- /.footer -->
+  <script src="https://nairobilug.or.ke/theme/js/jquery.min.js"></script>
+  <script src="https://nairobilug.or.ke/theme/js/bootstrap.min.js"></script>
+</body> <!-- 42 -->
+
+</html>
