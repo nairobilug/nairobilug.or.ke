@@ -27,7 +27,20 @@ Someone also pointed out that one of the Universities is still teaching HTML 2.0
 
 There was a slight segway into talks about various conferences, and how in Kenya, there seems to be a dearth of information on things like venues and times. Someone suggested that the organisers might be afraid that the NairobiLUG might criticise them [as it did BRCK](https://nairobilug.or.ke/2015/05/brck-violating-gpl.html)
 
-We laughed that off as unlikely and quickly moved on
+We laughed that off as unlikely and quickly moved on.
+
+### Computer Security
+There was an anecdote to the effect that the security organs in the country might be frowning upon discussions on computer security.
+
+It was also stated that a lot of banks in the country might be using ciphers that are known to be broken and vulnerable for years now, but raising that with the concerned parties is likely to land you in jail, rather than having the issue fixed.
+
+On that chilling note, we moved along swiftly.
+
+### The Kenic/CA Farce
+
+There was a discussion on the news in [this article](http://www.nation.co.ke/news/CA-WiFi-Internet-Rules-Cybercrime/-/1056/2771118/-/mbci1a/-/index.html) regarding Kenic and the Communications Authority requiring registration of gadgets to access Wi-Fi
+
+There was a general consensus that the people who came up with these kind of rules do not understand how the technology works, and willfully refuse to consult with and listen to those who do.
 
 ### Conclusion
 
