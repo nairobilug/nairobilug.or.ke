@@ -25,7 +25,7 @@ Someone also pointed out that one of the Universities is still teaching HTML 2.0
 
 ### Hackathons, Conferences, etc
 
-There was a slight segway into talks about various conferences, and how in Kenya, there seems to be a dearth of information on things like venues and times. Someone suggested that the organisers might be afraid that the NairobiLUG might criticise them [as it did BRCK](https://nairobilug.or.ke/2015/05/brck-violating-gpl.html)
+There was a slight segway into talks about various conferences, and how in Kenya, there seems to be a dearth of information on things like venues and times. Someone suggested that the organisers might be afraid that the NairobiLUG might criticise them [as it did BRCK](https://nairobilug.or.ke/2015/05/brck-violating-gpl.html).
 
 We laughed that off as unlikely and quickly moved on.
 
@@ -38,7 +38,7 @@ On that chilling note, we moved along swiftly.
 
 ### The Kenic/CA Farce
 
-There was a discussion on the news in [this article](http://www.nation.co.ke/news/CA-WiFi-Internet-Rules-Cybercrime/-/1056/2771118/-/mbci1a/-/index.html) regarding Kenic and the Communications Authority requiring registration of gadgets to access Wi-Fi
+There was a discussion on the news in [this article](http://www.nation.co.ke/news/CA-WiFi-Internet-Rules-Cybercrime/-/1056/2771118/-/mbci1a/-/index.html) regarding Kenic and the Communications Authority requiring registration of gadgets to access Wi-Fi.
 
 There was a general consensus that the people who came up with these kind of rules do not understand how the technology works, and willfully refuse to consult with and listen to those who do.
 
@@ -46,4 +46,4 @@ There was a general consensus that the people who came up with these kind of rul
 
 While this is the least attended meetup in a really long time, it turned out to be really fascinating and fun.
 
-I encourage people to show up to the next meeting on 01 August, 2015
+I encourage people to show up to the next meeting on 01 August, 2015.
