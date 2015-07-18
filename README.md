@@ -80,6 +80,10 @@ You can use any web server to view the generated HTML. For example, Python's bui
 
 And now you should see the blog at [http://localhost:8000](http://localhost:8000).
 
+### Get help
+
+If you're having trouble, you can ask for help by creating [an issue](https://github.com/nairobilug/nairobilug.or.ke/issues/new). :smile:
+
 ## Workflow for blog posts
 
 If you're interested in writing a blog post for the site, you need to:
