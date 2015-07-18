@@ -10,30 +10,7 @@ In order to build this, you need to have [Pelican](http://getpelican.com/) insta
 
 ### pyenv quick install
 
-Clone the `pyenv` and `pyenv-virtualenv` repositories to your home folder:
-
-    $ git clone https://github.com/yyuu/pyenv.git ~/.pyenv
-    $ git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
-
-Add the following snippet to your shell's init script, ie `~/.bashrc` or `~/.zshrc`:
-
-```bash
-# Enable pyenv
-# See: https://github.com/yyuu/pyenv#basic-github-checkout
-if [[ -d ~/.pyenv ]]; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-
-    eval "$(pyenv init -)"
-    # optionally enable pyenv-virtualenv
-    # See: https://github.com/yyuu/pyenv-virtualenv
-    if [[ -d ~/.pyenv/plugins/pyenv-virtualenv ]]; then
-        eval "$(pyenv virtualenv-init -)"
-    fi
-fi
-```
-
-This tells your shell to initialize `pyenv` and `pyenv-virtualenv` on startup, so close and re-open your shell to activate it (or run `source ~/.bashrc` OR `source ~/.zshrc` to save yourself the wait time).
+Luckily, pyenv has an automatic installer, [pyenv-installer](https://github.com/yyuu/pyenv-installer). Refer to the pyenv [README](https://github.com/yyuu/pyenv#installation) if you prefer a manual process.
 
 ### Create a virtualenv
 
