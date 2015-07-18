@@ -46,6 +46,12 @@ Once you have `pyenv` installed, create a virtual environment to hold Pelican an
 
 This creates a virtual environment and then activates it. If you want to exit the virtual environment, just type `deactivate`.
 
+### Clone the repo
+
+If you haven't already, clone this repo (or your version of it):
+
+    $ git clone https://github.com/nairobilug/nairobilug.or.ke
+
 ### Install Pelican & friends
 
 Use `pip` to install the list of dependencies into your virtual environment:
@@ -56,7 +62,7 @@ Use `pip` to install the list of dependencies into your virtual environment:
 
 The theme we're using, [pelican-alchemy](https://github.com/nairobilug/pelican-alchemy), is a "git submodule", which means it is maintained as its own separate git repository (with its own git history, project, etc). Submodules are stored in the `.gitmodules` file, and we first need to initialize and clone it before we can build.
 
-Navigate to where you've cloned this [repo](http://github.com/nairobilug/nairobilug.or.ke) and then:
+Navigate to where you've cloned this repo and type:
 
     $ git submodule init
     $ git submodule update
