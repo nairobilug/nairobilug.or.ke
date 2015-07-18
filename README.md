@@ -1,4 +1,5 @@
 # Nairobi GNU/Linux Users Group blog
+
 This is the repository which hosts the code for the [Nairobi GNU/Linux Users Group](https://nairobilug.or.ke) blog. We wanted a fun, nerdy and democratic way to give our community an online presence, so here we are.
 
 ![Screenshot](/screenshot@2x.png?raw=true "Screenshot")
@@ -6,9 +7,11 @@ This is the repository which hosts the code for the [Nairobi GNU/Linux Users Gro
 [![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/nairobilug.png)](https://kiwiirc.com/client/irc.freenode.net/#nairobilug)
 
 ## How to build
+
 In order to build this, you need to have [Pelican](http://getpelican.com/) installed. The easiest way to do this is to use Python virtual environments via [pyenv](https://github.com/yyuu/pyenv) and the [pyenv-virtualenv](https://github.com/yyuu/pyenv-virtualenv) plugin.
 
 ### pyenv quick install
+
 Clone the `pyenv` and `pyenv-virtualenv` repositories to your home folder:
 
     $ git clone https://github.com/yyuu/pyenv.git ~/.pyenv
@@ -35,6 +38,7 @@ fi
 This tells your shell to initialize `pyenv` and `pyenv-virtualenv` on startup, so close and re-open your shell to activate it (or run `source ~/.bashrc` OR `source ~/.zshrc` to save yourself the wait time).
 
 ### Create a virtualenv
+
 Once you have `pyenv` installed, create a virtual environment to hold Pelican and its dependencies:
 
     $ pyenv virtualenv nairobilug
@@ -43,11 +47,13 @@ Once you have `pyenv` installed, create a virtual environment to hold Pelican an
 This creates a virtual environment and then activates it. If you want to exit the virtual environment, just type `deactivate`.
 
 ### Install Pelican & friends
+
 Use `pip` to install the list of dependencies into your virtual environment:
 
     $ pip install -r requirements.txt
 
 ### Theme initialization
+
 The theme we're using, [pelican-alchemy](https://github.com/nairobilug/pelican-alchemy), is a "git submodule", which means it is maintained as its own separate git repository (with its own git history, project, etc). Submodules are stored in the `.gitmodules` file, and we first need to initialize and clone it before we can build.
 
 Navigate to where you've cloned this [repo](http://github.com/nairobilug/nairobilug.or.ke) and then:
@@ -58,6 +64,7 @@ Navigate to where you've cloned this [repo](http://github.com/nairobilug/nairobi
 You only need to do the initialization the first time you build. After that, you can simply use the update command to get the latest submodule changes.
 
 ### Generate the blog
+
 Now that the theme exists, we can build:
 
     $ pelican content
@@ -65,6 +72,7 @@ Now that the theme exists, we can build:
 This takes the Markdown files from the `content` folder and generates static HTML pages inside the `output` directory. That's it. No MySQL, no PHP, etc...
 
 ### View the results
+
 You can use any web server to view the generated HTML. For example, Python's built-in simple HTTP server:
 
     $ cd output
@@ -73,6 +81,7 @@ You can use any web server to view the generated HTML. For example, Python's bui
 And now you should see the blog at [http://localhost:8000](http://localhost:8000).
 
 ## Workflow for blog posts
+
 If you're interested in writing a blog post for the site, you need to:
 
   - Fork the [nairobilug/nairobilug.or.ke](http://github.com/nairobilug/nairobilug.or.ke) repository
@@ -81,4 +90,5 @@ If you're interested in writing a blog post for the site, you need to:
   - Make a pull request against the `master` branch of nairobilug/nairobilug.or.ke
 
 ## Contact
+
 If you have any questions, drop by **#nairobilug** on Freenode. Happy blogging!
