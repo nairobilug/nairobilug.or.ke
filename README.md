@@ -25,7 +25,7 @@ This creates a virtual environment and then activates it. If you want to exit th
 
 If you haven't already, clone this repo (or your version of it):
 
-    $ git clone https://github.com/nairobilug/nairobilug.or.ke
+    $ git clone --recurse-submodules https://github.com/nairobilug/nairobilug.or.ke
 
 ### Install Pelican & friends
 
@@ -33,20 +33,9 @@ Use `pip` to install the list of dependencies (including Pelican) into your virt
 
     $ pip install -r requirements.txt
 
-### Theme initialization
-
-The theme we're using, [pelican-alchemy](https://github.com/nairobilug/pelican-alchemy), is a "git submodule", which means it's maintained as its own separate git repository (with its own git history, project, etc). Submodules are listed in the `.gitmodules` file. We first need to initialize and clone it before we can build.
-
-Navigate to where you've cloned this repo and type:
-
-    $ git submodule init
-    $ git submodule update
-
-You only need to do the initialization the first time you build. After that, you can simply use the `update` command to get the latest submodule changes.
-
 ### Generate the blog
 
-Now that the theme exists, we can build:
+Now that the dependencies exists, we can build:
 
     $ pelican content
 
