@@ -4,8 +4,6 @@ This is the repository which hosts the code for the [Nairobi GNU/Linux Users Gro
 
 ![Screenshot](/screenshot@2x.png?raw=true "Screenshot")
 
-[![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/nairobilug.png)](https://kiwiirc.com/client/irc.freenode.net/#nairobilug)
-
 ## How to build
 
 In order to build this, you need to have [Pelican](http://getpelican.com/) installed. The easiest way to do this is to use Python virtual environments via [pyenv](https://github.com/yyuu/pyenv) and the [pyenv-virtualenv](https://github.com/yyuu/pyenv-virtualenv) plugin.
@@ -102,3 +100,5 @@ If you're interested in writing a blog post for the site, you need to:
 ## Contact
 
 If you have any questions, drop by **#nairobilug** on Freenode. Happy blogging!
+
+[![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/nairobilug.png)](https://kiwiirc.com/client/irc.freenode.net/#nairobilug)
