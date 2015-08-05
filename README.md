@@ -67,6 +67,6 @@ If you're interested in writing a blog post for the site, you need to:
 
 ## Contact
 
-If you have any questions, drop by **#nairobilug** on Freenode. Happy blogging!
+If you have any questions, drop by **#nairobilug** on Freenode, or our [mailing list](https://groups.google.com/group/nairobi-gnu). Happy blogging!
 
 [![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/nairobilug.png)](https://kiwiirc.com/client/irc.freenode.net/#nairobilug)
