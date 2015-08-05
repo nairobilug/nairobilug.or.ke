@@ -10,7 +10,9 @@ In order to build this, you need to have [Pelican](http://getpelican.com/) insta
 
 ### pyenv quick install
 
-Luckily, pyenv has an automatic installer, [pyenv-installer](https://github.com/yyuu/pyenv-installer). Refer to the pyenv [README](https://github.com/yyuu/pyenv#installation) if you prefer a manual process.
+Luckily, pyenv has an automatic installer, [pyenv-installer](https://github.com/yyuu/pyenv-installer). Refer to the pyenv [README](https://github.com/yyuu/pyenv#installation) if you prefer a manual process. The recommended way:
+
+    $ curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
 
 ### Create a virtualenv
 
