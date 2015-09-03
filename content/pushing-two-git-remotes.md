@@ -6,7 +6,7 @@ Slug: pushing-two-git-remotes
 Author: Alan Orth
 Summary: Pushing to two git remotes at once using multiple push URLs for a single remote
 
-Sometimes you need to push commits to two remotes in a git repository -- either for a cheap "backup" of sorts, or for some public / private repository scheme you may have in your organization, etc.
+Sometimes you need to push commits to two remotes in a git repository — either for a cheap "backup" of sorts, or for some public / private repository scheme you may have in your organization, etc.
 
 Let's say you have a repository hosted on GitHub *and* BitBucket (hey, GitHub is king today, but you never know!). You could add a remote for each and push to them individually:
 

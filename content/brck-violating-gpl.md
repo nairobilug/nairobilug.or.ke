@@ -10,7 +10,7 @@ During a recent meeting of the Nairobi GNU/Linux Users Group we discussed [BRCK]
 Public License (GPL). The lively discussion ended up making its way to the web in the form of a [blog
 post](https://nairobilug.or.ke/2015/05/meetup-may-2015.html) on the group's blog.
 
-Their product is based on [OpenWRT](https://openwrt.org/) -- the GNU/Linux distribution geared towards embedded systems -- which is [licensed](http://wiki.openwrt.org/about/license) under the GPL v2. I believe this is problematic for BRCK for a number of reasons that I will enumerate below. When we reached out to BRCK they claimed that they were not in violation because they use "stock unmodified OpenWRT" source code. This claim is repeated verbatim in a [thread on their forum](http://forums.brck.com/t/where-is-the-openwrt-fork-source-at/482/8).
+Their product is based on [OpenWRT](https://openwrt.org/) — the GNU/Linux distribution geared towards embedded systems — which is [licensed](http://wiki.openwrt.org/about/license) under the GPL v2. I believe this is problematic for BRCK for a number of reasons that I will enumerate below. When we reached out to BRCK they claimed that they were not in violation because they use "stock unmodified OpenWRT" source code. This claim is repeated verbatim in a [thread on their forum](http://forums.brck.com/t/where-is-the-openwrt-fork-source-at/482/8).
 
 I had intended this post to be a discussion of the spirit of the GPL ending with me expressing disappointment in BRCK for cowering behind perceived technicalities of the license. After sitting down to read the license, however, it became immediately apparent to me that they are indeed in violation. *\*sigh\**
 
@@ -119,7 +119,7 @@ The implications of Section 2 are less clear, depending on whether or not BRCK i
 
 ## BRCK should know better
 
-BRCK is not the "enemy", but they -- of all people -- should know better. We expect this behavior from large corporations, but not from quasi-community-based organizations operating in the technical sector.
+BRCK is not the "enemy", but they — of all people — should know better. We expect this behavior from large corporations, but not from quasi-community-based organizations operating in the technical sector.
 
 In the end none of this matters unless someone is willing to take BRCK to court over non-compliance. Even if someone was willing to do so, I think it would be sad if it had to come to that. Instead, I hope this serves as a lesson in GPL v2 compliance for Kenyan organizations in the future, and indeed a public record of my findings.
 
