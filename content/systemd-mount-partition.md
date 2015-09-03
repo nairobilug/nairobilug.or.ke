@@ -15,10 +15,10 @@ Summary: Recently, I discovered you can mount partitions using systemd.mount by 
 
 After _RTFM'ing_, I realized, under the hood, systemd just runs [mount command](http://linux.die.net/man/8/mount) to mount the specified partition with the specified mount options listed in the mount unit file. Basically, you need to specify the following options in your unit file:
 
-- `What=` a partition name, path or UUID to mount.
-- `Where=` an absolute path of a directory i.e. path to a mount point. If the mount point is non-existent, it will be created.
-- `Type=` file system type. In most cases [mount command](http://linux.die.net/man/8/mount) auto-detects the file system.
-- `Options=` Mount options to use when mounting.
+- `What=` a partition name, path or UUID to mount
+- `Where=` an absolute path of a directory i.e. path to a mount point. If the mount point is non-existent, it will be created
+- `Type=` file system type. In most cases [mount command](http://linux.die.net/man/8/mount) auto-detects the file system
+- `Options=` Mount options to use when mounting
 
 In the end, you can convert your typical fstab entry such as this:
 ```
@@ -38,7 +38,11 @@ Options=defaults
 ![I Got This!](/images/2015-09-02-systemd-mount-partition/i-got-this.gif)
 
 
-So I wrote a simple systemd mount unit file — `/etc/systemd/system/mnt-backups.mount` — which didn't work at first because I fell victim to one of the `systemd.mount` pitfalls -- _"Mount units must be named after the mount point directories they control. Example: the mount point /home/lennart must be configured in a unit file home-lennart.mount..."_. Huh?? Yes that's right! The unit filename should match the mount point path.
+So I wrote a simple systemd mount unit file — `/etc/systemd/system/mnt-backups.mount` — which didn't work at first because I fell victim to one of the `systemd.mount` pitfalls:
+
+> Mount units must be named after the mount point directories they control. Example: the mount point /home/lennart must be configured in a unit file home-lennart.mount.
+
+Huh? Yes that's right! The unit filename should match the mount point path.
 
 `mnt-backups.mount` mount unit file:
 
