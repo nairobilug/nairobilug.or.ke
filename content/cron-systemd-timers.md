@@ -6,12 +6,12 @@ Slug: cron-systemd-timers
 Author: Alan Orth
 Summary: Using systemd's timer functionality to to replace (and improve) cron jobs
 
-systemd has a timer function that can be used to run tasks periodically -- yes, like `cron`. There's nothing really wrong with cron, but have you ever tried to debug a cron job on a server? The script runs fine from the command line, but nothing seems to happen when it runs from cron. You quickly type `date` to see how many seconds until the next minute, adjust the cron job, and wait. Nothing. Repeat. _\*facedesk\*_
+systemd has a timer function that can be used to run tasks periodically — yes, like `cron`. There's nothing really wrong with cron, but have you ever tried to debug a cron job on a server? The script runs fine from the command line, but nothing seems to happen when it runs from cron. You quickly type `date` to see how many seconds until the next minute, adjust the cron job, and wait. Nothing. Repeat. _\*facedesk\*_
 
 This is the systemd value proposition in this context: _timers can be run on demand_ from the command line, and _their output is logged to the systemd journal_ where you can see it like any other systemd units.
 
 ## System backups using a timer
-As an example, I have a simple shell script -- `system-backup.sh` -- that uses `rsync` to back up my system to an external USB hard drive once per day. Converting this job to use systemd timers requires the creation of both a _timer_ and a _service_.
+As an example, I have a simple shell script — `system-backup.sh` — that uses `rsync` to back up my system to an external USB hard drive once per day. Converting this job to use systemd timers requires the creation of both a _timer_ and a _service_.
 
 _/etc/systemd/system/system-backup.timer_:
 

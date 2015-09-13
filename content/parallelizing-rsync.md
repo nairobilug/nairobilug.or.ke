@@ -71,7 +71,7 @@ Pay attention to the source/destination paths, the number of `THREADS`, and the 
 It's a bit of magic, but here are the important parts:
 
 - The `-aAXv` options to `rsync` tell it to **archive**, preserve **ACLs**, and preserve **eXtended** attributes.  Extended attributes are [critically important in GlusterFS >= 3.3](http://joejulian.name/blog/what-is-this-new-glusterfs-directory-in-33), and also if you're using SELinux.
-- The `--exclude=.glusterfs` option to `rsync` tells it to ignore this directory at the root of the directory, as the self-heal daemon -- `glustershd` -- will rebuild it based on the files' extended attributes once we restart the `glusterd` service.
+- The `--exclude=.glusterfs` option to `rsync` tells it to ignore this directory at the root of the directory, as the self-heal daemon — `glustershd` — will rebuild it based on the files' extended attributes once we restart the `glusterd` service.
 - The `--relative` option to `rsync` is so we don't have to bother constructing the destination path, as `rsync` will imply the path is relative to our destination's top.
 - The `RSYNC_RSH` options influence `rsync`'s use of SSH, basically telling it to use very weak encryption and disable any unnecessary features for non-interactive sessions (tty, X11, etc).
 - Using `find` with `-mindepth 1` and `-maxdepth 1` just means we concentrate on files/directories 1 level below each directory in our immediate hierarchy.

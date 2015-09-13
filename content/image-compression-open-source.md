@@ -17,7 +17,7 @@ After a bit of Google-fu I learned that this is easier than I had originally tho
 
 ![Alan eating halloumi](/images/alan-halloumi.jpg "Alan eating halloumi")
 
-Straight from the fancy DSLR camera the image is _3.6 megabytes_ -- much too large to share practically on the web.  Amazingly, after uploading to Compressor.io the image is reduced to _1.6 megabytes_.  That's an impressive feat considering the image wasn't downscaled and is visually indistinguishable from the original!
+Straight from the fancy DSLR camera the image is _3.6 megabytes_ — much too large to share practically on the web.  Amazingly, after uploading to Compressor.io the image is reduced to _1.6 megabytes_.  That's an impressive feat considering the image wasn't downscaled and is visually indistinguishable from the original!
 
 As it turns out, it's actually pretty easy to achieve this level of savings:
 
@@ -31,12 +31,12 @@ The result is actually _better_ than Compressor.io:
     -rw-r--r-- 1 aorth staff 1.6M Oct 14 20:47 DSC_0685-compressor.jpg
     -rw-r--r-- 1 aorth staff 3.6M Jun 28 11:21 DSC_0685.JPG
 
-The first operation -- `jpegtran` -- is "lossless".  That is, it doesn't change the image data itself, instead optimizing the image's compression algorithm and stripping the EXIF data, and converts to _[progressive JPEGs](http://www.bookofspeed.com/chapter5.html)_.  EXIF data, like GPS coordinates, exposure length, ISO, etc are useful to the photographer or image manipulation software, but not essential when uploading to the web.
+The first operation — `jpegtran` — is "lossless".  That is, it doesn't change the image data itself, instead optimizing the image's compression algorithm and stripping the EXIF data, and converts to _[progressive JPEGs](http://www.bookofspeed.com/chapter5.html)_.  EXIF data, like GPS coordinates, exposure length, ISO, etc are useful to the photographer or image manipulation software, but not essential when uploading to the web.
 
-The second operation -- GraphicsMagick -- is "lossy" because it reduces the image to 80% quality.  GraphicsMagick's `mogrify` command is very similar to the `convert` command, but it _edits files in place_ (so be careful!).
+The second operation — GraphicsMagick — is "lossy" because it reduces the image to 80% quality.  GraphicsMagick's `mogrify` command is very similar to the `convert` command, but it _edits files in place_ (so be careful!).
 
 ### Extra points
-Even though the file size has reduced by an amazing 60%, the image is actually still pretty massive -- both in terms of file size as well as dimensions.  At _4608x3072 pixels_ (14MP), the image is still too large for the average computer, tablet, or phone to consume practically.  Keep in mind that, in 2014, most high-end smart phones have a resolution of "only" _1920x1080 pixels_!
+Even though the file size has reduced by an amazing 60%, the image is actually still pretty massive — both in terms of file size as well as dimensions.  At _4608x3072 pixels_ (14MP), the image is still too large for the average computer, tablet, or phone to consume practically.  Keep in mind that, in 2014, most high-end smart phones have a resolution of "only" _1920x1080 pixels_!
 
 Given that high-end smart phones literally can't even fit more than 50% of this image on the screen, it's safe to assume that we can scale down the dimensions by a factor of at least 50% without sacrificing too much... I'll sympathize with the bandwidth deprived and go for 40%:
 
