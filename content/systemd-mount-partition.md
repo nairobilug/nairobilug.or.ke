@@ -1,4 +1,4 @@
-Title: Mounting Partitions Using Systemd
+Title: Mounting Partitions Using systemd
 Date: 2015-09-02 11:00
 Category: Linux
 Tags: linux, systemd
@@ -7,7 +7,7 @@ Author: James Oguya
 Summary: Recently, I discovered you can mount partitions using systemd.mount by writing a mount unit file. In this blog post, we'll talk about systemd.mount & how you can use it to mount partitions.
 
 
-[Systemd](http://www.freedesktop.org/wiki/Software/systemd) is gradually becoming the de facto init system & service manager replacing the old sysV init scripts & upstart. Recently, I discovered you can mount partitions using [systemd.mount](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) by writing your own `.mount` [systemd unit file](http://www.freedesktop.org/software/systemd/man/systemd.unit.html).
+[systemd](http://www.freedesktop.org/wiki/Software/systemd) is gradually becoming the de facto init system & service manager replacing the old sysV init scripts & upstart. Recently, I discovered you can mount partitions using [systemd.mount](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) by writing your own `.mount` [systemd unit file](http://www.freedesktop.org/software/systemd/man/systemd.unit.html).
 
 
 ![super suprised](/images/2015-09-02-systemd-mount-partition/suprised-cat.jpg)
