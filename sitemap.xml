@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/</loc>
-<lastmod>2015-08-05T21:33:06-00:00</lastmod>
+<lastmod>2015-09-13T14:38:49-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://nairobilug.or.ke/archives.html</loc>
-<lastmod>2015-08-05T21:33:06-00:00</lastmod>
+<lastmod>2015-09-13T14:38:49-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://nairobilug.or.ke/tags.html</loc>
-<lastmod>2015-08-05T21:33:06-00:00</lastmod>
+<lastmod>2015-09-13T14:38:49-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://nairobilug.or.ke/categories.html</loc>
-<lastmod>2015-08-05T21:33:06-00:00</lastmod>
+<lastmod>2015-09-13T14:38:49-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -34,6 +34,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://nairobilug.or.ke/2013/10/pages/about-us.html</loc>
 <lastmod>2013-10-08T13:00:00+03:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://nairobilug.or.ke/2015/09/systemd-mount-partition.html</loc>
+<lastmod>2015-09-02T11:00:00+03:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -278,7 +285,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/category/linux.html</loc>
-<lastmod>2015-08-02T15:21:00+02:27</lastmod>
+<lastmod>2015-09-02T11:00:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -369,7 +376,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/tag/linux.html</loc>
-<lastmod>2015-08-02T15:21:00+02:27</lastmod>
+<lastmod>2015-09-02T11:00:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -425,7 +432,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/tag/systemd.html</loc>
-<lastmod>2015-06-08T15:21:00+02:27</lastmod>
+<lastmod>2015-09-02T11:00:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -579,7 +586,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/author/james-oguya.html</loc>
-<lastmod>2015-03-03T12:35:00+02:27</lastmod>
+<lastmod>2015-09-02T11:00:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

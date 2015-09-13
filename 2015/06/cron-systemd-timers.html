@@ -89,10 +89,10 @@
         </li>
     </ul>
     <div class="post-content">
-      <p>systemd has a timer function that can be used to run tasks periodically -- yes, like <code>cron</code>. There's nothing really wrong with cron, but have you ever tried to debug a cron job on a server? The script runs fine from the command line, but nothing seems to happen when it runs from cron. You quickly type <code>date</code> to see how many seconds until the next minute, adjust the cron job, and wait. Nothing. Repeat. <em>*facedesk*</em></p>
+      <p>systemd has a timer function that can be used to run tasks periodically — yes, like <code>cron</code>. There's nothing really wrong with cron, but have you ever tried to debug a cron job on a server? The script runs fine from the command line, but nothing seems to happen when it runs from cron. You quickly type <code>date</code> to see how many seconds until the next minute, adjust the cron job, and wait. Nothing. Repeat. <em>*facedesk*</em></p>
 <p>This is the systemd value proposition in this context: <em>timers can be run on demand</em> from the command line, and <em>their output is logged to the systemd journal</em> where you can see it like any other systemd units.</p>
 <h2>System backups using a timer</h2>
-<p>As an example, I have a simple shell script -- <code>system-backup.sh</code> -- that uses <code>rsync</code> to back up my system to an external USB hard drive once per day. Converting this job to use systemd timers requires the creation of both a <em>timer</em> and a <em>service</em>.</p>
+<p>As an example, I have a simple shell script — <code>system-backup.sh</code> — that uses <code>rsync</code> to back up my system to an external USB hard drive once per day. Converting this job to use systemd timers requires the creation of both a <em>timer</em> and a <em>service</em>.</p>
 <p><em>/etc/systemd/system/system-backup.timer</em>:</p>
 <div class="highlight"><pre><span class="k">[Unit]</span>
 <span class="na">Description</span><span class="o">=</span><span class="s">Perform system backup</span>
