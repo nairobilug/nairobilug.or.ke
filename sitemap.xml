@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/</loc>
-<lastmod>2015-09-13T14:38:49-00:00</lastmod>
+<lastmod>2015-10-07T16:25:18-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://nairobilug.or.ke/archives.html</loc>
-<lastmod>2015-09-13T14:38:49-00:00</lastmod>
+<lastmod>2015-10-07T16:25:18-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://nairobilug.or.ke/tags.html</loc>
-<lastmod>2015-09-13T14:38:49-00:00</lastmod>
+<lastmod>2015-10-07T16:25:18-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://nairobilug.or.ke/categories.html</loc>
-<lastmod>2015-09-13T14:38:49-00:00</lastmod>
+<lastmod>2015-10-07T16:25:18-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -34,6 +34,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://nairobilug.or.ke/2013/10/pages/about-us.html</loc>
 <lastmod>2013-10-08T13:00:00+03:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://nairobilug.or.ke/2015/10/meetup-october-2015.html</loc>
+<lastmod>2015-10-03T23:18:00+03:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -292,7 +299,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/category/meetups.html</loc>
-<lastmod>2015-07-05T23:18:00+02:27</lastmod>
+<lastmod>2015-10-03T23:18:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -340,8 +347,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://nairobilug.or.ke/tag/skype.html</loc>
-<lastmod>2015-08-02T15:21:00+02:27</lastmod>
+<loc>https://nairobilug.or.ke/tag/linux.html</loc>
+<lastmod>2015-09-02T11:00:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -368,15 +375,15 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://nairobilug.or.ke/tag/kfc.html</loc>
-<lastmod>2015-07-05T23:18:00+02:27</lastmod>
+<loc>https://nairobilug.or.ke/tag/licensing.html</loc>
+<lastmod>2015-05-18T15:21:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://nairobilug.or.ke/tag/linux.html</loc>
-<lastmod>2015-09-02T11:00:00+02:27</lastmod>
+<loc>https://nairobilug.or.ke/tag/skype.html</loc>
+<lastmod>2015-08-02T15:21:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -410,8 +417,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://nairobilug.or.ke/tag/chromebook.html</loc>
-<lastmod>2014-03-19T19:15:00+02:27</lastmod>
+<loc>https://nairobilug.or.ke/tag/tunapanda.html</loc>
+<lastmod>2015-10-03T23:18:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -460,7 +467,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/tag/meetup.html</loc>
-<lastmod>2015-07-05T23:18:00+02:27</lastmod>
+<lastmod>2015-10-03T23:18:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -475,6 +482,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://nairobilug.or.ke/tag/nairobilug.html</loc>
 <lastmod>2013-09-28T02:15:00+02:27</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://nairobilug.or.ke/tag/chromebook.html</loc>
+<lastmod>2014-03-19T19:15:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -564,15 +578,15 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://nairobilug.or.ke/tag/licensing.html</loc>
-<lastmod>2015-05-18T15:21:00+02:27</lastmod>
+<loc>https://nairobilug.or.ke/tag/kfc.html</loc>
+<lastmod>2015-07-05T23:18:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://nairobilug.or.ke/author/alan-orth.html</loc>
-<lastmod>2015-08-02T15:21:00+02:27</lastmod>
+<lastmod>2015-10-03T23:18:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
