@@ -92,13 +92,13 @@
       <p>PulseAudio has a neat feature that allows applications to "uncork" media players like Rhythmbox, Banshee, etc when certain events happen. For example: when a call comes in Skype pauses your music so you can answer without fiddling around to pause manually. Unfortunately Skype also deems the "contact coming online" and "contact going offline" events as worthy of uncorking, so your music gets interrupted for several seconds when these events fire (aka all the time).</p>
 <h2>Unload the "cork" module</h2>
 <p>A short term solution is to unload the corking module from your user's PulseAudio session:</p>
-<div class="highlight"><pre><span class="nv">$ </span>pactl unload-module module-role-cork
+<div class="highlight"><pre><span></span>$ pactl unload-module module-role-cork
 </pre></div>
 
 
 <p>That will take effect immediately for the remainder of the current user's session. A more permanent solution would be to comment out the loading of the "cork" module in PulseAudio's configuration file.</p>
 <p><em>/etc/pulse/default.pa</em>:</p>
-<div class="highlight"><pre>### Cork music/video streams when a phone stream is active
+<div class="highlight"><pre><span></span>### Cork music/video streams when a phone stream is active
 #load-module module-role-cork
 </pre></div>
 

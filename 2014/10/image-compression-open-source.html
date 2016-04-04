@@ -97,13 +97,13 @@
 <p><img alt="Alan eating halloumi" src="/images/alan-halloumi.jpg" title="Alan eating halloumi" /></p>
 <p>Straight from the fancy DSLR camera the image is <em>3.6 megabytes</em> — much too large to share practically on the web.  Amazingly, after uploading to Compressor.io the image is reduced to <em>1.6 megabytes</em>.  That's an impressive feat considering the image wasn't downscaled and is visually indistinguishable from the original!</p>
 <p>As it turns out, it's actually pretty easy to achieve this level of savings:</p>
-<div class="highlight"><pre><span class="nv">$ </span>jpegtran -copy none -progressive -outfile DSC_0685-trimmed.JPG DSC_0685.JPG
-<span class="nv">$ </span>gm mogrify DSC_0685-trimmed.JPG -quality 80
+<div class="highlight"><pre><span></span>$ jpegtran -copy none -progressive -outfile DSC_0685-trimmed.JPG DSC_0685.JPG
+$ gm mogrify DSC_0685-trimmed.JPG -quality 80
 </pre></div>
 
 
 <p>The result is actually <em>better</em> than Compressor.io:</p>
-<div class="highlight"><pre><span class="nv">$ </span>ls -lht DSC_0685*
+<div class="highlight"><pre><span></span>$ ls -lht DSC_0685*
 -rw-r--r-- <span class="m">1</span> aorth staff 1.4M Oct <span class="m">14</span> 21:52 DSC_0685-trimmed.JPG
 -rw-r--r-- <span class="m">1</span> aorth staff 1.6M Oct <span class="m">14</span> 20:47 DSC_0685-compressor.jpg
 -rw-r--r-- <span class="m">1</span> aorth staff 3.6M Jun <span class="m">28</span> 11:21 DSC_0685.JPG
@@ -115,7 +115,7 @@
 <h3>Extra points</h3>
 <p>Even though the file size has reduced by an amazing 60%, the image is actually still pretty massive — both in terms of file size as well as dimensions.  At <em>4608x3072 pixels</em> (14MP), the image is still too large for the average computer, tablet, or phone to consume practically.  Keep in mind that, in 2014, most high-end smart phones have a resolution of "only" <em>1920x1080 pixels</em>!</p>
 <p>Given that high-end smart phones literally can't even fit more than 50% of this image on the screen, it's safe to assume that we can scale down the dimensions by a factor of at least 50% without sacrificing too much... I'll sympathize with the bandwidth deprived and go for 40%:</p>
-<div class="highlight"><pre><span class="nv">$ </span>gm convert DSC_0685-trimmed.JPG -resize 40% -quality <span class="m">80</span> -interlace Line DSC_0685-trimmed-scaled.JPG
+<div class="highlight"><pre><span></span>$ gm convert DSC_0685-trimmed.JPG -resize 40% -quality <span class="m">80</span> -interlace Line DSC_0685-trimmed-scaled.JPG
 </pre></div>
 
 

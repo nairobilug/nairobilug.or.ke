@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/</loc>
-<lastmod>2015-10-07T16:25:18-00:00</lastmod>
+<lastmod>2016-04-04T19:56:55-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://nairobilug.or.ke/archives.html</loc>
-<lastmod>2015-10-07T16:25:18-00:00</lastmod>
+<lastmod>2016-04-04T19:56:55-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://nairobilug.or.ke/tags.html</loc>
-<lastmod>2015-10-07T16:25:18-00:00</lastmod>
+<lastmod>2016-04-04T19:56:55-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://nairobilug.or.ke/categories.html</loc>
-<lastmod>2015-10-07T16:25:18-00:00</lastmod>
+<lastmod>2016-04-04T19:56:55-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -34,6 +34,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://nairobilug.or.ke/2013/10/pages/about-us.html</loc>
 <lastmod>2013-10-08T13:00:00+03:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://nairobilug.or.ke/2016/02/heka-influxdb-and-grafana.html</loc>
+<lastmod>2016-02-07T17:00:00+03:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -292,7 +299,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/category/linux.html</loc>
-<lastmod>2015-09-02T11:00:00+02:27</lastmod>
+<lastmod>2016-02-07T17:00:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -348,7 +355,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/tag/linux.html</loc>
-<lastmod>2015-09-02T11:00:00+02:27</lastmod>
+<lastmod>2016-02-07T17:00:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -466,6 +473,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>https://nairobilug.or.ke/tag/grafana.html</loc>
+<lastmod>2016-02-07T17:00:00+02:27</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>https://nairobilug.or.ke/tag/meetup.html</loc>
 <lastmod>2015-10-03T23:18:00+02:27</lastmod>
 <changefreq>daily</changefreq>
@@ -508,6 +522,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>https://nairobilug.or.ke/tag/influxdb.html</loc>
+<lastmod>2016-02-07T17:00:00+02:27</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>https://nairobilug.or.ke/tag/nginx.html</loc>
 <lastmod>2014-12-09T17:00:00+02:27</lastmod>
 <changefreq>daily</changefreq>
@@ -545,6 +566,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://nairobilug.or.ke/tag/tomcat.html</loc>
 <lastmod>2015-01-02T11:00:00+02:27</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://nairobilug.or.ke/tag/heka.html</loc>
+<lastmod>2016-02-07T17:00:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -607,7 +635,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/author/jason-rogena.html</loc>
-<lastmod>2015-05-10T17:25:00+02:27</lastmod>
+<lastmod>2016-02-07T17:00:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

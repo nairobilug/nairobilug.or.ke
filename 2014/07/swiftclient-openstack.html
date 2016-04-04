@@ -102,21 +102,21 @@
 <p>In the dashboard, navigate to <code>Project -&gt; Compute -&gt; Access &amp; Security -&gt; Download OpenStack RC File</code>.  We'll need this later.</p>
 <h2>Create and prepare virtualenv</h2>
 <p>There's no <code>swiftclient</code> package in my GNU/Linux distribution, so I decided to just install it into a virtual environment straight from pypi/pip.</p>
-<div class="highlight"><pre><span class="gp">$</span> mkvirtualenv -p <span class="sb">`</span>which python2<span class="sb">`</span> swift
+<div class="highlight"><pre><span></span><span class="gp">$</span> mkvirtualenv -p <span class="sb">`</span>which python2<span class="sb">`</span> swift
 <span class="gp">$</span> pip install python-swiftclient python-keystoneclient
 </pre></div>
 
 
 <h2>Setup the environment</h2>
 <p>Source the environment RC script you downloaded from the OpenStack dashboard:</p>
-<div class="highlight"><pre><span class="gp">$</span> . ~/Downloads/aorth-openrc.sh
+<div class="highlight"><pre><span></span><span class="gp">$</span> . ~/Downloads/aorth-openrc.sh
 </pre></div>
 
 
 <p>It will prompt you for your OpenStack dashboard password.</p>
 <h2>Test</h2>
 <p>Check if the settings are correct:</p>
-<div class="highlight"><pre><span class="gp">$</span> swift stat
+<div class="highlight"><pre><span></span><span class="gp">$</span> swift stat
 <span class="go">       Account: AUTH_8b0c9cff5d094829b0cf7606a0390c1a</span>
 <span class="go">    Containers: 0</span>
 <span class="go">       Objects: 0</span>
@@ -133,7 +133,7 @@
 <p>This means the API key and all other settings are ok, and authentication was successful; you're now ready to use OpenStack CLI tools.</p>
 <h2>Create a container</h2>
 <p>You could create a container in the OpenStack dashboard (<code>Object Store -&gt; Containers -&gt; Create Container</code>), but it's much nicer to be able to do this from the commandline using the API.</p>
-<div class="highlight"><pre><span class="gp">$</span> swift post Documents
+<div class="highlight"><pre><span></span><span class="gp">$</span> swift post Documents
 <span class="gp">$</span> swift list
 <span class="go">Documents</span>
 </pre></div>
@@ -141,14 +141,14 @@
 
 <h2>Upload files</h2>
 <p>My use case is to backup Documents from my desktop.</p>
-<div class="highlight"><pre><span class="gp">$</span> <span class="nb">cd</span> ~/Documents
+<div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> ~/Documents
 <span class="gp">$</span> swift upload Documents *
 </pre></div>
 
 
 <p><strong>Note:</strong> I <code>cd</code> into the directory I want to upload first, because I found that if I wasn't <em>inside</em> it, I would end up with another layer of hierarchy in my container itself, ie <code>Documents/Documents</code>.</p>
 <p>Check the status of the container:</p>
-<div class="highlight"><pre><span class="gp">$</span> swift stat Documents
+<div class="highlight"><pre><span></span><span class="gp">$</span> swift stat Documents
 <span class="go">       Account: AUTH_9b0a8aff5d584828b5af7656c0385a1c</span>
 <span class="go">     Container: Documents</span>
 <span class="go">       Objects: 2691</span>

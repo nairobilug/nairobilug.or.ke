@@ -93,7 +93,7 @@
 Ansible has <a href="http://docs.ansible.com/playbooks_intro.html#handlers-running-operations-on-change">notification handlers</a> but they are only triggered at the end of the current playbook unlike <a href="https://docs.chef.io/resource_common.html#notifies-syntax">Chef's notifications</a> which can be triggered immediately! Moreover, you can configure Chef's notifications to be triggered at specific times e.g. at the very end of a chef-client run i.e. <code>notifies :delayed</code> or immediately i.e. <code>notifies :immediately</code>.</p>
 <p>Now, why I'm going into all these boring theories? Well, when installing tomcat on Ubuntu, dpkg starts it automatically once the process is complete. But in my case, I wanted to stop tomcat7 service first, configure it, deploy its webapps &amp; finally start it. So on my ansible tasks file, after installing tomcat7 I added a notification action to call a task that stops tomcat7 service. Here's a snippet from the ansible task file:</p>
 <p><em>tomcat.yml</em>:</p>
-<div class="highlight"><pre><span class="x">- hosts: all</span>
+<div class="highlight"><pre><span></span><span class="x">- hosts: all</span>
 <span class="x">  sudo: yes</span>
 <span class="x">  tasks:</span>
 <span class="x">    - name: Install tomcat7</span>
@@ -117,7 +117,7 @@ So I had to come up with a quick fix for this issue.</p>
 Basically, ansible notifications use a similar concept to this.</p>
 <p>Here's a snippet from the playbook showing the quick fix:</p>
 <p><em>tomcat.yml</em>:</p>
-<div class="highlight"><pre><span class="x">- hosts: all</span>
+<div class="highlight"><pre><span></span><span class="x">- hosts: all</span>
 <span class="x">  sudo: yes</span>
 <span class="x">  tasks:</span>
 <span class="x">      - name: Install tomcat7</span>

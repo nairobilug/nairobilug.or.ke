@@ -1,5 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Nairobi LUG</title><link href="https://nairobilug.or.ke/" rel="alternate"></link><link href="https://nairobilug.or.ke/feed/atom.xml" rel="self"></link><id>https://nairobilug.or.ke/</id><updated>2015-10-03T23:18:00+03:00</updated><entry><title>Meetup Summary (October, 2015)</title><link href="https://nairobilug.or.ke/2015/10/meetup-october-2015.html" rel="alternate"></link><updated>2015-10-03T23:18:00+03:00</updated><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-10-03:2015/10/meetup-october-2015.html</id><summary type="html">&lt;p&gt;Today's meetup was a collabo between the Nairobi LUG and Tunapanda, and it might go down in history as the most successful meeting of the Nairobi GNU/Linux Users Group &lt;em&gt;ever&lt;/em&gt;. Our organizations are incredibly compatible and I'm not sure why we don't do this more often! The &lt;abbr title="Linux Users Group"&gt;LUG&lt;/abbr&gt; and Tunapanda are both forces for openness and community in Kenya. Note to self: suggest this style of meetup more often.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Nairobi LUG</title><link href="https://nairobilug.or.ke/" rel="alternate"></link><link href="https://nairobilug.or.ke/feed/atom.xml" rel="self"></link><id>https://nairobilug.or.ke/</id><updated>2016-02-07T17:00:00+03:00</updated><entry><title>Heka, InfluxDB, and Grafana</title><link href="https://nairobilug.or.ke/2016/02/heka-influxdb-and-grafana.html" rel="alternate"></link><updated>2016-02-07T17:00:00+03:00</updated><author><name>Jason Rogena</name></author><id>tag:nairobilug.or.ke,2016-02-07:2016/02/heka-influxdb-and-grafana.html</id><summary type="html">&lt;p&gt;I recently started working at a startup :). My first task there was to configure their new Linux server to host some live apps. I, professionally, haven't done sysadmin work but since I've been configuring Linux VPSs to play with for some time now I figured it wouldn't be that hard doing the initial setup. I did the usual; install and configure the necessary packages, firewall stuff, automated deployment of the apps, and of course, monitoring. I tried to do as much as possible on Ansible — I'm no idiot.&lt;/p&gt;
+&lt;p&gt;Settling on what I should use for monitoring took quite some time. There a so many ways you can kill this rat; Logstash, Gaphite, &lt;a href="http://prometheus.io"&gt;Prometheus&lt;/a&gt;, &lt;a href="https://hekad.readthedocs.org/en/latest"&gt;Heka&lt;/a&gt;, and the list goes on and on. I knew, however, what I wanted:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Easily deployable — mainly because I didn't want to have to do a lot of work on Ansible&lt;/li&gt;
+&lt;li&gt;Monitors both live stats and log files&lt;/li&gt;
+&lt;li&gt;Can run as a daemon&lt;/li&gt;
+&lt;li&gt;Has (or supports) a sexy graph dashboard&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Prometheus and Heka came up top. Prometheus comes bundled with an integrated time-series database and a graph dashboard. Heka, on the other hand, only collects and processes the time-series data. It might look like Prometheus has a leg up on Heka (it probably does in most use-cases). Using Prometheus, however, means that you have to use everything Prometheus. I hate being locked down — hey boo ;)! Heka supports a &lt;a href="https://hekad.readthedocs.org/en/v0.10.0b0/config/outputs/index.html"&gt;variety of data outputs&lt;/a&gt; including a host of storage engines (&lt;a href="https://influxdata.com"&gt;InfluxDB&lt;/a&gt; being one of them), IRC, ElasticSearch, HTTP, etc. &lt;a href="http://grafana.org"&gt;Grafana&lt;/a&gt; can graph data stored in an InfluxDB database. InfluxDB and Grafana are also very easy to install and run as daemons. Sorted!&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;
+Currently, the latest versions for both Heka and InfluxDB are pre v1 (v0.10.0 for Heka and v0.9.6 for InfluxDB). Both are also very young projects. I have however not experienced any issues with my setup. Live a little!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;Configuration&lt;/h3&gt;
+&lt;p&gt;I will focus on configuring Heka. Props to the Heka team for providing such &lt;a href="https://hekad.readthedocs.org/en/latest/"&gt;awesome documentation&lt;/a&gt;. As for InfluxDB, all you need to do is to create the user and databases to be used by Heka. &lt;a href="http://docs.grafana.org/datasources/influxdb"&gt;Here's&lt;/a&gt; a good tutorial on how to configure Grafana with InfluxDB.&lt;/p&gt;
+&lt;p&gt;Heka works as a system of user-defined plugins with each plugin handling a step in the monitoring process. Here's a list of the steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Input&lt;/li&gt;
+&lt;li&gt;Splitting — This is an optional step and I have honestly not used it yet.&lt;/li&gt;
+&lt;li&gt;Decode&lt;/li&gt;
+&lt;li&gt;Filter&lt;/li&gt;
+&lt;li&gt;Encode&lt;/li&gt;
+&lt;li&gt;Output&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;What's cool is that you can mix and match plugin types depending on, for instance, what your input is.&lt;/p&gt;
+&lt;p&gt;As an example, I'll show how I configured Heka to monitor HTTP status codes. All the configuration snippets for the different steps below are actually part of one configuration file (&lt;a href="https://raw.githubusercontent.com/jasonrogena/heka-config-sample/master/conf.d/http_status.toml"&gt;http_status.toml&lt;/a&gt;) in this GitHub &lt;a href="https://github.com/jasonrogena/heka-config-sample"&gt;repository&lt;/a&gt;.&lt;/p&gt;
+&lt;h4&gt;1. Input&lt;/h4&gt;
+&lt;p&gt;For this step, you configure the source for what you're monitoring. It might be a log file, Docker event, etc. In this example, my source is Apache2's access log file.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Apache2AccessLogInput]&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;LogstreamerInput&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;log_directory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/var/log/apache2&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;file_match&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;access\.log&amp;#39;&lt;/span&gt;
+&lt;span class="na"&gt;ticker_interval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;5&lt;/span&gt;
+&lt;span class="na"&gt;decoder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Apache2LogDecoder&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The first line, with the square brackets, specifies the name you've given the plugin you're defining for the step. You can also use the &lt;strong&gt;type&lt;/strong&gt; as the name and hence won't be required to define the type as a field below the name. I used the 'LogStreamerInput' type to handle for my input plugin. I also had to specify which decoder plugin (described in the next sub-section) I want coupled with the input plugin. Pretty straightforward.&lt;/p&gt;
+&lt;h4&gt;2. Decode&lt;/h4&gt;
+&lt;p&gt;The decoder plugin translates the input gotten by the input plugin to something that can be processed by the plugins that follow it.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Apache2LogDecoder]&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;SandboxDecoder&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;lua_decoders/apache_access.lua&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;    [Apache2LogDecoder.config]&lt;/span&gt;
+&lt;span class="s"&gt;    user_agent_transform = false&lt;/span&gt;
+&lt;span class="s"&gt;    log_format = &amp;quot;%h %l %u %t \&amp;quot;%r\&amp;quot; %&amp;gt;s %O \&amp;quot;%{Referer}i\&amp;quot; \&amp;quot;%{User-Agent}i\&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The name you give the decoder plugin has to be consistent with the one defined as the decoder in the input plugin. For the SandboxDecoder type, you also have to provide the file in which the plugin type is defined.&lt;/p&gt;
+&lt;p&gt;There is a set of files that define types that come bundled with Heka in &lt;em&gt;/usr/share/heka&lt;/em&gt;. I, for instance, used the &lt;em&gt;/usr/share/heka/lua_decoders/apache_access.lua&lt;/em&gt; file that defines a SandboxDecoder type. Another cool thing about Heka, you can define your own plugin types and point to where you've defined them in your config files.&lt;/p&gt;
+&lt;h4&gt;3. Filter&lt;/h4&gt;
+&lt;p&gt;You might want to filter out decoded data that you consider unnecessary in your filter plugin.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Apache2HTTPStatusFilter]&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;SandboxFilter&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;lua_filters/http_status.lua&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;ticker_interval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;5&lt;/span&gt;
+&lt;span class="na"&gt;preserve_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;false&lt;/span&gt;
+&lt;span class="na"&gt;message_matcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Type == &amp;#39;logfile&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;    [Apache2HTTPStatusFilter.config]&lt;/span&gt;
+&lt;span class="s"&gt;    sec_per_row = 60&lt;/span&gt;
+&lt;span class="s"&gt;    rows = 1440&lt;/span&gt;
+&lt;span class="s"&gt;    preservation_version = 14&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Some meta-variables are appended to the monitoring data by the decoder plugin depending on the type of decoder used. For instance, the SandboxDecoder in &lt;em&gt;lua_decoders/apache_access.lua&lt;/em&gt; appends the &lt;strong&gt;Type&lt;/strong&gt; meta-variable to the decoded data. You can use these variables to filter out the data you need — because a lot of data is decoded and you might not want to store all of it. Check the decoder type documentation for the full list of appended variables. I only needed data that had the Type set to 'logfile' so I defined this in the &lt;strong&gt;message_matcher&lt;/strong&gt; field.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Tip:&lt;/strong&gt;
+I initially set the &lt;strong&gt;message_matcher&lt;/strong&gt; field to "TRUE" so that none of the data was actually filtered out then checked the output to see what I could use to filter out the data.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;4. Encode&lt;/h4&gt;
+&lt;p&gt;You need to define an encoder plugin for encoding the data to a form that can be processed by whatever you are outputting to. This might be as simple as defining the type for the encoder plugin.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Apache2HTTPStatusInfluxDBEncoder]&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;SandboxEncoder&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;lua_encoders/schema_influx_line.lua&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;    [Apache2HTTPStatusInfluxDBEncoder.config]&lt;/span&gt;
+&lt;span class="s"&gt;    timestamp_precision= &amp;quot;s&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;5. Output&lt;/h4&gt;
+&lt;p&gt;Finally, you need to define the output plugin. I am sending the data to an InfluxDB database so I had to define a plugin for this purpose.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Apache2HTTPStatusInfluxDBOutput]&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;HttpOutput&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;message_matcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Type == &amp;#39;logfile&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;address&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;http://127.0.0.1:8086/write?db=a2_access_log&amp;amp;rp=default&amp;amp;precision=s&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;root&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;root&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;encoder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Apache2HTTPStatusInfluxDBEncoder&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You can define more than one output plugin (you can probably also do this for some of the other steps). I wanted to log the output, during testing, so that I didn't have to query InfluxDB for the data.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[LogOutput]&lt;/span&gt;
+&lt;span class="na"&gt;message_matcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Type == &amp;#39;logfile&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;encoder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Apache2HTTPStatusInfluxDBEncoder&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;I love the setup so far:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;No processor hogging observed.&lt;/li&gt;
+&lt;li&gt;The Heka, InfluxDB, and Grafana services have been running continuously for a month now without farting or dying on me.&lt;/li&gt;
+&lt;li&gt;InfluxDB isn't using a lot of disk space. The database storing HTTP status codes is 900K on the disk, one month on.&lt;/li&gt;
+&lt;li&gt;The graphs on Grafana look sexy. Here's a screenshot of the graphs on HTTP status codes:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt="image showing HTTP status codes on Grafana" src="/images/heka-influxdb-and-grafana.png" /&gt;&lt;/p&gt;
+&lt;p&gt;This was &lt;a href="https://jasonrogena.github.io/2016/01/02/heka-influxdb-and-grafana.html"&gt;originally posted&lt;/a&gt; on my personal blog; re-posting here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="heka"></category><category term="influxdb"></category><category term="grafana"></category></entry><entry><title>Meetup Summary (October, 2015)</title><link href="https://nairobilug.or.ke/2015/10/meetup-october-2015.html" rel="alternate"></link><updated>2015-10-03T23:18:00+03:00</updated><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-10-03:2015/10/meetup-october-2015.html</id><summary type="html">&lt;p&gt;Today's meetup was a collabo between the Nairobi LUG and Tunapanda, and it might go down in history as the most successful meeting of the Nairobi GNU/Linux Users Group &lt;em&gt;ever&lt;/em&gt;. Our organizations are incredibly compatible and I'm not sure why we don't do this more often! The &lt;abbr title="Linux Users Group"&gt;LUG&lt;/abbr&gt; and Tunapanda are both forces for openness and community in Kenya. Note to self: suggest this style of meetup more often.&lt;/p&gt;
 &lt;h2&gt;Tunapanda&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://www.tunapanda.org/"&gt;Tunapanda&lt;/a&gt; is a community-based organization teaching digital technology in Nairobi's Kibera estate. A few weeks ago they floated the idea of holding our next meetup at their institute and I'm grateful they did. We saw their Linux-based thin client setup, where people were working with GIMP and Blender when we walked in, and had some great conversations with students, teachers, and even the people selling beans and chapati around the corner!&lt;/p&gt;
 &lt;h2&gt;Other Goings Ons&lt;/h2&gt;
@@ -24,12 +133,12 @@
 &lt;li&gt;&lt;code&gt;Options=&lt;/code&gt; Mount options to use when mounting&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;In the end, you can convert your typical fstab entry such as this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;UUID=86fef3b2-bdc9-47fa-bbb1-4e528a89d222 /mnt/backups    ext4    defaults      0 0
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;UUID=86fef3b2-bdc9-47fa-bbb1-4e528a89d222 /mnt/backups    ext4    defaults      0 0
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;to:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Mount]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Mount]&lt;/span&gt;
 &lt;span class="na"&gt;What&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/dev/disk/by-uuid/86fef3b2-bdc9-47fa-bbb1-4e528a89d222&lt;/span&gt;
 &lt;span class="na"&gt;Where&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/mnt/backups&lt;/span&gt;
 &lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;ext4&lt;/span&gt;
@@ -44,7 +153,7 @@
 &lt;/blockquote&gt;
 &lt;p&gt;Huh? Yes that's right! The unit filename should match the mount point path.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;mnt-backups.mount&lt;/code&gt; mount unit file:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
 &lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Mount System Backups Directory&lt;/span&gt;
 
 &lt;span class="k"&gt;[Mount]&lt;/span&gt;
@@ -56,13 +165,13 @@
 
 
 &lt;p&gt;Reload systemd daemon &amp;amp; start the unit.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;systemctl daemon-reload
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;systemctl daemon-reload
 systemctl start mnt-backups.mount
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;And just like any other unit, you can view its status using &lt;code&gt;systemctl status mnt-backups.mount&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;root&lt;/span&gt;&lt;span class="k"&gt;@vast&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nt"&gt;systemctl&lt;/span&gt; &lt;span class="nt"&gt;status&lt;/span&gt; &lt;span class="nt"&gt;mnt-backups&lt;/span&gt;&lt;span class="nc"&gt;.mount&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;root&lt;/span&gt;&lt;span class="k"&gt;@vast&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nt"&gt;systemctl&lt;/span&gt; &lt;span class="nt"&gt;status&lt;/span&gt; &lt;span class="nt"&gt;mnt-backups&lt;/span&gt;&lt;span class="nc"&gt;.mount&lt;/span&gt;
 &lt;span class="err"&gt;●&lt;/span&gt; &lt;span class="nt"&gt;mnt-backups&lt;/span&gt;&lt;span class="nc"&gt;.mount&lt;/span&gt; &lt;span class="nt"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;Mount&lt;/span&gt; &lt;span class="nt"&gt;System&lt;/span&gt; &lt;span class="nt"&gt;Backups&lt;/span&gt; &lt;span class="nt"&gt;Directory&lt;/span&gt;
    &lt;span class="nt"&gt;Loaded&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nt"&gt;loaded&lt;/span&gt; &lt;span class="o"&gt;(/&lt;/span&gt;&lt;span class="nt"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;systemd&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;system&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;mnt-backups&lt;/span&gt;&lt;span class="nc"&gt;.mount&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nt"&gt;enabled&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="nt"&gt;vendor&lt;/span&gt; &lt;span class="nt"&gt;preset&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nt"&gt;disabled&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
    &lt;span class="nt"&gt;Active&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nt"&gt;active&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;mounted&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nt"&gt;since&lt;/span&gt; &lt;span class="nt"&gt;Mon&lt;/span&gt; &lt;span class="nt"&gt;2015-08-31&lt;/span&gt; &lt;span class="nt"&gt;08&lt;/span&gt;&lt;span class="nd"&gt;:09:15&lt;/span&gt; &lt;span class="nt"&gt;EAT&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="nt"&gt;2&lt;/span&gt; &lt;span class="nt"&gt;days&lt;/span&gt; &lt;span class="nt"&gt;ago&lt;/span&gt;
@@ -78,7 +187,7 @@ systemctl start mnt-backups.mount
 &lt;h2&gt;Gotchas!!&lt;/h2&gt;
 &lt;p&gt;After a reboot, I noticed the unit wasn't started &amp;amp; as result the mount point dir. was empty. The unit file was missing an &lt;code&gt;[Install]&lt;/code&gt; section which contains installation information such as unit dependencies(&lt;code&gt;WantedBy=, RequiredBy=&lt;/code&gt;), aliases(&lt;code&gt;Alias=&lt;/code&gt;), additional units(&lt;code&gt;Also=&lt;/code&gt;), e.t.c for the specified unit. In this case, I set the unit to start in multi-user runlevel a.k.a &lt;code&gt;multi-user.target&lt;/code&gt;. Oh, did you know you can change runlevel using &lt;code&gt;systemctl isolate $RUN_LEVEL.target&lt;/code&gt;? &lt;a href="https://wiki.archlinux.org/index.php/Systemd#Targets_table"&gt;Read more&lt;/a&gt; about systemd runlevels/targets.&lt;/p&gt;
 &lt;p&gt;Here's the complete &lt;code&gt;/etc/systemd/system/mnt-backups.mount&lt;/code&gt; unit file with an &lt;code&gt;[Install]&lt;/code&gt; section:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
 &lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Mount System Backups Directory&lt;/span&gt;
 
 &lt;span class="k"&gt;[Mount]&lt;/span&gt;
@@ -93,17 +202,17 @@ systemctl start mnt-backups.mount
 
 
 &lt;p&gt;As always, enable the unit to start automatically during boot.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;systemctl &lt;span class="nb"&gt;enable &lt;/span&gt;mnt-backups.mount
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; mnt-backups.mount
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="systemd"></category></entry><entry><title>Stop Skype and PulseAudio from "uncorking" media players</title><link href="https://nairobilug.or.ke/2015/08/stop-pulseaudio-uncorking.html" rel="alternate"></link><updated>2015-08-02T15:21:00+03:00</updated><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-08-02:2015/08/stop-pulseaudio-uncorking.html</id><summary type="html">&lt;p&gt;PulseAudio has a neat feature that allows applications to "uncork" media players like Rhythmbox, Banshee, etc when certain events happen. For example: when a call comes in Skype pauses your music so you can answer without fiddling around to pause manually. Unfortunately Skype also deems the "contact coming online" and "contact going offline" events as worthy of uncorking, so your music gets interrupted for several seconds when these events fire (aka all the time).&lt;/p&gt;
 &lt;h2&gt;Unload the "cork" module&lt;/h2&gt;
 &lt;p&gt;A short term solution is to unload the corking module from your user's PulseAudio session:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pactl unload-module module-role-cork
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ pactl unload-module module-role-cork
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;That will take effect immediately for the remainder of the current user's session. A more permanent solution would be to comment out the loading of the "cork" module in PulseAudio's configuration file.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;/etc/pulse/default.pa&lt;/em&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;### Cork music/video streams when a phone stream is active
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;### Cork music/video streams when a phone stream is active
 #load-module module-role-cork
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -151,7 +260,7 @@ As is to be expected, we laughed our heads out... still, could there be a faster
 &lt;h2&gt;System backups using a timer&lt;/h2&gt;
 &lt;p&gt;As an example, I have a simple shell script — &lt;code&gt;system-backup.sh&lt;/code&gt; — that uses &lt;code&gt;rsync&lt;/code&gt; to back up my system to an external USB hard drive once per day. Converting this job to use systemd timers requires the creation of both a &lt;em&gt;timer&lt;/em&gt; and a &lt;em&gt;service&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;/etc/systemd/system/system-backup.timer&lt;/em&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
 &lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Perform system backup&lt;/span&gt;
 
 &lt;span class="k"&gt;[Timer]&lt;/span&gt;
@@ -163,7 +272,7 @@ As is to be expected, we laughed our heads out... still, could there be a faster
 
 
 &lt;p&gt;&lt;em&gt;/etc/systemd/system/system-backup.service&lt;/em&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
 &lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Perform system backup&lt;/span&gt;
 
 &lt;span class="k"&gt;[Service]&lt;/span&gt;
@@ -176,26 +285,26 @@ As is to be expected, we laughed our heads out... still, could there be a faster
 
 
 &lt;p&gt;Start and enable the timer:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo systemctl start system-backup.timer
-&lt;span class="nv"&gt;$ &lt;/span&gt;sudo systemctl &lt;span class="nb"&gt;enable &lt;/span&gt;system-backup.timer
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo systemctl start system-backup.timer
+$ sudo systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; system-backup.timer
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Starting the timer is necessary because otherwise it wouldn't be active until the next time you rebooted (assuming it was enabled, that is). You can verify that the timer has been started using either of the following commands:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo systemctl status system-backup.timer
-&lt;span class="nv"&gt;$ &lt;/span&gt;sudo systemctl list-timers --all
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo systemctl status system-backup.timer
+$ sudo systemctl list-timers --all
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;What this gets you&lt;/h2&gt;
 &lt;p&gt;Using &lt;code&gt;OnCalendar=daily&lt;/code&gt; this job will run every day at midnight, similar to cron's &lt;code&gt;@daily&lt;/code&gt; keyword. If you ever want to run the job manually you can invoke its service on demand:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo systemctl start system-backup.service
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo systemctl start system-backup.service
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Unless you're handling stdout manually in your script (like appending to a log file), any output from will go to the systemd journal. You can see the logs just like you'd do for any other system unit file using &lt;code&gt;journalctl&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;For example, to see logs from this timer since yesterday:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo journalctl -u system-backup --since&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;yesterday&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo journalctl -u system-backup --since&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;yesterday&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -236,12 +345,12 @@ Program.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;This is very important because compliance with Section 1 is required by subsequent Sections of the license. Use of the language "&lt;em&gt;may copy&lt;/em&gt;" merely grants BRCK the permission to distribute program source code which is explicitly required by Sections 2 and 3. In addition, Section 1 states that the copyright notice and license from the original work must be preserved.&lt;/p&gt;
 &lt;p&gt;While BRCK does not provide source code for their work, they do offer public &lt;a href="https://www.brck.com/firmware/"&gt;downloads of their firmware binaries&lt;/a&gt;. Unfortunately there is neither a &lt;code&gt;LICENSE.txt&lt;/code&gt; file nor any mention of the the GPL in the archive provided:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ls -l brckv1_20141114.zip
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ls -l brckv1_20141114.zip
 -rw-r----- &lt;span class="m"&gt;1&lt;/span&gt; aorth staff &lt;span class="m"&gt;5547580&lt;/span&gt; May &lt;span class="m"&gt;17&lt;/span&gt; 14:01 brckv1_20141114.zip
-&lt;span class="nv"&gt;$ &lt;/span&gt;shasum brckv1_20141114.zip
+$ shasum brckv1_20141114.zip
 d6dcbb1d61e99bf2b35133c5e6897a352518da0c  brckv1_20141114.zip
-&lt;span class="nv"&gt;$ &lt;/span&gt;unzip brckv1_20141114.zip
-&lt;span class="nv"&gt;$ &lt;/span&gt;grep -r -E &lt;span class="s1"&gt;&amp;#39;gpl|GPL&amp;#39;&lt;/span&gt; brckv1_20141114/* &lt;span class="p"&gt;|&lt;/span&gt; wc -l
+$ unzip brckv1_20141114.zip
+$ grep -r -E &lt;span class="s1"&gt;&amp;#39;gpl|GPL&amp;#39;&lt;/span&gt; brckv1_20141114/* &lt;span class="p"&gt;|&lt;/span&gt; wc -l
        0
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -311,8 +420,8 @@ will automatically terminate your rights under this License. [...]&lt;/li&gt;
 &lt;p&gt;One topic that was discussed that I feel like I need to highlight is the &lt;a href="https://www.gnu.org/copyleft/gpl.html"&gt;GPL&lt;/a&gt; and how some Kenyan companies are violating it. &lt;a href="https://www.brck.com/"&gt;BRCK&lt;/a&gt;, for instance, runs a fork of &lt;a href="https://openwrt.org/"&gt;OpenWRT&lt;/a&gt; yet NONE of its code is open (at least the forked OpenWRT code should be). OpenWRT is a GNU Linux distribution that comprises of at least two high profile projects (the &lt;a href="https://kernel.org/"&gt;Linux kernel&lt;/a&gt; and &lt;a href="http://www.busybox.net/"&gt;BusyBox&lt;/a&gt;) that are licensed under the GPL. All projects that are derivatives of OpenWRT therefore are technically licensed under the GPL. I reached out to the BRCK team but I still haven't gotten a response from them. It's time 'they' know we are not fine with them violating the GPL!&lt;/p&gt;
 &lt;p&gt;VIVA GPL!!&lt;/p&gt;</summary><category term="KFC"></category><category term="meetup"></category></entry><entry><title>Simultaneously pushing to two remotes in a git repository</title><link href="https://nairobilug.or.ke/2015/05/pushing-two-git-remotes.html" rel="alternate"></link><updated>2015-05-10T16:40:00+03:00</updated><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-05-10:2015/05/pushing-two-git-remotes.html</id><summary type="html">&lt;p&gt;Sometimes you need to push commits to two remotes in a git repository — either for a cheap "backup" of sorts, or for some public / private repository scheme you may have in your organization, etc.&lt;/p&gt;
 &lt;p&gt;Let's say you have a repository hosted on GitHub &lt;em&gt;and&lt;/em&gt; BitBucket (hey, GitHub is king today, but you never know!). You could add a remote for each and push to them individually:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git push github
-&lt;span class="nv"&gt;$ &lt;/span&gt;git push bitbucket
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git push github
+$ git push bitbucket
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -320,12 +429,12 @@ will automatically terminate your rights under this License. [...]&lt;/li&gt;
 &lt;h3&gt;A better way&lt;/h3&gt;
 &lt;p&gt;If you're using any relatively modern version of git (1.9?) you can manipulate the remote to include two push URLs. Instead of adding a second remote, you simply add a second push URL to the existing remote.&lt;/p&gt;
 &lt;p&gt;For example, adding a BitBucket URL to the remote called "origin":&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git remote &lt;span class="nb"&gt;set&lt;/span&gt;-url origin --add git@bitbucket.org:alanorth/repo.git
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git remote set-url origin --add git@bitbucket.org:alanorth/repo.git
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;After that the remote looks like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git remote -v
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git remote -v
 origin  git@github.com:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;fetch&lt;span class="o"&gt;)&lt;/span&gt;
 origin  git@github.com:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;push&lt;span class="o"&gt;)&lt;/span&gt;
 origin  git@bitbucket.org:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;push&lt;span class="o"&gt;)&lt;/span&gt;
@@ -376,7 +485,7 @@ scripts finish running - as is the case with Java application server e.g. Tomcat
 &lt;p&gt;Section 1: &lt;strong&gt;Pre-reboot&lt;/strong&gt;: Run your pre-reboot task, it can be performing major
 upgrades and/or performing some configuration which only take effect at boot time.
 For example - upgrade all packages using &lt;code&gt;yum&lt;/code&gt; module&lt;a href="http://docs.ansible.com/yum_module.html"&gt;&lt;sup&gt;[2]&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;- name: upgrade all packages
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;- name: upgrade all packages
   yum: name=* state=latest
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -386,7 +495,7 @@ For example - upgrade all packages using &lt;code&gt;yum&lt;/code&gt; module&lt;
 &lt;p&gt;Section 2: &lt;strong&gt;Reboot&lt;/strong&gt;: In this stage we'll use the &lt;code&gt;command&lt;/code&gt; module&lt;a href="http://docs.ansible.com/command_module.html"&gt;&lt;sup&gt;[3]&lt;/sup&gt;&lt;/a&gt;
 to reboot the remote machine/server by running the &lt;code&gt;reboot&lt;/code&gt; command  - nothing
 fancy - you can also use &lt;code&gt;shutdown --reboot&lt;/code&gt;.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;- name: reboot server
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;- name: reboot server
   command: /sbin/reboot
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -403,7 +512,7 @@ using a &lt;code&gt;timeout&lt;/code&gt; value of 300 seconds because most physi
 use any value that suites you.
 For example: - wait for 300 seconds for port 22 to become available &amp;amp; contain
 &lt;code&gt;OpenSSH&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;- name: wait for the server to finish rebooting
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;- name: wait for the server to finish rebooting
   local_action: wait_for host=&amp;quot;web01&amp;quot; search_regex=OpenSSH port=22 timeout=300
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -417,7 +526,7 @@ needs.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;h3&gt;puttin' it all together&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;We can merge all the above sections into one playbook as shown below:&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
+&lt;li&gt;We can merge all the above sections into one playbook as shown below:&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
 &lt;span class="x"&gt;  sudo: yes&lt;/span&gt;
 &lt;span class="x"&gt;  tasks:&lt;/span&gt;
 &lt;span class="x"&gt;    - name: Upgrade all packages in RedHat-based machines&lt;/span&gt;
@@ -480,7 +589,7 @@ e.t.c.&lt;/li&gt;
 &lt;p&gt;According to the documentation, the Python API is:
 &lt;blockquote&gt;[...] very powerful, and is how the ansible CLI and ansible-playbook are implemented.&lt;/blockquote&gt;&lt;/p&gt;
 &lt;p&gt;Indeed! Using &lt;code&gt;ansible.runner&lt;/code&gt; I whipped something up and extracted data from several dozen servers in just a few minutes (and I don't even know Python!):&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;./ansible-runner.py
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ./ansible-runner.py
 mjanjavm10, 2, 30, Ubuntu 14.04, 192.168.7.34
 mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
 &lt;/pre&gt;&lt;/div&gt;
@@ -538,48 +647,48 @@ mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
 47
 48
 49
-50&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+50&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/usr/bin/env python&lt;/span&gt;
 
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;ansible.runner&lt;/span&gt;
 
-&lt;span class="c"&gt;# hosts to contact&lt;/span&gt;
-&lt;span class="n"&gt;hostlist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;virtual&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="c1"&gt;# hosts to contact&lt;/span&gt;
+&lt;span class="n"&gt;hostlist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;virtual&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 
-&lt;span class="c"&gt;# MiB -&amp;gt; GiB&lt;/span&gt;
+&lt;span class="c1"&gt;# MiB -&amp;gt; GiB&lt;/span&gt;
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;mibs_to_gibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mibs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mibs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt;
 
-&lt;span class="c"&gt;# KiB -&amp;gt; GiB&lt;/span&gt;
+&lt;span class="c1"&gt;# KiB -&amp;gt; GiB&lt;/span&gt;
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;kibs_to_gibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kibs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kibs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt;
 
-&lt;span class="c"&gt;# bytes -&amp;gt; GiB&lt;/span&gt;
+&lt;span class="c1"&gt;# bytes -&amp;gt; GiB&lt;/span&gt;
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;bytes_to_gibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num_bytes&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num_bytes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt;
 
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;parse_results&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;results&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;results&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;contacted&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-        &lt;span class="n"&gt;memory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mibs_to_gibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_memtotal_mb&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;results&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;contacted&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="n"&gt;memory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mibs_to_gibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_memtotal_mb&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
 
-        &lt;span class="c"&gt;# enumerate all disk devices to get total capacity&lt;/span&gt;
+        &lt;span class="c1"&gt;# enumerate all disk devices to get total capacity&lt;/span&gt;
         &lt;span class="n"&gt;disk_total_capacity&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
-        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;disk_device&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_devices&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iterkeys&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-            &lt;span class="n"&gt;disk_sectors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_devices&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;disk_device&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;sectors&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-            &lt;span class="n"&gt;disk_sectors_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_devices&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;disk_device&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;sectorsize&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;disk_device&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_devices&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iterkeys&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+            &lt;span class="n"&gt;disk_sectors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_devices&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;disk_device&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;sectors&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+            &lt;span class="n"&gt;disk_sectors_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_devices&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;disk_device&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;sectorsize&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
             &lt;span class="n"&gt;disk_bytes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;disk_sectors&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;disk_sectors_size&lt;/span&gt;
 
             &lt;span class="n"&gt;disk_total_capacity&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;bytes_to_gibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;disk_bytes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
-        &lt;span class="n"&gt;os&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt; &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_distribution&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_distribution_version&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-        &lt;span class="n"&gt;ip&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ansible_default_ipv4&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;address&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+        &lt;span class="n"&gt;os&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_distribution&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_distribution_version&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+        &lt;span class="n"&gt;ip&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_default_ipv4&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;address&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
 
-        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%.0f&lt;/span&gt;&lt;span class="s"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%2.0f&lt;/span&gt;&lt;span class="s"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;memory&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;disk_total_capacity&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ip&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%.0f&lt;/span&gt;&lt;span class="s2"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%2.0f&lt;/span&gt;&lt;span class="s2"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;memory&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;disk_total_capacity&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ip&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ansible&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;runner&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Runner&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-        &lt;span class="n"&gt;module_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;setup&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="n"&gt;module_args&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="n"&gt;remote_user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;provisioning&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;module_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;setup&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;module_args&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;remote_user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;provisioning&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
         &lt;span class="n"&gt;sudo&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
         &lt;span class="n"&gt;pattern&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;hostlist&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
         &lt;span class="n"&gt;forks&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;
@@ -587,7 +696,7 @@ mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
 
     &lt;span class="n"&gt;parse_results&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;results&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
-&lt;span class="c"&gt;# vim: set sw=4 ts=4:&lt;/span&gt;
+&lt;span class="c1"&gt;# vim: set sw=4 ts=4:&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
@@ -612,7 +721,7 @@ mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
 Ansible has &lt;a href="http://docs.ansible.com/playbooks_intro.html#handlers-running-operations-on-change"&gt;notification handlers&lt;/a&gt; but they are only triggered at the end of the current playbook unlike &lt;a href="https://docs.chef.io/resource_common.html#notifies-syntax"&gt;Chef's notifications&lt;/a&gt; which can be triggered immediately! Moreover, you can configure Chef's notifications to be triggered at specific times e.g. at the very end of a chef-client run i.e. &lt;code&gt;notifies :delayed&lt;/code&gt; or immediately i.e. &lt;code&gt;notifies :immediately&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Now, why I'm going into all these boring theories? Well, when installing tomcat on Ubuntu, dpkg starts it automatically once the process is complete. But in my case, I wanted to stop tomcat7 service first, configure it, deploy its webapps &amp;amp; finally start it. So on my ansible tasks file, after installing tomcat7 I added a notification action to call a task that stops tomcat7 service. Here's a snippet from the ansible task file:&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;tomcat.yml&lt;/em&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
 &lt;span class="x"&gt;  sudo: yes&lt;/span&gt;
 &lt;span class="x"&gt;  tasks:&lt;/span&gt;
 &lt;span class="x"&gt;    - name: Install tomcat7&lt;/span&gt;
@@ -636,7 +745,7 @@ So I had to come up with a quick fix for this issue.&lt;/p&gt;
 Basically, ansible notifications use a similar concept to this.&lt;/p&gt;
 &lt;p&gt;Here's a snippet from the playbook showing the quick fix:&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;tomcat.yml&lt;/em&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
 &lt;span class="x"&gt;  sudo: yes&lt;/span&gt;
 &lt;span class="x"&gt;  tasks:&lt;/span&gt;
 &lt;span class="x"&gt;      - name: Install tomcat7&lt;/span&gt;
@@ -658,7 +767,7 @@ Basically, ansible notifications use a similar concept to this.&lt;/p&gt;
 &lt;p&gt;I eventually stumbled upon the &lt;a href="http://nginx.org/en/docs/http/ngx_http_map_module.html"&gt;nginx map module&lt;/a&gt; which, combined with a custom error page, ended up being an elegant, fun solution to this problem.&lt;/p&gt;
 &lt;h3&gt;Elegant maps&lt;/h3&gt;
 &lt;p&gt;Here is a snippet from &lt;em&gt;/etc/nginx/conf.d/default.conf&lt;/em&gt; which shows the important bits:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="o"&gt;...&lt;/span&gt;
 
     &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
@@ -680,7 +789,7 @@ Basically, ansible notifications use a similar concept to this.&lt;/p&gt;
 &lt;span class="err"&gt;}&lt;/span&gt;
 
 &lt;span class="nt"&gt;map&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;remote_addr&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;denied&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;default&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="nb"&gt;default&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;18&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;216&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;110&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="m"&gt;192&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;64&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;147&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;150&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
@@ -699,13 +808,13 @@ Basically, ansible notifications use a similar concept to this.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Alan eating halloumi" src="/images/alan-halloumi.jpg" title="Alan eating halloumi" /&gt;&lt;/p&gt;
 &lt;p&gt;Straight from the fancy DSLR camera the image is &lt;em&gt;3.6 megabytes&lt;/em&gt; — much too large to share practically on the web.  Amazingly, after uploading to Compressor.io the image is reduced to &lt;em&gt;1.6 megabytes&lt;/em&gt;.  That's an impressive feat considering the image wasn't downscaled and is visually indistinguishable from the original!&lt;/p&gt;
 &lt;p&gt;As it turns out, it's actually pretty easy to achieve this level of savings:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;jpegtran -copy none -progressive -outfile DSC_0685-trimmed.JPG DSC_0685.JPG
-&lt;span class="nv"&gt;$ &lt;/span&gt;gm mogrify DSC_0685-trimmed.JPG -quality 80
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ jpegtran -copy none -progressive -outfile DSC_0685-trimmed.JPG DSC_0685.JPG
+$ gm mogrify DSC_0685-trimmed.JPG -quality 80
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;The result is actually &lt;em&gt;better&lt;/em&gt; than Compressor.io:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ls -lht DSC_0685*
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ls -lht DSC_0685*
 -rw-r--r-- &lt;span class="m"&gt;1&lt;/span&gt; aorth staff 1.4M Oct &lt;span class="m"&gt;14&lt;/span&gt; 21:52 DSC_0685-trimmed.JPG
 -rw-r--r-- &lt;span class="m"&gt;1&lt;/span&gt; aorth staff 1.6M Oct &lt;span class="m"&gt;14&lt;/span&gt; 20:47 DSC_0685-compressor.jpg
 -rw-r--r-- &lt;span class="m"&gt;1&lt;/span&gt; aorth staff 3.6M Jun &lt;span class="m"&gt;28&lt;/span&gt; 11:21 DSC_0685.JPG
@@ -717,7 +826,7 @@ Basically, ansible notifications use a similar concept to this.&lt;/p&gt;
 &lt;h3&gt;Extra points&lt;/h3&gt;
 &lt;p&gt;Even though the file size has reduced by an amazing 60%, the image is actually still pretty massive — both in terms of file size as well as dimensions.  At &lt;em&gt;4608x3072 pixels&lt;/em&gt; (14MP), the image is still too large for the average computer, tablet, or phone to consume practically.  Keep in mind that, in 2014, most high-end smart phones have a resolution of "only" &lt;em&gt;1920x1080 pixels&lt;/em&gt;!&lt;/p&gt;
 &lt;p&gt;Given that high-end smart phones literally can't even fit more than 50% of this image on the screen, it's safe to assume that we can scale down the dimensions by a factor of at least 50% without sacrificing too much... I'll sympathize with the bandwidth deprived and go for 40%:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;gm convert DSC_0685-trimmed.JPG -resize 40% -quality &lt;span class="m"&gt;80&lt;/span&gt; -interlace Line DSC_0685-trimmed-scaled.JPG
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ gm convert DSC_0685-trimmed.JPG -resize 40% -quality &lt;span class="m"&gt;80&lt;/span&gt; -interlace Line DSC_0685-trimmed-scaled.JPG
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -729,7 +838,7 @@ Basically, ansible notifications use a similar concept to this.&lt;/p&gt;
 &lt;p&gt;Anyways, I'll leave the infosec community to &lt;a href="https://www.dfranke.us/posts/2014-09-27-shell-shock-exploitation-vectors.html" title="Shell Shock Exploitation Vectors"&gt;expound on attack vectors&lt;/a&gt;.  The point of this post is really to illustrate that you should be using an infrastructure orchestration tool like &lt;a href="http://www.ansible.com/home" title="Ansible homepage"&gt;Ansible&lt;/a&gt; to manage your servers.&lt;/p&gt;
 &lt;h3&gt;Painless patching with Ansible&lt;/h3&gt;
 &lt;p&gt;Patching your systems is painlessly easy if you manage your server infrastructure with something like Ansible.  Using a one-off command you can easily update all "web" servers, for example:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; ansible web -m apt -a &lt;span class="s2"&gt;&amp;quot;name=bash state=latest update_cache=yes&amp;quot;&lt;/span&gt; -K -s
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; ansible web -m apt -a &lt;span class="s2"&gt;&amp;quot;name=bash state=latest update_cache=yes&amp;quot;&lt;/span&gt; -K -s
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -738,27 +847,27 @@ Basically, ansible notifications use a similar concept to this.&lt;/p&gt;
 &lt;p&gt;When you have more than a handful of servers, the combinations of DNS names, IP addresses, roles, and distros becomes overwhelming.  With Ansible you define your inventory of hosts, allocate them into groups, and then write "playbooks" to mold your servers into functional roles, ie web, database, compute, proxy, etc servers; the &lt;a href="https://xkcd.com/910/" title="XKCD coming about naming servers"&gt;personal relationship&lt;/a&gt; between sysadmin and server is gone.&lt;/p&gt;
 &lt;p&gt;Here's a simple playbook I wrote which takes into account the different OS families in our infrastructure and updates the &lt;code&gt;bash&lt;/code&gt; package on each host.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;shellshock.yml&lt;/em&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nn"&gt;---&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nn"&gt;---&lt;/span&gt;
 &lt;span class="c1"&gt;# To update hosts for &amp;quot;Shellshock&amp;quot; bash vulnerability&lt;/span&gt;
 &lt;span class="c1"&gt;# See: https://en.wikipedia.org/wiki/Shellshock_(software_bug)&lt;/span&gt;
 
-&lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;hosts&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;all&lt;/span&gt;
-  &lt;span class="l-Scalar-Plain"&gt;sudo&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;yes&lt;/span&gt;
-  &lt;span class="l-Scalar-Plain"&gt;tasks&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
-    &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Update on Debian-based distros&lt;/span&gt;
-      &lt;span class="l-Scalar-Plain"&gt;apt&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;name=bash state=latest update_cache=yes&lt;/span&gt;
-      &lt;span class="l-Scalar-Plain"&gt;when&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;ansible_os_family == &amp;quot;Debian&amp;quot;&lt;/span&gt;
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;hosts&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;all&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;sudo&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;tasks&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Update on Debian-based distros&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;apt&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name=bash state=latest update_cache=yes&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;when&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ansible_os_family == &amp;quot;Debian&amp;quot;&lt;/span&gt;
 
-    &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Update on RedHat-based distros&lt;/span&gt;
-      &lt;span class="l-Scalar-Plain"&gt;yum&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;name=bash state=latest&lt;/span&gt;
-      &lt;span class="l-Scalar-Plain"&gt;when&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;ansible_os_family == &amp;quot;RedHat&amp;quot;&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Update on RedHat-based distros&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yum&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name=bash state=latest&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;when&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ansible_os_family == &amp;quot;RedHat&amp;quot;&lt;/span&gt;
 
 &lt;span class="c1"&gt;# vim: set sw=2 ts=2:&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;And then run the playbook with:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; ansible-playbook shellshock.yml -K -s
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; ansible-playbook shellshock.yml -K -s
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -863,21 +972,21 @@ TCP is a byte-oriented protocol, and UDP is message-oriented. The majority of ap
 &lt;p&gt;In the dashboard, navigate to &lt;code&gt;Project -&amp;gt; Compute -&amp;gt; Access &amp;amp; Security -&amp;gt; Download OpenStack RC File&lt;/code&gt;.  We'll need this later.&lt;/p&gt;
 &lt;h2&gt;Create and prepare virtualenv&lt;/h2&gt;
 &lt;p&gt;There's no &lt;code&gt;swiftclient&lt;/code&gt; package in my GNU/Linux distribution, so I decided to just install it into a virtual environment straight from pypi/pip.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; mkvirtualenv -p &lt;span class="sb"&gt;`&lt;/span&gt;which python2&lt;span class="sb"&gt;`&lt;/span&gt; swift
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; mkvirtualenv -p &lt;span class="sb"&gt;`&lt;/span&gt;which python2&lt;span class="sb"&gt;`&lt;/span&gt; swift
 &lt;span class="gp"&gt;$&lt;/span&gt; pip install python-swiftclient python-keystoneclient
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;Setup the environment&lt;/h2&gt;
 &lt;p&gt;Source the environment RC script you downloaded from the OpenStack dashboard:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; . ~/Downloads/aorth-openrc.sh
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; . ~/Downloads/aorth-openrc.sh
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;It will prompt you for your OpenStack dashboard password.&lt;/p&gt;
 &lt;h2&gt;Test&lt;/h2&gt;
 &lt;p&gt;Check if the settings are correct:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; swift stat
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; swift stat
 &lt;span class="go"&gt;       Account: AUTH_8b0c9cff5d094829b0cf7606a0390c1a&lt;/span&gt;
 &lt;span class="go"&gt;    Containers: 0&lt;/span&gt;
 &lt;span class="go"&gt;       Objects: 0&lt;/span&gt;
@@ -894,7 +1003,7 @@ TCP is a byte-oriented protocol, and UDP is message-oriented. The majority of ap
 &lt;p&gt;This means the API key and all other settings are ok, and authentication was successful; you're now ready to use OpenStack CLI tools.&lt;/p&gt;
 &lt;h2&gt;Create a container&lt;/h2&gt;
 &lt;p&gt;You could create a container in the OpenStack dashboard (&lt;code&gt;Object Store -&amp;gt; Containers -&amp;gt; Create Container&lt;/code&gt;), but it's much nicer to be able to do this from the commandline using the API.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; swift post Documents
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; swift post Documents
 &lt;span class="gp"&gt;$&lt;/span&gt; swift list
 &lt;span class="go"&gt;Documents&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -902,14 +1011,14 @@ TCP is a byte-oriented protocol, and UDP is message-oriented. The majority of ap
 
 &lt;h2&gt;Upload files&lt;/h2&gt;
 &lt;p&gt;My use case is to backup Documents from my desktop.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; ~/Documents
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; ~/Documents
 &lt;span class="gp"&gt;$&lt;/span&gt; swift upload Documents *
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; I &lt;code&gt;cd&lt;/code&gt; into the directory I want to upload first, because I found that if I wasn't &lt;em&gt;inside&lt;/em&gt; it, I would end up with another layer of hierarchy in my container itself, ie &lt;code&gt;Documents/Documents&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Check the status of the container:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; swift stat Documents
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; swift stat Documents
 &lt;span class="go"&gt;       Account: AUTH_9b0a8aff5d584828b5af7656c0385a1c&lt;/span&gt;
 &lt;span class="go"&gt;     Container: Documents&lt;/span&gt;
 &lt;span class="go"&gt;       Objects: 2691&lt;/span&gt;
@@ -941,12 +1050,12 @@ TCP is a byte-oriented protocol, and UDP is message-oriented. The majority of ap
 &lt;p&gt;&lt;em&gt;tl;dr&lt;/em&gt;: &lt;code&gt;rsync&lt;/code&gt; is amazing, but it’s single threaded and struggles when you tell it to sync large directory hierarchies.  &lt;a href="#sync_bricks"&gt;Here's how you can speed it up&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;rsync #fail&lt;/h3&gt;
 &lt;p&gt;I figured syncing the brick hierarchy from the good node to the bad node was simple enough, so I stopped the &lt;code&gt;glusterd&lt;/code&gt; service on the bad node and invoked:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;#&lt;/span&gt; rsync -aAXv --delete --exclude&lt;span class="o"&gt;=&lt;/span&gt;.glusterfs storage0:/path/to/bricks/homes/ storage1:/path/to/bricks/homes/
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;#&lt;/span&gt; rsync -aAXv --delete --exclude&lt;span class="o"&gt;=&lt;/span&gt;.glusterfs storage0:/path/to/bricks/homes/ storage1:/path/to/bricks/homes/
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;After a day or so I noticed I had only copied ~1.5TB (over 1 hop on a dedicated 10GbE switch!), and I realized something must be wrong.  I attached to the &lt;code&gt;rsync&lt;/code&gt; process with &lt;code&gt;strace -p&lt;/code&gt; and saw a bunch of system calls in one particular user’s directory. I dug deeper:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;#&lt;/span&gt; find /path/to/bricks/homes/ukenyatta/maker/genN_datastore/ -type d &lt;span class="p"&gt;|&lt;/span&gt; wc -l
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;#&lt;/span&gt; find /path/to/bricks/homes/ukenyatta/maker/genN_datastore/ -type d &lt;span class="p"&gt;|&lt;/span&gt; wc -l
 &lt;span class="go"&gt;1398640&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -963,26 +1072,26 @@ TCP is a byte-oriented protocol, and UDP is message-oriented. The majority of ap
 &lt;p&gt;Basically, he describes a clever use of &lt;code&gt;find&lt;/code&gt; and &lt;code&gt;xargs&lt;/code&gt; to split up the problem set into smaller pieces that &lt;code&gt;rsync&lt;/code&gt; can process more quickly.&lt;/p&gt;
 &lt;h3&gt;sync_brick.sh&lt;/h3&gt;
 &lt;p&gt;So here's my adaptation of his script for the purpose of syncing failed GlusterFS bricks, &lt;code&gt;sync_brick.sh&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/env bash&lt;/span&gt;
-&lt;span class="c"&gt;# borrowed / adapted from: https://wiki.ncsa.illinois.edu/display/~wglick/Parallel+Rsync&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/env bash&lt;/span&gt;
+&lt;span class="c1"&gt;# borrowed / adapted from: https://wiki.ncsa.illinois.edu/display/~wglick/Parallel+Rsync&lt;/span&gt;
 
-&lt;span class="c"&gt;# RSYNC SETUP&lt;/span&gt;
+&lt;span class="c1"&gt;# RSYNC SETUP&lt;/span&gt;
 &lt;span class="nv"&gt;RSYNC_PROG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/bin/rsync
-&lt;span class="c"&gt;# note the important use of --relative to use relative paths so we don&amp;#39;t have to specify the exact path on dest&lt;/span&gt;
+&lt;span class="c1"&gt;# note the important use of --relative to use relative paths so we don&amp;#39;t have to specify the exact path on dest&lt;/span&gt;
 &lt;span class="nv"&gt;RSYNC_OPTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-aAXv --numeric-ids --progress --human-readable --delete --exclude=.glusterfs --relative&amp;quot;&lt;/span&gt;
-&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;RSYNC_RSH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;ssh -T -c arcfour -o Compression=no -x&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;RSYNC_RSH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;ssh -T -c arcfour -o Compression=no -x&amp;quot;&lt;/span&gt;
 
-&lt;span class="c"&gt;# ENV SETUP&lt;/span&gt;
+&lt;span class="c1"&gt;# ENV SETUP&lt;/span&gt;
 &lt;span class="nv"&gt;SRCDIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/path/to/good/brick
 &lt;span class="nv"&gt;DESTDIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/path/to/bad/brick
-&lt;span class="c"&gt;# Recommend to match # of CPUs&lt;/span&gt;
+&lt;span class="c1"&gt;# Recommend to match # of CPUs&lt;/span&gt;
 &lt;span class="nv"&gt;THREADS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;4
 &lt;span class="nv"&gt;BAD_NODE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;server1
 
 &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$SRCDIR&lt;/span&gt;
 
-&lt;span class="c"&gt;# COPY&lt;/span&gt;
-&lt;span class="c"&gt;# note the combination of -print0 and -0!&lt;/span&gt;
+&lt;span class="c1"&gt;# COPY&lt;/span&gt;
+&lt;span class="c1"&gt;# note the combination of -print0 and -0!&lt;/span&gt;
 find &lt;span class="o"&gt;{&lt;/span&gt;a..z&lt;span class="o"&gt;}&lt;/span&gt;* &lt;span class="o"&gt;{&lt;/span&gt;A..Z&lt;span class="o"&gt;}&lt;/span&gt;* &lt;span class="o"&gt;{&lt;/span&gt;0..9&lt;span class="o"&gt;}&lt;/span&gt;* -mindepth &lt;span class="m"&gt;1&lt;/span&gt; -maxdepth &lt;span class="m"&gt;1&lt;/span&gt; -print0 &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
     xargs -0 -n1 -P&lt;span class="nv"&gt;$THREADS&lt;/span&gt; -I% &lt;span class="se"&gt;\&lt;/span&gt;
         &lt;span class="nv"&gt;$RSYNC_PROG&lt;/span&gt; &lt;span class="nv"&gt;$RSYNC_OPTS&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;%&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;$BAD_NODE&lt;/span&gt;:&lt;span class="nv"&gt;$DESTDIR&lt;/span&gt;
@@ -1056,14 +1165,14 @@ For an introduction to coreboot see &lt;a href="https://johnlewis.ie/mediawiki/i
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;Edit &lt;code&gt;/etc/modprobe.d/blacklist.conf&lt;/code&gt; and include the following line&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;blacklist chromeos_laptop
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;blacklist chromeos_laptop
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Edit &lt;code&gt;/etc/modules&lt;/code&gt; and include the following lines:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;i2c-i801
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;i2c-i801
 i2c-dev
 chromeos_laptop
 cyapa
@@ -1178,7 +1287,7 @@ Happy hacking!!&lt;/p&gt;</summary><category term="KFC"></category><category ter
 &lt;p&gt;According to &lt;a href="http://openssl.6102.n7.nabble.com/having-a-lot-of-troubles-trying-to-get-AES-NI-working-td44285.html"&gt;a post&lt;/a&gt; on the OpenSSL Users mailing list, you can force &lt;code&gt;openssl&lt;/code&gt; to avoid hardware AES instructions using the &lt;code&gt;OPENSSL_ia32cap&lt;/code&gt; environment variable.&lt;/p&gt;
 &lt;h2&gt;Benchmarks&lt;/h2&gt;
 &lt;p&gt;First, with AES-NI enabled (the default, on hardware that supports it):&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; openssl speed -elapsed -evp aes-128-cbc
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; openssl speed -elapsed -evp aes-128-cbc
 &lt;span class="go"&gt;You have chosen to measure elapsed time instead of user CPU time.&lt;/span&gt;
 &lt;span class="go"&gt;Doing aes-128-cbc for 3s on 16 size blocks: 57196857 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
 &lt;span class="go"&gt;Doing aes-128-cbc for 3s on 64 size blocks: 15343650 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
@@ -1196,7 +1305,7 @@ Happy hacking!!&lt;/p&gt;</summary><category term="KFC"></category><category ter
 
 
 &lt;p&gt;Then, setting the capability mask to turn off the hardware AES features:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nv"&gt;OPENSSL_ia32cap&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;~0x200000200000000&amp;quot;&lt;/span&gt; openssl speed -elapsed -evp aes-128-cbc
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nv"&gt;OPENSSL_ia32cap&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;~0x200000200000000&amp;quot;&lt;/span&gt; openssl speed -elapsed -evp aes-128-cbc
 &lt;span class="go"&gt;You have chosen to measure elapsed time instead of user CPU time.&lt;/span&gt;
 &lt;span class="go"&gt;Doing aes-128-cbc for 3s on 16 size blocks: 27883366 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
 &lt;span class="go"&gt;Doing aes-128-cbc for 3s on 64 size blocks: 7736907 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
@@ -1257,7 +1366,7 @@ I asked for suggestions from fellow LUGers on IRC and I hope this will be an ong
 &lt;p&gt;I would also like to thank the visionary fellows who had the light-bulb moment to start off the &lt;em&gt;LUG&lt;/em&gt;. Here, I specifically target &lt;em&gt;nj3ma&lt;/em&gt; and &lt;em&gt;eebrah&lt;/em&gt;. You spoke of it in university, but I was too busy chasing tail and the A's :D&lt;/p&gt;
 &lt;p&gt;Then there is all the rest of you people who saw fit to join the LUG and further light the fire. I am grateful to have met all of you in person. And for those of you I have yet to meet in person, I look forward to meeting you.&lt;/p&gt;
 &lt;h3&gt;And Now, a code block&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;[aorth@noma: ~]$ uname -sr
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[aorth@noma: ~]$ uname -sr
 Linux 3.9.9-1-ARCH
 &lt;/pre&gt;&lt;/div&gt;
 

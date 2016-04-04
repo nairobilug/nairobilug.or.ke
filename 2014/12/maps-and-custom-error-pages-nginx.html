@@ -93,7 +93,7 @@
 <p>I eventually stumbled upon the <a href="http://nginx.org/en/docs/http/ngx_http_map_module.html">nginx map module</a> which, combined with a custom error page, ended up being an elegant, fun solution to this problem.</p>
 <h3>Elegant maps</h3>
 <p>Here is a snippet from <em>/etc/nginx/conf.d/default.conf</em> which shows the important bits:</p>
-<div class="highlight"><pre><span class="nt">server</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="nt">server</span> <span class="p">{</span>
 <span class="o">...</span>
 
     <span class="n">location</span> <span class="o">/</span> <span class="err">{</span>
@@ -115,7 +115,7 @@
 <span class="err">}</span>
 
 <span class="nt">map</span> <span class="o">$</span><span class="nt">remote_addr</span> <span class="o">$</span><span class="nt">denied</span> <span class="p">{</span>
-    <span class="k">default</span> <span class="m">1</span><span class="p">;</span>
+    <span class="nb">default</span> <span class="m">1</span><span class="p">;</span>
     <span class="m">2</span><span class="o">.</span><span class="m">18</span><span class="o">.</span><span class="m">216</span><span class="o">.</span><span class="m">110</span> <span class="m">0</span><span class="p">;</span>
     <span class="m">192</span><span class="o">.</span><span class="m">64</span><span class="o">.</span><span class="m">147</span><span class="o">.</span><span class="m">150</span> <span class="m">0</span><span class="p">;</span>
 <span class="p">}</span>

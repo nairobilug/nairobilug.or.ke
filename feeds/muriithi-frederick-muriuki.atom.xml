@@ -65,14 +65,14 @@ For an introduction to coreboot see &lt;a href="https://johnlewis.ie/mediawiki/i
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;Edit &lt;code&gt;/etc/modprobe.d/blacklist.conf&lt;/code&gt; and include the following line&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;blacklist chromeos_laptop
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;blacklist chromeos_laptop
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Edit &lt;code&gt;/etc/modules&lt;/code&gt; and include the following lines:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;i2c-i801
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;i2c-i801
 i2c-dev
 chromeos_laptop
 cyapa
@@ -116,7 +116,7 @@ Yeah, keep doing the shit you're doing, and that will never happen.&lt;/p&gt;
 &lt;p&gt;I would also like to thank the visionary fellows who had the light-bulb moment to start off the &lt;em&gt;LUG&lt;/em&gt;. Here, I specifically target &lt;em&gt;nj3ma&lt;/em&gt; and &lt;em&gt;eebrah&lt;/em&gt;. You spoke of it in university, but I was too busy chasing tail and the A's :D&lt;/p&gt;
 &lt;p&gt;Then there is all the rest of you people who saw fit to join the LUG and further light the fire. I am grateful to have met all of you in person. And for those of you I have yet to meet in person, I look forward to meeting you.&lt;/p&gt;
 &lt;h3&gt;And Now, a code block&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;[aorth@noma: ~]$ uname -sr
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[aorth@noma: ~]$ uname -sr
 Linux 3.9.9-1-ARCH
 &lt;/pre&gt;&lt;/div&gt;
 

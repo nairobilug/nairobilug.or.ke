@@ -94,12 +94,12 @@
 <p><em>tl;dr</em>: <code>rsync</code> is amazing, but it’s single threaded and struggles when you tell it to sync large directory hierarchies.  <a href="#sync_bricks">Here's how you can speed it up</a>.</p>
 <h3>rsync #fail</h3>
 <p>I figured syncing the brick hierarchy from the good node to the bad node was simple enough, so I stopped the <code>glusterd</code> service on the bad node and invoked:</p>
-<div class="highlight"><pre><span class="gp">#</span> rsync -aAXv --delete --exclude<span class="o">=</span>.glusterfs storage0:/path/to/bricks/homes/ storage1:/path/to/bricks/homes/
+<div class="highlight"><pre><span></span><span class="gp">#</span> rsync -aAXv --delete --exclude<span class="o">=</span>.glusterfs storage0:/path/to/bricks/homes/ storage1:/path/to/bricks/homes/
 </pre></div>
 
 
 <p>After a day or so I noticed I had only copied ~1.5TB (over 1 hop on a dedicated 10GbE switch!), and I realized something must be wrong.  I attached to the <code>rsync</code> process with <code>strace -p</code> and saw a bunch of system calls in one particular user’s directory. I dug deeper:</p>
-<div class="highlight"><pre><span class="gp">#</span> find /path/to/bricks/homes/ukenyatta/maker/genN_datastore/ -type d <span class="p">|</span> wc -l
+<div class="highlight"><pre><span></span><span class="gp">#</span> find /path/to/bricks/homes/ukenyatta/maker/genN_datastore/ -type d <span class="p">|</span> wc -l
 <span class="go">1398640</span>
 </pre></div>
 
@@ -116,26 +116,26 @@
 <p>Basically, he describes a clever use of <code>find</code> and <code>xargs</code> to split up the problem set into smaller pieces that <code>rsync</code> can process more quickly.</p>
 <h3>sync_brick.sh</h3>
 <p>So here's my adaptation of his script for the purpose of syncing failed GlusterFS bricks, <code>sync_brick.sh</code>:</p>
-<div class="highlight"><pre><span class="c">#!/bin/env bash</span>
-<span class="c"># borrowed / adapted from: https://wiki.ncsa.illinois.edu/display/~wglick/Parallel+Rsync</span>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/env bash</span>
+<span class="c1"># borrowed / adapted from: https://wiki.ncsa.illinois.edu/display/~wglick/Parallel+Rsync</span>
 
-<span class="c"># RSYNC SETUP</span>
+<span class="c1"># RSYNC SETUP</span>
 <span class="nv">RSYNC_PROG</span><span class="o">=</span>/usr/bin/rsync
-<span class="c"># note the important use of --relative to use relative paths so we don&#39;t have to specify the exact path on dest</span>
+<span class="c1"># note the important use of --relative to use relative paths so we don&#39;t have to specify the exact path on dest</span>
 <span class="nv">RSYNC_OPTS</span><span class="o">=</span><span class="s2">&quot;-aAXv --numeric-ids --progress --human-readable --delete --exclude=.glusterfs --relative&quot;</span>
-<span class="nb">export </span><span class="nv">RSYNC_RSH</span><span class="o">=</span><span class="s2">&quot;ssh -T -c arcfour -o Compression=no -x&quot;</span>
+<span class="nb">export</span> <span class="nv">RSYNC_RSH</span><span class="o">=</span><span class="s2">&quot;ssh -T -c arcfour -o Compression=no -x&quot;</span>
 
-<span class="c"># ENV SETUP</span>
+<span class="c1"># ENV SETUP</span>
 <span class="nv">SRCDIR</span><span class="o">=</span>/path/to/good/brick
 <span class="nv">DESTDIR</span><span class="o">=</span>/path/to/bad/brick
-<span class="c"># Recommend to match # of CPUs</span>
+<span class="c1"># Recommend to match # of CPUs</span>
 <span class="nv">THREADS</span><span class="o">=</span>4
 <span class="nv">BAD_NODE</span><span class="o">=</span>server1
 
 <span class="nb">cd</span> <span class="nv">$SRCDIR</span>
 
-<span class="c"># COPY</span>
-<span class="c"># note the combination of -print0 and -0!</span>
+<span class="c1"># COPY</span>
+<span class="c1"># note the combination of -print0 and -0!</span>
 find <span class="o">{</span>a..z<span class="o">}</span>* <span class="o">{</span>A..Z<span class="o">}</span>* <span class="o">{</span>0..9<span class="o">}</span>* -mindepth <span class="m">1</span> -maxdepth <span class="m">1</span> -print0 <span class="p">|</span> <span class="se">\</span>
     xargs -0 -n1 -P<span class="nv">$THREADS</span> -I% <span class="se">\</span>
         <span class="nv">$RSYNC_PROG</span> <span class="nv">$RSYNC_OPTS</span> <span class="s2">&quot;%&quot;</span> <span class="nv">$BAD_NODE</span>:<span class="nv">$DESTDIR</span>

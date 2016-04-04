@@ -111,7 +111,7 @@ scripts finish running - as is the case with Java application server e.g. Tomcat
 <p>Section 1: <strong>Pre-reboot</strong>: Run your pre-reboot task, it can be performing major
 upgrades and/or performing some configuration which only take effect at boot time.
 For example - upgrade all packages using <code>yum</code> module<a href="http://docs.ansible.com/yum_module.html"><sup>[2]</sup></a></p>
-<div class="highlight"><pre>- name: upgrade all packages
+<div class="highlight"><pre><span></span>- name: upgrade all packages
   yum: name=* state=latest
 </pre></div>
 
@@ -121,7 +121,7 @@ For example - upgrade all packages using <code>yum</code> module<a href="http://
 <p>Section 2: <strong>Reboot</strong>: In this stage we'll use the <code>command</code> module<a href="http://docs.ansible.com/command_module.html"><sup>[3]</sup></a>
 to reboot the remote machine/server by running the <code>reboot</code> command  - nothing
 fancy - you can also use <code>shutdown --reboot</code>.</p>
-<div class="highlight"><pre>- name: reboot server
+<div class="highlight"><pre><span></span>- name: reboot server
   command: /sbin/reboot
 </pre></div>
 
@@ -138,7 +138,7 @@ using a <code>timeout</code> value of 300 seconds because most physical servers 
 use any value that suites you.
 For example: - wait for 300 seconds for port 22 to become available &amp; contain
 <code>OpenSSH</code></p>
-<div class="highlight"><pre>- name: wait for the server to finish rebooting
+<div class="highlight"><pre><span></span>- name: wait for the server to finish rebooting
   local_action: wait_for host=&quot;web01&quot; search_regex=OpenSSH port=22 timeout=300
 </pre></div>
 
@@ -152,7 +152,7 @@ needs.</p>
 </ul>
 <h3>puttin' it all together</h3>
 <ul>
-<li>We can merge all the above sections into one playbook as shown below:<div class="highlight"><pre><span class="x">- hosts: all</span>
+<li>We can merge all the above sections into one playbook as shown below:<div class="highlight"><pre><span></span><span class="x">- hosts: all</span>
 <span class="x">  sudo: yes</span>
 <span class="x">  tasks:</span>
 <span class="x">    - name: Upgrade all packages in RedHat-based machines</span>

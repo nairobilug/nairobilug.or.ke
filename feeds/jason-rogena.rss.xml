@@ -1,5 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nairobi LUG</title><link>https://nairobilug.or.ke/</link><description></description><atom:link href="https://nairobilug.or.ke/feeds/jason-rogena.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 10 May 2015 17:25:00 +0300</lastBuildDate><item><title>Meetup Summary (May, 2015)</title><link>https://nairobilug.or.ke/2015/05/meetup-may-2015.html</link><description>&lt;p&gt;Just like most months, we had the monthly meetup at KFC Kimathi on the first Saturday (2nd May). Eight people showed up.&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nairobi LUG</title><link>https://nairobilug.or.ke/</link><description></description><atom:link href="https://nairobilug.or.ke/feeds/jason-rogena.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 07 Feb 2016 17:00:00 +0300</lastBuildDate><item><title>Heka, InfluxDB, and Grafana</title><link>https://nairobilug.or.ke/2016/02/heka-influxdb-and-grafana.html</link><description>&lt;p&gt;I recently started working at a startup :). My first task there was to configure their new Linux server to host some live apps. I, professionally, haven't done sysadmin work but since I've been configuring Linux VPSs to play with for some time now I figured it wouldn't be that hard doing the initial setup. I did the usual; install and configure the necessary packages, firewall stuff, automated deployment of the apps, and of course, monitoring. I tried to do as much as possible on Ansible — I'm no idiot.&lt;/p&gt;
+&lt;p&gt;Settling on what I should use for monitoring took quite some time. There a so many ways you can kill this rat; Logstash, Gaphite, &lt;a href="http://prometheus.io"&gt;Prometheus&lt;/a&gt;, &lt;a href="https://hekad.readthedocs.org/en/latest"&gt;Heka&lt;/a&gt;, and the list goes on and on. I knew, however, what I wanted:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Easily deployable — mainly because I didn't want to have to do a lot of work on Ansible&lt;/li&gt;
+&lt;li&gt;Monitors both live stats and log files&lt;/li&gt;
+&lt;li&gt;Can run as a daemon&lt;/li&gt;
+&lt;li&gt;Has (or supports) a sexy graph dashboard&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Prometheus and Heka came up top. Prometheus comes bundled with an integrated time-series database and a graph dashboard. Heka, on the other hand, only collects and processes the time-series data. It might look like Prometheus has a leg up on Heka (it probably does in most use-cases). Using Prometheus, however, means that you have to use everything Prometheus. I hate being locked down — hey boo ;)! Heka supports a &lt;a href="https://hekad.readthedocs.org/en/v0.10.0b0/config/outputs/index.html"&gt;variety of data outputs&lt;/a&gt; including a host of storage engines (&lt;a href="https://influxdata.com"&gt;InfluxDB&lt;/a&gt; being one of them), IRC, ElasticSearch, HTTP, etc. &lt;a href="http://grafana.org"&gt;Grafana&lt;/a&gt; can graph data stored in an InfluxDB database. InfluxDB and Grafana are also very easy to install and run as daemons. Sorted!&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;
+Currently, the latest versions for both Heka and InfluxDB are pre v1 (v0.10.0 for Heka and v0.9.6 for InfluxDB). Both are also very young projects. I have however not experienced any issues with my setup. Live a little!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;Configuration&lt;/h3&gt;
+&lt;p&gt;I will focus on configuring Heka. Props to the Heka team for providing such &lt;a href="https://hekad.readthedocs.org/en/latest/"&gt;awesome documentation&lt;/a&gt;. As for InfluxDB, all you need to do is to create the user and databases to be used by Heka. &lt;a href="http://docs.grafana.org/datasources/influxdb"&gt;Here's&lt;/a&gt; a good tutorial on how to configure Grafana with InfluxDB.&lt;/p&gt;
+&lt;p&gt;Heka works as a system of user-defined plugins with each plugin handling a step in the monitoring process. Here's a list of the steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Input&lt;/li&gt;
+&lt;li&gt;Splitting — This is an optional step and I have honestly not used it yet.&lt;/li&gt;
+&lt;li&gt;Decode&lt;/li&gt;
+&lt;li&gt;Filter&lt;/li&gt;
+&lt;li&gt;Encode&lt;/li&gt;
+&lt;li&gt;Output&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;What's cool is that you can mix and match plugin types depending on, for instance, what your input is.&lt;/p&gt;
+&lt;p&gt;As an example, I'll show how I configured Heka to monitor HTTP status codes. All the configuration snippets for the different steps below are actually part of one configuration file (&lt;a href="https://raw.githubusercontent.com/jasonrogena/heka-config-sample/master/conf.d/http_status.toml"&gt;http_status.toml&lt;/a&gt;) in this GitHub &lt;a href="https://github.com/jasonrogena/heka-config-sample"&gt;repository&lt;/a&gt;.&lt;/p&gt;
+&lt;h4&gt;1. Input&lt;/h4&gt;
+&lt;p&gt;For this step, you configure the source for what you're monitoring. It might be a log file, Docker event, etc. In this example, my source is Apache2's access log file.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Apache2AccessLogInput]&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;LogstreamerInput&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;log_directory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/var/log/apache2&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;file_match&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;access\.log&amp;#39;&lt;/span&gt;
+&lt;span class="na"&gt;ticker_interval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;5&lt;/span&gt;
+&lt;span class="na"&gt;decoder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Apache2LogDecoder&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The first line, with the square brackets, specifies the name you've given the plugin you're defining for the step. You can also use the &lt;strong&gt;type&lt;/strong&gt; as the name and hence won't be required to define the type as a field below the name. I used the 'LogStreamerInput' type to handle for my input plugin. I also had to specify which decoder plugin (described in the next sub-section) I want coupled with the input plugin. Pretty straightforward.&lt;/p&gt;
+&lt;h4&gt;2. Decode&lt;/h4&gt;
+&lt;p&gt;The decoder plugin translates the input gotten by the input plugin to something that can be processed by the plugins that follow it.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Apache2LogDecoder]&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;SandboxDecoder&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;lua_decoders/apache_access.lua&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;    [Apache2LogDecoder.config]&lt;/span&gt;
+&lt;span class="s"&gt;    user_agent_transform = false&lt;/span&gt;
+&lt;span class="s"&gt;    log_format = &amp;quot;%h %l %u %t \&amp;quot;%r\&amp;quot; %&amp;gt;s %O \&amp;quot;%{Referer}i\&amp;quot; \&amp;quot;%{User-Agent}i\&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The name you give the decoder plugin has to be consistent with the one defined as the decoder in the input plugin. For the SandboxDecoder type, you also have to provide the file in which the plugin type is defined.&lt;/p&gt;
+&lt;p&gt;There is a set of files that define types that come bundled with Heka in &lt;em&gt;/usr/share/heka&lt;/em&gt;. I, for instance, used the &lt;em&gt;/usr/share/heka/lua_decoders/apache_access.lua&lt;/em&gt; file that defines a SandboxDecoder type. Another cool thing about Heka, you can define your own plugin types and point to where you've defined them in your config files.&lt;/p&gt;
+&lt;h4&gt;3. Filter&lt;/h4&gt;
+&lt;p&gt;You might want to filter out decoded data that you consider unnecessary in your filter plugin.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Apache2HTTPStatusFilter]&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;SandboxFilter&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;lua_filters/http_status.lua&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;ticker_interval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;5&lt;/span&gt;
+&lt;span class="na"&gt;preserve_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;false&lt;/span&gt;
+&lt;span class="na"&gt;message_matcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Type == &amp;#39;logfile&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;    [Apache2HTTPStatusFilter.config]&lt;/span&gt;
+&lt;span class="s"&gt;    sec_per_row = 60&lt;/span&gt;
+&lt;span class="s"&gt;    rows = 1440&lt;/span&gt;
+&lt;span class="s"&gt;    preservation_version = 14&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Some meta-variables are appended to the monitoring data by the decoder plugin depending on the type of decoder used. For instance, the SandboxDecoder in &lt;em&gt;lua_decoders/apache_access.lua&lt;/em&gt; appends the &lt;strong&gt;Type&lt;/strong&gt; meta-variable to the decoded data. You can use these variables to filter out the data you need — because a lot of data is decoded and you might not want to store all of it. Check the decoder type documentation for the full list of appended variables. I only needed data that had the Type set to 'logfile' so I defined this in the &lt;strong&gt;message_matcher&lt;/strong&gt; field.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Tip:&lt;/strong&gt;
+I initially set the &lt;strong&gt;message_matcher&lt;/strong&gt; field to "TRUE" so that none of the data was actually filtered out then checked the output to see what I could use to filter out the data.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;4. Encode&lt;/h4&gt;
+&lt;p&gt;You need to define an encoder plugin for encoding the data to a form that can be processed by whatever you are outputting to. This might be as simple as defining the type for the encoder plugin.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Apache2HTTPStatusInfluxDBEncoder]&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;SandboxEncoder&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;lua_encoders/schema_influx_line.lua&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;    [Apache2HTTPStatusInfluxDBEncoder.config]&lt;/span&gt;
+&lt;span class="s"&gt;    timestamp_precision= &amp;quot;s&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;5. Output&lt;/h4&gt;
+&lt;p&gt;Finally, you need to define the output plugin. I am sending the data to an InfluxDB database so I had to define a plugin for this purpose.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Apache2HTTPStatusInfluxDBOutput]&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;HttpOutput&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;message_matcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Type == &amp;#39;logfile&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;address&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;http://127.0.0.1:8086/write?db=a2_access_log&amp;amp;rp=default&amp;amp;precision=s&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;root&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;root&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;encoder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Apache2HTTPStatusInfluxDBEncoder&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You can define more than one output plugin (you can probably also do this for some of the other steps). I wanted to log the output, during testing, so that I didn't have to query InfluxDB for the data.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[LogOutput]&lt;/span&gt;
+&lt;span class="na"&gt;message_matcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Type == &amp;#39;logfile&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;encoder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Apache2HTTPStatusInfluxDBEncoder&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;I love the setup so far:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;No processor hogging observed.&lt;/li&gt;
+&lt;li&gt;The Heka, InfluxDB, and Grafana services have been running continuously for a month now without farting or dying on me.&lt;/li&gt;
+&lt;li&gt;InfluxDB isn't using a lot of disk space. The database storing HTTP status codes is 900K on the disk, one month on.&lt;/li&gt;
+&lt;li&gt;The graphs on Grafana look sexy. Here's a screenshot of the graphs on HTTP status codes:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt="image showing HTTP status codes on Grafana" src="/images/heka-influxdb-and-grafana.png" /&gt;&lt;/p&gt;
+&lt;p&gt;This was &lt;a href="https://jasonrogena.github.io/2016/01/02/heka-influxdb-and-grafana.html"&gt;originally posted&lt;/a&gt; on my personal blog; re-posting here for posterity.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jason Rogena</dc:creator><pubDate>Sun, 07 Feb 2016 17:00:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2016-02-07:2016/02/heka-influxdb-and-grafana.html</guid><category>linux</category><category>heka</category><category>influxdb</category><category>grafana</category></item><item><title>Meetup Summary (May, 2015)</title><link>https://nairobilug.or.ke/2015/05/meetup-may-2015.html</link><description>&lt;p&gt;Just like most months, we had the monthly meetup at KFC Kimathi on the first Saturday (2nd May). Eight people showed up.&lt;/p&gt;
 &lt;h3&gt;Topics Discussed&lt;/h3&gt;
 &lt;p&gt;A lot was discussed. Opera Mini, and whether the Nairobi LUG blog should be accessible using this browser, Search Engine Optimization, learning Rust.. I'm not going to pretend I remember everything that was discussed, partly because I'm writing this one week later.&lt;/p&gt;
 &lt;h3&gt;GPL Violation&lt;/h3&gt;

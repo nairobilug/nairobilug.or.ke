@@ -9,12 +9,12 @@
 &lt;li&gt;&lt;code&gt;Options=&lt;/code&gt; Mount options to use when mounting&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;In the end, you can convert your typical fstab entry such as this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;UUID=86fef3b2-bdc9-47fa-bbb1-4e528a89d222 /mnt/backups    ext4    defaults      0 0
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;UUID=86fef3b2-bdc9-47fa-bbb1-4e528a89d222 /mnt/backups    ext4    defaults      0 0
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;to:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Mount]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Mount]&lt;/span&gt;
 &lt;span class="na"&gt;What&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/dev/disk/by-uuid/86fef3b2-bdc9-47fa-bbb1-4e528a89d222&lt;/span&gt;
 &lt;span class="na"&gt;Where&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/mnt/backups&lt;/span&gt;
 &lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;ext4&lt;/span&gt;
@@ -29,7 +29,7 @@
 &lt;/blockquote&gt;
 &lt;p&gt;Huh? Yes that's right! The unit filename should match the mount point path.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;mnt-backups.mount&lt;/code&gt; mount unit file:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
 &lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Mount System Backups Directory&lt;/span&gt;
 
 &lt;span class="k"&gt;[Mount]&lt;/span&gt;
@@ -41,13 +41,13 @@
 
 
 &lt;p&gt;Reload systemd daemon &amp;amp; start the unit.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;systemctl daemon-reload
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;systemctl daemon-reload
 systemctl start mnt-backups.mount
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;And just like any other unit, you can view its status using &lt;code&gt;systemctl status mnt-backups.mount&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;root&lt;/span&gt;&lt;span class="k"&gt;@vast&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nt"&gt;systemctl&lt;/span&gt; &lt;span class="nt"&gt;status&lt;/span&gt; &lt;span class="nt"&gt;mnt-backups&lt;/span&gt;&lt;span class="nc"&gt;.mount&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;root&lt;/span&gt;&lt;span class="k"&gt;@vast&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nt"&gt;systemctl&lt;/span&gt; &lt;span class="nt"&gt;status&lt;/span&gt; &lt;span class="nt"&gt;mnt-backups&lt;/span&gt;&lt;span class="nc"&gt;.mount&lt;/span&gt;
 &lt;span class="err"&gt;●&lt;/span&gt; &lt;span class="nt"&gt;mnt-backups&lt;/span&gt;&lt;span class="nc"&gt;.mount&lt;/span&gt; &lt;span class="nt"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;Mount&lt;/span&gt; &lt;span class="nt"&gt;System&lt;/span&gt; &lt;span class="nt"&gt;Backups&lt;/span&gt; &lt;span class="nt"&gt;Directory&lt;/span&gt;
    &lt;span class="nt"&gt;Loaded&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nt"&gt;loaded&lt;/span&gt; &lt;span class="o"&gt;(/&lt;/span&gt;&lt;span class="nt"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;systemd&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;system&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;mnt-backups&lt;/span&gt;&lt;span class="nc"&gt;.mount&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nt"&gt;enabled&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="nt"&gt;vendor&lt;/span&gt; &lt;span class="nt"&gt;preset&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nt"&gt;disabled&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
    &lt;span class="nt"&gt;Active&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nt"&gt;active&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;mounted&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nt"&gt;since&lt;/span&gt; &lt;span class="nt"&gt;Mon&lt;/span&gt; &lt;span class="nt"&gt;2015-08-31&lt;/span&gt; &lt;span class="nt"&gt;08&lt;/span&gt;&lt;span class="nd"&gt;:09:15&lt;/span&gt; &lt;span class="nt"&gt;EAT&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="nt"&gt;2&lt;/span&gt; &lt;span class="nt"&gt;days&lt;/span&gt; &lt;span class="nt"&gt;ago&lt;/span&gt;
@@ -63,7 +63,7 @@ systemctl start mnt-backups.mount
 &lt;h2&gt;Gotchas!!&lt;/h2&gt;
 &lt;p&gt;After a reboot, I noticed the unit wasn't started &amp;amp; as result the mount point dir. was empty. The unit file was missing an &lt;code&gt;[Install]&lt;/code&gt; section which contains installation information such as unit dependencies(&lt;code&gt;WantedBy=, RequiredBy=&lt;/code&gt;), aliases(&lt;code&gt;Alias=&lt;/code&gt;), additional units(&lt;code&gt;Also=&lt;/code&gt;), e.t.c for the specified unit. In this case, I set the unit to start in multi-user runlevel a.k.a &lt;code&gt;multi-user.target&lt;/code&gt;. Oh, did you know you can change runlevel using &lt;code&gt;systemctl isolate $RUN_LEVEL.target&lt;/code&gt;? &lt;a href="https://wiki.archlinux.org/index.php/Systemd#Targets_table"&gt;Read more&lt;/a&gt; about systemd runlevels/targets.&lt;/p&gt;
 &lt;p&gt;Here's the complete &lt;code&gt;/etc/systemd/system/mnt-backups.mount&lt;/code&gt; unit file with an &lt;code&gt;[Install]&lt;/code&gt; section:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
 &lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Mount System Backups Directory&lt;/span&gt;
 
 &lt;span class="k"&gt;[Mount]&lt;/span&gt;
@@ -78,7 +78,7 @@ systemctl start mnt-backups.mount
 
 
 &lt;p&gt;As always, enable the unit to start automatically during boot.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;systemctl &lt;span class="nb"&gt;enable &lt;/span&gt;mnt-backups.mount
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; mnt-backups.mount
 &lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">James Oguya</dc:creator><pubDate>Wed, 02 Sep 2015 11:00:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2015-09-02:2015/09/systemd-mount-partition.html</guid><category>linux</category><category>systemd</category></item><item><title>Rebooting server(s) using Ansible</title><link>https://nairobilug.or.ke/2015/03/rebooting-server-using-ansible.html</link><description>&lt;p&gt;In this blogpost, we'll talk about rebooting servers using ansible &amp;amp; pausing the
 playbook by waiting for a given amount of time for a given service on a given
 port to start.&lt;/p&gt;
@@ -101,7 +101,7 @@ scripts finish running - as is the case with Java application server e.g. Tomcat
 &lt;p&gt;Section 1: &lt;strong&gt;Pre-reboot&lt;/strong&gt;: Run your pre-reboot task, it can be performing major
 upgrades and/or performing some configuration which only take effect at boot time.
 For example - upgrade all packages using &lt;code&gt;yum&lt;/code&gt; module&lt;a href="http://docs.ansible.com/yum_module.html"&gt;&lt;sup&gt;[2]&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;- name: upgrade all packages
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;- name: upgrade all packages
   yum: name=* state=latest
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -111,7 +111,7 @@ For example - upgrade all packages using &lt;code&gt;yum&lt;/code&gt; module&lt;
 &lt;p&gt;Section 2: &lt;strong&gt;Reboot&lt;/strong&gt;: In this stage we'll use the &lt;code&gt;command&lt;/code&gt; module&lt;a href="http://docs.ansible.com/command_module.html"&gt;&lt;sup&gt;[3]&lt;/sup&gt;&lt;/a&gt;
 to reboot the remote machine/server by running the &lt;code&gt;reboot&lt;/code&gt; command  - nothing
 fancy - you can also use &lt;code&gt;shutdown --reboot&lt;/code&gt;.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;- name: reboot server
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;- name: reboot server
   command: /sbin/reboot
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -128,7 +128,7 @@ using a &lt;code&gt;timeout&lt;/code&gt; value of 300 seconds because most physi
 use any value that suites you.
 For example: - wait for 300 seconds for port 22 to become available &amp;amp; contain
 &lt;code&gt;OpenSSH&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;- name: wait for the server to finish rebooting
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;- name: wait for the server to finish rebooting
   local_action: wait_for host=&amp;quot;web01&amp;quot; search_regex=OpenSSH port=22 timeout=300
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -142,7 +142,7 @@ needs.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;h3&gt;puttin' it all together&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;We can merge all the above sections into one playbook as shown below:&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
+&lt;li&gt;We can merge all the above sections into one playbook as shown below:&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
 &lt;span class="x"&gt;  sudo: yes&lt;/span&gt;
 &lt;span class="x"&gt;  tasks:&lt;/span&gt;
 &lt;span class="x"&gt;    - name: Upgrade all packages in RedHat-based machines&lt;/span&gt;
@@ -193,7 +193,7 @@ e.t.c.&lt;/li&gt;
 Ansible has &lt;a href="http://docs.ansible.com/playbooks_intro.html#handlers-running-operations-on-change"&gt;notification handlers&lt;/a&gt; but they are only triggered at the end of the current playbook unlike &lt;a href="https://docs.chef.io/resource_common.html#notifies-syntax"&gt;Chef's notifications&lt;/a&gt; which can be triggered immediately! Moreover, you can configure Chef's notifications to be triggered at specific times e.g. at the very end of a chef-client run i.e. &lt;code&gt;notifies :delayed&lt;/code&gt; or immediately i.e. &lt;code&gt;notifies :immediately&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Now, why I'm going into all these boring theories? Well, when installing tomcat on Ubuntu, dpkg starts it automatically once the process is complete. But in my case, I wanted to stop tomcat7 service first, configure it, deploy its webapps &amp;amp; finally start it. So on my ansible tasks file, after installing tomcat7 I added a notification action to call a task that stops tomcat7 service. Here's a snippet from the ansible task file:&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;tomcat.yml&lt;/em&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
 &lt;span class="x"&gt;  sudo: yes&lt;/span&gt;
 &lt;span class="x"&gt;  tasks:&lt;/span&gt;
 &lt;span class="x"&gt;    - name: Install tomcat7&lt;/span&gt;
@@ -217,7 +217,7 @@ So I had to come up with a quick fix for this issue.&lt;/p&gt;
 Basically, ansible notifications use a similar concept to this.&lt;/p&gt;
 &lt;p&gt;Here's a snippet from the playbook showing the quick fix:&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;tomcat.yml&lt;/em&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
 &lt;span class="x"&gt;  sudo: yes&lt;/span&gt;
 &lt;span class="x"&gt;  tasks:&lt;/span&gt;
 &lt;span class="x"&gt;      - name: Install tomcat7&lt;/span&gt;

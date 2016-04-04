@@ -99,12 +99,12 @@
 <li><code>Options=</code> Mount options to use when mounting</li>
 </ul>
 <p>In the end, you can convert your typical fstab entry such as this:</p>
-<div class="highlight"><pre>UUID=86fef3b2-bdc9-47fa-bbb1-4e528a89d222 /mnt/backups    ext4    defaults      0 0
+<div class="highlight"><pre><span></span>UUID=86fef3b2-bdc9-47fa-bbb1-4e528a89d222 /mnt/backups    ext4    defaults      0 0
 </pre></div>
 
 
 <p>to:</p>
-<div class="highlight"><pre><span class="k">[Mount]</span>
+<div class="highlight"><pre><span></span><span class="k">[Mount]</span>
 <span class="na">What</span><span class="o">=</span><span class="s">/dev/disk/by-uuid/86fef3b2-bdc9-47fa-bbb1-4e528a89d222</span>
 <span class="na">Where</span><span class="o">=</span><span class="s">/mnt/backups</span>
 <span class="na">Type</span><span class="o">=</span><span class="s">ext4</span>
@@ -119,7 +119,7 @@
 </blockquote>
 <p>Huh? Yes that's right! The unit filename should match the mount point path.</p>
 <p><code>mnt-backups.mount</code> mount unit file:</p>
-<div class="highlight"><pre><span class="k">[Unit]</span>
+<div class="highlight"><pre><span></span><span class="k">[Unit]</span>
 <span class="na">Description</span><span class="o">=</span><span class="s">Mount System Backups Directory</span>
 
 <span class="k">[Mount]</span>
@@ -131,13 +131,13 @@
 
 
 <p>Reload systemd daemon &amp; start the unit.</p>
-<div class="highlight"><pre>systemctl daemon-reload
+<div class="highlight"><pre><span></span>systemctl daemon-reload
 systemctl start mnt-backups.mount
 </pre></div>
 
 
 <p>And just like any other unit, you can view its status using <code>systemctl status mnt-backups.mount</code>:</p>
-<div class="highlight"><pre><span class="nt">root</span><span class="k">@vast</span> <span class="o">~</span> <span class="err">#</span> <span class="nt">systemctl</span> <span class="nt">status</span> <span class="nt">mnt-backups</span><span class="nc">.mount</span>
+<div class="highlight"><pre><span></span><span class="nt">root</span><span class="k">@vast</span> <span class="o">~</span> <span class="err">#</span> <span class="nt">systemctl</span> <span class="nt">status</span> <span class="nt">mnt-backups</span><span class="nc">.mount</span>
 <span class="err">●</span> <span class="nt">mnt-backups</span><span class="nc">.mount</span> <span class="nt">-</span> <span class="nt">Mount</span> <span class="nt">System</span> <span class="nt">Backups</span> <span class="nt">Directory</span>
    <span class="nt">Loaded</span><span class="o">:</span> <span class="nt">loaded</span> <span class="o">(/</span><span class="nt">etc</span><span class="o">/</span><span class="nt">systemd</span><span class="o">/</span><span class="nt">system</span><span class="o">/</span><span class="nt">mnt-backups</span><span class="nc">.mount</span><span class="p">;</span> <span class="nt">enabled</span><span class="o">;</span> <span class="nt">vendor</span> <span class="nt">preset</span><span class="o">:</span> <span class="nt">disabled</span><span class="o">)</span>
    <span class="nt">Active</span><span class="o">:</span> <span class="nt">active</span> <span class="o">(</span><span class="nt">mounted</span><span class="o">)</span> <span class="nt">since</span> <span class="nt">Mon</span> <span class="nt">2015-08-31</span> <span class="nt">08</span><span class="nd">:09:15</span> <span class="nt">EAT</span><span class="o">;</span> <span class="nt">2</span> <span class="nt">days</span> <span class="nt">ago</span>
@@ -153,7 +153,7 @@ systemctl start mnt-backups.mount
 <h2>Gotchas!!</h2>
 <p>After a reboot, I noticed the unit wasn't started &amp; as result the mount point dir. was empty. The unit file was missing an <code>[Install]</code> section which contains installation information such as unit dependencies(<code>WantedBy=, RequiredBy=</code>), aliases(<code>Alias=</code>), additional units(<code>Also=</code>), e.t.c for the specified unit. In this case, I set the unit to start in multi-user runlevel a.k.a <code>multi-user.target</code>. Oh, did you know you can change runlevel using <code>systemctl isolate $RUN_LEVEL.target</code>? <a href="https://wiki.archlinux.org/index.php/Systemd#Targets_table">Read more</a> about systemd runlevels/targets.</p>
 <p>Here's the complete <code>/etc/systemd/system/mnt-backups.mount</code> unit file with an <code>[Install]</code> section:</p>
-<div class="highlight"><pre><span class="k">[Unit]</span>
+<div class="highlight"><pre><span></span><span class="k">[Unit]</span>
 <span class="na">Description</span><span class="o">=</span><span class="s">Mount System Backups Directory</span>
 
 <span class="k">[Mount]</span>
@@ -168,7 +168,7 @@ systemctl start mnt-backups.mount
 
 
 <p>As always, enable the unit to start automatically during boot.</p>
-<div class="highlight"><pre>systemctl <span class="nb">enable </span>mnt-backups.mount
+<div class="highlight"><pre><span></span>systemctl <span class="nb">enable</span> mnt-backups.mount
 </pre></div>
     </div>
   </div>
