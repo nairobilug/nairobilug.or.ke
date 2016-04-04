@@ -6,16 +6,16 @@ Slug: heka-influxdb-and-grafana
 Author: Jason Rogena
 Summary: My experience configuring Heka, InfluxDB, and Grafana for monitoring logs and live server stats
 
-I recently started working at a startup :). My first task there was to configure their new Linux server to host some live apps. I, professionally, haven't done sysadmin work but since I've been configuring Linux VPSs to play with for some time now I figured it wouldn't be that hard doing the initial setup. I did the usual; install and configure the necessary packages, firewall stuff, automated deployment of the apps, and of course, monitoring. I tried to do as much as possible on Ansible--I'm no idiot.
+I recently started working at a startup :). My first task there was to configure their new Linux server to host some live apps. I, professionally, haven't done sysadmin work but since I've been configuring Linux VPSs to play with for some time now I figured it wouldn't be that hard doing the initial setup. I did the usual; install and configure the necessary packages, firewall stuff, automated deployment of the apps, and of course, monitoring. I tried to do as much as possible on Ansible — I'm no idiot.
 
 Settling on what I should use for monitoring took quite some time. There a so many ways you can kill this rat; Logstash, Gaphite, [Prometheus](http://prometheus.io), [Heka](https://hekad.readthedocs.org/en/latest), and the list goes on and on. I knew, however, what I wanted:
 
- 1. Easily deployable--mainly because I didn't want to have to do a lot of work on Ansible
+ 1. Easily deployable — mainly because I didn't want to have to do a lot of work on Ansible
  2. Monitors both live stats and log files
  3. Can run as a daemon
  4. Has (or supports) a sexy graph dashboard
 
-Prometheus and Heka came up top. Prometheus comes bundled with an integrated time-series database and a graph dashboard. Heka, on the other hand, only collects and processes the time-series data. It might look like Prometheus has a leg up on Heka (it probably does in most use-cases). Using Prometheus, however, means that you have to use everything Prometheus. I hate being locked down--hey boo ;)! Heka supports a [variety of data outputs](https://hekad.readthedocs.org/en/v0.10.0b0/config/outputs/index.html) including a host of storage engines ([InfluxDB](https://influxdata.com) being one of them), IRC, ElasticSearch, HTTP, etc. [Grafana](http://grafana.org) can graph data stored in an InfluxDB database. InfluxDB and Grafana are also very easy to install and run as daemons. Sorted!
+Prometheus and Heka came up top. Prometheus comes bundled with an integrated time-series database and a graph dashboard. Heka, on the other hand, only collects and processes the time-series data. It might look like Prometheus has a leg up on Heka (it probably does in most use-cases). Using Prometheus, however, means that you have to use everything Prometheus. I hate being locked down — hey boo ;)! Heka supports a [variety of data outputs](https://hekad.readthedocs.org/en/v0.10.0b0/config/outputs/index.html) including a host of storage engines ([InfluxDB](https://influxdata.com) being one of them), IRC, ElasticSearch, HTTP, etc. [Grafana](http://grafana.org) can graph data stored in an InfluxDB database. InfluxDB and Grafana are also very easy to install and run as daemons. Sorted!
 
 > **Note:**
 > Currently, the latest versions for both Heka and InfluxDB are pre v1 (v0.10.0 for Heka and v0.9.6 for InfluxDB). Both are also very young projects. I have however not experienced any issues with my setup. Live a little!
@@ -27,7 +27,7 @@ I will focus on configuring Heka. Props to the Heka team for providing such [awe
 Heka works as a system of user-defined plugins with each plugin handling a step in the monitoring process. Here's a list of the steps:
 
  - Input
- - Splitting--This is an optional step and I have honestly not used it yet.
+ - Splitting — This is an optional step and I have honestly not used it yet.
  - Decode
  - Filter
  - Encode
@@ -80,7 +80,7 @@ You might want to filter out decoded data that you consider unnecessary in your 
         rows = 1440
         preservation_version = 14
 
-Some meta-variables are appended to the monitoring data by the decoder plugin depending on the type of decoder used. For instance, the SandboxDecoder in *lua_decoders/apache_access.lua* appends the **Type** meta-variable to the decoded data. You can use these variables to filter out the data you need--because a lot of data is decoded and you might not want to store all of it. Check the decoder type documentation for the full list of appended variables. I only needed data that had the Type set to 'logfile' so I defined this in the **message_matcher** field.
+Some meta-variables are appended to the monitoring data by the decoder plugin depending on the type of decoder used. For instance, the SandboxDecoder in *lua_decoders/apache_access.lua* appends the **Type** meta-variable to the decoded data. You can use these variables to filter out the data you need — because a lot of data is decoded and you might not want to store all of it. Check the decoder type documentation for the full list of appended variables. I only needed data that had the Type set to 'logfile' so I defined this in the **message_matcher** field.
 
 > **Tip:**
 > I initially set the **message_matcher** field to "TRUE" so that none of the data was actually filtered out then checked the output to see what I could use to filter out the data.
