@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Nairobi LUG</title><link>https://nairobilug.or.ke/</link><description></description><lastBuildDate>Mon, 19 Jan 2015 20:40:00 +0300</lastBuildDate><item><title>Meetup Summary (January, 2015)</title><link>https://nairobilug.or.ke/2015/01/meetup-january-2015.html</link><description>&lt;p&gt;First off the meetup couldn't be held on the usual first Saturday of the month (4-Jan-2015) but was held on the second Satruday (11-Jan-2015) because by Kenyan culture people just aren't around Nairobi until at least the first Monday after first January. This pushing forward of the meetup was discussed in the mailing list and it was agreed.&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nairobi LUG</title><link>https://nairobilug.or.ke/</link><description></description><atom:link href="https://nairobilug.or.ke/feeds/njagi-mwaniki.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 19 Jan 2015 20:40:00 +0300</lastBuildDate><item><title>Meetup Summary (January, 2015)</title><link>https://nairobilug.or.ke/2015/01/meetup-january-2015.html</link><description>&lt;p&gt;First off the meetup couldn't be held on the usual first Saturday of the month (4-Jan-2015) but was held on the second Satruday (11-Jan-2015) because by Kenyan culture people just aren't around Nairobi until at least the first Monday after first January. This pushing forward of the meetup was discussed in the mailing list and it was agreed.&lt;/p&gt;
 &lt;p&gt;The meetup was awesome. I had missed quite a number of them and so I met a lot of new faces. Almost everyone was new so I count for that as growth.&lt;/p&gt;
 &lt;p&gt;Discussions:&lt;/p&gt;
 &lt;ul&gt;
@@ -15,7 +15,7 @@
 &lt;li&gt;
 &lt;p&gt;There was a lot of catching up being friends and such things.&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Njagi Mwaniki</dc:creator><pubDate>Mon, 19 Jan 2015 20:40:00 +0300</pubDate><guid isPermaLink="false">tag:nairobilug.or.ke,2015-01-19:2015/01/meetup-january-2015.html</guid><category>KFC</category><category>meetup</category></item><item><title>Meetup Summary (February, 2014)</title><link>https://nairobilug.or.ke/2014/02/meetup-february-2014.html</link><description>&lt;p&gt;16 guys showed up (staggered).
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Njagi Mwaniki</dc:creator><pubDate>Mon, 19 Jan 2015 20:40:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2015-01-19:2015/01/meetup-january-2015.html</guid><category>KFC</category><category>meetup</category></item><item><title>Meetup Summary (February, 2014)</title><link>https://nairobilug.or.ke/2014/02/meetup-february-2014.html</link><description>&lt;p&gt;16 guys showed up (staggered).
 I had a friend attend for the first time and he liked it.&lt;/p&gt;
 &lt;h3&gt;3D printer&lt;/h3&gt;
 &lt;p&gt;Well great news guys have decided to build a 3D printer. Updates on that will be blogged about sooner than later I hope. I for one are very excited that we're doing such.&lt;/p&gt;
@@ -45,4 +45,4 @@ I had a friend attend for the first time and he liked it.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Group shot0" src="/images/meetup-february-2014-0.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Group shot1" src="/images/meetup-february-2014-1.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
 &lt;p&gt;Guys had a great time. See you at KFC Kimathi Street on March 1st, 2014.
-Happy hacking!!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Njagi Mwaniki</dc:creator><pubDate>Thu, 06 Feb 2014 16:00:00 +0300</pubDate><guid isPermaLink="false">tag:nairobilug.or.ke,2014-02-06:2014/02/meetup-february-2014.html</guid><category>KFC</category><category>meetup</category></item></channel></rss>
+Happy hacking!!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Njagi Mwaniki</dc:creator><pubDate>Thu, 06 Feb 2014 16:00:00 +0300</pubDate><guid>tag:nairobilug.or.ke,2014-02-06:2014/02/meetup-february-2014.html</guid><category>KFC</category><category>meetup</category></item></channel></rss>
