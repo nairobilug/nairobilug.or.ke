@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/</loc>
-<lastmod>2016-04-27T11:57:21-00:00</lastmod>
+<lastmod>2016-05-05T12:48:05-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://nairobilug.or.ke/archives.html</loc>
-<lastmod>2016-04-27T11:57:21-00:00</lastmod>
+<lastmod>2016-05-05T12:48:05-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://nairobilug.or.ke/tags.html</loc>
-<lastmod>2016-04-27T11:57:21-00:00</lastmod>
+<lastmod>2016-05-05T12:48:05-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://nairobilug.or.ke/categories.html</loc>
-<lastmod>2016-04-27T11:57:21-00:00</lastmod>
+<lastmod>2016-05-05T12:48:05-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -34,6 +34,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://nairobilug.or.ke/2013/10/pages/about-us.html</loc>
 <lastmod>2013-10-08T13:00:00+03:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://nairobilug.or.ke/2016/04/my-experience-applying-for-a-strange-loop-2016-opportunity-grant.html</loc>
+<lastmod>2016-04-26T08:42:00+03:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -291,6 +298,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>https://nairobilug.or.ke/category/conferences.html</loc>
+<lastmod>2016-04-26T08:42:00+02:27</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>https://nairobilug.or.ke/category/events.html</loc>
 <lastmod>2013-10-02T12:00:00+02:27</lastmod>
 <changefreq>daily</changefreq>
@@ -536,8 +550,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://nairobilug.or.ke/tag/rsync.html</loc>
-<lastmod>2014-07-11T16:40:00+02:27</lastmod>
+<loc>https://nairobilug.or.ke/tag/strangeloop.html</loc>
+<lastmod>2016-04-26T08:42:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -550,8 +564,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://nairobilug.or.ke/tag/nginx.html</loc>
-<lastmod>2014-12-09T17:00:00+02:27</lastmod>
+<loc>https://nairobilug.or.ke/tag/heka.html</loc>
+<lastmod>2016-02-07T17:00:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -599,8 +613,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://nairobilug.or.ke/tag/heka.html</loc>
-<lastmod>2016-02-07T17:00:00+02:27</lastmod>
+<loc>https://nairobilug.or.ke/tag/nginx.html</loc>
+<lastmod>2014-12-09T17:00:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -622,6 +636,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://nairobilug.or.ke/tag/tech.html</loc>
 <lastmod>2014-09-04T18:37:00+02:27</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://nairobilug.or.ke/tag/rsync.html</loc>
+<lastmod>2014-07-11T16:40:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -691,7 +712,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://nairobilug.or.ke/author/njagi-mwaniki.html</loc>
-<lastmod>2015-01-19T20:40:00+02:27</lastmod>
+<lastmod>2016-04-26T08:42:00+02:27</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
