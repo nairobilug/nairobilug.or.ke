@@ -1,11 +1,7 @@
-*.pid
-*.pyc
-*.swp
-*~
-\#
-cache/
+# Byte-compiled, optimized
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pelican output directory
 output/
-bin/
-include/
-lib/
-pip-selfcheck.json
