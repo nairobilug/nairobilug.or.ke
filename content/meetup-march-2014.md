@@ -1,14 +1,14 @@
 Title: Meetup Summary (March, 2014)
 Date: 2014-03-02 21:01
 Category: Meetups
-Tags: KFC, meetup
+Tags: kfc, meetup
 Slug: meetup-march-2014
 Author: Alan Orth
 Summary: Highlights from the March, 2014 meetup.
 
 11 or 12 people showed up, including two first-time members (hi, Ken and friend!).  Off the top of my head, the topics discussed included:
 
-### Serious stuff
+### Serious Stuff
 
 * Using GPG Public Keys for signing and encrypting emails (standards, terminology, motivation, etc)
     * Several members have, in the last weeks, set up and exchanged keys
@@ -20,16 +20,18 @@ Summary: Highlights from the March, 2014 meetup.
     * Venue should be somewhere in tao to make it easy for people to be on time, possibly University of Nairobi library (with KENET connections?)
     * Perhaps could be the 3rd Saturday of the month
 
-### Not-so-serious stuff
+### Not-so-Serious Stuff
+
 * Progress of the current Nairobi GNU/Linux Users Group book club book, Stephen King's *The Stand*.  sticky and sentinelprime are ~50% through, but emk and raywan haven't started
 * emk's gangsta beard will rival that of Rick Ross soon
 * Proper pronunciation of "Linux" ([Linus says "Lih-nux"](http://safalra.com/science/linguistics/linux-pronunciation/))
 
 ### Wat?
+
 * Proper pronunciation of "doge"
 
 Proof that it happened:
 
-![Group shot](/images/meetup-march-2014.jpg  "Nairobi GNU/Linux Users Group members")
- 
+![Group shot](/images/meetup-march-2014/meetup-march-2014.jpg "Nairobi GNU/Linux Users Group members")
+
 See you for the next meeting (April 5th, 2014!)
