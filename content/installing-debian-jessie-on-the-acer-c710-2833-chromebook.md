@@ -1,10 +1,10 @@
 Title: Installing Debian Jessie on the Acer C710-2833 Chromebook
 Date: 2014-03-19 19:15
 Category: Tech
-Tags: hardware, Chromebook, Debian
+Tags: hardware, chromebook, debian
 Slug: installing-debian-jessie-on-the-acer-c710-2833-chromebook
 Author: Muriithi Frederick Muriuki
-Summary: Making my 'new' chromebook useful
+Summary: Making my 'new' chromebook useful.
 
 ## Introduction
 
@@ -50,7 +50,7 @@ For an introduction to coreboot see [here](https://johnlewis.ie/mediawiki/index.
 
 [Here](http://johnlewis.ie/coreboot-on-chromebooks/pre-built-firmware/) you can find a list of the existing coreboot firmware. DO NOT RUSH JUST YET. Read on.
 
-##Installing
+## Installing
 
 ### Getting the ISO
 
@@ -60,7 +60,7 @@ Armed with that knowledge, get to [http://www.debian.org](http://www.debian.org/
 
 At this time, it is recommended that you get Debian Jessie [here](http://www.debian.org/devel/debian-installer/)
 
-### Ready To Go
+### Ready to Go
 
 Now, you have read up on coreboot, you have the image all that remains is the process.
 
