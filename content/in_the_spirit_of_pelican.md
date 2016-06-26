@@ -4,10 +4,9 @@ Category: Pelican
 Tags: pelican, publishing
 Slug: in-the-spirit-of-pelican
 Author: Muriithi Frederick Muriuki
-Summary: I have to start by commending everyone involved in the Nairobi Linux User Group (nairobilug) for their various efforts to get all of us to this point.
+Summary: I have to start by commending everyone involved in the Nairobi GNU/Linux Users Group (nairobilug) for their various efforts to get all of us to this point.
 
-
-I have to start by commending everyone involved in the Nairobi Linux User Group (nairobilug) for their various efforts to get all of us to this point.
+I have to start by commending everyone involved in the Nairobi GNU/Linux Users Group (nairobilug) for their various efforts to get all of us to this point.
 
 First off, I wish to thank *Mr. Alan Orth* for introducing us (or was it just me?) to Pelican, and providing the tutorial for getting it running. Also, for setting up the system so that we can all collaborate to add content to the site.
 
@@ -15,12 +14,12 @@ I would also like to thank the visionary fellows who had the light-bulb moment t
 
 Then there is all the rest of you people who saw fit to join the LUG and further light the fire. I am grateful to have met all of you in person. And for those of you I have yet to meet in person, I look forward to meeting you.
 
-### And Now, a code block
+### And Now, a Code Block
 
     [aorth@noma: ~]$ uname -sr
     Linux 3.9.9-1-ARCH
 
-### And now, a list
+### And Now, a List
 
 I could not resist doing this... here is a list of the nicks on irc as I type this:
 
