@@ -1,17 +1,19 @@
 Title: Leveraging the Ansible Python API for Infrastructure Reporting
 Date: 2015-01-21 16:40
 Category: Linux
-Tags: linux, ansible
+Tags: linux, ansible, python
 Slug: ansible-api-reporting
 Author: Alan Orth
-Summary: Leveraging Ansible's Python API to generate infrastructure reports
+Summary: Leveraging Ansible's Python API to generate infrastructure reports.
 
 A few days ago I had to get some basic information from a handful of servers for an inventory report; just basic stuff like hostname, IP address, storage capacity, distro version, etc. I already manage all of my servers with Ansible, and there's a wealth of information available in Ansible's `setup` module, so I knew there had to be a clever way to do this.
 
 Somehow I stumbled upon [Ansible's Python API](http://docs.ansible.com/developing_api.html), which solves this problem elegantly! It helped that other people are doing cool things and [writing about their experiences](http://jpmens.net/2012/12/13/obtaining-remote-data-with-ansible-s-api/) too.
 
 ## Enter ansible.runner
+
 According to the documentation, the Python API is:
+
 <blockquote>[...] very powerful, and is how the ansible CLI and ansible-playbook are implemented.</blockquote>
 
 Indeed! Using `ansible.runner` I whipped something up and extracted data from several dozen servers in just a few minutes (and I don't even know Python!):
@@ -24,7 +26,8 @@ mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
 
 I had to massage the data a bit to get clean numbers for RAM and storage capacity, but other than that it was extremely straightforward (as most things with Ansible generally are).
 
-## The code
+## The Code
+
 Here's the source code for the *ansible-runner.py* script above:
 
 ```
