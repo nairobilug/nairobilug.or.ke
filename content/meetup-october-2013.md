@@ -1,7 +1,7 @@
-Title: October NairobiLUG Meetup
-Date: 2013-10-2 12:00
-Tags: meetup, kfc, event
-Category: Events
+Title: Meetup Summary (October, 2015)
+Date: 2013-10-02 12:00
+Category: Meetups
+Tags: meetup, kfc
 Slug: october-nairobilug-meetup
 Author: Mwaoshe Njemah
 Summary: October GNU/Linux User Group Meetup on 5th October, 04.00 – 06.00 pm EAT (GMT +3), KFC Kimathi Street.
