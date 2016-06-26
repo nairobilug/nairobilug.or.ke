@@ -2,14 +2,13 @@ Title: Exploring Anti-DOS Tools for Apache Httpd
 Date: 2014-09-13 18:28
 Category: Linux
 Tags: linux, security, httpd, nginx
-Slug: exploring-anti-DOS-tools-for-Apache-httpd
+Slug: exploring-anti-dos-tools-for-apache-httpd
 Author: John Troon
 Summary: Analyzing how Apache can be crippled by a DOS tool like Slowloris and a side note on Nginx...
 
-
 Slowloris is among the well known "Denial Of Service" (or DOS) [tool](http://resources.infosecinstitute.com/dos-attacks-free-dos-attacking-tools/) used by both experienced attackers and script kiddies. This evening, I've been testing *mod_evasion* and *mod_antiloris* on Apache httpd /2.2.15 (Oracle Linux 6.5 using Redhat built Kernel).
 
-First Setup:
+First Setup
 -----------
 
 - Server: 192.168.43.221 (running Apache httpd with *mod_evasion* loaded)
@@ -17,22 +16,22 @@ First Setup:
 
 **Apache httpd error logs**
 
-![Error from bad requests](/images/badheader.png "Apache error logs")
+![Error from bad requests](/images/exploring-anti-dos-tools-for-apache-httpd/badheader.png "Apache error logs")
 
 The loaded module (*mod_evasion*), can't save Apache httpd from the DOS attack, even loading the site from a browser is somehow impossible.
 
-![Apache DOSed](/images/apachedown.png "Can't access via Browser")
+![Apache DOSed](/images/exploring-anti-dos-tools-for-apache-httpd/apachedown.png "Can't access via Browser")
 
 But this module can prevent a brute-force attack (*e.g. an automated script to guess a password field in a web-form*) in a web server (running Apache httpd).
 
-![mod_evasion can prevent Brute-force..](/images/bruteforce.png "mod_evasion can prevent Brute-force attack")
+![mod_evasion can prevent Brute-force..](/images/exploring-anti-dos-tools-for-apache-httpd/bruteforce.png "mod_evasion can prevent Brute-force attack")
 
 Just to make an interesting comparison, I replaced Apache httpd with Nginx on the same Server (192.168.43.221) and **ta! da!..**
-![Nginx is not DOSed by Slowloris](/images/nginxup.png "Nginx is not DOSed by Slowloris") Nginx gracefully made it by ignoring the request from  Slowloris. But I noticed a brute-force attack is possible while using Nginx default settings! **Nginx access logs**
-![Nginx Brute-forced](/images/bfnginx.png "Nginx can be Brute-forced")
 
+![Nginx is not DOSed by Slowloris](/images/exploring-anti-dos-tools-for-apache-httpd/nginxup.png "Nginx is not DOSed by Slowloris") Nginx gracefully made it by ignoring the request from Slowloris. But I noticed a brute-force attack is possible while using Nginx default settings! **Nginx access logs**
+![Nginx Brute-forced](/images/exploring-anti-dos-tools-for-apache-httpd/bfnginx.png "Nginx can be Brute-forced")
 
-Second Setup:
+Second Setup
 ------------
 
 - Server: 192.168.43.221 (running Apache httpd with mod_antiloris loaded)
@@ -40,20 +39,18 @@ Second Setup:
 
 *mod_antiloris* played it nice by monitoring the requests coming from the client and rejected extra connections. Accessing the web services from the browser was not interfered.
 
-![mod_antiloris logs](/images/antiloris.png "mod_antiloris logs")
+![mod_antiloris logs](/images/exploring-anti-dos-tools-for-apache-httpd/antiloris.png "mod_antiloris logs")
 
 *mod_evasion* is cool but can't save Apache httpd from Slowloris. On the other hand, *mod_antiloris* worked fine and denied Slowloris a chance to mess up with the Apache httpd server.
 
- 
-Explanation:
-------------
+Explanation
+-----------
 
 **Putting the Lens on the Logs...** (Apache httpd access log)
 
-![Apache-httpd access log](/images/accesslog.png "Apache httpd access logs")
+![Apache-httpd access log](/images/exploring-anti-dos-tools-for-apache-httpd/accesslog.png "Apache httpd access logs")
 
 *Why did mod_antiloris pass the test and mod_evasion fail?..* *Why did Slowloris work on Apache httpd and not on Nginx?*
-
 
 Apache httpd waits for a **complete HTTP request header** to be received, this makes it good to serve web-content even in slow connections. So, by default, the timeout value is 300 seconds and it's reset each time the client sends more packets. Slowloris takes advantage by sending incomplete HTTP request headers and maintains the connection by sending more incomplete request headers resetting the time-out counter.
 
@@ -68,6 +65,7 @@ This is not to claim that Nginx is bullet proof by default, tools like [golris](
 **But I'll always go with Nginx whenever possible!**
 
 ### Conclusion
+
 I think Apache httpd should find a way of prioritizing clients sending full HTTP requests to minimize DOS attacks of the (above) described nature...
 
-Ciao! 
+Ciao!
