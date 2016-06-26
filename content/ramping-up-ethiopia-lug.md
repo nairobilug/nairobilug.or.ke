@@ -12,7 +12,8 @@ Much to my surprise the Linux Users Group has been in existence for a few years,
 
 The meeting was small, short, and sweet. In addition to our one Internet person, I brought a few of my Addis friends and colleagues. Seven people taking time out of their Saturday to talk about free, libre, open-source software and community. Not a bad start!
 
-### A good start
+### A Good Start
+
 I opened the meeting by giving a brief background of the Nairobi GNU/Linux Users Group; from a few of us trading hashtags on Twitter to regular monthly meetings, an active [mailing list](https://groups.google.com/forum/#!forum/nairobi-gnu), [lively IRC channel](https://kiwiirc.com/client/irc.freenode.net/#nairobilug), [democratically managed website](https://github.com/nairobilug/nairobilug.or.ke), etc. On second thought it wasn't very brief, but I'm sure it was entertaining and insightful. ;)
 
 We talked about some ways to ramp up the group:
@@ -25,14 +26,16 @@ We talked about some ways to ramp up the group:
 
 Generally, I drew parallels between the early days of the Nairobi GNU/Linux Users Group and the current state of the Ethiopian group in Addis. My advice was for them to create a website and draw on social media to drive users to their mailing list to keep discussions going.
 
-### Eyob's GitHub shirt
+### Eyob's GitHub Shirt
+
 Here's a shoutout to Eyob, who saw the message on the mailing list and bothered to show up. I had brought a GitHub shirt with me to give out and it just seemed right to give it to him!
 
-![Eyob with his new GitHub shirt](/images/addis-meetup-2015-04-25.jpg "Eyob with his new GitHub shirt")
+![Eyob with his new GitHub shirt](/images/ramping-up-ethiopia-lug/addis-meetup-2015-04-25.jpg "Eyob with his new GitHub shirt")
 
 Hopefully that's motivation for people to show up to meetings from time to time! Also, I think he might be the first one in Addis with a GitHub shirt. w00t?
 
-### Linux users' couches
+### Linux Users' Couches
+
 I joked that I'd like to be able to take a road trip from Addis to Cape Town and sleep on Linux users' couches in cities all along the way. It's a bit of an oversimplification, but the point is that we're building networks. Whether you're looking for help on your Ubuntu machine, trying to find potential employees to manage your servers, or just need a place to sleep in Pretoria, we are building networks to connect people.
 
 Thanks to everyone that came to the meeting. Stay tuned for the next one! So long, and thanks for all the ቡና!
