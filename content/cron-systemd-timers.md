@@ -4,13 +4,14 @@ Category: Linux
 Tags: linux, systemd, cron
 Slug: cron-systemd-timers
 Author: Alan Orth
-Summary: Using systemd's timer functionality to to replace (and improve) cron jobs
+Summary: Using systemd's timer functionality to to replace (and improve) cron jobs.
 
 systemd has a timer function that can be used to run tasks periodically — yes, like `cron`. There's nothing really wrong with cron, but have you ever tried to debug a cron job on a server? The script runs fine from the command line, but nothing seems to happen when it runs from cron. You quickly type `date` to see how many seconds until the next minute, adjust the cron job, and wait. Nothing. Repeat. _\*facedesk\*_
 
 This is the systemd value proposition in this context: _timers can be run on demand_ from the command line, and _their output is logged to the systemd journal_ where you can see it like any other systemd units.
 
-## System backups using a timer
+## System Backups Using a Timer
+
 As an example, I have a simple shell script — `system-backup.sh` — that uses `rsync` to back up my system to an external USB hard drive once per day. Converting this job to use systemd timers requires the creation of both a _timer_ and a _service_.
 
 _/etc/systemd/system/system-backup.timer_:
@@ -50,7 +51,8 @@ Starting the timer is necessary because otherwise it wouldn't be active until th
     $ sudo systemctl status system-backup.timer
     $ sudo systemctl list-timers --all
 
-## What this gets you
+## What This Gets You
+
 Using `OnCalendar=daily` this job will run every day at midnight, similar to cron's `@daily` keyword. If you ever want to run the job manually you can invoke its service on demand:
 
     $ sudo systemctl start system-backup.service
@@ -63,7 +65,8 @@ For example, to see logs from this timer since yesterday:
 
 I find this much more elegant than appending to, looking through, and rotating log files manually. Furthermore, I like the ability to set CPU and I/O scheduling priorities in the service itself rather than relying on external `nice` and `ionice` binaries in the script. :)
 
-## More information
+## More Information
+
 See the following for more information:
 
 - `man systemd.timer`
