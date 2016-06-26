@@ -1,4 +1,4 @@
-Title: Maps and custom error pages in nginx
+Title: Maps and Custom Error Pages in Nginx
 Date: 2014-12-09 17:00
 Category: Linux
 Tags: linux, nginx

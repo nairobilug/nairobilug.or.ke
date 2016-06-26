@@ -1,4 +1,4 @@
-Title: Stop Skype and PulseAudio from "uncorking" media players
+Title: Stop Skype and PulseAudio From "Uncorking" Media Players
 Date: 2015-08-02 15:21
 Category: Linux
 Tags: linux, pulseaudio, skype, nsa

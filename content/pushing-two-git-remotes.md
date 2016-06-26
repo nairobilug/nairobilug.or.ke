@@ -1,4 +1,4 @@
-Title: Simultaneously pushing to two remotes in a git repository
+Title: Simultaneously Pushing to Two Remotes in a Git Repository
 Date: 2015-05-10 16:40
 Category: Linux
 Tags: linux, git

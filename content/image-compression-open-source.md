@@ -1,4 +1,4 @@
-Title: Image compression like Compressor.io, but with open-source tools
+Title: Image Compression Like Compressor.io, but With Open-Source Tools
 Date: 2014-10-23 10:40
 Category: Linux
 Tags: linux, images, photography

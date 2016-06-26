@@ -1,4 +1,4 @@
-Title: Mounting Partitions Using systemd
+Title: Mounting Partitions Using Systemd
 Date: 2015-09-02 11:00
 Category: Linux
 Tags: linux, systemd

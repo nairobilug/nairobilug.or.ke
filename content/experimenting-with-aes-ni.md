@@ -1,4 +1,4 @@
-Title: Experimenting with AES-NI
+Title: Experimenting With AES-NI
 Date: 2013-11-10 13:00
 Category: Linux
 Tags: linux, crypto

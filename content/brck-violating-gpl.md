@@ -1,4 +1,4 @@
-Title: BRCK in violation of the GPL
+Title: BRCK in Violation of the GPL
 Date: 2015-05-18 15:21
 Category: Licensing
 Tags: licensing, gpl

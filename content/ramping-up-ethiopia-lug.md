@@ -1,4 +1,4 @@
-Title: Ramping up the Ethiopia LUG
+Title: Ramping Up the Ethiopia LUG
 Date: 2015-04-25 21:01
 Category: Meetups
 Tags: meetup

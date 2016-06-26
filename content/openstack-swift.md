@@ -1,4 +1,4 @@
-Title: Using swiftclient for object storage on OpenStack
+Title: Using Swiftclient for Object Storage on OpenStack
 Date: 2014-07-29 19:40
 Category: Linux
 Tags: linux, openstack, swift

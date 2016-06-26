@@ -1,4 +1,4 @@
-Title: Rebooting server(s) using Ansible
+Title: Rebooting Server(s) Using Ansible
 Date: 2015-03-03 12:35
 Category: Linux
 Tags: linux, ansible

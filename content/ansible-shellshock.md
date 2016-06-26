@@ -1,4 +1,4 @@
-Title: Update hosts via Ansible to mitigate bash "Shellshock" vulnerability
+Title: Update Hosts via Ansible to Mitigate Bash "Shellshock" Vulnerability
 Date: 2014-09-29 10:40
 Category: Linux
 Tags: linux, ansible, bash, security
