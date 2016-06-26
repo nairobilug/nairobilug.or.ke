@@ -28,10 +28,9 @@ _tomcat.yml_:
           - name: Temporarily stop tomcat7
           service: name=tomcat7 state=stopped
 
-OK so the task file looks great, but did it work ? Unfortunately, no! Ansible notifications trigger tasks in handlers section to run only at the end of a playbook.
-So I had to come up with a quick fix for this issue.
+OK so the task file looks great, but did it work ? Unfortunately, no! Ansible notifications trigger tasks in handlers section to run only at the end of a playbook. So I had to come up with a quick fix for this issue.
 
-### 'Prompt' handlers
+### 'Prompt' Handlers
 
 My quick fix involved registering a variable in the task that installs tomcat packages i.e. `register: tomcat_installed`, then the next task to stop tomcat service would be executed only if the registered variable has changed i.e. if tomcat7 has been installed - `when: tomcat_installed|changed`.
 Basically, ansible notifications use a similar concept to this.
@@ -57,4 +56,5 @@ _tomcat.yml_:
 As you can see from the snippet, I've not used a handler. Yes that's right, inorder to achieve the effect of an 'immediate' handler, I moved the task that stops tomcat7 service from the handler section to the tasks section.
 
 ### Conclusion
+
 Though I'm sure there are better solutions out there, I think the concept behind my quick fix can be useful in tackling other ansible-related issues.
