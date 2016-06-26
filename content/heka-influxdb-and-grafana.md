@@ -4,16 +4,16 @@ Category: Linux
 Tags: linux, heka, influxdb, grafana
 Slug: heka-influxdb-and-grafana
 Author: Jason Rogena
-Summary: My experience configuring Heka, InfluxDB, and Grafana for monitoring logs and live server stats
+Summary: My experience configuring Heka, InfluxDB, and Grafana for monitoring logs and live server stats.
 
 I recently started working at a startup :). My first task there was to configure their new Linux server to host some live apps. I, professionally, haven't done sysadmin work but since I've been configuring Linux VPSs to play with for some time now I figured it wouldn't be that hard doing the initial setup. I did the usual; install and configure the necessary packages, firewall stuff, automated deployment of the apps, and of course, monitoring. I tried to do as much as possible on Ansible — I'm no idiot.
 
 Settling on what I should use for monitoring took quite some time. There a so many ways you can kill this rat; Logstash, Gaphite, [Prometheus](http://prometheus.io), [Heka](https://hekad.readthedocs.org/en/latest), and the list goes on and on. I knew, however, what I wanted:
 
- 1. Easily deployable — mainly because I didn't want to have to do a lot of work on Ansible
- 2. Monitors both live stats and log files
- 3. Can run as a daemon
- 4. Has (or supports) a sexy graph dashboard
+1. Easily deployable — mainly because I didn't want to have to do a lot of work on Ansible
+2. Monitors both live stats and log files
+3. Can run as a daemon
+4. Has (or supports) a sexy graph dashboard
 
 Prometheus and Heka came up top. Prometheus comes bundled with an integrated time-series database and a graph dashboard. Heka, on the other hand, only collects and processes the time-series data. It might look like Prometheus has a leg up on Heka (it probably does in most use-cases). Using Prometheus, however, means that you have to use everything Prometheus. I hate being locked down — hey boo ;)! Heka supports a [variety of data outputs](https://hekad.readthedocs.org/en/v0.10.0b0/config/outputs/index.html) including a host of storage engines ([InfluxDB](https://influxdata.com) being one of them), IRC, ElasticSearch, HTTP, etc. [Grafana](http://grafana.org) can graph data stored in an InfluxDB database. InfluxDB and Grafana are also very easy to install and run as daemons. Sorted!
 
@@ -26,12 +26,12 @@ I will focus on configuring Heka. Props to the Heka team for providing such [awe
 
 Heka works as a system of user-defined plugins with each plugin handling a step in the monitoring process. Here's a list of the steps:
 
- - Input
- - Splitting — This is an optional step and I have honestly not used it yet.
- - Decode
- - Filter
- - Encode
- - Output
+- Input
+- Splitting — This is an optional step and I have honestly not used it yet.
+- Decode
+- Filter
+- Encode
+- Output
 
 What's cool is that you can mix and match plugin types depending on, for instance, what your input is.
 
@@ -117,11 +117,11 @@ You can define more than one output plugin (you can probably also do this for so
 
 I love the setup so far:
 
- - No processor hogging observed.
- - The Heka, InfluxDB, and Grafana services have been running continuously for a month now without farting or dying on me.
- - InfluxDB isn't using a lot of disk space. The database storing HTTP status codes is 900K on the disk, one month on.
- - The graphs on Grafana look sexy. Here's a screenshot of the graphs on HTTP status codes:
+- No processor hogging observed.
+- The Heka, InfluxDB, and Grafana services have been running continuously for a month now without farting or dying on me.
+- InfluxDB isn't using a lot of disk space. The database storing HTTP status codes is 900K on the disk, one month on.
+- The graphs on Grafana look sexy. Here's a screenshot of the graphs on HTTP status codes:
 
-![image showing HTTP status codes on Grafana](/images/heka-influxdb-and-grafana.png)
+![Image showing HTTP status codes on Grafana](/images/heka-influxdb-and-grafana/heka-influxdb-and-grafana.png)
 
 This was [originally posted](https://jasonrogena.github.io/2016/01/02/heka-influxdb-and-grafana.html) on my personal blog; re-posting here for posterity.
