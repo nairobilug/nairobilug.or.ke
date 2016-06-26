@@ -1,7 +1,7 @@
 Title: Meetup Summary (July, 2015)
 Date: 2015-07-05 23:18
 Category: Meetups
-Tags: KFC, meetup
+Tags: kfc, meetup
 Slug: meetup-july-2015
 Author: Muriithi Frederick Muriuki
 Summary: Highlights from the July, 2015 meetup.
@@ -30,6 +30,7 @@ There was a slight segway into talks about various conferences, and how in Kenya
 We laughed that off as unlikely and quickly moved on.
 
 ### Computer Security
+
 There was an anecdote to the effect that the security organs in the country might be frowning upon discussions on computer security.
 
 It was also stated that a lot of banks in the country might be using ciphers that are known to be broken and vulnerable for years now, but raising that with the concerned parties is likely to land you in jail, rather than having the issue fixed.
