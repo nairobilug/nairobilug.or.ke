@@ -1,14 +1,14 @@
 Title: Meetup Summary (November, 2013)
-Date: 2013-11-2 22:33
+Date: 2013-11-02 22:33
 Category: Meetups
-Tags: KFC, meetup
+Tags: kfc, meetup
 Slug: meetup-november-2013
 Author: Alan Orth
 Summary: Highlights from the November, 2013 meetup.
 
 A major highlight of the November, 2013 meetup was having fourteen people show up; this was perhaps the most successful meetup since we began in 2012... Other than that, there were lots of lively discussions of technology goings ons, releases, politics etc.
 
-### Some topic highlights (from memory):
+### Some Topic Highlights (From Memory):
 
 * Fedora 20 beta (and therefore final) [being delayed by one week](https://lists.fedoraproject.org/pipermail/devel/2013-October/190689.html)
 * [Cisco releasing a BSD-licensed H.264 implementation](http://blogs.cisco.com/collaboration/open-source-h-264-removes-barriers-webrtc) (as well as binaries) and footing the licensing bill for users of the binary (ie, Mozilla Firefox, who [has said](https://blog.mozilla.org/blog/2013/10/30/video-interoperability-on-the-web-gets-a-boost-from-ciscos-h-264-codec/) they will integrate this)
@@ -24,10 +24,12 @@ A major highlight of the November, 2013 meetup was having fourteen people show u
 
 If I missed anything, leave it in the comments (or send a pull request ;).
 
-### Proof we were there
+### Proof We Were There
+
 Discussing all teh things...
 
-![Group shot](/images/meetup-november-2013.jpg "Nairobi GNU/Linux Users Group members")
+![Group shot](/images/meetup-november-2013/meetup-november-2013.jpg "Nairobi GNU/Linux Users Group members")
 
-### December meetup
+### December Meetup
+
 Remember, we meet the first Saturday of the month, meaning December's meetup should be December 7th.  See you there!
