@@ -1,6 +1,6 @@
 Title: Scars in Web App Trenches
 Date: 2014-02-17 13:00
-Category: Web Development
+Category: Development
 Tags: web, applications, development
 Slug: scars-in-web-app-trenches
 Author: Muriithi Frederick Muriuki
