@@ -6,9 +6,7 @@ Slug: brck-violating-gpl
 Author: Alan Orth
 Summary: BRCK is distributing binaries derived from GPL-licensed programs and fails to comply with the copyleft obligations of the license.
 
-During a recent meeting of the Nairobi GNU/Linux Users Group we discussed [BRCK](https://www.brck.com "BRCK | Rugged, Portable WiFi Hotspot & Battery Extender"), the Kenya-based makers of a slick, "rugged", battery-powered-GSM-router thing of the same name, and their apparent violation of the GNU General
-Public License (GPL). The lively discussion ended up making its way to the web in the form of a [blog
-post](https://nairobilug.or.ke/2015/05/meetup-may-2015.html) on the group's blog.
+During a recent meeting of the Nairobi GNU/Linux Users Group we discussed [BRCK](https://www.brck.com "BRCK | Rugged, Portable WiFi Hotspot & Battery Extender"), the Kenya-based makers of a slick, "rugged", battery-powered-GSM-router thing of the same name, and their apparent violation of the GNU General Public License (GPL). The lively discussion ended up making its way to the web in the form of a [blog post](https://nairobilug.or.ke/2015/05/meetup-may-2015.html) on the group's blog.
 
 Their product is based on [OpenWRT](https://openwrt.org/) — the GNU/Linux distribution geared towards embedded systems — which is [licensed](http://wiki.openwrt.org/about/license) under the GPL v2. I believe this is problematic for BRCK for a number of reasons that I will enumerate below. When we reached out to BRCK they claimed that they were not in violation because they use "stock unmodified OpenWRT" source code. This claim is repeated verbatim in a [thread on their forum](http://forums.brck.com/t/where-is-the-openwrt-fork-source-at/482/8).
 
@@ -51,7 +49,7 @@ While BRCK does not provide source code for their work, they do offer public [do
     d6dcbb1d61e99bf2b35133c5e6897a352518da0c  brckv1_20141114.zip
     $ unzip brckv1_20141114.zip
     $ grep -r -E 'gpl|GPL' brckv1_20141114/* | wc -l
-           0
+    0
 
 `brckv1_20141114.zip` was retrieved on May 17, 2015 and had the file size and SHA1 fingerprint shown above.
 
@@ -64,8 +62,8 @@ Section 2 deals with modifications to the program. Specifically:
 
 At first this Section doesn't seem to apply, as BRCK claims to be using "stock unmodified OpenWRT", but I find their claim dubious for two reasons:
 
-1.  The OpenWRT project doesn't provide source code producing firmware for any device called "BRCK", so it is unclear from which source code the firmware builds are created.
-2.  BRCK themselves allude to "optimizing" for a 4MB image size, which implies modification.
+1. The OpenWRT project doesn't provide source code producing firmware for any device called "BRCK", so it is unclear from which source code the firmware builds are created.
+2. BRCK themselves allude to "optimizing" for a 4MB image size, which implies modification.
 
 Nevertheless, if BRCK does indeed use "stock unmodified OpenWRT" source code then the [Linux kernel's GPL v2 compliance guide](https://www.kernel.org/doc/pending/gplv2-howto.html) suggests:
 
@@ -117,7 +115,7 @@ As BRCK is distributing an OpenWRT-derived work in object code form, Section 3 r
 
 The implications of Section 2 are less clear, depending on whether or not BRCK is actually using "stock unmodified OpenWRT" source code. I suppose that's up to them to decide, but I would urge them to keep in mind the spirit of the GPL v2 when making that decision.
 
-## BRCK should know better
+## BRCK Should Know Better
 
 BRCK is not the "enemy", but they — of all people — should know better. We expect this behavior from large corporations, but not from quasi-community-based organizations operating in the technical sector.
 
