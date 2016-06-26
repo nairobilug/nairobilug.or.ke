@@ -1,7 +1,7 @@
 Title: Meetup Summary (May, 2015)
 Date: 2015-05-10 17:25
 Category: Meetups
-Tags: KFC, meetup
+Tags: kfc, meetup
 Slug: meetup-may-2015
 Author: Jason Rogena
 Summary: Highlights from the May, 2015 meetup.
