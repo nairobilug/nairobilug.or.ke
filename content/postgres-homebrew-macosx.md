@@ -1,12 +1,12 @@
 Title: Using Homebrew's PostgreSQL on Mac OS X
 Date: 2016-04-05 15:21
 Category: Mac OS X
-Tags: Postgres, Homebrew
+Tags: postgres, homebrew
 Slug: postgres-homebrew-macosx
 Author: Alan Orth
 Summary: As a long-time GNU/Linux user I found it tricky to get PostgreSQL running on Mac OS X.
 
-You're on Mac OS X and you need to use PostgreSQL, but you're used to GNU/Linux where there is usually a dedicated `postgres` system user for doing database administrator tasks. This is just a quick note to people who might have installed PostgreSQL from [Homebrew](http://brew.sh/) and find themselves scratching their head for the next step.  First, initialize the database directory and start the database daemon manually:
+You're on Mac OS X and you need to use PostgreSQL, but you're used to GNU/Linux where there is usually a dedicated `postgres` system user for doing database administrator tasks. This is just a quick note to people who might have installed PostgreSQL from [Homebrew](http://brew.sh/) and find themselves scratching their head for the next step. First, initialize the database directory and start the database daemon manually:
 
     $ initdb /opt/brew/var/postgres -E utf8
     $ postgres -D /opt/brew/var/postgres
