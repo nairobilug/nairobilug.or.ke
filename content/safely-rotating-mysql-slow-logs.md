@@ -17,7 +17,6 @@ Truncating log files can block MySQL because the OS serializes access to the ino
 
 Flushing logs might take a considerable amount of time, so, to avoid filling slow log buffer, it's advisable to temporarily disable MySQL slow query logging & re-enabling it once the rotation is complete.
 
-
 ## Manual Rotation
 
 To manually rotate slow query logs, we'll temporarily disable slow query logging, flush slow logs, rename the original file & finally re-enable slow query logging.
@@ -52,7 +51,6 @@ To manually rotate slow query logs, we'll temporarily disable slow query logging
 
         MariaDB [(none)]> set global slow_query_log=on;
         Query OK, 0 rows affected (0.00 sec)
-
 
 ## Using Logrotate
 
@@ -90,7 +88,7 @@ More info. about each config. directive:
 - `create 660 mysql mysql`: after rotation, create a new log file owned by mysql with permissions mode 660
 - `postrotate`: script executed after rotation is done
 
-### Further Reading
+## Further Reading
 
 1. [MySQL Slow Query Log](https://dev.mysql.com/doc/refman/5.5/en/slow-query-log.html)
 2. [logrotate man page](http://linux.die.net/man/8/logrotate)
