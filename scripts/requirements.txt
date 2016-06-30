@@ -1,3 +1,2 @@
-ghp-import
-pelican
-markdown
+Markdown
+pelican==3.6.*

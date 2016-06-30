@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
+
 ##
 # This section should match your Makefile
 ##
+
 PY=${PY:-python}
 PELICAN=${PELICAN:-pelican}
 PELICANOPTS=
@@ -85,6 +87,7 @@ function start_up(){
 ###
 #  MAIN
 ###
+
 [[ ($# -eq 0) || ($# -gt 2) ]] && usage
 port=''
 [[ $# -eq 2 ]] && port=$2
