@@ -1,5 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Nairobi LUG</title><link>https://nairobilug.or.ke/</link><description></description><lastBuildDate>Wed, 02 Sep 2015 11:00:00 +0300</lastBuildDate><item><title>Mounting Partitions Using systemd</title><link>https://nairobilug.or.ke/2015/09/systemd-mount-partition.html</link><description>&lt;p&gt;&lt;a href="http://www.freedesktop.org/wiki/Software/systemd"&gt;systemd&lt;/a&gt; is gradually becoming the de facto init system &amp;amp; service manager replacing the old sysV init scripts &amp;amp; upstart. Recently, I discovered you can mount partitions using &lt;a href="http://www.freedesktop.org/software/systemd/man/systemd.mount.html"&gt;systemd.mount&lt;/a&gt; by writing your own &lt;code&gt;.mount&lt;/code&gt; &lt;a href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html"&gt;systemd unit file&lt;/a&gt;.&lt;/p&gt;
+<rss version="2.0"><channel><title>Nairobi LUG</title><link>https://nairobilug.or.ke/</link><description></description><lastBuildDate>Sat, 16 Apr 2016 16:05:00 +0300</lastBuildDate><item><title>Safely Rotating MySQL Slow Query Logs</title><link>https://nairobilug.or.ke/2016/04/safely-rotating-mysql-slow-logs.html</link><description>&lt;p&gt;MySQL slow query log consists of SQL statements that took more than &lt;a href="https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_long_query_time"&gt;long_query_time&lt;/a&gt; seconds to complete execution &amp;amp; required atleast &lt;a href="https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_min_examined_row_limit"&gt;min_examined_row_limit&lt;/a&gt; to be examined. By default, administrative queries &amp;amp; those that don't use indexes for lookups are not logged.&lt;/p&gt;
+&lt;p&gt;Two common techniques used by &lt;a href="http://linux.die.net/man/8/logrotate"&gt;Logrotate&lt;/a&gt; are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;copytruncate&lt;/strong&gt;: Instead of moving the old log file &amp;amp; optionally creating a new one, logrotate truncates the original log file in place after creating a copy.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;nocopytruncate&lt;/strong&gt;: Do not truncate the original log file in place after creating a copy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Truncating log files can block MySQL because the OS serializes access to the inode during the truncate operation. Therefore, it is recommended to temporarily stop slow query logging, flush slow logs, rename the old log file &amp;amp; finally re-enable slow query logging.&lt;/p&gt;
+&lt;p&gt;Flushing logs might take a considerable amount of time, so, to avoid filling slow log buffer, it's advisable to temporarily disable MySQL slow query logging &amp;amp; re-enabling it once the rotation is complete.&lt;/p&gt;
+&lt;h2&gt;Manual Rotation&lt;/h2&gt;
+&lt;p&gt;To manually rotate slow query logs, we'll temporarily disable slow query logging, flush slow logs, rename the original file &amp;amp; finally re-enable slow query logging.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;get the path to slow query log file&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;MariaDB [(none)]&amp;gt; show variables like &amp;#39;%slow_query%&amp;#39;;
++---------------------+-------------------------------+
+| Variable_name       | Value                         |
++---------------------+-------------------------------+
+| slow_query_log      | ON                            |
+| slow_query_log_file | /var/lib/mysql/mysql-slow.log |
++---------------------+-------------------------------+
+2 rows in set (0.00 sec)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;temporarily disable slow query logging&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;MariaDB [(none)]&amp;gt; set global slow_query_log=off;
+Query OK, 0 rows affected (0.00 sec)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;flush only slow logs&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;MariaDB [(none)]&amp;gt; flush slow logs;
+Query OK, 0 rows affected (0.00 sec)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;rename the old log file and or compress it&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# mv /var/lib/mysql/mysql-slow.log /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log
+# gzip -c /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log &amp;gt; /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log.gz
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;finally, re-enable slow query logging&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;MariaDB [(none)]&amp;gt; set global slow_query_log=on;
+Query OK, 0 rows affected (0.00 sec)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Using Logrotate&lt;/h2&gt;
+&lt;p&gt;Instead of manual rotation, you can use a lograte config file to acheive the same effect by using logrotate: &lt;code&gt;/etc/logrotate.d/mysql-slow-logs&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;/var/lib/mysql/mysql-slow.log {
+    size 1G
+    dateext
+    compress
+    missingok
+    rotate 20
+    notifempty
+    delaycompress
+    sharedscripts
+    nocopytruncate
+    create 660 mysql mysql
+    postrotate
+        /usr/bin/mysql -e &amp;#39;select @@global.slow_query_log into @sq_log_save; set global slow_query_log=off; select sleep(5); FLUSH SLOW LOGS; select sleep(10); set global slow_query_log=@sq_log_save;&amp;#39;
+    endscript
+    rotate 150
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;More info. about each config. directive:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;size 1G&lt;/code&gt;: Rotate a log file only if it's bigger than 1Gb&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dateext&lt;/code&gt;: archive old log files by adding a date extension using the format YYYYMMDD instead of using a number.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;compress&lt;/code&gt;: compress old log files using gzip(default compression program)&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;delaycompress&lt;/code&gt;: postpone compression of the previous log file until the next rotation cylce&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;missingok&lt;/code&gt;: if a log file is missing, don't issue an error message&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rotate 20&lt;/code&gt;: keep 20 log files before deleting old ones&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;notifempty&lt;/code&gt;: don't rotate empty log files&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;sharedscripts&lt;/code&gt;: run &lt;code&gt;prerotate&lt;/code&gt; &amp;amp; &lt;code&gt;postrotate&lt;/code&gt; scripts only once, no matter how many logs match the wildcard pattern&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;nocopytruncate&lt;/code&gt;: don't truncate the original log file in place after creating a copy&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;create 660 mysql mysql&lt;/code&gt;: after rotation, create a new log file owned by mysql with permissions mode 660&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;postrotate&lt;/code&gt;: script executed after rotation is done&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Further Reading&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://dev.mysql.com/doc/refman/5.5/en/slow-query-log.html"&gt;MySQL Slow Query Log&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://linux.die.net/man/8/logrotate"&gt;logrotate man page&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This post is also available on my &lt;a href="https://oguya.ch/posts/2016-04-13-safely-rotating-mysql-slow-logs/"&gt;personal blog&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">James Oguya</dc:creator><pubDate>Sat, 16 Apr 2016 16:05:00 +0300</pubDate><guid isPermaLink="false">tag:nairobilug.or.ke,2016-04-16:2016/04/safely-rotating-mysql-slow-logs.html</guid><category>mysql</category><category>mariadb</category></item><item><title>Mounting Partitions Using systemd</title><link>https://nairobilug.or.ke/2015/09/systemd-mount-partition.html</link><description>&lt;p&gt;&lt;a href="http://www.freedesktop.org/wiki/Software/systemd"&gt;systemd&lt;/a&gt; is gradually becoming the de facto init system &amp;amp; service manager replacing the old sysV init scripts &amp;amp; upstart. Recently, I discovered you can mount partitions using &lt;a href="http://www.freedesktop.org/software/systemd/man/systemd.mount.html"&gt;systemd.mount&lt;/a&gt; by writing your own &lt;code&gt;.mount&lt;/code&gt; &lt;a href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html"&gt;systemd unit file&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="super suprised" src="/images/2015-09-02-systemd-mount-partition/suprised-cat.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;After &lt;em&gt;RTFM'ing&lt;/em&gt;, I realized, under the hood, systemd just runs &lt;a href="http://linux.die.net/man/8/mount"&gt;mount command&lt;/a&gt; to mount the specified partition with the specified mount options listed in the mount unit file. Basically, you need to specify the following options in your unit file:&lt;/p&gt;
 &lt;ul&gt;
