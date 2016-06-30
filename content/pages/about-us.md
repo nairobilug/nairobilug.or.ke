@@ -1,9 +1,9 @@
 Title: About Us
-Date: 2013-10-8 13:00
+Date: 2013-10-08 13:00
 Category: Pages
 Slug: about-us
-Author: Multiple
-Summary: The Nairobi GNU/Linux User Group.
+Authors: Ken King'ori, Raymond Wanyoike
+Summary: About the Nairobi GNU/Linux User Group.
 
 The Nairobi GNU/Linux Users Group is a not-for-profit community serving the greater Nairobi area. We are a collection of people dedicated to GNU/Linux, Free Software, Open Source, and related topics. Our goals include education, advocacy, support and community.
 
