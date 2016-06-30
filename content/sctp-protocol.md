@@ -2,7 +2,7 @@ Title: The "SCTP" Protocol
 Date: 2014-09-04 18:37
 Category: Tech
 Tags: tech, linux, programming
-Slug: SCTP-protocol
+Slug: sctp-protocol
 Author: John Troon
 Summary: In the Know: Stream Control Transmission Protocol (SCTP).
 
