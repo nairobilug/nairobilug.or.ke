@@ -1,7 +1,5 @@
 # Nairobi GNU/Linux Users Group Website
 
-[![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/nairobilug.png)](https://kiwiirc.com/client/irc.freenode.net/#nairobilug)
-
 This repository hosts the code for the [Nairobi GNU/Linux Users Group](https://nairobilug.or.ke) website. We wanted a fun, nerdy and democratic way to give our community an online presence, so here we are.
 
 The website is powered by [Pelican](http://getpelican.com/) - a static site generator, written in Python. And [Alchemy](https://github.com/nairobilug/pelican-alchemy) - A magical Pelican theme.
