@@ -7,8 +7,6 @@ Summary: Nairobi GNU/Linux User Group mailing list.
 
 This list is for the discussion of Linux related issues, news, problems, and ideas.
 
-Nairobi LUG proudly supports its [Code of Conduct]({filename}/pages/code-of-conduct.md).
-
 Particularly for this list:
 
 - Don't be the person on the soapbox.
