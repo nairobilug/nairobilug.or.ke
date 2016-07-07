@@ -2,7 +2,7 @@
 
 This repository hosts the code for the [Nairobi GNU/Linux Users Group](https://nairobilug.or.ke) website. We wanted a fun, nerdy and democratic way to give our community an online presence, so here we are.
 
-The website is powered by [Pelican](http://getpelican.com/) - a static site generator, written in Python. And [Alchemy](https://github.com/nairobilug/pelican-alchemy) - A magical Pelican theme.
+The website is powered by [Pelican](http://getpelican.com/) — a static site generator written in Python — and uses a magical theme called [Alchemy](https://github.com/nairobilug/pelican-alchemy).
 
 ![Screenshot](/screenshot.png "Screenshot")
 
@@ -17,11 +17,11 @@ The easiest way to do this is in a Python [virtual environment](http://docs.pyth
 Once you have `pyenv` installed, create a virtual environment to hold Pelican and its dependencies:
 
     $ pyenv virtualenv nairobilug
-    $ source activate nairobilug
+    $ pyenv activate nairobilug
 
 This creates a virtual environment and then activates it. If you want to exit the virtual environment, type:
 
-    $ deactivate
+    $ pyenv deactivate
 
 ### Fork / Clone the Repo
 
