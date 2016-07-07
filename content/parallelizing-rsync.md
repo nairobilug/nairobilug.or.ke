@@ -1,4 +1,4 @@
-Title: Parallelizing rsync
+Title: Parallelizing Rsync
 Date: 2014-07-11 16:40
 Category: Linux
 Tags: linux, rsync

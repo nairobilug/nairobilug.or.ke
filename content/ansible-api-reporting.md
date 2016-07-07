@@ -1,4 +1,4 @@
-Title: Leveraging the Ansible Python API for infrastructure reporting
+Title: Leveraging the Ansible Python API for Infrastructure Reporting
 Date: 2015-01-21 16:40
 Category: Linux
 Tags: linux, ansible

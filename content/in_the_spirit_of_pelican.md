@@ -1,4 +1,4 @@
-Title: In The Spirit of Pelican
+Title: In the Spirit of Pelican
 Date: 2013-07-14 20:22
 Category: Pelican
 Tags: pelican, publishing

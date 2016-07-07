@@ -1,4 +1,4 @@
-Title: The "SCTP" protocol
+Title: The "SCTP" Protocol
 Date: 2014-09-04 18:37
 Category: Tech
 Tags: Tech, Linux, programming

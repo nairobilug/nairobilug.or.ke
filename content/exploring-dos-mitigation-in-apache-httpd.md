@@ -1,4 +1,4 @@
-Title: Exploring anti-DOS tools for Apache httpd
+Title: Exploring Anti-DOS Tools for Apache Httpd
 Date: 2014-09-13 18:28
 Category: Linux
 Tags: linux, security, httpd, nginx
