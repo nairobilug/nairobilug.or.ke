@@ -179,7 +179,7 @@ systemctl start mnt-backups.mount
 
 &lt;p&gt;As always, enable the unit to start automatically during boot.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; mnt-backups.mount
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">James Oguya</dc:creator><pubDate>Wed, 02 Sep 2015 11:00:00 +0300</pubDate><guid isPermaLink="false">tag:nairobilug.or.ke,2015-09-02:2015/09/systemd-mount-partition.html</guid><category>linux</category><category>systemd</category></item><item><title>Rebooting server(s) using Ansible</title><link>https://nairobilug.or.ke/2015/03/rebooting-server-using-ansible.html</link><description>&lt;p&gt;In this blogpost, we'll talk about rebooting servers using ansible &amp;amp; pausing the
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">James Oguya</dc:creator><pubDate>Wed, 02 Sep 2015 11:00:00 +0300</pubDate><guid isPermaLink="false">tag:nairobilug.or.ke,2015-09-02:2015/09/systemd-mount-partition.html</guid><category>linux</category><category>systemd</category></item><item><title>Rebooting Server(s) Using Ansible</title><link>https://nairobilug.or.ke/2015/03/rebooting-server-using-ansible.html</link><description>&lt;p&gt;In this blogpost, we'll talk about rebooting servers using ansible &amp;amp; pausing the
 playbook by waiting for a given amount of time for a given service on a given
 port to start.&lt;/p&gt;
 &lt;p&gt;Of late, I've seen a lot of guys on &lt;code&gt;#ansible&lt;/code&gt; irc channel &amp;amp; google groups
