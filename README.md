@@ -17,7 +17,7 @@ The easiest way to do this is in a Python [virtual environment](http://docs.pyth
 Once you have `pyenv` installed, create a virtual environment to hold Pelican and its dependencies:
 
     $ pyenv virtualenv nairobilug
-    $ source activate nairobilug
+    $ pyenv activate nairobilug
 
 This creates a virtual environment and then activates it. If you want to exit the virtual environment, type:
 
