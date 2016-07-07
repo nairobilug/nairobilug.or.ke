@@ -21,7 +21,7 @@ Once you have `pyenv` installed, create a virtual environment to hold Pelican an
 
 This creates a virtual environment and then activates it. If you want to exit the virtual environment, type:
 
-    $ deactivate
+    $ pyenv deactivate
 
 ### Fork / Clone the Repo
 
