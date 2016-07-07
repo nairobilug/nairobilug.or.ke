@@ -33,7 +33,7 @@ If you haven't already, clone this repo (or your version of it):
 
 Use `pip` to install the list of dependencies (including Pelican) into your virtual environment:
 
-    $ pip install -r requirements.txt
+    $ pip install -r scripts/requirements.txt
 
 ### Generate the Website
 
