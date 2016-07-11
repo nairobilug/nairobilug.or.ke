@@ -39,7 +39,7 @@
 
     <meta name="author" content="Alan Orth">
     <meta name="description" content="As a long-time GNU/Linux user I found it tricky to get PostgreSQL running on Mac OS X.">
-  <meta name="tags" contents="Postgres, Homebrew, ">
+  <meta name="tags" contents="postgres, homebrew, ">
 </head>
 
 <body>
@@ -80,7 +80,7 @@
       </li>
         <li class="muted">&middot;</li>
         <li>
-            <a href="https://nairobilug.or.ke/tag/postgres.html">Postgres</a>,             <a href="https://nairobilug.or.ke/tag/homebrew.html">Homebrew</a>        </li>
+            <a href="https://nairobilug.or.ke/tag/postgres.html">postgres</a>,             <a href="https://nairobilug.or.ke/tag/homebrew.html">homebrew</a>        </li>
         <li class="muted">&middot;</li>
         <li>
           <address class="post-author">
@@ -89,7 +89,7 @@
         </li>
     </ul>
     <div class="post-content">
-      <p>You're on Mac OS X and you need to use PostgreSQL, but you're used to GNU/Linux where there is usually a dedicated <code>postgres</code> system user for doing database administrator tasks. This is just a quick note to people who might have installed PostgreSQL from <a href="http://brew.sh/">Homebrew</a> and find themselves scratching their head for the next step.  First, initialize the database directory and start the database daemon manually:</p>
+      <p>You're on Mac OS X and you need to use PostgreSQL, but you're used to GNU/Linux where there is usually a dedicated <code>postgres</code> system user for doing database administrator tasks. This is just a quick note to people who might have installed PostgreSQL from <a href="http://brew.sh/">Homebrew</a> and find themselves scratching their head for the next step. First, initialize the database directory and start the database daemon manually:</p>
 <div class="highlight"><pre><span></span>$ initdb /opt/brew/var/postgres -E utf8
 $ postgres -D /opt/brew/var/postgres
 </pre></div>

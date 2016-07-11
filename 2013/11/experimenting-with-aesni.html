@@ -38,7 +38,7 @@
   </script>
 
     <meta name="author" content="Alan Orth">
-    <meta name="description" content="Experimenting with hardware-accelerated AES on Sandy Bridge+ chipsets">
+    <meta name="description" content="Experimenting with hardware-accelerated AES on Sandy Bridge+ chipsets.">
   <meta name="tags" contents="linux, crypto, ">
 </head>
 
@@ -102,7 +102,7 @@
 <span class="go">Doing aes-128-cbc for 3s on 8192 size blocks: 122310 aes-128-cbc&#39;s in 3.00s</span>
 <span class="go">OpenSSL 1.0.1e 11 Feb 2013</span>
 <span class="go">built on: Sun Oct 20 14:49:13 CEST 2013</span>
-<span class="go">options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx) </span>
+<span class="go">options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx)</span>
 <span class="go">compiler: gcc -fPIC -DOPENSSL_PIC -DZLIB -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -Wa,--noexecstack -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -m64 -DL_ENDIAN -DTERMIO -O3 -Wall -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM</span>
 <span class="go">The &#39;numbers&#39; are in 1000s of bytes per second processed.</span>
 <span class="go">type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes</span>
@@ -120,7 +120,7 @@
 <span class="go">Doing aes-128-cbc for 3s on 8192 size blocks: 62446 aes-128-cbc&#39;s in 3.00s</span>
 <span class="go">OpenSSL 1.0.1e 11 Feb 2013</span>
 <span class="go">built on: Sun Oct 20 14:49:13 CEST 2013</span>
-<span class="go">options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx) </span>
+<span class="go">options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx)</span>
 <span class="go">compiler: gcc -fPIC -DOPENSSL_PIC -DZLIB -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -Wa,--noexecstack -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -m64 -DL_ENDIAN -DTERMIO -O3 -Wall -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM</span>
 <span class="go">The &#39;numbers&#39; are in 1000s of bytes per second processed.</span>
 <span class="go">type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes</span>
@@ -128,8 +128,8 @@
 </pre></div>
 
 
-<p>You can see that hardware-accelerated AES is pretty consistently <strong>twice</strong> as fast as the implementation without <em>aesni</em>.  So it's not an exponential win, but getting <strong>twice</strong> the performance is certainly very serious!  This is great for not only for servers using AES encryption (SSL/TLS, hello!), but also for consumers wanting to connect to said servers as well as things like full-disk encryption.</p>
-<p><strong>Note:</strong> It seems Arch Linux's OpenSSL is built with AES-NI support but not as an <em>engine</em>, so <code>openssl speed</code> could be misleading (ie, you'd see no difference with or without the capabilities masked).  To get the AES-NI support you need to use <code>-evp</code> ("envelope") mode, which is some sort of <a href="http://wiki.openssl.org/index.php/EVP">high-level interface</a> for crypto functions in OpenSSL.</p>
+<p>You can see that hardware-accelerated AES is pretty consistently <strong>twice</strong> as fast as the implementation without <em>aesni</em>. So it's not an exponential win, but getting <strong>twice</strong> the performance is certainly very serious! This is great for not only for servers using AES encryption (SSL/TLS, hello!), but also for consumers wanting to connect to said servers as well as things like full-disk encryption.</p>
+<p><strong>Note:</strong> It seems Arch Linux's OpenSSL is built with AES-NI support but not as an <em>engine</em>, so <code>openssl speed</code> could be misleading (ie, you'd see no difference with or without the capabilities masked). To get the AES-NI support you need to use <code>-evp</code> ("envelope") mode, which is some sort of <a href="http://wiki.openssl.org/index.php/EVP">high-level interface</a> for crypto functions in OpenSSL.</p>
 <p>This was originally <a href="https://mjanja.ch/2013/11/disabling-aes-ni-on-linux-openssl/">posted on</a> on my personal blog; re-posted here for posterity.</p>
     </div>
   </div>

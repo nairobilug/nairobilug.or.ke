@@ -91,20 +91,20 @@
     <div class="post-content">
       <p>Last week I had a massive hardware failure on one of the GlusterFS storage nodes in the <a href="http://hpc.ilri.cgiar.org/">ILRI, Kenya Research Computing cluster</a>; two drives failed simultaneously on the underlying RAID5. As RAID5 can only withstand one drive failure, the entire 31TB array was toast. FML.</p>
 <p>After replacing the failed disks, rebuilding the array, and formatting my bricks, I decided I would use <code>rsync</code> to pre-seed my bricks from the good node before bringing <code>glusterd</code> back up.</p>
-<p><em>tl;dr</em>: <code>rsync</code> is amazing, but it’s single threaded and struggles when you tell it to sync large directory hierarchies.  <a href="#sync_bricks">Here's how you can speed it up</a>.</p>
+<p><em>tl;dr</em>: <code>rsync</code> is amazing, but it’s single threaded and struggles when you tell it to sync large directory hierarchies. <a href="#sync_bricks">Here's how you can speed it up</a>.</p>
 <h3>rsync #fail</h3>
 <p>I figured syncing the brick hierarchy from the good node to the bad node was simple enough, so I stopped the <code>glusterd</code> service on the bad node and invoked:</p>
 <div class="highlight"><pre><span></span><span class="gp">#</span> rsync -aAXv --delete --exclude<span class="o">=</span>.glusterfs storage0:/path/to/bricks/homes/ storage1:/path/to/bricks/homes/
 </pre></div>
 
 
-<p>After a day or so I noticed I had only copied ~1.5TB (over 1 hop on a dedicated 10GbE switch!), and I realized something must be wrong.  I attached to the <code>rsync</code> process with <code>strace -p</code> and saw a bunch of system calls in one particular user’s directory. I dug deeper:</p>
+<p>After a day or so I noticed I had only copied ~1.5TB (over 1 hop on a dedicated 10GbE switch!), and I realized something must be wrong. I attached to the <code>rsync</code> process with <code>strace -p</code> and saw a bunch of system calls in one particular user’s directory. I dug deeper:</p>
 <div class="highlight"><pre><span></span><span class="gp">#</span> find /path/to/bricks/homes/ukenyatta/maker/genN_datastore/ -type d <span class="p">|</span> wc -l
 <span class="go">1398640</span>
 </pre></div>
 
 
-<p>So this one particular directory in one user's home contained over a million <em>other</em> directories and $god knows how many files, and this command itself took several hours to finish!  To make matters worse, careful trial and error inspection of other user home directories revealed more massive directory structures as well.</p>
+<p>So this one particular directory in one user's home contained over a million <em>other</em> directories and $god knows how many files, and this command itself took several hours to finish! To make matters worse, careful trial and error inspection of other user home directories revealed more massive directory structures as well.</p>
 <ul>
 <li>rsync is single threaded</li>
 <li>rsync generates a list of files to be synced before it starts the sync</li>
@@ -112,7 +112,7 @@
 </ul>
 <p>It's pretty clear (now) that a recursive <code>rsync</code> on my huge directory hierarchy is out of the question!</p>
 <h3>rsync #win</h3>
-<p>I had a look around and saw lots of people complaining about <code>rsync</code> being "slow" and others suggesting tips to speed it up.  One very promising strategy was described on <a href="https://wiki.ncsa.illinois.edu/display/~wglick/Parallel+Rsync">this wiki</a> and there's a great discussion in the comments.</p>
+<p>I had a look around and saw lots of people complaining about <code>rsync</code> being "slow" and others suggesting tips to speed it up. One very promising strategy was described on <a href="https://wiki.ncsa.illinois.edu/display/~wglick/Parallel+Rsync">this wiki</a> and there's a great discussion in the comments.</p>
 <p>Basically, he describes a clever use of <code>find</code> and <code>xargs</code> to split up the problem set into smaller pieces that <code>rsync</code> can process more quickly.</p>
 <h3>sync_brick.sh</h3>
 <p>So here's my adaptation of his script for the purpose of syncing failed GlusterFS bricks, <code>sync_brick.sh</code>:</p>
@@ -143,15 +143,15 @@ find <span class="o">{</span>a..z<span class="o">}</span>* <span class="o">{</sp
 
 
 <p>Pay attention to the source/destination paths, the number of <code>THREADS</code>, and the <code>BAD_NODE</code> name, then you should be ready to roll.</p>
-<h3>The magic, explained</h3>
+<h3>The Magic, Explained</h3>
 <p>It's a bit of magic, but here are the important parts:</p>
 <ul>
-<li>The <code>-aAXv</code> options to <code>rsync</code> tell it to <strong>archive</strong>, preserve <strong>ACLs</strong>, and preserve <strong>eXtended</strong> attributes.  Extended attributes are <a href="http://joejulian.name/blog/what-is-this-new-glusterfs-directory-in-33">critically important in GlusterFS &gt;= 3.3</a>, and also if you're using SELinux.</li>
+<li>The <code>-aAXv</code> options to <code>rsync</code> tell it to <strong>archive</strong>, preserve <strong>ACLs</strong>, and preserve <strong>eXtended</strong> attributes. Extended attributes are <a href="http://joejulian.name/blog/what-is-this-new-glusterfs-directory-in-33">critically important in GlusterFS &gt;= 3.3</a>, and also if you're using SELinux.</li>
 <li>The <code>--exclude=.glusterfs</code> option to <code>rsync</code> tells it to ignore this directory at the root of the directory, as the self-heal daemon — <code>glustershd</code> — will rebuild it based on the files' extended attributes once we restart the <code>glusterd</code> service.</li>
 <li>The <code>--relative</code> option to <code>rsync</code> is so we don't have to bother constructing the destination path, as <code>rsync</code> will imply the path is relative to our destination's top.</li>
 <li>The <code>RSYNC_RSH</code> options influence <code>rsync</code>'s use of SSH, basically telling it to use very weak encryption and disable any unnecessary features for non-interactive sessions (tty, X11, etc).</li>
-<li>Using <code>find</code> with <code>-mindepth 1</code> and <code>-maxdepth 1</code> just means we concentrate on files/directories 1 level below each directory in our immediate hierarchy.
--Using <code>xargs</code> with <code>-n1</code> and <code>-P</code> tells it to use 1 argument per command line, and to launch <code>$THREADS</code> number of processes at a time.</li>
+<li>Using <code>find</code> with <code>-mindepth 1</code> and <code>-maxdepth 1</code> just means we concentrate on files/directories 1 level below each directory in our immediate hierarchy.</li>
+<li>Using <code>xargs</code> with <code>-n1</code> and <code>-P</code> tells it to use 1 argument per command line, and to launch <code>$THREADS</code> number of processes at a time.</li>
 </ul>
 <p>Hope this helps!</p>
 <p>This was <a href="https://mjanja.ch/2014/07/parallelizing-rsync/">originally posted</a> on my personal blog; re-posted here for posterity.</p>

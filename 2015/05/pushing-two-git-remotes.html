@@ -38,7 +38,7 @@
   </script>
 
     <meta name="author" content="Alan Orth">
-    <meta name="description" content="Pushing to two git remotes at once using multiple push URLs for a single remote">
+    <meta name="description" content="Pushing to two git remotes at once using multiple push URLs for a single remote.">
   <meta name="tags" contents="linux, git, ">
 </head>
 
@@ -97,7 +97,7 @@ $ git push bitbucket
 
 
 <p>This works fine but it's a bit manual. Also, assuming you want both remotes to essentially be mirrors of each other, there's a better way.</p>
-<h3>A better way</h3>
+<h3>A Better Way</h3>
 <p>If you're using any relatively modern version of git (1.9?) you can manipulate the remote to include two push URLs. Instead of adding a second remote, you simply add a second push URL to the existing remote.</p>
 <p>For example, adding a BitBucket URL to the remote called "origin":</p>
 <div class="highlight"><pre><span></span>$ git remote set-url origin --add git@bitbucket.org:alanorth/repo.git

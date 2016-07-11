@@ -1,81 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Nairobi LUG</title><link href="https://nairobilug.or.ke/" rel="alternate"></link><link href="https://nairobilug.or.ke/feed/atom.xml" rel="self"></link><id>https://nairobilug.or.ke/</id><updated>2016-04-26T08:42:00+03:00</updated><entry><title>My Experience Applying for a Strange Loop 2016 Opportunity Grant</title><link href="https://nairobilug.or.ke/2016/04/my-experience-applying-for-a-strange-loop-2016-opportunity-grant.html" rel="alternate"></link><published>2016-04-26T08:42:00+03:00</published><author><name>Njagi Mwaniki</name></author><id>tag:nairobilug.or.ke,2016-04-26:2016/04/my-experience-applying-for-a-strange-loop-2016-opportunity-grant.html</id><summary type="html">&lt;p&gt;I was at work when I saw a post in the Slack channel about
-&lt;a href="http://www.thestrangeloop.com/opportunity.html"&gt;strange loop 2016 opportunity grants&lt;/a&gt;.
-First of all, I didn't know what an opportunity grant was but
-for sure I know what strange loop is from all those videos on you tube.
-So I got excited, learned what an opportunity grant is got excited and
-decided that I'd apply on when applications open which was 11th April 2016.&lt;/p&gt;
-&lt;p&gt;Fast forward to April 21st. I log into the clojurians Slack channel
-and asked around whether anyone had attened the conference and where I would go
-for a cost estimate for my travels and such things.
-The good people there recommended [expedia] which I deciced to use.&lt;/p&gt;
-&lt;p&gt;From expedia's calculations, it would cost me around $2000 to go there
-hotel and all for 4 days. The biggest cost being the plane ticket which
-would be around $1500, this is for a flight from Nairobi to St. Louis.
-So assuming that this was some big budget corporate conference and that
-American corporations have lots of cash I just entered my $2000 dollar
-cost, sat back and hit send.&lt;/p&gt;
-&lt;p&gt;That was ignorance on my part because I went back to the Slack channel only to
-find that well it wasn't like that. First I learned that they favoured
-Americans. My assumption was that they want to keep 
-knowledge in USA. I kept this to myself though still with the assumption that
-this was an American corporation organised conference.&lt;/p&gt;
-&lt;p&gt;Another thing I learned is that they would like it if you catered for part of the
-cost of your travel yourself. I amde no assumption this time.
-Someone in the channel talked about crowdfunding and all.
-I thought to myself do I want to be that African guy raising money to go to
-America on sympathy and all?
-No I won't do that. Honestly, I wouldn't crowdfund to do that. I feel that
-that would lower my dignity but that's just me. I have nothing against anyone
-who would just that narrative of aid to Africa is something I don't like or want
-to propagate.&lt;/p&gt;
-&lt;p&gt;I knew at this point that my application would not go through and I should've
-researched more and not just applying. Basically I felt dumb for assuming malice
-where my ignorance was to blame.&lt;/p&gt;
-&lt;p&gt;So I told the dudes and ladies at work about it and I was told that if I
-were to give a talk at the event the organisation I work for
-would cater for my costs. Awesome, that's a win win for everyone.
-So I figured I could give a talk on building a development server for Haskell
-web applicatons. However this would have to wait until I have improved
-wai-devel to be as good as what I see in other languages
-, Clojure to be specific, tools such as lein Figwheel have blown my mind and
-the repls you get in django and rails applicatons are impressive.&lt;/p&gt;
-&lt;p&gt;Fast forward about 6 hours.
-I went home then saw a Slack notification. Turns out the strange loop isn't
-organised by evil corp. You can tell the tribe of programmer I am by my
-language so far (I'm all about that FOSS). Anyway, so Alex Miller messages me,
- much to my surprise of course, I shall just quote him.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;hey, I'm the Strange Loop founder/organizer. most of the comments above
-seem generally correct. if you'd like to update your app, either re-complete
-the form or just send an email to diversity@thestrangeloop.com with the
-corrections. we do focus on US, simply to stretch our funds to cover the
-maximum number of people. however we are happy to be creative in trying to
-bridge gaps and we can't have that conversation if you don't apply.&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;I was taken aback and was glad as hell I hadn't run mouth and said what had come
-to mind when I heard that they favour Americans. Turns out everyone is really
-nice. Everyone wants everyone to win. I wonder why I had assumed that everyone
-was bad? We live and we learn every day.&lt;/p&gt;
-&lt;p&gt;Since I had been told earlier in the day that the cost  would be catered 
-for if I gave a talk. I told him about my talk idea and showed him the code
-I had so far and what I would want to give a talk regarding and well the reply was&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;sounds like a good topic&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;So that's that I don't have enough yet to give a talk on it or know enough tbh
-(imposter syndrome) but when it's done; sure I'll apply. Hopefully it will be within
-the set time frame and if not, well next year.&lt;/p&gt;
-&lt;p&gt;So a few things one should do before applying for strange loop. It really applies
-to all factions of life and is hacker culture 101:&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Nairobi LUG</title><link href="https://nairobilug.or.ke/" rel="alternate"></link><link href="https://nairobilug.or.ke/feed/atom.xml" rel="self"></link><id>https://nairobilug.or.ke/</id><updated>2016-07-11T14:42:00+03:00</updated><entry><title>Using systemd Timers to Renew Let’s Encrypt Certificates</title><link href="https://nairobilug.or.ke/2016/07/using-systemd-timers-to-renew-lets-encrypt-certificates.html" rel="alternate"></link><published>2016-07-11T14:42:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2016-07-11:2016/07/using-systemd-timers-to-renew-lets-encrypt-certificates.html</id><summary type="html">&lt;p&gt;This is a quick blog post to share the systemd timers that I use to automate the renewal of my &lt;a href="https://letsencrypt.org"&gt;Let's Encrypt&lt;/a&gt; certificates. I prefer &lt;a href="https://nairobilug.or.ke/2015/06/cron-systemd-timers.html"&gt;systemd timers to cron jobs&lt;/a&gt; for task scheduling because they are more flexible and easier to debug. I assume that you know what Let's Encrypt is and that you already have some certificates. If not, I recommend that you check out &lt;a href="https://certbot.eff.org"&gt;Certbot&lt;/a&gt; (the official reference client) and get some.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://letsencrypt.org/" title="Let's Encrypt homepage"&gt;&lt;img alt="Let's Encrypt logo" src="https://nairobilug.or.ke/images/letsencrypt-systemd-timers/lets-encrypt.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Because Let's Encrypt issues &lt;abbr title="Transport Layer Security"&gt;TLS&lt;/abbr&gt; certificates with much &lt;a href="https://letsencrypt.org/2015/11/09/why-90-days.html"&gt;shorter lifetimes&lt;/a&gt; (currently ninety days) than traditional certificate authorities, they expect you to reduce the burden of the issuance and renewal processes by performing them programmatically and automating them.&lt;/p&gt;
+&lt;h2&gt;Check Early, Check Often&lt;/h2&gt;
+&lt;p&gt;Your certificates are good for ninety days, but checking them for renewal on a daily or weekly basis allows for some margin of error in case of server downtime, network interruptions, beach holidays, etc. In the future Let's Encrypt might use even shorter lifespans so it's good to get familiar with this automation now. You will need to create both the &lt;code&gt;service&lt;/code&gt; and &lt;code&gt;timer&lt;/code&gt; unit files below.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;/etc/systemd/system/renew-letsencrypt.service&lt;/em&gt; :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Renew Let&amp;#39;s Encrypt certificates&lt;/span&gt;
+
+&lt;span class="k"&gt;[Service]&lt;/span&gt;
+&lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;oneshot&lt;/span&gt;
+&lt;span class="c1"&gt;# check for renewal, only start/stop nginx if certs need to be renewed&lt;/span&gt;
+&lt;span class="na"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/opt/certbot-auto renew --standalone --pre-hook &amp;quot;/bin/systemctl stop nginx&amp;quot; --post-hook &amp;quot;/bin/systemctl start nginx&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;em&gt;/etc/systemd/system/renew-letsencrypt.timer&lt;/em&gt; :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Daily renewal of Let&amp;#39;s Encrypt&amp;#39;s certificates&lt;/span&gt;
+
+&lt;span class="k"&gt;[Timer]&lt;/span&gt;
+&lt;span class="c1"&gt;# once a day, at 2AM&lt;/span&gt;
+&lt;span class="na"&gt;OnCalendar&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;*-*-* 02:00:00&lt;/span&gt;
+&lt;span class="c1"&gt;# Be kind to the Let&amp;#39;s Encrypt servers: add a random delay of 0–3600 seconds&lt;/span&gt;
+&lt;span class="na"&gt;RandomizedDelaySec&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;3600&lt;/span&gt;
+&lt;span class="na"&gt;Persistent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
+
+&lt;span class="k"&gt;[Install]&lt;/span&gt;
+&lt;span class="na"&gt;WantedBy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;timers.target&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This timer runs once a day at 2AM, but each execution is delayed by a random amount of time between zero and 3600 seconds using the &lt;code&gt;RandomizedDelaySec&lt;/code&gt; option.&lt;/p&gt;
+&lt;p&gt;Pay attention to the location of the &lt;code&gt;certbot-auto&lt;/code&gt; script in the service file and adjust accordingly for your setup. Also note that I'm using the &lt;code&gt;standalone&lt;/code&gt; mode of execution because the &lt;code&gt;nginx&lt;/code&gt; one isn't stable yet. See the &lt;a href="https://certbot.eff.org/docs/using.html#renewal"&gt;Certbot renewal documentation&lt;/a&gt; for more examples.&lt;/p&gt;
+&lt;h2&gt;Activate and Enable the Timer&lt;/h2&gt;
+&lt;p&gt;Tell systemd to read the system's unit files again, and then start and enable the timer:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo systemctl daemon-reload
+$ sudo systemctl start renew-letsencrypt.timer
+$ sudo systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; renew-letsencrypt.timer
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Starting the timer is necessary because otherwise it wouldn't be active until the next time you rebooted (assuming it was enabled, that is). You can verify that the timer has been started, its planned execution times, service logs, etc using the following commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo systemctl list-timers
+$ sudo journalctl -u renew-letsencrypt
+$ sudo journalctl -u renew-letsencrypt --since&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;yesterday&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;More Information&lt;/h2&gt;
+&lt;p&gt;See the following for more information:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;RTFM (If I had read enough and researched I woudn't have made a bad application).&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://wiki.archlinux.org/index.php/Systemd/Timers"&gt;systemd timers on the Arch Linux wiki&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;man systemd.timer&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;man systemd.time&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;man systemd.service&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;man journalctl&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This was &lt;a href="https://mjanja.ch/2016/07/using-systemd-timers-to-renew-lets-encrypt-certificates/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="Let's Encrypt"></category><category term="systemd"></category><category term="Security"></category></entry><entry><title>My Experience Applying for a Strange Loop 2016 Opportunity Grant</title><link href="https://nairobilug.or.ke/2016/04/my-experience-applying-for-a-strange-loop-2016-opportunity-grant.html" rel="alternate"></link><published>2016-04-26T08:42:00+03:00</published><author><name>Njagi Mwaniki</name></author><id>tag:nairobilug.or.ke,2016-04-26:2016/04/my-experience-applying-for-a-strange-loop-2016-opportunity-grant.html</id><summary type="html">&lt;p&gt;I was at work when I saw a post in the Slack channel about &lt;strong&gt;strange loop 2016 opportunity grants&lt;/strong&gt;. First of all, I didn't know what an opportunity grant was but for sure I know what strange loop is from all those videos on you tube. So I got excited, learned what an opportunity grant is got excited and decided that I'd apply on when applications open which was 11th April 2016.&lt;/p&gt;
+&lt;p&gt;Fast forward to April 21st. I log into the clojurians Slack channel and asked around whether anyone had attended the conference and where I would go for a cost estimate for my travels and such things. The good people there recommended &lt;strong&gt;expedia&lt;/strong&gt; which I decided to use.&lt;/p&gt;
+&lt;p&gt;From expedia's calculations, it would cost me around $2000 to go there hotel and all for 4 days. The biggest cost being the plane ticket which would be around $1500, this is for a flight from Nairobi to St. Louis. So assuming that this was some big budget corporate conference and that American corporations have lots of cash I just entered my $2000 dollar cost, sat back and hit send.&lt;/p&gt;
+&lt;p&gt;That was ignorance on my part because I went back to the Slack channel only to find that well it wasn't like that. First I learned that they favoured Americans. My assumption was that they want to keep knowledge in USA. I kept this to myself though still with the assumption that this was an American corporation organised conference.&lt;/p&gt;
+&lt;p&gt;Another thing I learned is that they would like it if you catered for part of the cost of your travel yourself. I made no assumption this time. Someone in the channel talked about crowdfunding and all. I thought to myself do I want to be that African guy raising money to go to America on sympathy and all? No I won't do that. Honestly, I wouldn't crowdfund to do that. I feel that that would lower my dignity but that's just me. I have nothing against anyone who would just that narrative of aid to Africa is something I don't like or want to propagate.&lt;/p&gt;
+&lt;p&gt;I knew at this point that my application would not go through and I should've researched more and not just applying. Basically I felt dumb for assuming malice where my ignorance was to blame.&lt;/p&gt;
+&lt;p&gt;So I told the dudes and ladies at work about it and I was told that if I were to give a talk at the event the organisation I work for would cater for my costs. Awesome, that's a win win for everyone. So I figured I could give a talk on building a development server for Haskell web applications. However this would have to wait until I have improved wai-devel to be as good as what I see in other languages, Clojure to be specific, tools such as lein, Figwheel have blown my mind and the repls you get in Django and Rails applications are impressive.&lt;/p&gt;
+&lt;p&gt;Fast forward about 6 hours. I went home then saw a Slack notification. Turns out the strange loop isn't organised by evil corp. You can tell the tribe of programmer I am by my language so far (I'm all about that FOSS). Anyway, so Alex Miller messages me, much to my surprise of course, I shall just quote him.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;hey, I'm the Strange Loop founder/organizer. most of the comments above seem generally correct. if you'd like to update your app, either re-complete the form or just send an email to diversity@thestrangeloop.com with the corrections. we do focus on US, simply to stretch our funds to cover the maximum number of people. however we are happy to be creative in trying to bridge gaps and we can't have that conversation if you don't apply.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I was taken aback and was glad as hell I hadn't run mouth and said what had come to mind when I heard that they favour Americans. Turns out everyone is really nice. Everyone wants everyone to win. I wonder why I had assumed that everyone was bad? We live and we learn every day.&lt;/p&gt;
+&lt;p&gt;Since I had been told earlier in the day that the cost would be catered for if I gave a talk. I told him about my talk idea and showed him the code I had so far and what I would want to give a talk regarding and well the reply was:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;sounds like a good topic&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So that's that I don't have enough yet to give a talk on it or know enough tbh (imposter syndrome) but when it's done; sure I'll apply. Hopefully it will be within the set time frame and if not, well next year.&lt;/p&gt;
+&lt;p&gt;So a few things one should do before applying for strange loop. It really applies to all factions of life and is hacker culture 101:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;RTFM (If I had read enough and researched I wouldn't have made a bad application).&lt;/li&gt;
 &lt;li&gt;There is no evil corp.&lt;/li&gt;
 &lt;li&gt;Ask around first.&lt;/li&gt;
 &lt;li&gt;It pays to have some of your own money.&lt;/li&gt;
-&lt;li&gt;From Alan Orth: &lt;a href="https://en.wikipedia.org/wiki/Hanlon%27s_razor"&gt;Hanlon's razor&lt;/a&gt; that says "never assume malice where stupidity will suffice"
-In this case "never assume malice where your ignorance will suffice" :D&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="strangeloop"></category></entry><entry><title>Safely Rotating MySQL Slow Query Logs</title><link href="https://nairobilug.or.ke/2016/04/safely-rotating-mysql-slow-logs.html" rel="alternate"></link><published>2016-04-16T16:05:00+03:00</published><author><name>James Oguya</name></author><id>tag:nairobilug.or.ke,2016-04-16:2016/04/safely-rotating-mysql-slow-logs.html</id><summary type="html">&lt;p&gt;MySQL slow query log consists of SQL statements that took more than &lt;a href="https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_long_query_time"&gt;long_query_time&lt;/a&gt; seconds to complete execution &amp;amp; required atleast &lt;a href="https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_min_examined_row_limit"&gt;min_examined_row_limit&lt;/a&gt; to be examined. By default, administrative queries &amp;amp; those that don't use indexes for lookups are not logged.&lt;/p&gt;
+&lt;li&gt;From Alan Orth: &lt;a href="https://en.wikipedia.org/wiki/Hanlon%27s_razor"&gt;Hanlon's razor&lt;/a&gt; that says "never assume malice where stupidity will suffice"&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In this case "never assume malice where your ignorance will suffice" :D&lt;/p&gt;</summary><category term="strangeloop"></category><category term="grant"></category></entry><entry><title>Safely Rotating MySQL Slow Query Logs</title><link href="https://nairobilug.or.ke/2016/04/safely-rotating-mysql-slow-logs.html" rel="alternate"></link><published>2016-04-16T16:05:00+03:00</published><author><name>James Oguya</name></author><id>tag:nairobilug.or.ke,2016-04-16:2016/04/safely-rotating-mysql-slow-logs.html</id><summary type="html">&lt;p&gt;MySQL slow query log consists of SQL statements that took more than &lt;a href="https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_long_query_time"&gt;long_query_time&lt;/a&gt; seconds to complete execution &amp;amp; required atleast &lt;a href="https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_min_examined_row_limit"&gt;min_examined_row_limit&lt;/a&gt; to be examined. By default, administrative queries &amp;amp; those that don't use indexes for lookups are not logged.&lt;/p&gt;
 &lt;p&gt;Two common techniques used by &lt;a href="http://linux.die.net/man/8/logrotate"&gt;Logrotate&lt;/a&gt; are:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;copytruncate&lt;/strong&gt;: Instead of moving the old log file &amp;amp; optionally creating a new one, logrotate truncates the original log file in place after creating a copy.&lt;/li&gt;
@@ -175,7 +182,7 @@ Query OK, 0 rows affected (0.00 sec)
 &lt;li&gt;&lt;a href="https://dev.mysql.com/doc/refman/5.5/en/slow-query-log.html"&gt;MySQL Slow Query Log&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://linux.die.net/man/8/logrotate"&gt;logrotate man page&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;This post is also available on my &lt;a href="https://oguya.ch/posts/2016-04-13-safely-rotating-mysql-slow-logs/"&gt;personal blog&lt;/a&gt;.&lt;/p&gt;</summary><category term="mysql"></category><category term="mariadb"></category></entry><entry><title>Using Homebrew's PostgreSQL on Mac OS X</title><link href="https://nairobilug.or.ke/2016/04/postgres-homebrew-macosx.html" rel="alternate"></link><published>2016-04-05T15:21:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2016-04-05:2016/04/postgres-homebrew-macosx.html</id><summary type="html">&lt;p&gt;You're on Mac OS X and you need to use PostgreSQL, but you're used to GNU/Linux where there is usually a dedicated &lt;code&gt;postgres&lt;/code&gt; system user for doing database administrator tasks. This is just a quick note to people who might have installed PostgreSQL from &lt;a href="http://brew.sh/"&gt;Homebrew&lt;/a&gt; and find themselves scratching their head for the next step.  First, initialize the database directory and start the database daemon manually:&lt;/p&gt;
+&lt;p&gt;This post is also available on my &lt;a href="https://oguya.ch/posts/2016-04-13-safely-rotating-mysql-slow-logs/"&gt;personal blog&lt;/a&gt;.&lt;/p&gt;</summary><category term="mysql"></category><category term="mariadb"></category></entry><entry><title>Using Homebrew's PostgreSQL on Mac OS X</title><link href="https://nairobilug.or.ke/2016/04/postgres-homebrew-macosx.html" rel="alternate"></link><published>2016-04-05T15:21:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2016-04-05:2016/04/postgres-homebrew-macosx.html</id><summary type="html">&lt;p&gt;You're on Mac OS X and you need to use PostgreSQL, but you're used to GNU/Linux where there is usually a dedicated &lt;code&gt;postgres&lt;/code&gt; system user for doing database administrator tasks. This is just a quick note to people who might have installed PostgreSQL from &lt;a href="http://brew.sh/"&gt;Homebrew&lt;/a&gt; and find themselves scratching their head for the next step. First, initialize the database directory and start the database daemon manually:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ initdb /opt/brew/var/postgres -E utf8
 $ postgres -D /opt/brew/var/postgres
 &lt;/pre&gt;&lt;/div&gt;
@@ -204,7 +211,7 @@ $ createdb -O aorth --encoding&lt;span class="o"&gt;=&lt;/span&gt;UNICODE mjanja
 
 
 &lt;p&gt;Notice how you don't have to &lt;em&gt;become&lt;/em&gt; the PostgreSQL system user first (ie, via &lt;code&gt;su - postgres&lt;/code&gt;), you just use your normal Mac OS X user account.&lt;/p&gt;
-&lt;p&gt;This was &lt;a href="https://mjanja.ch/2016/04/using-homebrews-postgresql-mac-os-x/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="Postgres"></category><category term="Homebrew"></category></entry><entry><title>Heka, InfluxDB, and Grafana</title><link href="https://nairobilug.or.ke/2016/02/heka-influxdb-and-grafana.html" rel="alternate"></link><published>2016-02-07T17:00:00+03:00</published><author><name>Jason Rogena</name></author><id>tag:nairobilug.or.ke,2016-02-07:2016/02/heka-influxdb-and-grafana.html</id><summary type="html">&lt;p&gt;I recently started working at a startup :). My first task there was to configure their new Linux server to host some live apps. I, professionally, haven't done sysadmin work but since I've been configuring Linux VPSs to play with for some time now I figured it wouldn't be that hard doing the initial setup. I did the usual; install and configure the necessary packages, firewall stuff, automated deployment of the apps, and of course, monitoring. I tried to do as much as possible on Ansible — I'm no idiot.&lt;/p&gt;
+&lt;p&gt;This was &lt;a href="https://mjanja.ch/2016/04/using-homebrews-postgresql-mac-os-x/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="postgres"></category><category term="homebrew"></category></entry><entry><title>Heka, InfluxDB, and Grafana</title><link href="https://nairobilug.or.ke/2016/02/heka-influxdb-and-grafana.html" rel="alternate"></link><published>2016-02-07T17:00:00+03:00</published><author><name>Jason Rogena</name></author><id>tag:nairobilug.or.ke,2016-02-07:2016/02/heka-influxdb-and-grafana.html</id><summary type="html">&lt;p&gt;I recently started working at a startup :). My first task there was to configure their new Linux server to host some live apps. I, professionally, haven't done sysadmin work but since I've been configuring Linux VPSs to play with for some time now I figured it wouldn't be that hard doing the initial setup. I did the usual; install and configure the necessary packages, firewall stuff, automated deployment of the apps, and of course, monitoring. I tried to do as much as possible on Ansible — I'm no idiot.&lt;/p&gt;
 &lt;p&gt;Settling on what I should use for monitoring took quite some time. There a so many ways you can kill this rat; Logstash, Gaphite, &lt;a href="http://prometheus.io"&gt;Prometheus&lt;/a&gt;, &lt;a href="https://hekad.readthedocs.org/en/latest"&gt;Heka&lt;/a&gt;, and the list goes on and on. I knew, however, what I wanted:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Easily deployable — mainly because I didn't want to have to do a lot of work on Ansible&lt;/li&gt;
@@ -312,7 +319,7 @@ I initially set the &lt;strong&gt;message_matcher&lt;/strong&gt; field to "TRUE"
 &lt;li&gt;InfluxDB isn't using a lot of disk space. The database storing HTTP status codes is 900K on the disk, one month on.&lt;/li&gt;
 &lt;li&gt;The graphs on Grafana look sexy. Here's a screenshot of the graphs on HTTP status codes:&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img alt="image showing HTTP status codes on Grafana" src="/images/heka-influxdb-and-grafana.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Image showing HTTP status codes on Grafana" src="https://nairobilug.or.ke/images/heka-influxdb-and-grafana/heka-influxdb-and-grafana.png" /&gt;&lt;/p&gt;
 &lt;p&gt;This was &lt;a href="https://jasonrogena.github.io/2016/01/02/heka-influxdb-and-grafana.html"&gt;originally posted&lt;/a&gt; on my personal blog; re-posting here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="heka"></category><category term="influxdb"></category><category term="grafana"></category></entry><entry><title>Meetup Summary (October, 2015)</title><link href="https://nairobilug.or.ke/2015/10/meetup-october-2015.html" rel="alternate"></link><published>2015-10-03T23:18:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-10-03:2015/10/meetup-october-2015.html</id><summary type="html">&lt;p&gt;Today's meetup was a collabo between the Nairobi LUG and Tunapanda, and it might go down in history as the most successful meeting of the Nairobi GNU/Linux Users Group &lt;em&gt;ever&lt;/em&gt;. Our organizations are incredibly compatible and I'm not sure why we don't do this more often! The &lt;abbr title="Linux Users Group"&gt;LUG&lt;/abbr&gt; and Tunapanda are both forces for openness and community in Kenya. Note to self: suggest this style of meetup more often.&lt;/p&gt;
 &lt;h2&gt;Tunapanda&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://www.tunapanda.org/"&gt;Tunapanda&lt;/a&gt; is a community-based organization teaching digital technology in Nairobi's Kibera estate. A few weeks ago they floated the idea of holding our next meetup at their institute and I'm grateful they did. We saw their Linux-based thin client setup, where people were working with GIMP and Blender when we walked in, and had some great conversations with students, teachers, and even the people selling beans and chapati around the corner!&lt;/p&gt;
@@ -328,8 +335,8 @@ I initially set the &lt;strong&gt;message_matcher&lt;/strong&gt; field to "TRUE"
 &lt;/ul&gt;
 &lt;p&gt;A sizeable contingent of the Nairobi LUG made the pilgrimage and we were received by an equally numerous Tunapanda, making the meeting at least thirty people strong!&lt;/p&gt;
 &lt;h2&gt;Thanks and Welcome&lt;/h2&gt;
-&lt;p&gt;I want to thank ALL the people who came to the meetup. The next meeting will be November 7, 2015.&lt;/p&gt;</summary><category term="Tunapanda"></category><category term="meetup"></category></entry><entry><title>Mounting Partitions Using systemd</title><link href="https://nairobilug.or.ke/2015/09/systemd-mount-partition.html" rel="alternate"></link><published>2015-09-02T11:00:00+03:00</published><author><name>James Oguya</name></author><id>tag:nairobilug.or.ke,2015-09-02:2015/09/systemd-mount-partition.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.freedesktop.org/wiki/Software/systemd"&gt;systemd&lt;/a&gt; is gradually becoming the de facto init system &amp;amp; service manager replacing the old sysV init scripts &amp;amp; upstart. Recently, I discovered you can mount partitions using &lt;a href="http://www.freedesktop.org/software/systemd/man/systemd.mount.html"&gt;systemd.mount&lt;/a&gt; by writing your own &lt;code&gt;.mount&lt;/code&gt; &lt;a href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html"&gt;systemd unit file&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="super suprised" src="/images/2015-09-02-systemd-mount-partition/suprised-cat.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;I want to thank ALL the people who came to the meetup. The next meeting will be November 7, 2015.&lt;/p&gt;</summary><category term="tunapanda"></category><category term="meetup"></category></entry><entry><title>Mounting Partitions Using systemd</title><link href="https://nairobilug.or.ke/2015/09/systemd-mount-partition.html" rel="alternate"></link><published>2015-09-02T11:00:00+03:00</published><author><name>James Oguya</name></author><id>tag:nairobilug.or.ke,2015-09-02:2015/09/systemd-mount-partition.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.freedesktop.org/wiki/Software/systemd"&gt;systemd&lt;/a&gt; is gradually becoming the de facto init system &amp;amp; service manager replacing the old sysV init scripts &amp;amp; upstart. Recently, I discovered you can mount partitions using &lt;a href="http://www.freedesktop.org/software/systemd/man/systemd.mount.html"&gt;systemd.mount&lt;/a&gt; by writing your own &lt;code&gt;.mount&lt;/code&gt; &lt;a href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html"&gt;systemd unit file&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="super suprised" src="https://nairobilug.or.ke/images/systemd-mount-partition/suprised-cat.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;After &lt;em&gt;RTFM'ing&lt;/em&gt;, I realized, under the hood, systemd just runs &lt;a href="http://linux.die.net/man/8/mount"&gt;mount command&lt;/a&gt; to mount the specified partition with the specified mount options listed in the mount unit file. Basically, you need to specify the following options in your unit file:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;What=&lt;/code&gt; a partition name, path or UUID to mount&lt;/li&gt;
@@ -351,7 +358,7 @@ I initially set the &lt;strong&gt;message_matcher&lt;/strong&gt; field to "TRUE"
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;img alt="I Got This!" src="/images/2015-09-02-systemd-mount-partition/i-got-this.gif" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="I Got This!" src="https://nairobilug.or.ke/images/systemd-mount-partition/i-got-this.gif" /&gt;&lt;/p&gt;
 &lt;p&gt;So I wrote a simple systemd mount unit file — &lt;code&gt;/etc/systemd/system/mnt-backups.mount&lt;/code&gt; — which didn't work at first because I fell victim to one of the &lt;code&gt;systemd.mount&lt;/code&gt; pitfalls:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Mount units must be named after the mount point directories they control. Example: the mount point /home/lennart must be configured in a unit file home-lennart.mount.&lt;/p&gt;
@@ -409,7 +416,7 @@ systemctl start mnt-backups.mount
 &lt;p&gt;As always, enable the unit to start automatically during boot.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; mnt-backups.mount
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="systemd"></category></entry><entry><title>Stop Skype and PulseAudio From "Uncorking" Media Players</title><link href="https://nairobilug.or.ke/2015/08/stop-pulseaudio-uncorking.html" rel="alternate"></link><published>2015-08-02T15:21:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-08-02:2015/08/stop-pulseaudio-uncorking.html</id><summary type="html">&lt;p&gt;PulseAudio has a neat feature that allows applications to "uncork" media players like Rhythmbox, Banshee, etc when certain events happen. For example: when a call comes in Skype pauses your music so you can answer without fiddling around to pause manually. Unfortunately Skype also deems the "contact coming online" and "contact going offline" events as worthy of uncorking, so your music gets interrupted for several seconds when these events fire (aka all the time).&lt;/p&gt;
-&lt;h2&gt;Unload the "cork" module&lt;/h2&gt;
+&lt;h2&gt;Unload the "cork" Module&lt;/h2&gt;
 &lt;p&gt;A short term solution is to unload the corking module from your user's PulseAudio session:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ pactl unload-module module-role-cork
 &lt;/pre&gt;&lt;/div&gt;
@@ -422,7 +429,7 @@ systemctl start mnt-backups.mount
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2&gt;Other annoyances&lt;/h2&gt;
+&lt;h2&gt;Other Annoyances&lt;/h2&gt;
 &lt;p&gt;Now if only there were a way to address some other Skype annoyances like requiring the installation of a bunch of 32-bit libraries or how chat windows hijack the desktop environment's alt-tab ordering when there is a new message. Oh, it would also be nice if there wasn't massive, gaping &lt;a href="http://www.theguardian.com/world/2013/jul/11/microsoft-nsa-collaboration-user-data"&gt;backdoor giving the NSA access to your chats&lt;/a&gt;. &lt;em&gt;*sigh*&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;This was &lt;a href="https://mjanja.ch/2015/08/stop-skype-and-pulseaudio-from-uncorking-media-players/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="pulseaudio"></category><category term="skype"></category><category term="nsa"></category></entry><entry><title>Meetup Summary (July, 2015)</title><link href="https://nairobilug.or.ke/2015/07/meetup-july-2015.html" rel="alternate"></link><published>2015-07-05T23:18:00+03:00</published><author><name>Muriithi Frederick Muriuki</name></author><id>tag:nairobilug.or.ke,2015-07-05:2015/07/meetup-july-2015.html</id><summary type="html">&lt;p&gt;So, this month, only 4 people showed up in person, but the meeting turned out still interesting. Below is a summary of the things we talked about in no particular order:&lt;/p&gt;
 &lt;h3&gt;Linux (duh...)&lt;/h3&gt;
@@ -445,9 +452,9 @@ As is to be expected, we laughed our heads out... still, could there be a faster
 &lt;p&gt;There was a general consensus that the people who came up with these kind of rules do not understand how the technology works, and willfully refuse to consult with and listen to those who do.&lt;/p&gt;
 &lt;h3&gt;Conclusion&lt;/h3&gt;
 &lt;p&gt;While this is the least attended meetup in a really long time, it turned out to be really fascinating and fun.&lt;/p&gt;
-&lt;p&gt;I encourage people to show up to the next meeting on 01 August, 2015.&lt;/p&gt;</summary><category term="KFC"></category><category term="meetup"></category></entry><entry><title>Meetup Summary (June, 2015)</title><link href="https://nairobilug.or.ke/2015/06/meetup-june-2015.html" rel="alternate"></link><published>2015-06-14T17:25:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-06-14:2015/06/meetup-june-2015.html</id><summary type="html">&lt;p&gt;While I never tire of general chit chat about Linux and the broader free, libre, open-source software ecosystem, it is always nice when a meetup goes beyond that. This month we were lucky to have a few new faces drop by and shake up the monotony a bit. ;)&lt;/p&gt;
+&lt;p&gt;I encourage people to show up to the next meeting on 01 August, 2015.&lt;/p&gt;</summary><category term="kfc"></category><category term="meetup"></category></entry><entry><title>Meetup Summary (June, 2015)</title><link href="https://nairobilug.or.ke/2015/06/meetup-june-2015.html" rel="alternate"></link><published>2015-06-14T17:25:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-06-14:2015/06/meetup-june-2015.html</id><summary type="html">&lt;p&gt;While I never tire of general chit chat about Linux and the broader free, libre, open-source software ecosystem, it is always nice when a meetup goes beyond that. This month we were lucky to have a few new faces drop by and shake up the monotony a bit. ;)&lt;/p&gt;
 &lt;h3&gt;Tunapanda&lt;/h3&gt;
-&lt;p&gt;A few teachers and trainers from the &lt;a href="http://tunapanda.org/"&gt;Tunapanda Institute&lt;/a&gt; came by and talked about their work in the community. As a bonus, they brought their &lt;a href="http://www.cubietruck.com/"&gt;CubieTruck&lt;/a&gt; single-board mini PC which is running a modified Edubuntu, and is packed with a few hundred gigs(!) of open course content. Once booted up the device creates an open Wi-Fi access point that allows anyone to access its content via a built-in web server. &lt;/p&gt;
+&lt;p&gt;A few teachers and trainers from the &lt;a href="http://tunapanda.org/"&gt;Tunapanda Institute&lt;/a&gt; came by and talked about their work in the community. As a bonus, they brought their &lt;a href="http://www.cubietruck.com/"&gt;CubieTruck&lt;/a&gt; single-board mini PC which is running a modified Edubuntu, and is packed with a few hundred gigs(!) of open course content. Once booted up the device creates an open Wi-Fi access point that allows anyone to access its content via a built-in web server.&lt;/p&gt;
 &lt;p&gt;They've even got some of the nuts and bolts for provisioning and managing this process on &lt;a href="https://github.com/tunapanda"&gt;their GitHub account&lt;/a&gt;!&lt;/p&gt;
 &lt;h3&gt;BRCK&lt;/h3&gt;
 &lt;p&gt;After &lt;a href="https://nairobilug.or.ke/2015/05/meetup-may-2015.html"&gt;last month's&lt;/a&gt; discussion of &lt;a href="https://nairobilug.or.ke/2015/05/brck-violating-gpl.html"&gt;BRCK's GPL violation&lt;/a&gt; BRCK reached out to us and resolved things amicably. In addition to posting &lt;a href="https://www.brck.com/open-source-compliance/"&gt;source code for their BRCKv1&lt;/a&gt; a few of their people came to the meetup to talk about OpenWRT, single-board computers, and fried chicken.&lt;/p&gt;
@@ -456,13 +463,13 @@ As is to be expected, we laughed our heads out... still, could there be a faster
 &lt;iframe width="640" height="360" src="https://www.youtube-nocookie.com/embed/SV9qVZQcKck" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
 
 &lt;p&gt;We'll post more when we get time!&lt;/p&gt;
-&lt;h3&gt;Open all teh things&lt;/h3&gt;
+&lt;h3&gt;Open All teh Things&lt;/h3&gt;
 &lt;p&gt;We briefly discussed the closed-minded culture of information and data sharing in science, but how things are changing because donors who fund research — like the &lt;a href="http://www.gatesfoundation.org/"&gt;Bill and Melinda Gates Foundation&lt;/a&gt;, the &lt;a href="http://www.usaid.gov/"&gt;United States Agency for International Development&lt;/a&gt; (USAID), the &lt;a href="https://www.gov.uk/government/organisations/department-for-international-development"&gt;Department for International Development&lt;/a&gt; (DFID), etc — are calling for the results of all new research to be free and open. Even so, in April the Elsevier group of scientific journals announced their &lt;a href="https://www.elsevier.com/connect/elsevier-updates-its-policies-perspectives-and-services-on-article-sharing"&gt;new sharing policy&lt;/a&gt; which requires publications to be licensed Creative Commons, but with the restrictive no commercial (NC) and no derivatives (ND) clauses.&lt;/p&gt;
 &lt;p&gt;We were reminded of the late Aaron Swartz's &lt;a href="https://archive.org/stream/GuerillaOpenAccessManifesto/Goamjuly2008_djvu.txt"&gt;Guerilla Open Access Manifesto&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;Until next time&lt;/h3&gt;
-&lt;p&gt;As per our schedule of meeting on the first Saturday of the month, the next meeting should be on July 4th. Until next time, wathii!&lt;/p&gt;</summary><category term="KFC"></category><category term="meetup"></category></entry><entry><title>Replacing Cron Jobs With Systemd Timers</title><link href="https://nairobilug.or.ke/2015/06/cron-systemd-timers.html" rel="alternate"></link><published>2015-06-08T15:21:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-06-08:2015/06/cron-systemd-timers.html</id><summary type="html">&lt;p&gt;systemd has a timer function that can be used to run tasks periodically — yes, like &lt;code&gt;cron&lt;/code&gt;. There's nothing really wrong with cron, but have you ever tried to debug a cron job on a server? The script runs fine from the command line, but nothing seems to happen when it runs from cron. You quickly type &lt;code&gt;date&lt;/code&gt; to see how many seconds until the next minute, adjust the cron job, and wait. Nothing. Repeat. &lt;em&gt;*facedesk*&lt;/em&gt;&lt;/p&gt;
+&lt;h3&gt;Until Next Time&lt;/h3&gt;
+&lt;p&gt;As per our schedule of meeting on the first Saturday of the month, the next meeting should be on July 4th. Until next time, wathii!&lt;/p&gt;</summary><category term="kfc"></category><category term="meetup"></category></entry><entry><title>Replacing Cron Jobs With Systemd Timers</title><link href="https://nairobilug.or.ke/2015/06/cron-systemd-timers.html" rel="alternate"></link><published>2015-06-08T15:21:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-06-08:2015/06/cron-systemd-timers.html</id><summary type="html">&lt;p&gt;systemd has a timer function that can be used to run tasks periodically — yes, like &lt;code&gt;cron&lt;/code&gt;. There's nothing really wrong with cron, but have you ever tried to debug a cron job on a server? The script runs fine from the command line, but nothing seems to happen when it runs from cron. You quickly type &lt;code&gt;date&lt;/code&gt; to see how many seconds until the next minute, adjust the cron job, and wait. Nothing. Repeat. &lt;em&gt;*facedesk*&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;This is the systemd value proposition in this context: &lt;em&gt;timers can be run on demand&lt;/em&gt; from the command line, and &lt;em&gt;their output is logged to the systemd journal&lt;/em&gt; where you can see it like any other systemd units.&lt;/p&gt;
-&lt;h2&gt;System backups using a timer&lt;/h2&gt;
+&lt;h2&gt;System Backups Using a Timer&lt;/h2&gt;
 &lt;p&gt;As an example, I have a simple shell script — &lt;code&gt;system-backup.sh&lt;/code&gt; — that uses &lt;code&gt;rsync&lt;/code&gt; to back up my system to an external USB hard drive once per day. Converting this job to use systemd timers requires the creation of both a &lt;em&gt;timer&lt;/em&gt; and a &lt;em&gt;service&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;/etc/systemd/system/system-backup.timer&lt;/em&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
@@ -501,7 +508,7 @@ $ sudo systemctl list-timers --all
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2&gt;What this gets you&lt;/h2&gt;
+&lt;h2&gt;What This Gets You&lt;/h2&gt;
 &lt;p&gt;Using &lt;code&gt;OnCalendar=daily&lt;/code&gt; this job will run every day at midnight, similar to cron's &lt;code&gt;@daily&lt;/code&gt; keyword. If you ever want to run the job manually you can invoke its service on demand:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo systemctl start system-backup.service
 &lt;/pre&gt;&lt;/div&gt;
@@ -514,16 +521,14 @@ $ sudo systemctl list-timers --all
 
 
 &lt;p&gt;I find this much more elegant than appending to, looking through, and rotating log files manually. Furthermore, I like the ability to set CPU and I/O scheduling priorities in the service itself rather than relying on external &lt;code&gt;nice&lt;/code&gt; and &lt;code&gt;ionice&lt;/code&gt; binaries in the script. :)&lt;/p&gt;
-&lt;h2&gt;More information&lt;/h2&gt;
+&lt;h2&gt;More Information&lt;/h2&gt;
 &lt;p&gt;See the following for more information:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;man systemd.timer&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;man systemd.service&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;man journalctl&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;This was &lt;a href="https://mjanja.ch/2015/06/replacing-cron-jobs-with-systemd-timers/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="systemd"></category><category term="cron"></category></entry><entry><title>BRCK in Violation of the GPL</title><link href="https://nairobilug.or.ke/2015/05/brck-violating-gpl.html" rel="alternate"></link><published>2015-05-18T15:21:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-05-18:2015/05/brck-violating-gpl.html</id><summary type="html">&lt;p&gt;During a recent meeting of the Nairobi GNU/Linux Users Group we discussed &lt;a href="https://www.brck.com" title="BRCK | Rugged, Portable WiFi Hotspot &amp;amp; Battery Extender"&gt;BRCK&lt;/a&gt;, the Kenya-based makers of a slick, "rugged", battery-powered-GSM-router thing of the same name, and their apparent violation of the GNU General
-Public License (GPL). The lively discussion ended up making its way to the web in the form of a &lt;a href="https://nairobilug.or.ke/2015/05/meetup-may-2015.html"&gt;blog
-post&lt;/a&gt; on the group's blog.&lt;/p&gt;
+&lt;p&gt;This was &lt;a href="https://mjanja.ch/2015/06/replacing-cron-jobs-with-systemd-timers/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="systemd"></category><category term="cron"></category></entry><entry><title>BRCK in Violation of the GPL</title><link href="https://nairobilug.or.ke/2015/05/brck-violating-gpl.html" rel="alternate"></link><published>2015-05-18T15:21:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-05-18:2015/05/brck-violating-gpl.html</id><summary type="html">&lt;p&gt;During a recent meeting of the Nairobi GNU/Linux Users Group we discussed &lt;a href="https://www.brck.com" title="BRCK | Rugged, Portable WiFi Hotspot &amp;amp; Battery Extender"&gt;BRCK&lt;/a&gt;, the Kenya-based makers of a slick, "rugged", battery-powered-GSM-router thing of the same name, and their apparent violation of the GNU General Public License (GPL). The lively discussion ended up making its way to the web in the form of a &lt;a href="https://nairobilug.or.ke/2015/05/meetup-may-2015.html"&gt;blog post&lt;/a&gt; on the group's blog.&lt;/p&gt;
 &lt;p&gt;Their product is based on &lt;a href="https://openwrt.org/"&gt;OpenWRT&lt;/a&gt; — the GNU/Linux distribution geared towards embedded systems — which is &lt;a href="http://wiki.openwrt.org/about/license"&gt;licensed&lt;/a&gt; under the GPL v2. I believe this is problematic for BRCK for a number of reasons that I will enumerate below. When we reached out to BRCK they claimed that they were not in violation because they use "stock unmodified OpenWRT" source code. This claim is repeated verbatim in a &lt;a href="http://forums.brck.com/t/where-is-the-openwrt-fork-source-at/482/8"&gt;thread on their forum&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;I had intended this post to be a discussion of the spirit of the GPL ending with me expressing disappointment in BRCK for cowering behind perceived technicalities of the license. After sitting down to read the license, however, it became immediately apparent to me that they are indeed in violation. &lt;em&gt;*sigh*&lt;/em&gt;&lt;/p&gt;
 &lt;h2&gt;The GNU General Public License&lt;/h2&gt;
@@ -556,7 +561,7 @@ $ shasum brckv1_20141114.zip
 d6dcbb1d61e99bf2b35133c5e6897a352518da0c  brckv1_20141114.zip
 $ unzip brckv1_20141114.zip
 $ grep -r -E &lt;span class="s1"&gt;&amp;#39;gpl|GPL&amp;#39;&lt;/span&gt; brckv1_20141114/* &lt;span class="p"&gt;|&lt;/span&gt; wc -l
-       0
+0
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -614,7 +619,7 @@ will automatically terminate your rights under this License. [...]&lt;/li&gt;
 &lt;p&gt;Interpretation of the license is a bit confusing at first, but very accessible if you actually read it. Put simply: copyleft obligations of the GPL v2 are triggered upon &lt;em&gt;distribution&lt;/em&gt; of binary works derived from a GPL-licensed program.&lt;/p&gt;
 &lt;p&gt;As BRCK is distributing an OpenWRT-derived work in object code form, Section 3 requires that they provide &lt;em&gt;complete corresponding machine-readable source code&lt;/em&gt; used to produce the object code they are distributing. Section 1 grants them the permission to provide this code and stipulates that it must preserve the copyright notice and license of the original work.&lt;/p&gt;
 &lt;p&gt;The implications of Section 2 are less clear, depending on whether or not BRCK is actually using "stock unmodified OpenWRT" source code. I suppose that's up to them to decide, but I would urge them to keep in mind the spirit of the GPL v2 when making that decision.&lt;/p&gt;
-&lt;h2&gt;BRCK should know better&lt;/h2&gt;
+&lt;h2&gt;BRCK Should Know Better&lt;/h2&gt;
 &lt;p&gt;BRCK is not the "enemy", but they — of all people — should know better. We expect this behavior from large corporations, but not from quasi-community-based organizations operating in the technical sector.&lt;/p&gt;
 &lt;p&gt;In the end none of this matters unless someone is willing to take BRCK to court over non-compliance. Even if someone was willing to do so, I think it would be sad if it had to come to that. Instead, I hope this serves as a lesson in GPL v2 compliance for Kenyan organizations in the future, and indeed a public record of my findings.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Update (2015-05-19):&lt;/strong&gt; BRCK has &lt;a href="http://forums.brck.com/t/where-is-the-openwrt-fork-source-at/482/11"&gt;responded&lt;/a&gt; and posted &lt;a href="https://www.brck.com/open-source-compliance/"&gt;licensing information and source code&lt;/a&gt; on their website.&lt;/p&gt;
@@ -623,7 +628,7 @@ will automatically terminate your rights under this License. [...]&lt;/li&gt;
 &lt;p&gt;A lot was discussed. Opera Mini, and whether the Nairobi LUG blog should be accessible using this browser, Search Engine Optimization, learning Rust.. I'm not going to pretend I remember everything that was discussed, partly because I'm writing this one week later.&lt;/p&gt;
 &lt;h3&gt;GPL Violation&lt;/h3&gt;
 &lt;p&gt;One topic that was discussed that I feel like I need to highlight is the &lt;a href="https://www.gnu.org/copyleft/gpl.html"&gt;GPL&lt;/a&gt; and how some Kenyan companies are violating it. &lt;a href="https://www.brck.com/"&gt;BRCK&lt;/a&gt;, for instance, runs a fork of &lt;a href="https://openwrt.org/"&gt;OpenWRT&lt;/a&gt; yet NONE of its code is open (at least the forked OpenWRT code should be). OpenWRT is a GNU Linux distribution that comprises of at least two high profile projects (the &lt;a href="https://kernel.org/"&gt;Linux kernel&lt;/a&gt; and &lt;a href="http://www.busybox.net/"&gt;BusyBox&lt;/a&gt;) that are licensed under the GPL. All projects that are derivatives of OpenWRT therefore are technically licensed under the GPL. I reached out to the BRCK team but I still haven't gotten a response from them. It's time 'they' know we are not fine with them violating the GPL!&lt;/p&gt;
-&lt;p&gt;VIVA GPL!!&lt;/p&gt;</summary><category term="KFC"></category><category term="meetup"></category></entry><entry><title>Simultaneously Pushing to Two Remotes in a Git Repository</title><link href="https://nairobilug.or.ke/2015/05/pushing-two-git-remotes.html" rel="alternate"></link><published>2015-05-10T16:40:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-05-10:2015/05/pushing-two-git-remotes.html</id><summary type="html">&lt;p&gt;Sometimes you need to push commits to two remotes in a git repository — either for a cheap "backup" of sorts, or for some public / private repository scheme you may have in your organization, etc.&lt;/p&gt;
+&lt;p&gt;VIVA GPL!!&lt;/p&gt;</summary><category term="kfc"></category><category term="meetup"></category></entry><entry><title>Simultaneously Pushing to Two Remotes in a Git Repository</title><link href="https://nairobilug.or.ke/2015/05/pushing-two-git-remotes.html" rel="alternate"></link><published>2015-05-10T16:40:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-05-10:2015/05/pushing-two-git-remotes.html</id><summary type="html">&lt;p&gt;Sometimes you need to push commits to two remotes in a git repository — either for a cheap "backup" of sorts, or for some public / private repository scheme you may have in your organization, etc.&lt;/p&gt;
 &lt;p&gt;Let's say you have a repository hosted on GitHub &lt;em&gt;and&lt;/em&gt; BitBucket (hey, GitHub is king today, but you never know!). You could add a remote for each and push to them individually:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git push github
 $ git push bitbucket
@@ -631,7 +636,7 @@ $ git push bitbucket
 
 
 &lt;p&gt;This works fine but it's a bit manual. Also, assuming you want both remotes to essentially be mirrors of each other, there's a better way.&lt;/p&gt;
-&lt;h3&gt;A better way&lt;/h3&gt;
+&lt;h3&gt;A Better Way&lt;/h3&gt;
 &lt;p&gt;If you're using any relatively modern version of git (1.9?) you can manipulate the remote to include two push URLs. Instead of adding a second remote, you simply add a second push URL to the existing remote.&lt;/p&gt;
 &lt;p&gt;For example, adding a BitBucket URL to the remote called "origin":&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git remote set-url origin --add git@bitbucket.org:alanorth/repo.git
@@ -651,7 +656,7 @@ origin  git@bitbucket.org:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;
 &lt;p&gt;This was &lt;a href="https://mjanja.ch/2015/05/simultaneously-pushing-to-two-remotes-in-a-git-repository/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="git"></category></entry><entry><title>Ramping Up the Ethiopia LUG</title><link href="https://nairobilug.or.ke/2015/04/ramping-up-ethiopia-lug.html" rel="alternate"></link><published>2015-04-25T21:01:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-04-25:2015/04/ramping-up-ethiopia-lug.html</id><summary type="html">&lt;p&gt;Today I had the pleasure of participating in a rare meeting of the Ethiopia GNU/Linux Users Group at the &lt;a href="http://www.iceaddis.com"&gt;iceaddis&lt;/a&gt; co-working space in Addis Ababa. In all the years I've lived in Kenya, and all the times I've been to Ethiopia, I've never heard anything about Linux or open-source software groups in the community. But alas, they do exist! I enlisted the help of some friends in Addis and planned to arrange a meeting the next time I went to Ethiopia.&lt;/p&gt;
 &lt;p&gt;Much to my surprise the Linux Users Group has been in existence for a few years, and even has a fairly active &lt;a href="https://groups.google.com/forum/#!forum/linux-ethiopia"&gt;mailing list&lt;/a&gt; (albeit a bit off topic!). The list is active enough that, when we sent word of the meeting, several people replied stating interest and one actually showed up to the meeting!&lt;/p&gt;
 &lt;p&gt;The meeting was small, short, and sweet. In addition to our one Internet person, I brought a few of my Addis friends and colleagues. Seven people taking time out of their Saturday to talk about free, libre, open-source software and community. Not a bad start!&lt;/p&gt;
-&lt;h3&gt;A good start&lt;/h3&gt;
+&lt;h3&gt;A Good Start&lt;/h3&gt;
 &lt;p&gt;I opened the meeting by giving a brief background of the Nairobi GNU/Linux Users Group; from a few of us trading hashtags on Twitter to regular monthly meetings, an active &lt;a href="https://groups.google.com/forum/#!forum/nairobi-gnu"&gt;mailing list&lt;/a&gt;, &lt;a href="https://kiwiirc.com/client/irc.freenode.net/#nairobilug"&gt;lively IRC channel&lt;/a&gt;, &lt;a href="https://github.com/nairobilug/nairobilug.or.ke"&gt;democratically managed website&lt;/a&gt;, etc. On second thought it wasn't very brief, but I'm sure it was entertaining and insightful. ;)&lt;/p&gt;
 &lt;p&gt;We talked about some ways to ramp up the group:&lt;/p&gt;
 &lt;ul&gt;
@@ -662,34 +667,19 @@ origin  git@bitbucket.org:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;
 &lt;li&gt;Relationships with other users groups in Addis, like the &lt;a href="https://addis.meteor.com"&gt;Meteor.js group&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Generally, I drew parallels between the early days of the Nairobi GNU/Linux Users Group and the current state of the Ethiopian group in Addis. My advice was for them to create a website and draw on social media to drive users to their mailing list to keep discussions going.&lt;/p&gt;
-&lt;h3&gt;Eyob's GitHub shirt&lt;/h3&gt;
+&lt;h3&gt;Eyob's GitHub Shirt&lt;/h3&gt;
 &lt;p&gt;Here's a shoutout to Eyob, who saw the message on the mailing list and bothered to show up. I had brought a GitHub shirt with me to give out and it just seemed right to give it to him!&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Eyob with his new GitHub shirt" src="/images/addis-meetup-2015-04-25.jpg" title="Eyob with his new GitHub shirt" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Eyob with his new GitHub shirt" src="https://nairobilug.or.ke/images/ramping-up-ethiopia-lug/addis-meetup-2015-04-25.jpg" title="Eyob with his new GitHub shirt" /&gt;&lt;/p&gt;
 &lt;p&gt;Hopefully that's motivation for people to show up to meetings from time to time! Also, I think he might be the first one in Addis with a GitHub shirt. w00t?&lt;/p&gt;
-&lt;h3&gt;Linux users' couches&lt;/h3&gt;
+&lt;h3&gt;Linux Users' Couches&lt;/h3&gt;
 &lt;p&gt;I joked that I'd like to be able to take a road trip from Addis to Cape Town and sleep on Linux users' couches in cities all along the way. It's a bit of an oversimplification, but the point is that we're building networks. Whether you're looking for help on your Ubuntu machine, trying to find potential employees to manage your servers, or just need a place to sleep in Pretoria, we are building networks to connect people.&lt;/p&gt;
-&lt;p&gt;Thanks to everyone that came to the meeting. Stay tuned for the next one! So long, and thanks for all the ቡና!&lt;/p&gt;</summary><category term="meetup"></category></entry><entry><title>Rebooting Server(s) Using Ansible</title><link href="https://nairobilug.or.ke/2015/03/rebooting-server-using-ansible.html" rel="alternate"></link><published>2015-03-03T12:35:00+03:00</published><author><name>James Oguya</name></author><id>tag:nairobilug.or.ke,2015-03-03:2015/03/rebooting-server-using-ansible.html</id><summary type="html">&lt;p&gt;In this blogpost, we'll talk about rebooting servers using ansible &amp;amp; pausing the
-playbook by waiting for a given amount of time for a given service on a given
-port to start.&lt;/p&gt;
-&lt;p&gt;Of late, I've seen a lot of guys on &lt;code&gt;#ansible&lt;/code&gt; irc channel &amp;amp; google groups
-asking questions about rebooting servers/nodes &amp;amp; temporarily pausing the
-playbook for a given amount of time before continuing with the execution of the
-playbook. In some cases, you'd want to set some kernel parameters which take
-effect at boot time or perform major upgrades which might require a reboot
-before configuring the server/node.&lt;/p&gt;
-&lt;p&gt;Using ansible's &lt;code&gt;wait_for&lt;/code&gt; module&lt;a href="http://docs.ansible.com/wait_for_module.html"&gt;&lt;sup&gt;[1]&lt;/sup&gt;&lt;/a&gt;,
-we can temporarily stop running the playbook while we wait for the server to
-finish rebooting or for a service to start &amp;amp; bind to a port. We can also use the
-same module to wait for a port to become available which can be useful in
-situations where services are not immediately available after their &lt;code&gt;init&lt;/code&gt;
-scripts finish running - as is the case with Java application server e.g. Tomcat.&lt;/p&gt;
-&lt;h3&gt;gettin' started&lt;/h3&gt;
+&lt;p&gt;Thanks to everyone that came to the meeting. Stay tuned for the next one! So long, and thanks for all the ቡና!&lt;/p&gt;</summary><category term="meetup"></category></entry><entry><title>Rebooting Server(s) Using Ansible</title><link href="https://nairobilug.or.ke/2015/03/rebooting-server-using-ansible.html" rel="alternate"></link><published>2015-03-03T12:35:00+03:00</published><author><name>James Oguya</name></author><id>tag:nairobilug.or.ke,2015-03-03:2015/03/rebooting-server-using-ansible.html</id><summary type="html">&lt;p&gt;Of late, I've seen a lot of guys on &lt;code&gt;#ansible&lt;/code&gt; irc channel &amp;amp; google groups asking questions about rebooting servers/nodes &amp;amp; temporarily pausing the playbook for a given amount of time before continuing with the execution of the playbook. In some cases, you'd want to set some kernel parameters which take effect at boot time or perform major upgrades which might require a reboot before configuring the server/node.&lt;/p&gt;
+&lt;p&gt;Using ansible's &lt;code&gt;wait_for&lt;/code&gt; module&lt;a href="http://docs.ansible.com/wait_for_module.html"&gt;&lt;sup&gt;[1]&lt;/sup&gt;&lt;/a&gt;, we can temporarily stop running the playbook while we wait for the server to finish rebooting or for a service to start &amp;amp; bind to a port. We can also use the same module to wait for a port to become available which can be useful in situations where services are not immediately available after their &lt;code&gt;init&lt;/code&gt; scripts finish running - as is the case with Java application server e.g. Tomcat.&lt;/p&gt;
+&lt;h3&gt;Gettin' Started&lt;/h3&gt;
 &lt;p&gt;Basically, we can break our problem into 4 sections for easier conceptualization:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;Section 1: &lt;strong&gt;Pre-reboot&lt;/strong&gt;: Run your pre-reboot task, it can be performing major
-upgrades and/or performing some configuration which only take effect at boot time.
-For example - upgrade all packages using &lt;code&gt;yum&lt;/code&gt; module&lt;a href="http://docs.ansible.com/yum_module.html"&gt;&lt;sup&gt;[2]&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Section 1: &lt;strong&gt;Pre-reboot&lt;/strong&gt;: Run your pre-reboot task, it can be performing major upgrades and/or performing some configuration which only take effect at boot time. For example - upgrade all packages using &lt;code&gt;yum&lt;/code&gt; module&lt;a href="http://docs.ansible.com/yum_module.html"&gt;&lt;sup&gt;[2]&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;- name: upgrade all packages
   yum: name=* state=latest
 &lt;/pre&gt;&lt;/div&gt;
@@ -697,9 +687,7 @@ For example - upgrade all packages using &lt;code&gt;yum&lt;/code&gt; module&lt;
 
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Section 2: &lt;strong&gt;Reboot&lt;/strong&gt;: In this stage we'll use the &lt;code&gt;command&lt;/code&gt; module&lt;a href="http://docs.ansible.com/command_module.html"&gt;&lt;sup&gt;[3]&lt;/sup&gt;&lt;/a&gt;
-to reboot the remote machine/server by running the &lt;code&gt;reboot&lt;/code&gt; command  - nothing
-fancy - you can also use &lt;code&gt;shutdown --reboot&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Section 2: &lt;strong&gt;Reboot&lt;/strong&gt;: In this stage we'll use the &lt;code&gt;command&lt;/code&gt; module&lt;a href="http://docs.ansible.com/command_module.html"&gt;&lt;sup&gt;[3]&lt;/sup&gt;&lt;/a&gt; to reboot the remote machine/server by running the &lt;code&gt;reboot&lt;/code&gt; command  - nothing fancy - you can also use &lt;code&gt;shutdown --reboot&lt;/code&gt;.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;- name: reboot server
   command: /sbin/reboot
 &lt;/pre&gt;&lt;/div&gt;
@@ -707,16 +695,7 @@ fancy - you can also use &lt;code&gt;shutdown --reboot&lt;/code&gt;.&lt;/p&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Section 3: &lt;strong&gt;Pause the playbook&lt;/strong&gt;: We'll use the &lt;code&gt;wait_for&lt;/code&gt; module to wait for
-300 seconds for port 22 to become available before resuming the playbook. I'm
-using port 22 because most servers run openssh-server on port 22 &amp;amp; if we were to
-telnet to that port we'd probably see something like :&lt;code&gt;SSH-2.0-OpenSSH_6.6.1&lt;/code&gt;,
-so we can use regex to check whether the output matches "OpenSSH". I'm also
-using a &lt;code&gt;timeout&lt;/code&gt; value of 300 seconds because most physical servers take
-3 - 5 minutes to finish rebooting due to hardware checks e.t.c. but you can
-use any value that suites you.
-For example: - wait for 300 seconds for port 22 to become available &amp;amp; contain
-&lt;code&gt;OpenSSH&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Section 3: &lt;strong&gt;Pause the playbook&lt;/strong&gt;: We'll use the &lt;code&gt;wait_for&lt;/code&gt; module to wait for 300 seconds for port 22 to become available before resuming the playbook. I'm using port 22 because most servers run openssh-server on port 22 &amp;amp; if we were to telnet to that port we'd probably see something like :&lt;code&gt;SSH-2.0-OpenSSH_6.6.1&lt;/code&gt;, so we can use regex to check whether the output matches "OpenSSH". I'm also using a &lt;code&gt;timeout&lt;/code&gt; value of 300 seconds because most physical servers take 3 - 5 minutes to finish rebooting due to hardware checks e.t.c. but you can use any value that suites you. For example: - wait for 300 seconds for port 22 to become available &amp;amp; contain &lt;code&gt;OpenSSH&lt;/code&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;- name: wait for the server to finish rebooting
   local_action: wait_for host=&amp;quot;web01&amp;quot; search_regex=OpenSSH port=22 timeout=300
 &lt;/pre&gt;&lt;/div&gt;
@@ -724,12 +703,10 @@ For example: - wait for 300 seconds for port 22 to become available &amp;amp; co
 
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Section 4: &lt;strong&gt;Resume the playbook&lt;/strong&gt;: After we've got a response from port 22,
-we can resume running the playbook. This step can be optional depending on your
-needs.&lt;/p&gt;
+&lt;p&gt;Section 4: &lt;strong&gt;Resume the playbook&lt;/strong&gt;: After we've got a response from port 22, we can resume running the playbook. This step can be optional depending on your needs.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;puttin' it all together&lt;/h3&gt;
+&lt;h3&gt;Puttin' It All Together&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;We can merge all the above sections into one playbook as shown below:&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
 &lt;span class="x"&gt;  sudo: yes&lt;/span&gt;
@@ -753,24 +730,14 @@ needs.&lt;/p&gt;
 
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;stuff to note&lt;/h3&gt;
+&lt;h3&gt;Stuff to Note&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;I know you might be wondering why we didn't use handlers. Well, &lt;code&gt;notify&lt;/code&gt;
-tasks&lt;a href="http://docs.ansible.com/playbooks_intro.html#handlers-running-operations-on-change"&gt;&lt;sup&gt;[4]&lt;/sup&gt;&lt;/a&gt;
-are only executed at the end of the playbook regardless of their location in the
-playbook - remember we're interested in rebooting the server &amp;amp; waiting for a
-given amount of time for the server to finish rebooting.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;inventory_hostname&lt;/code&gt; variable&lt;a href="http://docs.ansible.com/playbooks_variables.html#magic-variables-and-how-to-access-information-about-other-hosts"&gt;&lt;sup&gt;[5]&lt;/sup&gt;&lt;/a&gt;
-is the name of the remote server as stated in
-the ansible hosts file&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;local_action&lt;/code&gt; directive&lt;a href="http://docs.ansible.com/glossary.html#local-action"&gt;&lt;sup&gt;[6]&lt;/sup&gt;&lt;/a&gt;
-runs the given step on the local machine, for example, it would run the
-&lt;code&gt;wait_for&lt;/code&gt; task on your local machine.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;yum&lt;/code&gt; module only works on RedHat based OS e.g. Fedora, CentOS &amp;amp; RHEL -
-and so we'll also use the &lt;code&gt;apt&lt;/code&gt; module for Debian based OS e.g. Ubuntu, Debian
-e.t.c.&lt;/li&gt;
+&lt;li&gt;I know you might be wondering why we didn't use handlers. Well, &lt;code&gt;notify&lt;/code&gt; tasks&lt;a href="http://docs.ansible.com/playbooks_intro.html#handlers-running-operations-on-change"&gt;&lt;sup&gt;[4]&lt;/sup&gt;&lt;/a&gt; are only executed at the end of the playbook regardless of their location in the playbook - remember we're interested in rebooting the server &amp;amp; waiting for a given amount of time for the server to finish rebooting.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;inventory_hostname&lt;/code&gt; variable&lt;a href="http://docs.ansible.com/playbooks_variables.html#magic-variables-and-how-to-access-information-about-other-hosts"&gt;&lt;sup&gt;[5]&lt;/sup&gt;&lt;/a&gt; is the name of the remote server as stated in the ansible hosts file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;local_action&lt;/code&gt; directive&lt;a href="http://docs.ansible.com/glossary.html#local-action"&gt;&lt;sup&gt;[6]&lt;/sup&gt;&lt;/a&gt; runs the given step on the local machine, for example, it would run the &lt;code&gt;wait_for&lt;/code&gt; task on your local machine.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yum&lt;/code&gt; module only works on RedHat based OS e.g. Fedora, CentOS &amp;amp; RHEL - and so we'll also use the &lt;code&gt;apt&lt;/code&gt; module for Debian based OS e.g. Ubuntu, Debian e.t.c.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;links&lt;/h3&gt;
+&lt;h3&gt;Links&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href="http://docs.ansible.com/wait_for_module.html"&gt;Ansible wait_for module&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://docs.ansible.com/command_module.html"&gt;Ansible command module&lt;/a&gt;&lt;/li&gt;
@@ -779,7 +746,7 @@ e.t.c.&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://docs.ansible.com/playbooks_variables.html#magic-variables-and-how-to-access-information-about-other-hosts"&gt;Playbook built-in variables&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://docs.ansible.com/glossary.html#local-action"&gt;Ansible local_action directives&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;</summary><category term="linux"></category><category term="ansible"></category></entry><entry><title>Meetup Summary (February, 2015)</title><link href="https://nairobilug.or.ke/2015/02/meetup-february-2015.html" rel="alternate"></link><published>2015-02-07T16:30:00+03:00</published><author><name>Alois Mbutura</name></author><id>tag:nairobilug.or.ke,2015-02-07:2015/02/meetup-february-2015.html</id><summary type="html">&lt;p&gt;Twenty people showed up, and as always some people were late, others were not. A few new people (ahem, Frank!), and others not as new whom I had not seen for a while. Big special shoutout to Maureiq, the only female member in the meetup.&lt;/p&gt;
-&lt;h3&gt;As it happened, insider info&lt;/h3&gt;
+&lt;h3&gt;As it Happened, Insider Info&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;There was talk that everyone should try to watch the movie &lt;a href="http://www.imdb.com/title/tt4044364"&gt;Citizenfour&lt;/a&gt; -- an eye opening documentary on privacy, surveillance and obviously the bigger picture.&lt;/li&gt;
 &lt;li&gt;Jason talked of making an open source platform -- ma3map &lt;a href="https://github.com/ma3map/ma3map-client_android"&gt;client&lt;/a&gt; and &lt;a href="https://github.com/ma3map/ma3map-server"&gt;server&lt;/a&gt; -- for doing route interconnection and using machine learning to decide how to effectively recommend which matatus to take (and in which order).&lt;/li&gt;
@@ -787,12 +754,13 @@ e.t.c.&lt;/li&gt;
 &lt;li&gt;Lots of other questions, laughs and more.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;This is my first time posting so if I may have ommitted anything important, feel free to alter my &lt;a href="https://github.com/nairobilug/nairobilug.or.ke"&gt;post&lt;/a&gt; and then make a pull request. Big thanks to all the people who taught me &lt;a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet#links"&gt;Markdown&lt;/a&gt;... without which this post wouldn't have been possible.&lt;/p&gt;
-&lt;h3&gt;Next time&lt;/h3&gt;
-&lt;p&gt;See you all on March 7th. Meetups are usually on the first Saturday of every month at KFC, Kimathi street at 16:30. Bring a friend!&lt;/p&gt;</summary><category term="KFC"></category><category term="meetup"></category></entry><entry><title>Leveraging the Ansible Python API for Infrastructure Reporting</title><link href="https://nairobilug.or.ke/2015/01/ansible-api-reporting.html" rel="alternate"></link><published>2015-01-21T16:40:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-01-21:2015/01/ansible-api-reporting.html</id><summary type="html">&lt;p&gt;A few days ago I had to get some basic information from a handful of servers for an inventory report; just basic stuff like hostname, IP address, storage capacity, distro version, etc. I already manage all of my servers with Ansible, and there's a wealth of information available in Ansible's &lt;code&gt;setup&lt;/code&gt; module, so I knew there had to be a clever way to do this.&lt;/p&gt;
+&lt;h3&gt;Next Time&lt;/h3&gt;
+&lt;p&gt;See you all on March 7th. Meetups are usually on the first Saturday of every month at KFC, Kimathi street at 16:30. Bring a friend!&lt;/p&gt;</summary><category term="kfc"></category><category term="meetup"></category></entry><entry><title>Leveraging the Ansible Python API for Infrastructure Reporting</title><link href="https://nairobilug.or.ke/2015/01/ansible-api-reporting.html" rel="alternate"></link><published>2015-01-21T16:40:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-01-21:2015/01/ansible-api-reporting.html</id><summary type="html">&lt;p&gt;A few days ago I had to get some basic information from a handful of servers for an inventory report; just basic stuff like hostname, IP address, storage capacity, distro version, etc. I already manage all of my servers with Ansible, and there's a wealth of information available in Ansible's &lt;code&gt;setup&lt;/code&gt; module, so I knew there had to be a clever way to do this.&lt;/p&gt;
 &lt;p&gt;Somehow I stumbled upon &lt;a href="http://docs.ansible.com/developing_api.html"&gt;Ansible's Python API&lt;/a&gt;, which solves this problem elegantly! It helped that other people are doing cool things and &lt;a href="http://jpmens.net/2012/12/13/obtaining-remote-data-with-ansible-s-api/"&gt;writing about their experiences&lt;/a&gt; too.&lt;/p&gt;
 &lt;h2&gt;Enter ansible.runner&lt;/h2&gt;
-&lt;p&gt;According to the documentation, the Python API is:
-&lt;blockquote&gt;[...] very powerful, and is how the ansible CLI and ansible-playbook are implemented.&lt;/blockquote&gt;&lt;/p&gt;
+&lt;p&gt;According to the documentation, the Python API is:&lt;/p&gt;
+&lt;blockquote&gt;[...] very powerful, and is how the ansible CLI and ansible-playbook are implemented.&lt;/blockquote&gt;
+
 &lt;p&gt;Indeed! Using &lt;code&gt;ansible.runner&lt;/code&gt; I whipped something up and extracted data from several dozen servers in just a few minutes (and I don't even know Python!):&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ./ansible-runner.py
 mjanjavm10, 2, 30, Ubuntu 14.04, 192.168.7.34
@@ -801,7 +769,7 @@ mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
 
 
 &lt;p&gt;I had to massage the data a bit to get clean numbers for RAM and storage capacity, but other than that it was extremely straightforward (as most things with Ansible generally are).&lt;/p&gt;
-&lt;h2&gt;The code&lt;/h2&gt;
+&lt;h2&gt;The Code&lt;/h2&gt;
 &lt;p&gt;Here's the source code for the &lt;em&gt;ansible-runner.py&lt;/em&gt; script above:&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
  2
@@ -906,24 +874,15 @@ mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;Feel free to use, improve, and share it.&lt;/p&gt;
-&lt;p&gt;This was &lt;a href="https://mjanja.ch/2015/01/leveraging-the-ansible-python-api-for-infrastructure-reporting/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="ansible"></category></entry><entry><title>Meetup Summary (January, 2015)</title><link href="https://nairobilug.or.ke/2015/01/meetup-january-2015.html" rel="alternate"></link><published>2015-01-19T20:40:00+03:00</published><author><name>Njagi Mwaniki</name></author><id>tag:nairobilug.or.ke,2015-01-19:2015/01/meetup-january-2015.html</id><summary type="html">&lt;p&gt;First off the meetup couldn't be held on the usual first Saturday of the month (4-Jan-2015) but was held on the second Satruday (11-Jan-2015) because by Kenyan culture people just aren't around Nairobi until at least the first Monday after first January. This pushing forward of the meetup was discussed in the mailing list and it was agreed.&lt;/p&gt;
+&lt;p&gt;This was &lt;a href="https://mjanja.ch/2015/01/leveraging-the-ansible-python-api-for-infrastructure-reporting/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="ansible"></category><category term="python"></category></entry><entry><title>Meetup Summary (January, 2015)</title><link href="https://nairobilug.or.ke/2015/01/meetup-january-2015.html" rel="alternate"></link><published>2015-01-19T20:40:00+03:00</published><author><name>Njagi Mwaniki</name></author><id>tag:nairobilug.or.ke,2015-01-19:2015/01/meetup-january-2015.html</id><summary type="html">&lt;p&gt;First off the meetup couldn't be held on the usual first Saturday of the month (4-Jan-2015) but was held on the second Satruday (11-Jan-2015) because by Kenyan culture people just aren't around Nairobi until at least the first Monday after first January. This pushing forward of the meetup was discussed in the mailing list and it was agreed.&lt;/p&gt;
 &lt;p&gt;The meetup was awesome. I had missed quite a number of them and so I met a lot of new faces. Almost everyone was new so I count for that as growth.&lt;/p&gt;
 &lt;p&gt;Discussions:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;XMPP: We had agreed in the mailing list that we would talk about running an XMPP server for secure communication among members. Sadly this matter wasn't discussed as much as I hope it would have been. What I got is that everyone thought it was a good thing, just that we didn't agree on a when and where the hosting would be done and the source of funding.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Monetizing apps in Kenya. How to make something people want to pay for and get them to pay for it. People want to see some sort of proof of concept first they don't just buy in.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;poppingtonic and I talked about &lt;a href="http://mitpress.mit.edu/sicp/"&gt;SICP&lt;/a&gt; and some CS stuff, fun conversation.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;There was a lot of catching up being friends and such things.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="KFC"></category><category term="meetup"></category></entry><entry><title>Ansible 'Prompt' Handlers</title><link href="https://nairobilug.or.ke/2015/01/ansible-prompt-handlers.html" rel="alternate"></link><published>2015-01-02T11:00:00+03:00</published><author><name>James Oguya</name></author><id>tag:nairobilug.or.ke,2015-01-02:2015/01/ansible-prompt-handlers.html</id><summary type="html">&lt;p&gt;An awesome feature in &lt;a href="https://chef.io"&gt;Chef&lt;/a&gt; that is not available in &lt;a href="http://ansible.com"&gt;Ansible&lt;/a&gt; is immediate notification i.e. &lt;code&gt;notifies :immediately&lt;/code&gt;.
-Ansible has &lt;a href="http://docs.ansible.com/playbooks_intro.html#handlers-running-operations-on-change"&gt;notification handlers&lt;/a&gt; but they are only triggered at the end of the current playbook unlike &lt;a href="https://docs.chef.io/resource_common.html#notifies-syntax"&gt;Chef's notifications&lt;/a&gt; which can be triggered immediately! Moreover, you can configure Chef's notifications to be triggered at specific times e.g. at the very end of a chef-client run i.e. &lt;code&gt;notifies :delayed&lt;/code&gt; or immediately i.e. &lt;code&gt;notifies :immediately&lt;/code&gt;.&lt;/p&gt;
+&lt;li&gt;XMPP: We had agreed in the mailing list that we would talk about running an XMPP server for secure communication among members. Sadly this matter wasn't discussed as much as I hope it would have been. What I got is that everyone thought it was a good thing, just that we didn't agree on a when and where the hosting would be done and the source of funding.&lt;/li&gt;
+&lt;li&gt;Monetizing apps in Kenya. How to make something people want to pay for and get them to pay for it. People want to see some sort of proof of concept first they don't just buy in.&lt;/li&gt;
+&lt;li&gt;poppingtonic and I talked about &lt;a href="http://mitpress.mit.edu/sicp/"&gt;SICP&lt;/a&gt; and some CS stuff, fun conversation.&lt;/li&gt;
+&lt;li&gt;There was a lot of catching up being friends and such things.&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="kfc"></category><category term="meetup"></category></entry><entry><title>Ansible 'Prompt' Handlers</title><link href="https://nairobilug.or.ke/2015/01/ansible-prompt-handlers.html" rel="alternate"></link><published>2015-01-02T11:00:00+03:00</published><author><name>James Oguya</name></author><id>tag:nairobilug.or.ke,2015-01-02:2015/01/ansible-prompt-handlers.html</id><summary type="html">&lt;p&gt;An awesome feature in &lt;a href="https://chef.io"&gt;Chef&lt;/a&gt; that is not available in &lt;a href="http://ansible.com"&gt;Ansible&lt;/a&gt; is immediate notification i.e. &lt;code&gt;notifies :immediately&lt;/code&gt;. Ansible has &lt;a href="http://docs.ansible.com/playbooks_intro.html#handlers-running-operations-on-change"&gt;notification handlers&lt;/a&gt; but they are only triggered at the end of the current playbook unlike &lt;a href="https://docs.chef.io/resource_common.html#notifies-syntax"&gt;Chef's notifications&lt;/a&gt; which can be triggered immediately! Moreover, you can configure Chef's notifications to be triggered at specific times e.g. at the very end of a chef-client run i.e. &lt;code&gt;notifies :delayed&lt;/code&gt; or immediately i.e. &lt;code&gt;notifies :immediately&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Now, why I'm going into all these boring theories? Well, when installing tomcat on Ubuntu, dpkg starts it automatically once the process is complete. But in my case, I wanted to stop tomcat7 service first, configure it, deploy its webapps &amp;amp; finally start it. So on my ansible tasks file, after installing tomcat7 I added a notification action to call a task that stops tomcat7 service. Here's a snippet from the ansible task file:&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;tomcat.yml&lt;/em&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
@@ -943,11 +902,9 @@ Ansible has &lt;a href="http://docs.ansible.com/playbooks_intro.html#handlers-ru
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;OK so the task file looks great, but did it work ? Unfortunately, no! Ansible notifications trigger tasks in handlers section to run only at the end of a playbook.
-So I had to come up with a quick fix for this issue.&lt;/p&gt;
-&lt;h3&gt;'Prompt' handlers&lt;/h3&gt;
-&lt;p&gt;My quick fix involved registering a variable in the task that installs tomcat packages i.e. &lt;code&gt;register: tomcat_installed&lt;/code&gt;, then the next task to stop tomcat service would be executed only if the registered variable has changed i.e. if tomcat7 has been installed - &lt;code&gt;when: tomcat_installed|changed&lt;/code&gt;.
-Basically, ansible notifications use a similar concept to this.&lt;/p&gt;
+&lt;p&gt;OK so the task file looks great, but did it work ? Unfortunately, no! Ansible notifications trigger tasks in handlers section to run only at the end of a playbook. So I had to come up with a quick fix for this issue.&lt;/p&gt;
+&lt;h3&gt;'Prompt' Handlers&lt;/h3&gt;
+&lt;p&gt;My quick fix involved registering a variable in the task that installs tomcat packages i.e. &lt;code&gt;register: tomcat_installed&lt;/code&gt;, then the next task to stop tomcat service would be executed only if the registered variable has changed i.e. if tomcat7 has been installed - &lt;code&gt;when: tomcat_installed|changed&lt;/code&gt;. Basically, ansible notifications use a similar concept to this.&lt;/p&gt;
 &lt;p&gt;Here's a snippet from the playbook showing the quick fix:&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;tomcat.yml&lt;/em&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
@@ -970,7 +927,7 @@ Basically, ansible notifications use a similar concept to this.&lt;/p&gt;
 &lt;h3&gt;Conclusion&lt;/h3&gt;
 &lt;p&gt;Though I'm sure there are better solutions out there, I think the concept behind my quick fix can be useful in tackling other ansible-related issues.&lt;/p&gt;</summary><category term="linux"></category><category term="ansible"></category><category term="tomcat"></category></entry><entry><title>Maps and Custom Error Pages in Nginx</title><link href="https://nairobilug.or.ke/2014/12/maps-and-custom-error-pages-nginx.html" rel="alternate"></link><published>2014-12-09T17:00:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-12-09:2014/12/maps-and-custom-error-pages-nginx.html</id><summary type="html">&lt;p&gt;During a recent web application upgrade I had to limit access to the the web servers; I wanted the administrators and myself to be able to access the site, but for everyone else to see an "&lt;em&gt;Under Construction&lt;/em&gt;" page. My initial plan was to test if the &lt;code&gt;$remote_addr&lt;/code&gt; was one of the allowed IPs, and then redirect those clients to a maintenance page, but I couldn't figure out how to test more than one IP address (seriously)!&lt;/p&gt;
 &lt;p&gt;I eventually stumbled upon the &lt;a href="http://nginx.org/en/docs/http/ngx_http_map_module.html"&gt;nginx map module&lt;/a&gt; which, combined with a custom error page, ended up being an elegant, fun solution to this problem.&lt;/p&gt;
-&lt;h3&gt;Elegant maps&lt;/h3&gt;
+&lt;h3&gt;Elegant Maps&lt;/h3&gt;
 &lt;p&gt;Here is a snippet from &lt;em&gt;/etc/nginx/conf.d/default.conf&lt;/em&gt; which shows the important bits:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="o"&gt;...&lt;/span&gt;
@@ -1002,16 +959,16 @@ Basically, ansible notifications use a similar concept to this.&lt;/p&gt;
 
 
 &lt;p&gt;By default all IP addresses are denied (ie, &lt;code&gt;$denied=1&lt;/code&gt;), but depending on the client's IP address, the &lt;code&gt;$denied&lt;/code&gt; variable can be set to 0. In the root location block I essentially test if the IP address is denied and conditionally return an HTTP 503 (&lt;em&gt;Service Unavailable&lt;/em&gt;), which is handled by a custom &lt;code&gt;error_page&lt;/code&gt; handler with a named location block. So cool!&lt;/p&gt;
-&lt;h3&gt;In retrospect&lt;/h3&gt;
+&lt;h3&gt;In Retrospect&lt;/h3&gt;
 &lt;p&gt;In retrospect I probably could have used a regex in the &lt;code&gt;$remote_addr&lt;/code&gt; test, but maps are really a more flexible, efficient, and "nginx" way of accomplishing this. On that note, I'm using nginx more and more lately and, in addition to being fast as hell and having better TLS support, it's just more fun to use than Apache. ;)&lt;/p&gt;
 &lt;p&gt;Furthermore, to deploy this I wrote an Ansible playbook which included a list of allowed IPs and reconfigured the nginx vhost by using a Jinja2 template which iterated over the IPs to create the map block above. Very cool, and very easy to reverse when the maintenance was over!&lt;/p&gt;
-&lt;p&gt;This was originally &lt;a href="https://mjanja.ch/2014/12/maps-and-custom-error-pages-in-nginx/"&gt;posted on&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="nginx"></category></entry><entry><title>Image Compression Like Compressor.io, but With Open-Source Tools</title><link href="https://nairobilug.or.ke/2014/10/image-compression-open-source.html" rel="alternate"></link><published>2014-10-23T10:40:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-10-23:2014/10/image-compression-open-source.html</id><summary type="html">&lt;p&gt;When I first tried &lt;a href="https://compressor.io"&gt;Compressor.io&lt;/a&gt; I was shocked; how can they reduce an image's file size by hundreds of kilobytes or more without downscaling the image and no noticeable loss in quality?  Although it's a cool, free tool, it bothered me that, because I didn't know how to do this myself, I was depending on a "cloud" service to do it for me.  Surely that web service is just a snazzy front end for the free, libre, open-source tools we all know and love?&lt;/p&gt;
-&lt;p&gt;I was pretty sure the answers lay in GraphicsMagick / ImageMagick, but with which options?  What was the magic invocation that would produce the same result?&lt;/p&gt;
+&lt;p&gt;This was originally &lt;a href="https://mjanja.ch/2014/12/maps-and-custom-error-pages-in-nginx/"&gt;posted on&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="nginx"></category></entry><entry><title>Image Compression Like Compressor.io, but With Open-Source Tools</title><link href="https://nairobilug.or.ke/2014/10/image-compression-open-source.html" rel="alternate"></link><published>2014-10-23T10:40:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-10-23:2014/10/image-compression-open-source.html</id><summary type="html">&lt;p&gt;When I first tried &lt;a href="https://compressor.io"&gt;Compressor.io&lt;/a&gt; I was shocked; how can they reduce an image's file size by hundreds of kilobytes or more without downscaling the image and no noticeable loss in quality? Although it's a cool, free tool, it bothered me that, because I didn't know how to do this myself, I was depending on a "cloud" service to do it for me. Surely that web service is just a snazzy front end for the free, libre, open-source tools we all know and love?&lt;/p&gt;
+&lt;p&gt;I was pretty sure the answers lay in GraphicsMagick / ImageMagick, but with which options? What was the magic invocation that would produce the same result?&lt;/p&gt;
 &lt;p&gt;&lt;abbr title="Too long; didn't read"&gt;TL;DR&lt;/abbr&gt;: Strip EXIF data, interlace, convert to 80% quality, and scale to ~50% of original image dimensions.&lt;/p&gt;
-&lt;h3&gt;It's easy!&lt;/h3&gt;
-&lt;p&gt;After a bit of Google-fu I learned that this is easier than I had originally thought.  For example, take this picture of me eating a piece of halloumi cheese:&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Alan eating halloumi" src="/images/alan-halloumi.jpg" title="Alan eating halloumi" /&gt;&lt;/p&gt;
-&lt;p&gt;Straight from the fancy DSLR camera the image is &lt;em&gt;3.6 megabytes&lt;/em&gt; — much too large to share practically on the web.  Amazingly, after uploading to Compressor.io the image is reduced to &lt;em&gt;1.6 megabytes&lt;/em&gt;.  That's an impressive feat considering the image wasn't downscaled and is visually indistinguishable from the original!&lt;/p&gt;
+&lt;h3&gt;It's Easy!&lt;/h3&gt;
+&lt;p&gt;After a bit of Google-fu I learned that this is easier than I had originally thought. For example, take this picture of me eating a piece of halloumi cheese:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Alan eating halloumi" src="https://nairobilug.or.ke/images/image-compression-open-source/alan-halloumi.jpg" title="Alan eating halloumi" /&gt;&lt;/p&gt;
+&lt;p&gt;Straight from the fancy DSLR camera the image is &lt;em&gt;3.6 megabytes&lt;/em&gt; — much too large to share practically on the web. Amazingly, after uploading to Compressor.io the image is reduced to &lt;em&gt;1.6 megabytes&lt;/em&gt;. That's an impressive feat considering the image wasn't downscaled and is visually indistinguishable from the original!&lt;/p&gt;
 &lt;p&gt;As it turns out, it's actually pretty easy to achieve this level of savings:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ jpegtran -copy none -progressive -outfile DSC_0685-trimmed.JPG DSC_0685.JPG
 $ gm mogrify DSC_0685-trimmed.JPG -quality 80
@@ -1026,9 +983,9 @@ $ gm mogrify DSC_0685-trimmed.JPG -quality 80
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;The first operation — &lt;code&gt;jpegtran&lt;/code&gt; — is "lossless".  That is, it doesn't change the image data itself, instead optimizing the image's compression algorithm and stripping the EXIF data, and converts to &lt;em&gt;&lt;a href="http://www.bookofspeed.com/chapter5.html"&gt;progressive JPEGs&lt;/a&gt;&lt;/em&gt;.  EXIF data, like GPS coordinates, exposure length, ISO, etc are useful to the photographer or image manipulation software, but not essential when uploading to the web.&lt;/p&gt;
-&lt;p&gt;The second operation — GraphicsMagick — is "lossy" because it reduces the image to 80% quality.  GraphicsMagick's &lt;code&gt;mogrify&lt;/code&gt; command is very similar to the &lt;code&gt;convert&lt;/code&gt; command, but it &lt;em&gt;edits files in place&lt;/em&gt; (so be careful!).&lt;/p&gt;
-&lt;h3&gt;Extra points&lt;/h3&gt;
+&lt;p&gt;The first operation — &lt;code&gt;jpegtran&lt;/code&gt; — is "lossless". That is, it doesn't change the image data itself, instead optimizing the image's compression algorithm and stripping the EXIF data, and converts to &lt;em&gt;&lt;a href="http://www.bookofspeed.com/chapter5.html"&gt;progressive JPEGs&lt;/a&gt;&lt;/em&gt;. EXIF data, like GPS coordinates, exposure length, ISO, etc are useful to the photographer or image manipulation software, but not essential when uploading to the web.&lt;/p&gt;
+&lt;p&gt;The second operation — GraphicsMagick — is "lossy" because it reduces the image to 80% quality. GraphicsMagick's &lt;code&gt;mogrify&lt;/code&gt; command is very similar to the &lt;code&gt;convert&lt;/code&gt; command, but it &lt;em&gt;edits files in place&lt;/em&gt; (so be careful!).&lt;/p&gt;
+&lt;h3&gt;Extra Points&lt;/h3&gt;
 &lt;p&gt;Even though the file size has reduced by an amazing 60%, the image is actually still pretty massive — both in terms of file size as well as dimensions.  At &lt;em&gt;4608x3072 pixels&lt;/em&gt; (14MP), the image is still too large for the average computer, tablet, or phone to consume practically.  Keep in mind that, in 2014, most high-end smart phones have a resolution of "only" &lt;em&gt;1920x1080 pixels&lt;/em&gt;!&lt;/p&gt;
 &lt;p&gt;Given that high-end smart phones literally can't even fit more than 50% of this image on the screen, it's safe to assume that we can scale down the dimensions by a factor of at least 50% without sacrificing too much... I'll sympathize with the bandwidth deprived and go for 40%:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ gm convert DSC_0685-trimmed.JPG -resize 40% -quality &lt;span class="m"&gt;80&lt;/span&gt; -interlace Line DSC_0685-trimmed-scaled.JPG
@@ -1036,20 +993,20 @@ $ gm mogrify DSC_0685-trimmed.JPG -quality 80
 
 
 &lt;p&gt;After this the file is a mere &lt;em&gt;357 kilobytes&lt;/em&gt;, yet still nearly indistinguishable from the original!&lt;/p&gt;
-&lt;p&gt;This command is a bit of a mystery to me, though.  For some reason, in this particular invocation, &lt;code&gt;convert&lt;/code&gt; yields a smaller file size than &lt;code&gt;mogrify&lt;/code&gt;, even with the same exact options.  Also, even though we converted to progressive with &lt;code&gt;jpegtran&lt;/code&gt; earlier, doing it again here seems to have a substantial effect on the resulting file size (12k in this example).  Oh well, I suppose you can't understand everything all at once. ;)&lt;/p&gt;
-&lt;h3&gt;Great success!&lt;/h3&gt;
+&lt;p&gt;This command is a bit of a mystery to me, though. For some reason, in this particular invocation, &lt;code&gt;convert&lt;/code&gt; yields a smaller file size than &lt;code&gt;mogrify&lt;/code&gt;, even with the same exact options. Also, even though we converted to progressive with &lt;code&gt;jpegtran&lt;/code&gt; earlier, doing it again here seems to have a substantial effect on the resulting file size (12k in this example). Oh well, I suppose you can't understand everything all at once. ;)&lt;/p&gt;
+&lt;h3&gt;Great Success!&lt;/h3&gt;
 &lt;p&gt;So there you have it, now you get that Compressor.io-like effect from the safety of your own home, with free, libre, open-source software!&lt;/p&gt;
-&lt;p&gt;This was &lt;a href="https://mjanja.ch/2014/10/image-compression-like-compressor-io-but-with-open-source-tools/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="images"></category><category term="photography"></category></entry><entry><title>Update Hosts via Ansible to Mitigate Bash "Shellshock" Vulnerability</title><link href="https://nairobilug.or.ke/2014/09/ansible-shellshock.html" rel="alternate"></link><published>2014-09-29T10:40:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-09-29:2014/09/ansible-shellshock.html</id><summary type="html">&lt;p&gt;On September 24, 2014 someone &lt;a href="http://seclists.org/oss-sec/2014/q3/649" title="CVE-2014-6271: remote code execution through bash"&gt;posted&lt;/a&gt; on the oss-sec mailing list about a &lt;code&gt;bash&lt;/code&gt; vulnerability that likely affects several decades of &lt;code&gt;bash&lt;/code&gt;  versions (something like &lt;code&gt;1.14&lt;/code&gt; - &lt;code&gt;4.3&lt;/code&gt;!).  The vulnerability — aptly named "Shellshock" — can lead to remote code execution on un-patched hosts, for example &lt;a href="http://www.nimbo.com/blog/shellshock-heartbleed-2-0"&gt;web servers parsing HTTP environment variables via CGI GET requests&lt;/a&gt;, &lt;a href="https://community.qualys.com/blogs/laws-of-vulnerabilities/2014/09/24/bash-shellshock-vulnerability" title="BASH Shellshock vulnerability - Update3"&gt;sshd configurations using &lt;code&gt;ForceCommand&lt;/code&gt;&lt;/a&gt;, &lt;a href="https://www.trustedsec.com/september-2014/shellshock-dhcp-rce-proof-concept/" title="Shellshock DHCP RCE PoC"&gt;DHCP clients&lt;/a&gt;, etc.&lt;/p&gt;
-&lt;p&gt;Anyways, I'll leave the infosec community to &lt;a href="https://www.dfranke.us/posts/2014-09-27-shell-shock-exploitation-vectors.html" title="Shell Shock Exploitation Vectors"&gt;expound on attack vectors&lt;/a&gt;.  The point of this post is really to illustrate that you should be using an infrastructure orchestration tool like &lt;a href="http://www.ansible.com/home" title="Ansible homepage"&gt;Ansible&lt;/a&gt; to manage your servers.&lt;/p&gt;
-&lt;h3&gt;Painless patching with Ansible&lt;/h3&gt;
-&lt;p&gt;Patching your systems is painlessly easy if you manage your server infrastructure with something like Ansible.  Using a one-off command you can easily update all "web" servers, for example:&lt;/p&gt;
+&lt;p&gt;This was &lt;a href="https://mjanja.ch/2014/10/image-compression-like-compressor-io-but-with-open-source-tools/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="images"></category><category term="compression"></category></entry><entry><title>Update Hosts via Ansible to Mitigate Bash "Shellshock" Vulnerability</title><link href="https://nairobilug.or.ke/2014/09/ansible-shellshock.html" rel="alternate"></link><published>2014-09-29T10:40:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-09-29:2014/09/ansible-shellshock.html</id><summary type="html">&lt;p&gt;On September 24, 2014 someone &lt;a href="http://seclists.org/oss-sec/2014/q3/649" title="CVE-2014-6271: remote code execution through bash"&gt;posted&lt;/a&gt; on the oss-sec mailing list about a &lt;code&gt;bash&lt;/code&gt; vulnerability that likely affects several decades of &lt;code&gt;bash&lt;/code&gt; versions (something like &lt;code&gt;1.14&lt;/code&gt; - &lt;code&gt;4.3&lt;/code&gt;!). The vulnerability — aptly named "Shellshock" — can lead to remote code execution on un-patched hosts, for example &lt;a href="http://www.nimbo.com/blog/shellshock-heartbleed-2-0"&gt;web servers parsing HTTP environment variables via CGI GET requests&lt;/a&gt;, &lt;a href="https://community.qualys.com/blogs/laws-of-vulnerabilities/2014/09/24/bash-shellshock-vulnerability" title="BASH Shellshock vulnerability - Update3"&gt;sshd configurations using &lt;code&gt;ForceCommand&lt;/code&gt;&lt;/a&gt;, &lt;a href="https://www.trustedsec.com/september-2014/shellshock-dhcp-rce-proof-concept/" title="Shellshock DHCP RCE PoC"&gt;DHCP clients&lt;/a&gt;, etc.&lt;/p&gt;
+&lt;p&gt;Anyways, I'll leave the infosec community to &lt;a href="https://www.dfranke.us/posts/2014-09-27-shell-shock-exploitation-vectors.html" title="Shell Shock Exploitation Vectors"&gt;expound on attack vectors&lt;/a&gt;. The point of this post is really to illustrate that you should be using an infrastructure orchestration tool like &lt;a href="http://www.ansible.com/home" title="Ansible homepage"&gt;Ansible&lt;/a&gt; to manage your servers.&lt;/p&gt;
+&lt;h3&gt;Painless Patching With Ansible&lt;/h3&gt;
+&lt;p&gt;Patching your systems is painlessly easy if you manage your server infrastructure with something like Ansible. Using a one-off command you can easily update all "web" servers, for example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; ansible web -m apt -a &lt;span class="s2"&gt;&amp;quot;name=bash state=latest update_cache=yes&amp;quot;&lt;/span&gt; -K -s
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;That's great, but what if you have both Ubuntu and CentOS hosts in the "web" group?  CentOS doesn't use &lt;code&gt;apt&lt;/code&gt; for package management, so this has effectively only updated hosts running Debian-family GNU/Linux distros.&lt;/p&gt;
-&lt;h3&gt;Playbooks: the power of Ansible&lt;/h3&gt;
-&lt;p&gt;When you have more than a handful of servers, the combinations of DNS names, IP addresses, roles, and distros becomes overwhelming.  With Ansible you define your inventory of hosts, allocate them into groups, and then write "playbooks" to mold your servers into functional roles, ie web, database, compute, proxy, etc servers; the &lt;a href="https://xkcd.com/910/" title="XKCD coming about naming servers"&gt;personal relationship&lt;/a&gt; between sysadmin and server is gone.&lt;/p&gt;
+&lt;p&gt;That's great, but what if you have both Ubuntu and CentOS hosts in the "web" group? CentOS doesn't use &lt;code&gt;apt&lt;/code&gt; for package management, so this has effectively only updated hosts running Debian-family GNU/Linux distros.&lt;/p&gt;
+&lt;h3&gt;Playbooks: The Power of Ansible&lt;/h3&gt;
+&lt;p&gt;When you have more than a handful of servers, the combinations of DNS names, IP addresses, roles, and distros becomes overwhelming. With Ansible you define your inventory of hosts, allocate them into groups, and then write "playbooks" to mold your servers into functional roles, ie web, database, compute, proxy, etc servers; the &lt;a href="https://xkcd.com/910/" title="XKCD coming about naming servers"&gt;personal relationship&lt;/a&gt; between sysadmin and server is gone.&lt;/p&gt;
 &lt;p&gt;Here's a simple playbook I wrote which takes into account the different OS families in our infrastructure and updates the &lt;code&gt;bash&lt;/code&gt; package on each host.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;shellshock.yml&lt;/em&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nn"&gt;---&lt;/span&gt;
@@ -1076,36 +1033,36 @@ $ gm mogrify DSC_0685-trimmed.JPG -quality 80
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;In our case we patched twenty-five CentOS 6.x, Debian 6, Debian 7, Ubuntu 12.04, and Ubuntu 14.04 hosts living locally, in Amazon EC2, and in Linode.  With one command.  In less than five minutes!&lt;/p&gt;
-&lt;h3&gt;Stay vigilant!&lt;/h3&gt;
-&lt;p&gt;Vendors started pushing patched versions of &lt;code&gt;bash&lt;/code&gt; on September 26th, two days after the initial disclosure.  Two days after those patched versions were released there were &lt;a href="http://lcamtuf.blogspot.com/2014/09/bash-bug-apply-unofficial-patch-now.html" title="Bash bug: apply Florian"&gt;new variations of this bug discovered&lt;/a&gt;, and new packages issued (and we patched our systems again!).&lt;/p&gt;
-&lt;p&gt;As of now, five days after initial disclosure, there exist five &lt;abbr title="Common Vulnerabilities and Exposures"&gt;CVE&lt;/abbr&gt; identifiers for this bug!  So keep an eye on social media (&lt;a href="https://twitter.com/search?q=%23shellshock" title="#shellshock on Twitter"&gt;#shellshock&lt;/a&gt;?), &lt;a href="https://news.ycombinator.com/" title="Hacker News"&gt;Hacker News&lt;/a&gt;, and &lt;a href="https://shellshocker.net/" title="Shellshock monitoring"&gt;sites monitoring this bug&lt;/a&gt;, because more new vectors may emerge!&lt;/p&gt;
-&lt;p&gt;This was &lt;a href="https://mjanja.ch/2014/09/update-hosts-via-ansible-to-mitigate-bash-shellshock-vulnerability/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="ansible"></category><category term="bash"></category><category term="security"></category></entry><entry><title>Exploring Anti-DOS Tools for Apache Httpd</title><link href="https://nairobilug.or.ke/2014/09/exploring-anti-DOS-tools-for-Apache-httpd.html" rel="alternate"></link><published>2014-09-13T18:28:00+03:00</published><author><name>John Troon</name></author><id>tag:nairobilug.or.ke,2014-09-13:2014/09/exploring-anti-DOS-tools-for-Apache-httpd.html</id><summary type="html">&lt;p&gt;Slowloris is among the well known "Denial Of Service" (or DOS) &lt;a href="http://resources.infosecinstitute.com/dos-attacks-free-dos-attacking-tools/"&gt;tool&lt;/a&gt; used by both experienced attackers and script kiddies. This evening, I've been testing &lt;em&gt;mod_evasion&lt;/em&gt; and &lt;em&gt;mod_antiloris&lt;/em&gt; on Apache httpd /2.2.15 (Oracle Linux 6.5 using Redhat built Kernel).&lt;/p&gt;
-&lt;h2&gt;First Setup:&lt;/h2&gt;
+&lt;p&gt;In our case we patched twenty-five CentOS 6.x, Debian 6, Debian 7, Ubuntu 12.04, and Ubuntu 14.04 hosts living locally, in Amazon EC2, and in Linode. With one command. In less than five minutes!&lt;/p&gt;
+&lt;h3&gt;Stay Vigilant!&lt;/h3&gt;
+&lt;p&gt;Vendors started pushing patched versions of &lt;code&gt;bash&lt;/code&gt; on September 26th, two days after the initial disclosure. Two days after those patched versions were released there were &lt;a href="http://lcamtuf.blogspot.com/2014/09/bash-bug-apply-unofficial-patch-now.html" title="Bash bug: apply Florian"&gt;new variations of this bug discovered&lt;/a&gt;, and new packages issued (and we patched our systems again!).&lt;/p&gt;
+&lt;p&gt;As of now, five days after initial disclosure, there exist five &lt;abbr title="Common Vulnerabilities and Exposures"&gt;CVE&lt;/abbr&gt; identifiers for this bug! So keep an eye on social media (&lt;a href="https://twitter.com/search?q=%23shellshock" title="#shellshock on Twitter"&gt;#shellshock&lt;/a&gt;?), &lt;a href="https://news.ycombinator.com/" title="Hacker News"&gt;Hacker News&lt;/a&gt;, and &lt;a href="https://shellshocker.net/" title="Shellshock monitoring"&gt;sites monitoring this bug&lt;/a&gt;, because more new vectors may emerge!&lt;/p&gt;
+&lt;p&gt;This was &lt;a href="https://mjanja.ch/2014/09/update-hosts-via-ansible-to-mitigate-bash-shellshock-vulnerability/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="ansible"></category><category term="bash"></category><category term="security"></category></entry><entry><title>Exploring Anti-DOS Tools for Apache Httpd</title><link href="https://nairobilug.or.ke/2014/09/exploring-anti-dos-tools-for-apache-httpd.html" rel="alternate"></link><published>2014-09-13T18:28:00+03:00</published><author><name>John Troon</name></author><id>tag:nairobilug.or.ke,2014-09-13:2014/09/exploring-anti-dos-tools-for-apache-httpd.html</id><summary type="html">&lt;p&gt;Slowloris is among the well known "Denial Of Service" (or DOS) &lt;a href="http://resources.infosecinstitute.com/dos-attacks-free-dos-attacking-tools/"&gt;tool&lt;/a&gt; used by both experienced attackers and script kiddies. This evening, I've been testing &lt;em&gt;mod_evasion&lt;/em&gt; and &lt;em&gt;mod_antiloris&lt;/em&gt; on Apache httpd /2.2.15 (Oracle Linux 6.5 using Redhat built Kernel).&lt;/p&gt;
+&lt;h2&gt;First Setup&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Server: 192.168.43.221 (running Apache httpd with &lt;em&gt;mod_evasion&lt;/em&gt; loaded)&lt;/li&gt;
 &lt;li&gt;Attacking Machine: 192.168.43.39 (Slowloris "DOSing" the server)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;Apache httpd error logs&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Error from bad requests" src="/images/badheader.png" title="Apache error logs" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Error from bad requests" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/badheader.png" title="Apache error logs" /&gt;&lt;/p&gt;
 &lt;p&gt;The loaded module (&lt;em&gt;mod_evasion&lt;/em&gt;), can't save Apache httpd from the DOS attack, even loading the site from a browser is somehow impossible.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Apache DOSed" src="/images/apachedown.png" title="Can't access via Browser" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Apache DOSed" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/apachedown.png" title="Can't access via Browser" /&gt;&lt;/p&gt;
 &lt;p&gt;But this module can prevent a brute-force attack (&lt;em&gt;e.g. an automated script to guess a password field in a web-form&lt;/em&gt;) in a web server (running Apache httpd).&lt;/p&gt;
-&lt;p&gt;&lt;img alt="mod_evasion can prevent Brute-force.." src="/images/bruteforce.png" title="mod_evasion can prevent Brute-force attack" /&gt;&lt;/p&gt;
-&lt;p&gt;Just to make an interesting comparison, I replaced Apache httpd with Nginx on the same Server (192.168.43.221) and &lt;strong&gt;ta! da!..&lt;/strong&gt;
-&lt;img alt="Nginx is not DOSed by Slowloris" src="/images/nginxup.png" title="Nginx is not DOSed by Slowloris" /&gt; Nginx gracefully made it by ignoring the request from  Slowloris. But I noticed a brute-force attack is possible while using Nginx default settings! &lt;strong&gt;Nginx access logs&lt;/strong&gt;
-&lt;img alt="Nginx Brute-forced" src="/images/bfnginx.png" title="Nginx can be Brute-forced" /&gt;&lt;/p&gt;
-&lt;h2&gt;Second Setup:&lt;/h2&gt;
+&lt;p&gt;&lt;img alt="mod_evasion can prevent Brute-force.." src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/bruteforce.png" title="mod_evasion can prevent Brute-force attack" /&gt;&lt;/p&gt;
+&lt;p&gt;Just to make an interesting comparison, I replaced Apache httpd with Nginx on the same Server (192.168.43.221) and &lt;strong&gt;ta! da!..&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Nginx is not DOSed by Slowloris" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/nginxup.png" title="Nginx is not DOSed by Slowloris" /&gt; Nginx gracefully made it by ignoring the request from Slowloris. But I noticed a brute-force attack is possible while using Nginx default settings! &lt;strong&gt;Nginx access logs&lt;/strong&gt;
+&lt;img alt="Nginx Brute-forced" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/bfnginx.png" title="Nginx can be Brute-forced" /&gt;&lt;/p&gt;
+&lt;h2&gt;Second Setup&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Server: 192.168.43.221 (running Apache httpd with mod_antiloris loaded)&lt;/li&gt;
 &lt;li&gt;Attacking Machine: 192.168.43.39 (Sowloris "DOSing" the server)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;em&gt;mod_antiloris&lt;/em&gt; played it nice by monitoring the requests coming from the client and rejected extra connections. Accessing the web services from the browser was not interfered.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="mod_antiloris logs" src="/images/antiloris.png" title="mod_antiloris logs" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="mod_antiloris logs" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/antiloris.png" title="mod_antiloris logs" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;mod_evasion&lt;/em&gt; is cool but can't save Apache httpd from Slowloris. On the other hand, &lt;em&gt;mod_antiloris&lt;/em&gt; worked fine and denied Slowloris a chance to mess up with the Apache httpd server.&lt;/p&gt;
-&lt;h2&gt;Explanation:&lt;/h2&gt;
+&lt;h2&gt;Explanation&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Putting the Lens on the Logs...&lt;/strong&gt; (Apache httpd access log)&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Apache-httpd access log" src="/images/accesslog.png" title="Apache httpd access logs" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Apache-httpd access log" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/accesslog.png" title="Apache httpd access logs" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Why did mod_antiloris pass the test and mod_evasion fail?..&lt;/em&gt; &lt;em&gt;Why did Slowloris work on Apache httpd and not on Nginx?&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Apache httpd waits for a &lt;strong&gt;complete HTTP request header&lt;/strong&gt; to be received, this makes it good to serve web-content even in slow connections. So, by default, the timeout value is 300 seconds and it's reset each time the client sends more packets. Slowloris takes advantage by sending incomplete HTTP request headers and maintains the connection by sending more incomplete request headers resetting the time-out counter.&lt;/p&gt;
 &lt;p&gt;Slowloris is written in Perl, it simply plays around with &lt;strong&gt;CR (Carriage Return)&lt;/strong&gt; and &lt;strong&gt;LF (Line Feed)&lt;/strong&gt; at the end of every incomplete HTTP request header. A blank line after the request header is used to represent the completion of the header in HTTP. Since the request is incomplete and the timeout is 300 seconds, Apache httpd will keep the connection alive waiting for the remaining data, while Slowloris keeps on sending the incomplete HTTP requests resetting the timeout counter.&lt;/p&gt;
@@ -1115,74 +1072,70 @@ $ gm mogrify DSC_0685-trimmed.JPG -quality 80
 &lt;p&gt;&lt;strong&gt;But I'll always go with Nginx whenever possible!&lt;/strong&gt;&lt;/p&gt;
 &lt;h3&gt;Conclusion&lt;/h3&gt;
 &lt;p&gt;I think Apache httpd should find a way of prioritizing clients sending full HTTP requests to minimize DOS attacks of the (above) described nature...&lt;/p&gt;
-&lt;p&gt;Ciao! &lt;/p&gt;</summary><category term="linux"></category><category term="security"></category><category term="httpd"></category><category term="nginx"></category></entry><entry><title>The "SCTP" Protocol</title><link href="https://nairobilug.or.ke/2014/09/SCTP-protocol.html" rel="alternate"></link><published>2014-09-04T18:37:00+03:00</published><author><name>John Troon</name></author><id>tag:nairobilug.or.ke,2014-09-04:2014/09/SCTP-protocol.html</id><summary type="html">&lt;p&gt;TCP and UDP protocols have been in around for approximately 20+ years now. Even though they have helped in building nice Internet applications since inception, things are changing in the techie world and they will always change. TCP being a connection state protocol while UDP a connectionless state protocol, there have been attempts to build a general purpose protocol above the IP layer, SCTP so far is the only one endorsed by  the IETF.&lt;/p&gt;
+&lt;p&gt;Ciao!&lt;/p&gt;</summary><category term="linux"></category><category term="security"></category><category term="httpd"></category><category term="nginx"></category></entry><entry><title>The "SCTP" Protocol</title><link href="https://nairobilug.or.ke/2014/09/sctp-protocol.html" rel="alternate"></link><published>2014-09-04T18:37:00+03:00</published><author><name>John Troon</name></author><id>tag:nairobilug.or.ke,2014-09-04:2014/09/sctp-protocol.html</id><summary type="html">&lt;p&gt;TCP and UDP protocols have been in around for approximately 20+ years now. Even though they have helped in building nice Internet applications since inception, things are changing in the techie world and they will always change. TCP being a connection state protocol while UDP a connectionless state protocol, there have been attempts to build a general purpose protocol above the IP layer, SCTP so far is the only one endorsed by the IETF.&lt;/p&gt;
 &lt;p&gt;SCTP combines concepts from TCP and UDP for even better control over the transport of packets (with additional API calls for SCTP). TCP applications can be ported to SCTP.&lt;/p&gt;
 &lt;h2&gt;Some Cool Features:&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;strong&gt;More Support for multi-homed devices:&lt;/strong&gt; 
-Laptops these days can come with more than one in-built Ethernet cards, wireless cards, wiMAX cards and Bluetooth... Hence, a minimal laptop can at-least have 3 distinct IP network interfaces. SCTP support selective choosing of interfaces with ability to add and drop interfaces dynamically. You can unplug your machine from an Ethernet network, and an Internet application immediately pick up with existing  wifi connection etc.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;More Support for multi-homed devices:&lt;/strong&gt; Laptops these days can come with more than one in-built Ethernet cards, wireless cards, wiMAX cards and Bluetooth... Hence, a minimal laptop can at-least have 3 distinct IP network interfaces. SCTP support selective choosing of interfaces with ability to add and drop interfaces dynamically. You can unplug your machine from an Ethernet network, and an Internet application immediately pick up with existing wifi connection etc.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Whoo! Multi-streaming:&lt;/strong&gt; 
-An application doesn't need multiple sockets rather a single socket that can be used for multiple streams to a connected host! Let's say the X Window System is connecting on multiple ports, with SCTP, these could all be separate streams on a single association. &lt;em&gt;Fast-Browsing!&lt;/em&gt;, HTML docs containing referenced image files or other media files, they will load faster with SCTP compared in TCP. HTTP use separate TCP connection per downloaded URL, even with HTTP 1.1 "persistent connections" it's still expensive. With SCTP, the separate media files could be downloaded concurrently in separate streams on a single association.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Whoo! Multi-streaming:&lt;/strong&gt; An application doesn't need multiple sockets rather a single socket that can be used for multiple streams to a connected host! Let's say the X Window System is connecting on multiple ports, with SCTP, these could all be separate streams on a single association. &lt;em&gt;Fast-Browsing!&lt;/em&gt;, HTML docs containing referenced image files or other media files, they will load faster with SCTP compared in TCP. HTTP use separate TCP connection per downloaded URL, even with HTTP 1.1 "persistent connections" it's still expensive. With SCTP, the separate media files could be downloaded concurrently in separate streams on a single association.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;strong&gt;No “out of band”... :&lt;/strong&gt; 
-SCTP has no “out of band” messages, but a large number of events can be interleaved onto a single association, so that an application can monitor the state of the association (e.g. when the other end adds another interface to the association).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;No “out of band”... :&lt;/strong&gt; SCTP has no “out of band” messages, but a large number of events can be interleaved onto a single association, so that an application can monitor the state of the association (e.g. when the other end adds another interface to the association).&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Greater socket range:&lt;/strong&gt; 
-The range of socket options is greater than TCP or UDP. These also can be used to control individual associations or individual streams
+&lt;p&gt;&lt;strong&gt;Greater socket range:&lt;/strong&gt; The range of socket options is greater than TCP or UDP. These also can be used to control individual associations or individual streams
  within a single association. For example, messages on one stream can be given a longer time-to-live than messages on other streams, increasing the likelihood of their delivery.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Do more with single socket:&lt;/strong&gt;
-A single socket can support multiple associations, that is, a computer can use a single socket to talk to more than one computer. This is not multicast, but it could be useful in peer-to-peer situations&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Do more with single socket:&lt;/strong&gt; A single socket can support multiple associations, that is, a computer can use a single socket to talk to more than one computer. This is not multicast, but it could be useful in peer-to-peer situations&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Still message-oriented.. :&lt;/strong&gt; 
-TCP is a byte-oriented protocol, and UDP is message-oriented. The majority of applications are message-oriented, and applications using TCP have to jump through hoops, such as sending the message length as a first parameter. SCTP is message-oriented, so such tricks are not so necessary.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Still message-oriented.. :&lt;/strong&gt; TCP is a byte-oriented protocol, and UDP is message-oriented. The majority of applications are message-oriented, and applications using TCP have to jump through hoops, such as sending the message length as a first parameter. SCTP is message-oriented, so such tricks are not so necessary.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;blockquote&gt;
 &lt;p&gt;It is no longer necessary to open up multiple sockets; instead, a single socket can be used for multiple streams to a connected host. SCTP tries to provide a more reliable and robust protocol than either TCP or UDP. Btw, SCTP is not in any Microsoft release, another reason to love Linux? :)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2&gt;Resources&lt;/h2&gt;
-&lt;p&gt;&lt;a href="http://www.sctp.de"&gt;The Main  Site for SCTP &lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://lists.sourceforge.net/lists/listinfo/lksctp-developers"&gt;The Linux Kernel Project Home Page&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Stream_Control_Transmission_Protocol"&gt;Stream Control Transmission Protocol(SCTP)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://www.slideshare.net/PeterREgli/overview-of-sctp-transport-protocol"&gt;Overview of SCTP (Stream Control Transmission Protocol)&lt;/a&gt;&lt;/p&gt;</summary><category term="Tech"></category><category term="Linux"></category><category term="programming"></category></entry><entry><title>Meetup Summary (August, 2014)</title><link href="https://nairobilug.or.ke/2014/08/meetup-august-2014.html" rel="alternate"></link><published>2014-08-02T16:00:00+03:00</published><author><name>Jason Rogena</name></author><id>tag:nairobilug.or.ke,2014-08-02:2014/08/meetup-august-2014.html</id><summary type="html">&lt;p&gt;12 guys showed up, most well after 4PM. Congrats to Muya for being the only one to make it on time. The meetup was just as exciting, at least for me, as most of previous meetups.&lt;/p&gt;
-&lt;h3&gt;Highlights:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.sctp.de"&gt;The Main  Site for SCTP &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://lists.sourceforge.net/lists/listinfo/lksctp-developers"&gt;The Linux Kernel Project Home Page&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://en.wikipedia.org/wiki/Stream_Control_Transmission_Protocol"&gt;Stream Control Transmission Protocol(SCTP)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.slideshare.net/PeterREgli/overview-of-sctp-transport-protocol"&gt;Overview of SCTP (Stream Control Transmission Protocol)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="tech"></category><category term="linux"></category><category term="programming"></category></entry><entry><title>Meetup Summary (August, 2014)</title><link href="https://nairobilug.or.ke/2014/08/meetup-august-2014.html" rel="alternate"></link><published>2014-08-02T16:00:00+03:00</published><author><name>Jason Rogena</name></author><id>tag:nairobilug.or.ke,2014-08-02:2014/08/meetup-august-2014.html</id><summary type="html">&lt;p&gt;12 guys showed up, most well after 4PM. Congrats to Muya for being the only one to make it on time. The meetup was just as exciting, at least for me, as most of previous meetups.&lt;/p&gt;
+&lt;h3&gt;Highlights&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;There was a suggestion that the LUG should build a portable 'blood-glucose measuring device that plugs into a phone's audio jack' (I'm sure there's a shorter name for that) as a collaborative project, given the talent in the LUG.&lt;/li&gt;
-&lt;li&gt;There was some discussion on WebRTC and its apparent bright future. Somebody even created a group for the LUG on [talky] (https://talky.io/nairobilug). No nudity please ;).&lt;/li&gt;
+&lt;li&gt;There was some discussion on WebRTC and its apparent bright future. Somebody even created a group for the LUG on &lt;a href="https://talky.io/nairobilug"&gt;talky&lt;/a&gt;. No nudity please ;).&lt;/li&gt;
 &lt;li&gt;No females were present in the meetup. We seriously need to get nerdy girls to come to the meetups. ~~I think~~ I'm certain there are cool girls out there... somewhere.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Leave comments down below and if I've left anything, feel free to make a pull request.&lt;/p&gt;
 &lt;h3&gt;Pictures from Google+&lt;/h3&gt;
 &lt;p&gt;Picture courtesy of Mungai&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Drinks" src="/images/meetup-august-2014.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Drinks" src="https://nairobilug.or.ke/images/meetup-august-2014/meetup-august-2014.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
 &lt;h3&gt;September Meetup&lt;/h3&gt;
-&lt;p&gt;The Nairobi LUG meets every first Saturday of the month. The next meetup will therefore be on the 7th of September. Can't wait :)&lt;/p&gt;</summary><category term="KFC"></category><category term="meetup"></category></entry><entry><title>Using Swiftclient for Object Storage on OpenStack</title><link href="https://nairobilug.or.ke/2014/07/swiftclient-openstack.html" rel="alternate"></link><published>2014-07-29T19:40:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-07-29:2014/07/swiftclient-openstack.html</id><summary type="html">&lt;p&gt;I wanted to play with my new account on East African OpenStack provider &lt;a href="http://kili.io/"&gt;Kili.io&lt;/a&gt;, specifically to use the OpenStack Swift object storage to do periodic backups from my desktop.  I'd used tools like &lt;a href="http://s3tools.org/s3cmd"&gt;s3cmd&lt;/a&gt; to do backups to Amazon S3 object storage, but it doesn't seem to work with OpenStack's &lt;a href="http://docs.openstack.org/developer/swift/"&gt;Swift&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The Nairobi LUG meets every first Saturday of the month. The next meetup will therefore be on the 7th of September. Can't wait :)&lt;/p&gt;</summary><category term="kfc"></category><category term="meetup"></category></entry><entry><title>Using Swiftclient for Object Storage on OpenStack</title><link href="https://nairobilug.or.ke/2014/07/swiftclient-openstack.html" rel="alternate"></link><published>2014-07-29T19:40:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-07-29:2014/07/swiftclient-openstack.html</id><summary type="html">&lt;p&gt;I wanted to play with my new account on East African OpenStack provider &lt;a href="http://kili.io/"&gt;Kili.io&lt;/a&gt;, specifically to use the OpenStack Swift object storage to do periodic backups from my desktop. I'd used tools like &lt;a href="http://s3tools.org/s3cmd"&gt;s3cmd&lt;/a&gt; to do backups to Amazon S3 object storage, but it doesn't seem to work with OpenStack's &lt;a href="http://docs.openstack.org/developer/swift/"&gt;Swift&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.swiftstack.com/docs/integration/python-swiftclient.html"&gt;python-swiftclient&lt;/a&gt; seems to be the answer. These are my notes from getting it set up to backup some data from my desktop to my shiny new OpenStack provider.&lt;/p&gt;
-&lt;h3&gt;See also&lt;/h3&gt;
+&lt;h3&gt;See Also&lt;/h3&gt;
 &lt;p&gt;Related links and documentation:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://docs.openstack.org/grizzly/openstack-object-storage/admin/content/swift-cli-basics.html"&gt;Swift CLI Basic&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://docs.openstack.org/user-guide/content/managing-openstack-object-storage-with-swift-cli.html"&gt;Manage objects and containers&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2&gt;Download RC file&lt;/h2&gt;
-&lt;p&gt;This is actually the trickiest part of this whole exercise (you're welcome!).  For an outsider, the OpenStack API jargon is a bit overwhelming.  Luckily, I found that OpenStack provides a shell init script which will set all the shell environment variables you need to get started with &lt;code&gt;swiftclient&lt;/code&gt; (and presumably other OpenStack tools).&lt;/p&gt;
+&lt;h2&gt;Download RC File&lt;/h2&gt;
+&lt;p&gt;This is actually the trickiest part of this whole exercise (you're welcome!). For an outsider, the OpenStack API jargon is a bit overwhelming.  Luckily, I found that OpenStack provides a shell init script which will set all the shell environment variables you need to get started with &lt;code&gt;swiftclient&lt;/code&gt; (and presumably other OpenStack tools).&lt;/p&gt;
 &lt;p&gt;In the dashboard, navigate to &lt;code&gt;Project -&amp;gt; Compute -&amp;gt; Access &amp;amp; Security -&amp;gt; Download OpenStack RC File&lt;/code&gt;.  We'll need this later.&lt;/p&gt;
-&lt;h2&gt;Create and prepare virtualenv&lt;/h2&gt;
+&lt;h2&gt;Create and Prepare virtualenv&lt;/h2&gt;
 &lt;p&gt;There's no &lt;code&gt;swiftclient&lt;/code&gt; package in my GNU/Linux distribution, so I decided to just install it into a virtual environment straight from pypi/pip.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; mkvirtualenv -p &lt;span class="sb"&gt;`&lt;/span&gt;which python2&lt;span class="sb"&gt;`&lt;/span&gt; swift
 &lt;span class="gp"&gt;$&lt;/span&gt; pip install python-swiftclient python-keystoneclient
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2&gt;Setup the environment&lt;/h2&gt;
+&lt;h2&gt;Setup the Environment&lt;/h2&gt;
 &lt;p&gt;Source the environment RC script you downloaded from the OpenStack dashboard:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; . ~/Downloads/aorth-openrc.sh
 &lt;/pre&gt;&lt;/div&gt;
@@ -1206,7 +1159,7 @@ TCP is a byte-oriented protocol, and UDP is message-oriented. The majority of ap
 
 
 &lt;p&gt;This means the API key and all other settings are ok, and authentication was successful; you're now ready to use OpenStack CLI tools.&lt;/p&gt;
-&lt;h2&gt;Create a container&lt;/h2&gt;
+&lt;h2&gt;Create a Container&lt;/h2&gt;
 &lt;p&gt;You could create a container in the OpenStack dashboard (&lt;code&gt;Object Store -&amp;gt; Containers -&amp;gt; Create Container&lt;/code&gt;), but it's much nicer to be able to do this from the commandline using the API.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; swift post Documents
 &lt;span class="gp"&gt;$&lt;/span&gt; swift list
@@ -1214,7 +1167,7 @@ TCP is a byte-oriented protocol, and UDP is message-oriented. The majority of ap
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2&gt;Upload files&lt;/h2&gt;
+&lt;h2&gt;Upload Files&lt;/h2&gt;
 &lt;p&gt;My use case is to backup Documents from my desktop.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; ~/Documents
 &lt;span class="gp"&gt;$&lt;/span&gt; swift upload Documents *
@@ -1241,8 +1194,8 @@ TCP is a byte-oriented protocol, and UDP is message-oriented. The majority of ap
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Looks good!  ~250MB of data in my &lt;code&gt;Documents&lt;/code&gt; container now, which just about matches the size of the folder on my disk. &lt;/p&gt;
-&lt;h2&gt;Bonus points&lt;/h2&gt;
+&lt;p&gt;Looks good! ~250MB of data in my &lt;code&gt;Documents&lt;/code&gt; container now, which just about matches the size of the folder on my disk.&lt;/p&gt;
+&lt;h2&gt;Bonus Points&lt;/h2&gt;
 &lt;p&gt;Bonus points and future research:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;If I want to call this from a cron job, how do I enter my password?&lt;/li&gt;
@@ -1252,20 +1205,20 @@ TCP is a byte-oriented protocol, and UDP is message-oriented. The majority of ap
 &lt;li&gt;Play with public/private read/write ACLs&lt;/li&gt;
 &lt;/ul&gt;</summary><category term="linux"></category><category term="openstack"></category><category term="swift"></category></entry><entry><title>Parallelizing Rsync</title><link href="https://nairobilug.or.ke/2014/07/parallelizing-rsync.html" rel="alternate"></link><published>2014-07-11T16:40:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-07-11:2014/07/parallelizing-rsync.html</id><summary type="html">&lt;p&gt;Last week I had a massive hardware failure on one of the GlusterFS storage nodes in the &lt;a href="http://hpc.ilri.cgiar.org/"&gt;ILRI, Kenya Research Computing cluster&lt;/a&gt;; two drives failed simultaneously on the underlying RAID5. As RAID5 can only withstand one drive failure, the entire 31TB array was toast. FML.&lt;/p&gt;
 &lt;p&gt;After replacing the failed disks, rebuilding the array, and formatting my bricks, I decided I would use &lt;code&gt;rsync&lt;/code&gt; to pre-seed my bricks from the good node before bringing &lt;code&gt;glusterd&lt;/code&gt; back up.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;tl;dr&lt;/em&gt;: &lt;code&gt;rsync&lt;/code&gt; is amazing, but it’s single threaded and struggles when you tell it to sync large directory hierarchies.  &lt;a href="#sync_bricks"&gt;Here's how you can speed it up&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;tl;dr&lt;/em&gt;: &lt;code&gt;rsync&lt;/code&gt; is amazing, but it’s single threaded and struggles when you tell it to sync large directory hierarchies. &lt;a href="#sync_bricks"&gt;Here's how you can speed it up&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;rsync #fail&lt;/h3&gt;
 &lt;p&gt;I figured syncing the brick hierarchy from the good node to the bad node was simple enough, so I stopped the &lt;code&gt;glusterd&lt;/code&gt; service on the bad node and invoked:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;#&lt;/span&gt; rsync -aAXv --delete --exclude&lt;span class="o"&gt;=&lt;/span&gt;.glusterfs storage0:/path/to/bricks/homes/ storage1:/path/to/bricks/homes/
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;After a day or so I noticed I had only copied ~1.5TB (over 1 hop on a dedicated 10GbE switch!), and I realized something must be wrong.  I attached to the &lt;code&gt;rsync&lt;/code&gt; process with &lt;code&gt;strace -p&lt;/code&gt; and saw a bunch of system calls in one particular user’s directory. I dug deeper:&lt;/p&gt;
+&lt;p&gt;After a day or so I noticed I had only copied ~1.5TB (over 1 hop on a dedicated 10GbE switch!), and I realized something must be wrong. I attached to the &lt;code&gt;rsync&lt;/code&gt; process with &lt;code&gt;strace -p&lt;/code&gt; and saw a bunch of system calls in one particular user’s directory. I dug deeper:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;#&lt;/span&gt; find /path/to/bricks/homes/ukenyatta/maker/genN_datastore/ -type d &lt;span class="p"&gt;|&lt;/span&gt; wc -l
 &lt;span class="go"&gt;1398640&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;So this one particular directory in one user's home contained over a million &lt;em&gt;other&lt;/em&gt; directories and $god knows how many files, and this command itself took several hours to finish!  To make matters worse, careful trial and error inspection of other user home directories revealed more massive directory structures as well.&lt;/p&gt;
+&lt;p&gt;So this one particular directory in one user's home contained over a million &lt;em&gt;other&lt;/em&gt; directories and $god knows how many files, and this command itself took several hours to finish! To make matters worse, careful trial and error inspection of other user home directories revealed more massive directory structures as well.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;rsync is single threaded&lt;/li&gt;
 &lt;li&gt;rsync generates a list of files to be synced before it starts the sync&lt;/li&gt;
@@ -1273,7 +1226,7 @@ TCP is a byte-oriented protocol, and UDP is message-oriented. The majority of ap
 &lt;/ul&gt;
 &lt;p&gt;It's pretty clear (now) that a recursive &lt;code&gt;rsync&lt;/code&gt; on my huge directory hierarchy is out of the question!&lt;/p&gt;
 &lt;h3&gt;rsync #win&lt;/h3&gt;
-&lt;p&gt;I had a look around and saw lots of people complaining about &lt;code&gt;rsync&lt;/code&gt; being "slow" and others suggesting tips to speed it up.  One very promising strategy was described on &lt;a href="https://wiki.ncsa.illinois.edu/display/~wglick/Parallel+Rsync"&gt;this wiki&lt;/a&gt; and there's a great discussion in the comments.&lt;/p&gt;
+&lt;p&gt;I had a look around and saw lots of people complaining about &lt;code&gt;rsync&lt;/code&gt; being "slow" and others suggesting tips to speed it up. One very promising strategy was described on &lt;a href="https://wiki.ncsa.illinois.edu/display/~wglick/Parallel+Rsync"&gt;this wiki&lt;/a&gt; and there's a great discussion in the comments.&lt;/p&gt;
 &lt;p&gt;Basically, he describes a clever use of &lt;code&gt;find&lt;/code&gt; and &lt;code&gt;xargs&lt;/code&gt; to split up the problem set into smaller pieces that &lt;code&gt;rsync&lt;/code&gt; can process more quickly.&lt;/p&gt;
 &lt;h3&gt;sync_brick.sh&lt;/h3&gt;
 &lt;p&gt;So here's my adaptation of his script for the purpose of syncing failed GlusterFS bricks, &lt;code&gt;sync_brick.sh&lt;/code&gt;:&lt;/p&gt;
@@ -1304,28 +1257,28 @@ find &lt;span class="o"&gt;{&lt;/span&gt;a..z&lt;span class="o"&gt;}&lt;/span&gt
 
 
 &lt;p&gt;Pay attention to the source/destination paths, the number of &lt;code&gt;THREADS&lt;/code&gt;, and the &lt;code&gt;BAD_NODE&lt;/code&gt; name, then you should be ready to roll.&lt;/p&gt;
-&lt;h3&gt;The magic, explained&lt;/h3&gt;
+&lt;h3&gt;The Magic, Explained&lt;/h3&gt;
 &lt;p&gt;It's a bit of magic, but here are the important parts:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;The &lt;code&gt;-aAXv&lt;/code&gt; options to &lt;code&gt;rsync&lt;/code&gt; tell it to &lt;strong&gt;archive&lt;/strong&gt;, preserve &lt;strong&gt;ACLs&lt;/strong&gt;, and preserve &lt;strong&gt;eXtended&lt;/strong&gt; attributes.  Extended attributes are &lt;a href="http://joejulian.name/blog/what-is-this-new-glusterfs-directory-in-33"&gt;critically important in GlusterFS &amp;gt;= 3.3&lt;/a&gt;, and also if you're using SELinux.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;-aAXv&lt;/code&gt; options to &lt;code&gt;rsync&lt;/code&gt; tell it to &lt;strong&gt;archive&lt;/strong&gt;, preserve &lt;strong&gt;ACLs&lt;/strong&gt;, and preserve &lt;strong&gt;eXtended&lt;/strong&gt; attributes. Extended attributes are &lt;a href="http://joejulian.name/blog/what-is-this-new-glusterfs-directory-in-33"&gt;critically important in GlusterFS &amp;gt;= 3.3&lt;/a&gt;, and also if you're using SELinux.&lt;/li&gt;
 &lt;li&gt;The &lt;code&gt;--exclude=.glusterfs&lt;/code&gt; option to &lt;code&gt;rsync&lt;/code&gt; tells it to ignore this directory at the root of the directory, as the self-heal daemon — &lt;code&gt;glustershd&lt;/code&gt; — will rebuild it based on the files' extended attributes once we restart the &lt;code&gt;glusterd&lt;/code&gt; service.&lt;/li&gt;
 &lt;li&gt;The &lt;code&gt;--relative&lt;/code&gt; option to &lt;code&gt;rsync&lt;/code&gt; is so we don't have to bother constructing the destination path, as &lt;code&gt;rsync&lt;/code&gt; will imply the path is relative to our destination's top.&lt;/li&gt;
 &lt;li&gt;The &lt;code&gt;RSYNC_RSH&lt;/code&gt; options influence &lt;code&gt;rsync&lt;/code&gt;'s use of SSH, basically telling it to use very weak encryption and disable any unnecessary features for non-interactive sessions (tty, X11, etc).&lt;/li&gt;
-&lt;li&gt;Using &lt;code&gt;find&lt;/code&gt; with &lt;code&gt;-mindepth 1&lt;/code&gt; and &lt;code&gt;-maxdepth 1&lt;/code&gt; just means we concentrate on files/directories 1 level below each directory in our immediate hierarchy.
--Using &lt;code&gt;xargs&lt;/code&gt; with &lt;code&gt;-n1&lt;/code&gt; and &lt;code&gt;-P&lt;/code&gt; tells it to use 1 argument per command line, and to launch &lt;code&gt;$THREADS&lt;/code&gt; number of processes at a time.&lt;/li&gt;
+&lt;li&gt;Using &lt;code&gt;find&lt;/code&gt; with &lt;code&gt;-mindepth 1&lt;/code&gt; and &lt;code&gt;-maxdepth 1&lt;/code&gt; just means we concentrate on files/directories 1 level below each directory in our immediate hierarchy.&lt;/li&gt;
+&lt;li&gt;Using &lt;code&gt;xargs&lt;/code&gt; with &lt;code&gt;-n1&lt;/code&gt; and &lt;code&gt;-P&lt;/code&gt; tells it to use 1 argument per command line, and to launch &lt;code&gt;$THREADS&lt;/code&gt; number of processes at a time.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Hope this helps!&lt;/p&gt;
 &lt;p&gt;This was &lt;a href="https://mjanja.ch/2014/07/parallelizing-rsync/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="rsync"></category></entry><entry><title>Hacking on the Eudyptula Challenge</title><link href="https://nairobilug.or.ke/2014/05/hacking-on-eudyptula.html" rel="alternate"></link><published>2014-05-26T23:00:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-05-26:2014/05/hacking-on-eudyptula.html</id><summary type="html">&lt;p&gt;Last weekend a few of us met up at a coffee shop in Nairobi to hack on the &lt;a href="http://eudyptula-challenge.org/"&gt;Eudyptula Challenge&lt;/a&gt;. From their website, the Eudyptula Challenge is:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;... a series of programming exercises for the Linux kernel, that start from a very basic “Hello world” kernel module, moving on up in complexity to getting patches accepted into the main Linux kernel source tree.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2&gt;With coffee, anything is possible!&lt;/h2&gt;
+&lt;h2&gt;With Coffee, Anything Is Possible!&lt;/h2&gt;
 &lt;p&gt;Kaldis Coffee House in downtown Nairobi has free Wi-Fi, coffee, decent food, and it’s not too busy on Saturday mornings, so we got a nice table in the corner and dove in.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Hacking on Eudyptula at Kaldis" src="/images/eudyptula-may-2014.jpg" title="Hacking on Eudyptula at Kaldis" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Hacking on Eudyptula at Kaldis" src="https://nairobilug.or.ke/images/hacking-on-eudyptula/eudyptula-may-2014.jpg" title="Hacking on Eudyptula at Kaldis" /&gt;&lt;/p&gt;
 &lt;p&gt;While none of us are new to GNU/Linux or development, it still took us several hours to set up our build environments, text editors, email clients, and to read up on the Linux kernel’s build system and programming conventions. We learned a lot, and had a good time doing it!&lt;/p&gt;
-&lt;h2&gt;Little penguins...&lt;/h2&gt;
+&lt;h2&gt;Little Penguins&lt;/h2&gt;
 &lt;p&gt;BTW, &lt;em&gt;&lt;a href="https://en.wikipedia.org/wiki/Eudyptula"&gt;Eudyptula&lt;/a&gt;&lt;/em&gt; is the scientific classification for a genus of penguins containing two species; the little blue penguin and the white-flippered penguin. The more you know.™ ;)&lt;/p&gt;
-&lt;p&gt;This was originally &lt;a href="https://mjanja.ch/2014/05/hacking-on-the-eudyptula-challenge/"&gt;posted on&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="programming"></category></entry><entry><title>Installing Debian Jessie on the Acer C710-2833 Chromebook</title><link href="https://nairobilug.or.ke/2014/03/installing-debian-jessie-on-the-acer-c710-2833-chromebook.html" rel="alternate"></link><published>2014-03-19T19:15:00+03:00</published><author><name>Muriithi Frederick Muriuki</name></author><id>tag:nairobilug.or.ke,2014-03-19:2014/03/installing-debian-jessie-on-the-acer-c710-2833-chromebook.html</id><summary type="html">&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;This was originally &lt;a href="https://mjanja.ch/2014/05/hacking-on-the-eudyptula-challenge/"&gt;posted on&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="programming"></category><category term="eudyptula"></category></entry><entry><title>Installing Debian Jessie on the Acer C710-2833 Chromebook</title><link href="https://nairobilug.or.ke/2014/03/installing-debian-jessie-on-the-acer-c710-2833-chromebook.html" rel="alternate"></link><published>2014-03-19T19:15:00+03:00</published><author><name>Muriithi Frederick Muriuki</name></author><id>tag:nairobilug.or.ke,2014-03-19:2014/03/installing-debian-jessie-on-the-acer-c710-2833-chromebook.html</id><summary type="html">&lt;h2&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;Hey there.&lt;/p&gt;
 &lt;p&gt;I have recently had need to get a machine for work that is easy to lug around, affordable and has a decent battery life. While I already have a laptop (Presario CQ62), it has grown old and its battery life is in the shitter.&lt;/p&gt;
 &lt;p&gt;After shopping around, I settled for the Acer C710-2833 Chromebook (I would have picked a newer model, but there is not one in our market yet, and importing one would have made it quickly unaffordable - thank the new government).&lt;/p&gt;
@@ -1355,7 +1308,7 @@ For an introduction to coreboot see &lt;a href="https://johnlewis.ie/mediawiki/i
 &lt;p&gt;We now need to download an iso image to use as the installation source. It is important that you research and figure out what processor your machine uses. For the C710-2833, it uses the &lt;a href="http://ark.intel.com/products/56056/Intel-Celeron-Processor-847-2M-Cache-1_10-GHz"&gt;Intel Celeron 847&lt;/a&gt;. This is an x86_64 architecture, otherwise known as amd64.&lt;/p&gt;
 &lt;p&gt;Armed with that knowledge, get to &lt;a href="http://www.debian.org/"&gt;http://www.debian.org&lt;/a&gt; and get the relevant image.&lt;/p&gt;
 &lt;p&gt;At this time, it is recommended that you get Debian Jessie &lt;a href="http://www.debian.org/devel/debian-installer/"&gt;here&lt;/a&gt;&lt;/p&gt;
-&lt;h3&gt;Ready To Go&lt;/h3&gt;
+&lt;h3&gt;Ready to Go&lt;/h3&gt;
 &lt;p&gt;Now, you have read up on coreboot, you have the image all that remains is the process.&lt;/p&gt;
 &lt;p&gt;Start off &lt;a href="https://wiki.debian.org/InstallingDebianOn/Acer/C710-2615-Chromebook"&gt;here&lt;/a&gt; - you will get some information on the current status of your machine. It is also where you will finish your journey.&lt;/p&gt;
 &lt;p&gt;Once you have read through that at least twice, now start the actual installation. The process to follow is &lt;a href="https://johnlewis.ie/mediawiki/index.php?title=Flashing_stock_firmware_to_a_coreboot_build_on_Acer_C7_%28C710%29"&gt;here&lt;/a&gt;&lt;/p&gt;
@@ -1385,8 +1338,8 @@ cyapa
 
 
 &lt;/li&gt;
-&lt;/ol&gt;</summary><category term="hardware"></category><category term="Chromebook"></category><category term="Debian"></category></entry><entry><title>Meetup Summary (March, 2014)</title><link href="https://nairobilug.or.ke/2014/03/meetup-march-2014.html" rel="alternate"></link><published>2014-03-02T21:01:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-03-02:2014/03/meetup-march-2014.html</id><summary type="html">&lt;p&gt;11 or 12 people showed up, including two first-time members (hi, Ken and friend!).  Off the top of my head, the topics discussed included:&lt;/p&gt;
-&lt;h3&gt;Serious stuff&lt;/h3&gt;
+&lt;/ol&gt;</summary><category term="hardware"></category><category term="chromebook"></category><category term="debian"></category></entry><entry><title>Meetup Summary (March, 2014)</title><link href="https://nairobilug.or.ke/2014/03/meetup-march-2014.html" rel="alternate"></link><published>2014-03-02T21:01:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-03-02:2014/03/meetup-march-2014.html</id><summary type="html">&lt;p&gt;11 or 12 people showed up, including two first-time members (hi, Ken and friend!).  Off the top of my head, the topics discussed included:&lt;/p&gt;
+&lt;h3&gt;Serious Stuff&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Using GPG Public Keys for signing and encrypting emails (standards, terminology, motivation, etc)&lt;ul&gt;
 &lt;li&gt;Several members have, in the last weeks, set up and exchanged keys&lt;/li&gt;
@@ -1404,7 +1357,7 @@ cyapa
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;Not-so-serious stuff&lt;/h3&gt;
+&lt;h3&gt;Not-so-Serious Stuff&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Progress of the current Nairobi GNU/Linux Users Group book club book, Stephen King's &lt;em&gt;The Stand&lt;/em&gt;.  sticky and sentinelprime are ~50% through, but emk and raywan haven't started&lt;/li&gt;
 &lt;li&gt;emk's gangsta beard will rival that of Rick Ross soon&lt;/li&gt;
@@ -1415,8 +1368,8 @@ cyapa
 &lt;li&gt;Proper pronunciation of "doge"&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Proof that it happened:&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Group shot" src="/images/meetup-march-2014.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
-&lt;p&gt;See you for the next meeting (April 5th, 2014!)&lt;/p&gt;</summary><category term="KFC"></category><category term="meetup"></category></entry><entry><title>Scars in Web App Trenches</title><link href="https://nairobilug.or.ke/2014/02/scars-in-web-app-trenches.html" rel="alternate"></link><published>2014-02-17T13:00:00+03:00</published><author><name>Muriithi Frederick Muriuki</name></author><id>tag:nairobilug.or.ke,2014-02-17:2014/02/scars-in-web-app-trenches.html</id><summary type="html">&lt;p&gt;Hey there.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Group shot" src="https://nairobilug.or.ke/images/meetup-march-2014/meetup-march-2014.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
+&lt;p&gt;See you for the next meeting (April 5th, 2014!)&lt;/p&gt;</summary><category term="kfc"></category><category term="meetup"></category></entry><entry><title>Scars in Web App Trenches</title><link href="https://nairobilug.or.ke/2014/02/scars-in-web-app-trenches.html" rel="alternate"></link><published>2014-02-17T13:00:00+03:00</published><author><name>Muriithi Frederick Muriuki</name></author><id>tag:nairobilug.or.ke,2014-02-17:2014/02/scars-in-web-app-trenches.html</id><summary type="html">&lt;p&gt;Hey there.&lt;/p&gt;
 &lt;p&gt;I have been developing web applications for a while now, working freelance on oDesk, and from my work, I can state I do have some experience in doing this. Now, I will not claim to be a web-app ninja, but I will try to state my case as objectively as I can, but you decide how much salt you'll take it with. Deal?&lt;/p&gt;
 &lt;h2&gt;HTML - The M is for Markup&lt;/h2&gt;
 &lt;p&gt;From what I have come to understand from the gurus and ninjas in this field, HTML was built as a markup language. It was meant to give meaning to the content of the page, e.g.&lt;/p&gt;
@@ -1436,8 +1389,7 @@ cyapa
 &lt;p&gt;Now understand this &lt;strong&gt;I love Javascript&lt;/strong&gt; and though I am not a jQuery ninja, I cannot argue against it's merits, but if we are going to use javascript everywhere, we might as well start killing mosquitoes with handguns, or slings, or catapults (take your pick).&lt;/p&gt;
 &lt;h2&gt;Back to the Basics&lt;/h2&gt;
 &lt;p&gt;Hear me out, before you fetch the noose. I am making a simple suggestion here, based on the experience I have had with web applications, and even some plain websites.&lt;/p&gt;
-&lt;p&gt;When I land on your site, almost always, I am searching for information about your company, skill, etc. You, on the other hand, decide to make me have to struggle further to find the friggin content by putting those silly pictures, animations and shiznit in my path. Then, to insult me further, you make it so that, if I turn javascript off (It's off by default on my browser), I cannot see your content.
-As if you have not hurt me enough, you make all your forms submit only via javascript/jQuery.&lt;/p&gt;
+&lt;p&gt;When I land on your site, almost always, I am searching for information about your company, skill, etc. You, on the other hand, decide to make me have to struggle further to find the friggin content by putting those silly pictures, animations and shiznit in my path. Then, to insult me further, you make it so that, if I turn javascript off (It's off by default on my browser), I cannot see your content. As if you have not hurt me enough, you make all your forms submit only via javascript/jQuery.&lt;/p&gt;
 &lt;p&gt;DEAR &lt;deity&gt;! I cannot count the number of times I have left websites and gone looking for other options due to this.&lt;/p&gt;
 &lt;p&gt;First, you eat away my bandwidth with silly content, then you force me to use even more of my bandwidth, just to get functionality that is already built into html.&lt;/p&gt;
 &lt;h2&gt;Collaboration&lt;/h2&gt;
@@ -1445,50 +1397,37 @@ As if you have not hurt me enough, you make all your forms submit only via javas
 &lt;p&gt;Now, I do not know what you think, but I dare say, it is easier to pass to each other data, than force the backend to rely on the design of the frontend. Think also, of when you decide you want to change the look and feel of the website, then you have to make changes to both the front and backends, introducing new bugs, and possibly throwing away months of work debugging the data communication etc.&lt;/p&gt;
 &lt;p&gt;Now, if you had simply passed data between the frontend and backend, say using &lt;strong&gt;json, xml, plain text, plain html&lt;/strong&gt; and others, then you can change the frontend any time without worrying about the backend, since the data interchange format is standardised, agreed upon, and &lt;strong&gt;DE&lt;/strong&gt;fucking&lt;strong&gt;BUGGED!&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;The backend guy/gal, can now concentrate on building and testing the backend, even with plain, unstyled, ugly, but functional html, and you can concentrate on styling (CSS) and behaviour (Javascript), without breaking the backend every time you make a tiny little change to the front end.&lt;/p&gt;
-&lt;p&gt;Now, think of your client, and how happy they are, every time they contact you to change the look and feel of the website, and you do that in a few weeks without breaking the backend, and they think you are a god!
-Yeah, keep doing the shit you're doing, and that will never happen.&lt;/p&gt;
-&lt;p&gt;I'm angry, and so are you. Let me know what you think in the comments. Try to be civil, though I probably haven't.&lt;/p&gt;</summary><category term="web applications"></category><category term="web development"></category></entry><entry><title>Meetup Summary (February, 2014)</title><link href="https://nairobilug.or.ke/2014/02/meetup-february-2014.html" rel="alternate"></link><published>2014-02-06T16:00:00+03:00</published><author><name>Njagi Mwaniki</name></author><id>tag:nairobilug.or.ke,2014-02-06:2014/02/meetup-february-2014.html</id><summary type="html">&lt;p&gt;16 guys showed up (staggered).
-I had a friend attend for the first time and he liked it.&lt;/p&gt;
-&lt;h3&gt;3D printer&lt;/h3&gt;
+&lt;p&gt;Now, think of your client, and how happy they are, every time they contact you to change the look and feel of the website, and you do that in a few weeks without breaking the backend, and they think you are a god! Yeah, keep doing the shit you're doing, and that will never happen.&lt;/p&gt;
+&lt;p&gt;I'm angry, and so are you. Let me know what you think in the comments. Try to be civil, though I probably haven't.&lt;/p&gt;</summary><category term="web"></category><category term="applications"></category><category term="development"></category></entry><entry><title>Meetup Summary (February, 2014)</title><link href="https://nairobilug.or.ke/2014/02/meetup-february-2014.html" rel="alternate"></link><published>2014-02-06T16:00:00+03:00</published><author><name>Njagi Mwaniki</name></author><id>tag:nairobilug.or.ke,2014-02-06:2014/02/meetup-february-2014.html</id><summary type="html">&lt;p&gt;16 guys showed up (staggered). I had a friend attend for the first time and he liked it.&lt;/p&gt;
+&lt;h3&gt;3D Printer&lt;/h3&gt;
 &lt;p&gt;Well great news guys have decided to build a 3D printer. Updates on that will be blogged about sooner than later I hope. I for one are very excited that we're doing such.&lt;/p&gt;
-&lt;h3&gt;emk breaks opSec&lt;/h3&gt;
-&lt;p&gt;So he decided to show up after hiding for a very very long while. He wanted it noted that he refrained from kicking zipper's teeth in. &lt;/p&gt;
+&lt;h3&gt;emk Breaks opSec&lt;/h3&gt;
+&lt;p&gt;So he decided to show up after hiding for a very very long while. He wanted it noted that he refrained from kicking zipper's teeth in.&lt;/p&gt;
 &lt;p&gt;He has a gangsta beard which was totally unexpected.&lt;/p&gt;
 &lt;h3&gt;Stuff&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;There was talk of getting devices into the country as a group with eebrah fascilitating that. This was very exciting since it would bring prices down for most things.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;r0ckwilda{-_-} shared some interesting things he is doing with blender. I can't wait to see how that goes.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Sadly this time I didn't get a chance to hear Karibe talk about Physics and electronics. I always look forward to those that's for sure. You can't beat having a physicist around.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Oh plus everyone is talking about a book called the stand. It's really big and that just makes everyone love it haha I kid.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;The absence of theBOFH was noted with great concern.&lt;/p&gt;
-&lt;/li&gt;
+&lt;li&gt;There was talk of getting devices into the country as a group with eebrah fascilitating that. This was very exciting since it would bring prices down for most things.&lt;/li&gt;
+&lt;li&gt;r0ckwilda{-_-} shared some interesting things he is doing with blender. I can't wait to see how that goes.&lt;/li&gt;
+&lt;li&gt;Sadly this time I didn't get a chance to hear Karibe talk about Physics and electronics. I always look forward to those that's for sure. You can't beat having a physicist around.&lt;/li&gt;
+&lt;li&gt;Oh plus everyone is talking about a book called the stand. It's really big and that just makes everyone love it haha I kid.&lt;/li&gt;
+&lt;li&gt;The absence of theBOFH was noted with great concern.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;I noted that there wasn't much talk/argument on distros. I always like those.&lt;/p&gt;
 &lt;p&gt;Here are some cool pics from the event that was.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Group shot0" src="/images/meetup-february-2014-0.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Group shot1" src="/images/meetup-february-2014-1.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
-&lt;p&gt;Guys had a great time. See you at KFC Kimathi Street on March 1st, 2014.
-Happy hacking!!&lt;/p&gt;</summary><category term="KFC"></category><category term="meetup"></category></entry><entry><title>Meetup Summary (January, 2014)</title><link href="https://nairobilug.or.ke/2014/01/meetup-january-2014.html" rel="alternate"></link><published>2014-01-11T16:00:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-01-11:2014/01/meetup-january-2014.html</id><summary type="html">&lt;p&gt;A major highlight of the January, 2014 meetup was having sixteen people show up (a new record!).  Other than that, there were lots of lively discussions of technology goings ons, releases, politics etc.&lt;/p&gt;
-&lt;h3&gt;Some topic highlights (from memory):&lt;/h3&gt;
+&lt;p&gt;&lt;img alt="Group shot0" src="https://nairobilug.or.ke/images/meetup-february-2014/meetup-february-2014-0.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Group shot1" src="https://nairobilug.or.ke/images/meetup-february-2014/meetup-february-2014-1.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
+&lt;p&gt;Guys had a great time. See you at KFC Kimathi Street on March 1st, 2014. Happy hacking!!&lt;/p&gt;</summary><category term="kfc"></category><category term="meetup"></category></entry><entry><title>Meetup Summary (January, 2014)</title><link href="https://nairobilug.or.ke/2014/01/meetup-january-2014.html" rel="alternate"></link><published>2014-01-11T16:00:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-01-11:2014/01/meetup-january-2014.html</id><summary type="html">&lt;p&gt;A major highlight of the January, 2014 meetup was having sixteen people show up (a new record!).  Other than that, there were lots of lively discussions of technology goings ons, releases, politics etc.&lt;/p&gt;
+&lt;h3&gt;Some Topic Highlights (From Memory):&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;The debate over Debian voting to replace SysV Init with either &lt;a href="http://slashdot.org/story/13/10/28/1621219/debian-to-replace-sysvinit-switch-to-systemd-or-upstart"&gt;Upstart or systemd&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Using GPG for both signatures and encryption of email, and how to manage keychains on multiple computers&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;If I missed anything, leave it in the comments (or send a pull request ;).&lt;/p&gt;
-&lt;h3&gt;Proof we were there&lt;/h3&gt;
+&lt;h3&gt;Proof We Were There&lt;/h3&gt;
 &lt;p&gt;Discussing all teh things...&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Group shot" src="/images/meetup-january-2014.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
-&lt;h3&gt;February meetup&lt;/h3&gt;
-&lt;p&gt;Remember, we meet the first Saturday of the month, meaning February's meetup should be February 7th.  See you there!&lt;/p&gt;</summary><category term="KFC"></category><category term="meetup"></category></entry><entry><title>Experimenting With AES-NI</title><link href="https://nairobilug.or.ke/2013/11/experimenting-with-aesni.html" rel="alternate"></link><published>2013-11-10T13:00:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2013-11-10:2013/11/experimenting-with-aesni.html</id><summary type="html">&lt;p&gt;Ever since the &lt;a href="https://en.wikipedia.org/wiki/Sandy_Bridge"&gt;Sandy Bridge microarchitecture&lt;/a&gt;, Intel CPUs have been coming with hardware-accelerated &lt;abbr title="Advanced Encryption Standard"&gt;AES&lt;/abbr&gt; support (aka "AES-NI", &lt;em&gt;new instructions&lt;/em&gt;).  I figured it would be interesting see a comparison between AES with and without the hardware acceleration on my &lt;a href="http://ark.intel.com/products/65707"&gt;Intel Core i5-3317U CPU&lt;/a&gt; (Ivy Bridge) on Arch Linux.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Group shot" src="https://nairobilug.or.ke/images/meetup-january-2014/meetup-january-2014.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
+&lt;h3&gt;February Meetup&lt;/h3&gt;
+&lt;p&gt;Remember, we meet the first Saturday of the month, meaning February's meetup should be February 7th.  See you there!&lt;/p&gt;</summary><category term="kfc"></category><category term="meetup"></category></entry><entry><title>Experimenting With AES-NI</title><link href="https://nairobilug.or.ke/2013/11/experimenting-with-aesni.html" rel="alternate"></link><published>2013-11-10T13:00:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2013-11-10:2013/11/experimenting-with-aesni.html</id><summary type="html">&lt;p&gt;Ever since the &lt;a href="https://en.wikipedia.org/wiki/Sandy_Bridge"&gt;Sandy Bridge microarchitecture&lt;/a&gt;, Intel CPUs have been coming with hardware-accelerated &lt;abbr title="Advanced Encryption Standard"&gt;AES&lt;/abbr&gt; support (aka "AES-NI", &lt;em&gt;new instructions&lt;/em&gt;).  I figured it would be interesting see a comparison between AES with and without the hardware acceleration on my &lt;a href="http://ark.intel.com/products/65707"&gt;Intel Core i5-3317U CPU&lt;/a&gt; (Ivy Bridge) on Arch Linux.&lt;/p&gt;
 &lt;p&gt;According to &lt;a href="http://openssl.6102.n7.nabble.com/having-a-lot-of-troubles-trying-to-get-AES-NI-working-td44285.html"&gt;a post&lt;/a&gt; on the OpenSSL Users mailing list, you can force &lt;code&gt;openssl&lt;/code&gt; to avoid hardware AES instructions using the &lt;code&gt;OPENSSL_ia32cap&lt;/code&gt; environment variable.&lt;/p&gt;
 &lt;h2&gt;Benchmarks&lt;/h2&gt;
 &lt;p&gt;First, with AES-NI enabled (the default, on hardware that supports it):&lt;/p&gt;
@@ -1501,7 +1440,7 @@ Happy hacking!!&lt;/p&gt;</summary><category term="KFC"></category><category ter
 &lt;span class="go"&gt;Doing aes-128-cbc for 3s on 8192 size blocks: 122310 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
 &lt;span class="go"&gt;OpenSSL 1.0.1e 11 Feb 2013&lt;/span&gt;
 &lt;span class="go"&gt;built on: Sun Oct 20 14:49:13 CEST 2013&lt;/span&gt;
-&lt;span class="go"&gt;options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx) &lt;/span&gt;
+&lt;span class="go"&gt;options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx)&lt;/span&gt;
 &lt;span class="go"&gt;compiler: gcc -fPIC -DOPENSSL_PIC -DZLIB -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -Wa,--noexecstack -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -m64 -DL_ENDIAN -DTERMIO -O3 -Wall -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM&lt;/span&gt;
 &lt;span class="go"&gt;The &amp;#39;numbers&amp;#39; are in 1000s of bytes per second processed.&lt;/span&gt;
 &lt;span class="go"&gt;type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes&lt;/span&gt;
@@ -1519,7 +1458,7 @@ Happy hacking!!&lt;/p&gt;</summary><category term="KFC"></category><category ter
 &lt;span class="go"&gt;Doing aes-128-cbc for 3s on 8192 size blocks: 62446 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
 &lt;span class="go"&gt;OpenSSL 1.0.1e 11 Feb 2013&lt;/span&gt;
 &lt;span class="go"&gt;built on: Sun Oct 20 14:49:13 CEST 2013&lt;/span&gt;
-&lt;span class="go"&gt;options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx) &lt;/span&gt;
+&lt;span class="go"&gt;options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx)&lt;/span&gt;
 &lt;span class="go"&gt;compiler: gcc -fPIC -DOPENSSL_PIC -DZLIB -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -Wa,--noexecstack -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -m64 -DL_ENDIAN -DTERMIO -O3 -Wall -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM&lt;/span&gt;
 &lt;span class="go"&gt;The &amp;#39;numbers&amp;#39; are in 1000s of bytes per second processed.&lt;/span&gt;
 &lt;span class="go"&gt;type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes&lt;/span&gt;
@@ -1527,10 +1466,10 @@ Happy hacking!!&lt;/p&gt;</summary><category term="KFC"></category><category ter
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;You can see that hardware-accelerated AES is pretty consistently &lt;strong&gt;twice&lt;/strong&gt; as fast as the implementation without &lt;em&gt;aesni&lt;/em&gt;.  So it's not an exponential win, but getting &lt;strong&gt;twice&lt;/strong&gt; the performance is certainly very serious!  This is great for not only for servers using AES encryption (SSL/TLS, hello!), but also for consumers wanting to connect to said servers as well as things like full-disk encryption.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; It seems Arch Linux's OpenSSL is built with AES-NI support but not as an &lt;em&gt;engine&lt;/em&gt;, so &lt;code&gt;openssl speed&lt;/code&gt; could be misleading (ie, you'd see no difference with or without the capabilities masked).  To get the AES-NI support you need to use &lt;code&gt;-evp&lt;/code&gt; ("envelope") mode, which is some sort of &lt;a href="http://wiki.openssl.org/index.php/EVP"&gt;high-level interface&lt;/a&gt; for crypto functions in OpenSSL.&lt;/p&gt;
+&lt;p&gt;You can see that hardware-accelerated AES is pretty consistently &lt;strong&gt;twice&lt;/strong&gt; as fast as the implementation without &lt;em&gt;aesni&lt;/em&gt;. So it's not an exponential win, but getting &lt;strong&gt;twice&lt;/strong&gt; the performance is certainly very serious! This is great for not only for servers using AES encryption (SSL/TLS, hello!), but also for consumers wanting to connect to said servers as well as things like full-disk encryption.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; It seems Arch Linux's OpenSSL is built with AES-NI support but not as an &lt;em&gt;engine&lt;/em&gt;, so &lt;code&gt;openssl speed&lt;/code&gt; could be misleading (ie, you'd see no difference with or without the capabilities masked). To get the AES-NI support you need to use &lt;code&gt;-evp&lt;/code&gt; ("envelope") mode, which is some sort of &lt;a href="http://wiki.openssl.org/index.php/EVP"&gt;high-level interface&lt;/a&gt; for crypto functions in OpenSSL.&lt;/p&gt;
 &lt;p&gt;This was originally &lt;a href="https://mjanja.ch/2013/11/disabling-aes-ni-on-linux-openssl/"&gt;posted on&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="crypto"></category></entry><entry><title>Meetup Summary (November, 2013)</title><link href="https://nairobilug.or.ke/2013/11/meetup-november-2013.html" rel="alternate"></link><published>2013-11-02T22:33:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2013-11-02:2013/11/meetup-november-2013.html</id><summary type="html">&lt;p&gt;A major highlight of the November, 2013 meetup was having fourteen people show up; this was perhaps the most successful meetup since we began in 2012... Other than that, there were lots of lively discussions of technology goings ons, releases, politics etc.&lt;/p&gt;
-&lt;h3&gt;Some topic highlights (from memory):&lt;/h3&gt;
+&lt;h3&gt;Some Topic Highlights (From Memory):&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Fedora 20 beta (and therefore final) &lt;a href="https://lists.fedoraproject.org/pipermail/devel/2013-October/190689.html"&gt;being delayed by one week&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://blogs.cisco.com/collaboration/open-source-h-264-removes-barriers-webrtc"&gt;Cisco releasing a BSD-licensed H.264 implementation&lt;/a&gt; (as well as binaries) and footing the licensing bill for users of the binary (ie, Mozilla Firefox, who &lt;a href="https://blog.mozilla.org/blog/2013/10/30/video-interoperability-on-the-web-gets-a-boost-from-ciscos-h-264-codec/"&gt;has said&lt;/a&gt; they will integrate this)&lt;/li&gt;
@@ -1545,38 +1484,35 @@ Happy hacking!!&lt;/p&gt;</summary><category term="KFC"></category><category ter
 &lt;li&gt;The possibility of going whitewater rafting in Uganda in December (as the Nairobi GNU/Linux Users Group "Outdoor Explorers", a related, but unofficial affiliate of the LUG)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;If I missed anything, leave it in the comments (or send a pull request ;).&lt;/p&gt;
-&lt;h3&gt;Proof we were there&lt;/h3&gt;
+&lt;h3&gt;Proof We Were There&lt;/h3&gt;
 &lt;p&gt;Discussing all teh things...&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Group shot" src="/images/meetup-november-2013.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
-&lt;h3&gt;December meetup&lt;/h3&gt;
-&lt;p&gt;Remember, we meet the first Saturday of the month, meaning December's meetup should be December 7th.  See you there!&lt;/p&gt;</summary><category term="KFC"></category><category term="meetup"></category></entry><entry><title>October NairobiLUG Meetup</title><link href="https://nairobilug.or.ke/2013/10/october-nairobilug-meetup.html" rel="alternate"></link><published>2013-10-02T12:00:00+03:00</published><author><name>Mwaoshe Njemah</name></author><id>tag:nairobilug.or.ke,2013-10-02:2013/10/october-nairobilug-meetup.html</id><summary type="html">&lt;p&gt;We will be holding our October GNU/Linux User Group Meetup on 5th October between 04.00 – 06.00 pm EAT (GMT +3) at KFC Kimathi Street. We traditionally meet the first Saturday of every month.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Group shot" src="https://nairobilug.or.ke/images/meetup-november-2013/meetup-november-2013.jpg" title="Nairobi GNU/Linux Users Group members" /&gt;&lt;/p&gt;
+&lt;h3&gt;December Meetup&lt;/h3&gt;
+&lt;p&gt;Remember, we meet the first Saturday of the month, meaning December's meetup should be December 7th.  See you there!&lt;/p&gt;</summary><category term="kfc"></category><category term="meetup"></category></entry><entry><title>Meetup Summary (October, 2015)</title><link href="https://nairobilug.or.ke/2013/10/october-nairobilug-meetup.html" rel="alternate"></link><published>2013-10-02T12:00:00+03:00</published><author><name>Mwaoshe Njemah</name></author><id>tag:nairobilug.or.ke,2013-10-02:2013/10/october-nairobilug-meetup.html</id><summary type="html">&lt;p&gt;We will be holding our October GNU/Linux User Group Meetup on 5th October between 04.00 – 06.00 pm EAT (GMT +3) at KFC Kimathi Street. We traditionally meet the first Saturday of every month.&lt;/p&gt;
 &lt;h3&gt;Speakers&lt;/h3&gt;
 &lt;p&gt;We have this crazy format where everyone gets to speak! We talk about what we are doing with Linux and happenings in the FOSS scene locally and beyond in the past month.&lt;/p&gt;
 &lt;h3&gt;RSVP&lt;/h3&gt;
 &lt;p&gt;Please RSVP for the event on Google+  and join us in person at KFC or via IRC Chat (between 04.00 – 06.00 pm EAT (GMT +3))&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Google Group and Mailing List&lt;/strong&gt; &lt;a href="https://groups.google.com/group/nairobi-gnu"&gt;groups.google.com/group/nairobi-gnu&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;IRC Channel&lt;/strong&gt; #nairobilug @ freenode&lt;/p&gt;
-&lt;p&gt;For non-IRC users: &lt;a href="http://webchat.freenode.net/?channels=nairobilug"&gt;webchat.freenode.net/?channels=nairobilug&lt;/a&gt;&lt;/p&gt;</summary><category term="meetup"></category><category term="kfc"></category><category term="event"></category></entry><entry><title>Funding the Nairobi Linux User Group</title><link href="https://nairobilug.or.ke/2013/09/funding-the-nairobi-lug.html" rel="alternate"></link><published>2013-09-28T02:15:00+03:00</published><author><name>Mwaoshe Njemah</name></author><id>tag:nairobilug.or.ke,2013-09-28:2013/09/funding-the-nairobi-lug.html</id><summary type="html">&lt;p&gt;Yesterday I had a chat with emk on IRC concerning the organization and funding of the Nairobi LUG. He suggested that we ought to introduce some sort of monthly contribution by members.&lt;/p&gt;
-&lt;p&gt;Part of the reason this came up was that our domain name, nairobilug.or.ke, expired recently and money was needed to renew it.
-emk felt that it would have been easier for us to come up with the money if we had a kitty with members making monthly contributions to it. He suggested that we needed funds to spread the word and recruit members.&lt;/p&gt;
-&lt;p&gt;I pointed out several issues with this proposal. Collecting money would create the need for an office of the treasurer. Who would collect and keep the money? It's just a detail, but isn't the devil always in such? There would also be need for rules and regulations governing the use of the funds. I failed to point out that we do not have a registered membership. This would make collecting regular contributions from members that much harder. I feel that imposing  membership fees and/or contributions would also have the negative effect of discouraging would be members from coming on board.  &lt;/p&gt;
-&lt;p&gt;So how to finance an organisation of Linux and FOSS enthusiasts?
-On Thursday I had been toying with the idea of raising money for the LUG by selling Nairobi LUG swag. We might put up a store on the website and get members to purchase printed t-shirts, printed mug, and even mouse pads. The problem with this approach is that it needs money in the first place. &lt;/p&gt;
+&lt;p&gt;For non-IRC users: &lt;a href="http://webchat.freenode.net/?channels=nairobilug"&gt;webchat.freenode.net/?channels=nairobilug&lt;/a&gt;&lt;/p&gt;</summary><category term="meetup"></category><category term="kfc"></category></entry><entry><title>Funding the Nairobi GNU/Linux Users Group</title><link href="https://nairobilug.or.ke/2013/09/funding-the-nairobi-lug.html" rel="alternate"></link><published>2013-09-28T02:15:00+03:00</published><author><name>Mwaoshe Njemah</name></author><id>tag:nairobilug.or.ke,2013-09-28:2013/09/funding-the-nairobi-lug.html</id><summary type="html">&lt;p&gt;Yesterday I had a chat with emk on IRC concerning the organization and funding of the Nairobi LUG. He suggested that we ought to introduce some sort of monthly contribution by members.&lt;/p&gt;
+&lt;p&gt;Part of the reason this came up was that our domain name, nairobilug.or.ke, expired recently and money was needed to renew it. emk felt that it would have been easier for us to come up with the money if we had a kitty with members making monthly contributions to it. He suggested that we needed funds to spread the word and recruit members.&lt;/p&gt;
+&lt;p&gt;I pointed out several issues with this proposal. Collecting money would create the need for an office of the treasurer. Who would collect and keep the money? It's just a detail, but isn't the devil always in such? There would also be need for rules and regulations governing the use of the funds. I failed to point out that we do not have a registered membership. This would make collecting regular contributions from members that much harder. I feel that imposing  membership fees and/or contributions would also have the negative effect of discouraging would be members from coming on board.&lt;/p&gt;
+&lt;p&gt;So how to finance an organisation of Linux and FOSS enthusiasts? On Thursday I had been toying with the idea of raising money for the LUG by selling Nairobi LUG swag. We might put up a store on the website and get members to purchase printed t-shirts, printed mug, and even mouse pads. The problem with this approach is that it needs money in the first place.&lt;/p&gt;
 &lt;p&gt;We could always seek out sponsors, perhaps in the form of companies or other institutions working with Linux. I would be glad to hear from any. I am not too enthusiastic about the idea of a community being bankrolled by a corporate sponsor though.&lt;/p&gt;
 &lt;p&gt;I am personally comfortable with the idea of donations from members whenever the need arises, with everyone contributing whatever they can , from each according to his means so to speak. When we the registered the nairobilug.or.ke domain initially, we split the cost between all those present at the meetup where the decision to register it was made.&lt;/p&gt;
-&lt;p&gt;I had a similar conversation sometime ago with Fred Muriithi a fellow Nairobi LUGer, and he seemed to share many of my views on the subject.
-I asked for suggestions from fellow LUGers on IRC and I hope this will be an ongoing discussion. I would also like to hear about how other Linux User Groups fund themselves, and what they use their funds for. If you have any thoughts or ideas on the subject drop by #nairobilug on Freenode IRC and share or post to the mailing list.&lt;/p&gt;
-&lt;p&gt;As things stand we do not really need money for anything, save for the KES 2,320/- for renewing our .or.ke domain once a year. In the end Alan Orth and Ibrahim Ng'eno split the cost of renewing the domain. I look forward to reimbursing them my contribution at the next LUG meetup.&lt;/p&gt;</summary><category term="nairobilug"></category><category term="funding a linux user group"></category></entry><entry><title>In the Spirit of Pelican</title><link href="https://nairobilug.or.ke/2013/07/in-the-spirit-of-pelican.html" rel="alternate"></link><published>2013-07-14T20:22:00+03:00</published><author><name>Muriithi Frederick Muriuki</name></author><id>tag:nairobilug.or.ke,2013-07-14:2013/07/in-the-spirit-of-pelican.html</id><summary type="html">&lt;p&gt;I have to start by commending everyone involved in the Nairobi Linux User Group (nairobilug) for their various efforts to get all of us to this point.&lt;/p&gt;
+&lt;p&gt;I had a similar conversation sometime ago with Fred Muriithi a fellow Nairobi LUGer, and he seemed to share many of my views on the subject. I asked for suggestions from fellow LUGers on IRC and I hope this will be an ongoing discussion. I would also like to hear about how other Linux User Groups fund themselves, and what they use their funds for. If you have any thoughts or ideas on the subject drop by #nairobilug on Freenode IRC and share or post to the mailing list.&lt;/p&gt;
+&lt;p&gt;As things stand we do not really need money for anything, save for the KES 2,320/- for renewing our .or.ke domain once a year. In the end Alan Orth and Ibrahim Ng'eno split the cost of renewing the domain. I look forward to reimbursing them my contribution at the next LUG meetup.&lt;/p&gt;</summary><category term="funding"></category></entry><entry><title>In the Spirit of Pelican</title><link href="https://nairobilug.or.ke/2013/07/in-the-spirit-of-pelican.html" rel="alternate"></link><published>2013-07-14T20:22:00+03:00</published><author><name>Muriithi Frederick Muriuki</name></author><id>tag:nairobilug.or.ke,2013-07-14:2013/07/in-the-spirit-of-pelican.html</id><summary type="html">&lt;p&gt;I have to start by commending everyone involved in the Nairobi GNU/Linux Users Group (nairobilug) for their various efforts to get all of us to this point.&lt;/p&gt;
 &lt;p&gt;First off, I wish to thank &lt;em&gt;Mr. Alan Orth&lt;/em&gt; for introducing us (or was it just me?) to Pelican, and providing the tutorial for getting it running. Also, for setting up the system so that we can all collaborate to add content to the site.&lt;/p&gt;
 &lt;p&gt;I would also like to thank the visionary fellows who had the light-bulb moment to start off the &lt;em&gt;LUG&lt;/em&gt;. Here, I specifically target &lt;em&gt;nj3ma&lt;/em&gt; and &lt;em&gt;eebrah&lt;/em&gt;. You spoke of it in university, but I was too busy chasing tail and the A's :D&lt;/p&gt;
 &lt;p&gt;Then there is all the rest of you people who saw fit to join the LUG and further light the fire. I am grateful to have met all of you in person. And for those of you I have yet to meet in person, I look forward to meeting you.&lt;/p&gt;
-&lt;h3&gt;And Now, a code block&lt;/h3&gt;
+&lt;h3&gt;And Now, a Code Block&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[aorth@noma: ~]$ uname -sr
 Linux 3.9.9-1-ARCH
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h3&gt;And now, a list&lt;/h3&gt;
+&lt;h3&gt;And Now, a List&lt;/h3&gt;
 &lt;p&gt;I could not resist doing this... here is a list of the nicks on irc as I type this:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Alfontefonte&lt;/li&gt;

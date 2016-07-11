@@ -38,8 +38,8 @@
   </script>
 
     <meta name="author" content="Alan Orth">
-    <meta name="description" content="Leveraging Ansible's Python API to generate infrastructure reports">
-  <meta name="tags" contents="linux, ansible, ">
+    <meta name="description" content="Leveraging Ansible's Python API to generate infrastructure reports.">
+  <meta name="tags" contents="linux, ansible, python, ">
 </head>
 
 <body>
@@ -80,7 +80,7 @@
       </li>
         <li class="muted">&middot;</li>
         <li>
-            <a href="https://nairobilug.or.ke/tag/linux.html">linux</a>,             <a href="https://nairobilug.or.ke/tag/ansible.html">ansible</a>        </li>
+            <a href="https://nairobilug.or.ke/tag/linux.html">linux</a>,             <a href="https://nairobilug.or.ke/tag/ansible.html">ansible</a>,             <a href="https://nairobilug.or.ke/tag/python.html">python</a>        </li>
         <li class="muted">&middot;</li>
         <li>
           <address class="post-author">
@@ -92,8 +92,9 @@
       <p>A few days ago I had to get some basic information from a handful of servers for an inventory report; just basic stuff like hostname, IP address, storage capacity, distro version, etc. I already manage all of my servers with Ansible, and there's a wealth of information available in Ansible's <code>setup</code> module, so I knew there had to be a clever way to do this.</p>
 <p>Somehow I stumbled upon <a href="http://docs.ansible.com/developing_api.html">Ansible's Python API</a>, which solves this problem elegantly! It helped that other people are doing cool things and <a href="http://jpmens.net/2012/12/13/obtaining-remote-data-with-ansible-s-api/">writing about their experiences</a> too.</p>
 <h2>Enter ansible.runner</h2>
-<p>According to the documentation, the Python API is:
-<blockquote>[...] very powerful, and is how the ansible CLI and ansible-playbook are implemented.</blockquote></p>
+<p>According to the documentation, the Python API is:</p>
+<blockquote>[...] very powerful, and is how the ansible CLI and ansible-playbook are implemented.</blockquote>
+
 <p>Indeed! Using <code>ansible.runner</code> I whipped something up and extracted data from several dozen servers in just a few minutes (and I don't even know Python!):</p>
 <div class="highlight"><pre><span></span>$ ./ansible-runner.py
 mjanjavm10, 2, 30, Ubuntu 14.04, 192.168.7.34
@@ -102,7 +103,7 @@ mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
 
 
 <p>I had to massage the data a bit to get clean numbers for RAM and storage capacity, but other than that it was extremely straightforward (as most things with Ansible generally are).</p>
-<h2>The code</h2>
+<h2>The Code</h2>
 <p>Here's the source code for the <em>ansible-runner.py</em> script above:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2

@@ -1,78 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Nairobi LUG</title><link href="https://nairobilug.or.ke/" rel="alternate"></link><link href="https://nairobilug.or.ke/feeds/conferences.atom.xml" rel="self"></link><id>https://nairobilug.or.ke/</id><updated>2016-04-26T08:42:00+03:00</updated><entry><title>My Experience Applying for a Strange Loop 2016 Opportunity Grant</title><link href="https://nairobilug.or.ke/2016/04/my-experience-applying-for-a-strange-loop-2016-opportunity-grant.html" rel="alternate"></link><published>2016-04-26T08:42:00+03:00</published><author><name>Njagi Mwaniki</name></author><id>tag:nairobilug.or.ke,2016-04-26:2016/04/my-experience-applying-for-a-strange-loop-2016-opportunity-grant.html</id><summary type="html">&lt;p&gt;I was at work when I saw a post in the Slack channel about
-&lt;a href="http://www.thestrangeloop.com/opportunity.html"&gt;strange loop 2016 opportunity grants&lt;/a&gt;.
-First of all, I didn't know what an opportunity grant was but
-for sure I know what strange loop is from all those videos on you tube.
-So I got excited, learned what an opportunity grant is got excited and
-decided that I'd apply on when applications open which was 11th April 2016.&lt;/p&gt;
-&lt;p&gt;Fast forward to April 21st. I log into the clojurians Slack channel
-and asked around whether anyone had attened the conference and where I would go
-for a cost estimate for my travels and such things.
-The good people there recommended [expedia] which I deciced to use.&lt;/p&gt;
-&lt;p&gt;From expedia's calculations, it would cost me around $2000 to go there
-hotel and all for 4 days. The biggest cost being the plane ticket which
-would be around $1500, this is for a flight from Nairobi to St. Louis.
-So assuming that this was some big budget corporate conference and that
-American corporations have lots of cash I just entered my $2000 dollar
-cost, sat back and hit send.&lt;/p&gt;
-&lt;p&gt;That was ignorance on my part because I went back to the Slack channel only to
-find that well it wasn't like that. First I learned that they favoured
-Americans. My assumption was that they want to keep 
-knowledge in USA. I kept this to myself though still with the assumption that
-this was an American corporation organised conference.&lt;/p&gt;
-&lt;p&gt;Another thing I learned is that they would like it if you catered for part of the
-cost of your travel yourself. I amde no assumption this time.
-Someone in the channel talked about crowdfunding and all.
-I thought to myself do I want to be that African guy raising money to go to
-America on sympathy and all?
-No I won't do that. Honestly, I wouldn't crowdfund to do that. I feel that
-that would lower my dignity but that's just me. I have nothing against anyone
-who would just that narrative of aid to Africa is something I don't like or want
-to propagate.&lt;/p&gt;
-&lt;p&gt;I knew at this point that my application would not go through and I should've
-researched more and not just applying. Basically I felt dumb for assuming malice
-where my ignorance was to blame.&lt;/p&gt;
-&lt;p&gt;So I told the dudes and ladies at work about it and I was told that if I
-were to give a talk at the event the organisation I work for
-would cater for my costs. Awesome, that's a win win for everyone.
-So I figured I could give a talk on building a development server for Haskell
-web applicatons. However this would have to wait until I have improved
-wai-devel to be as good as what I see in other languages
-, Clojure to be specific, tools such as lein Figwheel have blown my mind and
-the repls you get in django and rails applicatons are impressive.&lt;/p&gt;
-&lt;p&gt;Fast forward about 6 hours.
-I went home then saw a Slack notification. Turns out the strange loop isn't
-organised by evil corp. You can tell the tribe of programmer I am by my
-language so far (I'm all about that FOSS). Anyway, so Alex Miller messages me,
- much to my surprise of course, I shall just quote him.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Nairobi LUG</title><link href="https://nairobilug.or.ke/" rel="alternate"></link><link href="https://nairobilug.or.ke/feeds/conferences.atom.xml" rel="self"></link><id>https://nairobilug.or.ke/</id><updated>2016-04-26T08:42:00+03:00</updated><entry><title>My Experience Applying for a Strange Loop 2016 Opportunity Grant</title><link href="https://nairobilug.or.ke/2016/04/my-experience-applying-for-a-strange-loop-2016-opportunity-grant.html" rel="alternate"></link><published>2016-04-26T08:42:00+03:00</published><author><name>Njagi Mwaniki</name></author><id>tag:nairobilug.or.ke,2016-04-26:2016/04/my-experience-applying-for-a-strange-loop-2016-opportunity-grant.html</id><summary type="html">&lt;p&gt;I was at work when I saw a post in the Slack channel about &lt;strong&gt;strange loop 2016 opportunity grants&lt;/strong&gt;. First of all, I didn't know what an opportunity grant was but for sure I know what strange loop is from all those videos on you tube. So I got excited, learned what an opportunity grant is got excited and decided that I'd apply on when applications open which was 11th April 2016.&lt;/p&gt;
+&lt;p&gt;Fast forward to April 21st. I log into the clojurians Slack channel and asked around whether anyone had attended the conference and where I would go for a cost estimate for my travels and such things. The good people there recommended &lt;strong&gt;expedia&lt;/strong&gt; which I decided to use.&lt;/p&gt;
+&lt;p&gt;From expedia's calculations, it would cost me around $2000 to go there hotel and all for 4 days. The biggest cost being the plane ticket which would be around $1500, this is for a flight from Nairobi to St. Louis. So assuming that this was some big budget corporate conference and that American corporations have lots of cash I just entered my $2000 dollar cost, sat back and hit send.&lt;/p&gt;
+&lt;p&gt;That was ignorance on my part because I went back to the Slack channel only to find that well it wasn't like that. First I learned that they favoured Americans. My assumption was that they want to keep knowledge in USA. I kept this to myself though still with the assumption that this was an American corporation organised conference.&lt;/p&gt;
+&lt;p&gt;Another thing I learned is that they would like it if you catered for part of the cost of your travel yourself. I made no assumption this time. Someone in the channel talked about crowdfunding and all. I thought to myself do I want to be that African guy raising money to go to America on sympathy and all? No I won't do that. Honestly, I wouldn't crowdfund to do that. I feel that that would lower my dignity but that's just me. I have nothing against anyone who would just that narrative of aid to Africa is something I don't like or want to propagate.&lt;/p&gt;
+&lt;p&gt;I knew at this point that my application would not go through and I should've researched more and not just applying. Basically I felt dumb for assuming malice where my ignorance was to blame.&lt;/p&gt;
+&lt;p&gt;So I told the dudes and ladies at work about it and I was told that if I were to give a talk at the event the organisation I work for would cater for my costs. Awesome, that's a win win for everyone. So I figured I could give a talk on building a development server for Haskell web applications. However this would have to wait until I have improved wai-devel to be as good as what I see in other languages, Clojure to be specific, tools such as lein, Figwheel have blown my mind and the repls you get in Django and Rails applications are impressive.&lt;/p&gt;
+&lt;p&gt;Fast forward about 6 hours. I went home then saw a Slack notification. Turns out the strange loop isn't organised by evil corp. You can tell the tribe of programmer I am by my language so far (I'm all about that FOSS). Anyway, so Alex Miller messages me, much to my surprise of course, I shall just quote him.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;hey, I'm the Strange Loop founder/organizer. most of the comments above
-seem generally correct. if you'd like to update your app, either re-complete
-the form or just send an email to diversity@thestrangeloop.com with the
-corrections. we do focus on US, simply to stretch our funds to cover the
-maximum number of people. however we are happy to be creative in trying to
-bridge gaps and we can't have that conversation if you don't apply.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;hey, I'm the Strange Loop founder/organizer. most of the comments above seem generally correct. if you'd like to update your app, either re-complete the form or just send an email to diversity@thestrangeloop.com with the corrections. we do focus on US, simply to stretch our funds to cover the maximum number of people. however we are happy to be creative in trying to bridge gaps and we can't have that conversation if you don't apply.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;I was taken aback and was glad as hell I hadn't run mouth and said what had come
-to mind when I heard that they favour Americans. Turns out everyone is really
-nice. Everyone wants everyone to win. I wonder why I had assumed that everyone
-was bad? We live and we learn every day.&lt;/p&gt;
-&lt;p&gt;Since I had been told earlier in the day that the cost  would be catered 
-for if I gave a talk. I told him about my talk idea and showed him the code
-I had so far and what I would want to give a talk regarding and well the reply was&lt;/p&gt;
+&lt;p&gt;I was taken aback and was glad as hell I hadn't run mouth and said what had come to mind when I heard that they favour Americans. Turns out everyone is really nice. Everyone wants everyone to win. I wonder why I had assumed that everyone was bad? We live and we learn every day.&lt;/p&gt;
+&lt;p&gt;Since I had been told earlier in the day that the cost would be catered for if I gave a talk. I told him about my talk idea and showed him the code I had so far and what I would want to give a talk regarding and well the reply was:&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;sounds like a good topic&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;sounds like a good topic&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;So that's that I don't have enough yet to give a talk on it or know enough tbh
-(imposter syndrome) but when it's done; sure I'll apply. Hopefully it will be within
-the set time frame and if not, well next year.&lt;/p&gt;
-&lt;p&gt;So a few things one should do before applying for strange loop. It really applies
-to all factions of life and is hacker culture 101:&lt;/p&gt;
+&lt;p&gt;So that's that I don't have enough yet to give a talk on it or know enough tbh (imposter syndrome) but when it's done; sure I'll apply. Hopefully it will be within the set time frame and if not, well next year.&lt;/p&gt;
+&lt;p&gt;So a few things one should do before applying for strange loop. It really applies to all factions of life and is hacker culture 101:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;RTFM (If I had read enough and researched I woudn't have made a bad application).&lt;/li&gt;
+&lt;li&gt;RTFM (If I had read enough and researched I wouldn't have made a bad application).&lt;/li&gt;
 &lt;li&gt;There is no evil corp.&lt;/li&gt;
 &lt;li&gt;Ask around first.&lt;/li&gt;
 &lt;li&gt;It pays to have some of your own money.&lt;/li&gt;
-&lt;li&gt;From Alan Orth: &lt;a href="https://en.wikipedia.org/wiki/Hanlon%27s_razor"&gt;Hanlon's razor&lt;/a&gt; that says "never assume malice where stupidity will suffice"
-In this case "never assume malice where your ignorance will suffice" :D&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="strangeloop"></category></entry></feed>
+&lt;li&gt;From Alan Orth: &lt;a href="https://en.wikipedia.org/wiki/Hanlon%27s_razor"&gt;Hanlon's razor&lt;/a&gt; that says "never assume malice where stupidity will suffice"&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In this case "never assume malice where your ignorance will suffice" :D&lt;/p&gt;</summary><category term="strangeloop"></category><category term="grant"></category></entry></feed>

@@ -100,7 +100,7 @@ Query OK, 0 rows affected (0.00 sec)
 &lt;li&gt;&lt;a href="http://linux.die.net/man/8/logrotate"&gt;logrotate man page&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;This post is also available on my &lt;a href="https://oguya.ch/posts/2016-04-13-safely-rotating-mysql-slow-logs/"&gt;personal blog&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">James Oguya</dc:creator><pubDate>Sat, 16 Apr 2016 16:05:00 +0300</pubDate><guid isPermaLink="false">tag:nairobilug.or.ke,2016-04-16:2016/04/safely-rotating-mysql-slow-logs.html</guid><category>mysql</category><category>mariadb</category></item><item><title>Mounting Partitions Using systemd</title><link>https://nairobilug.or.ke/2015/09/systemd-mount-partition.html</link><description>&lt;p&gt;&lt;a href="http://www.freedesktop.org/wiki/Software/systemd"&gt;systemd&lt;/a&gt; is gradually becoming the de facto init system &amp;amp; service manager replacing the old sysV init scripts &amp;amp; upstart. Recently, I discovered you can mount partitions using &lt;a href="http://www.freedesktop.org/software/systemd/man/systemd.mount.html"&gt;systemd.mount&lt;/a&gt; by writing your own &lt;code&gt;.mount&lt;/code&gt; &lt;a href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html"&gt;systemd unit file&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="super suprised" src="/images/2015-09-02-systemd-mount-partition/suprised-cat.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="super suprised" src="https://nairobilug.or.ke/images/systemd-mount-partition/suprised-cat.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;After &lt;em&gt;RTFM'ing&lt;/em&gt;, I realized, under the hood, systemd just runs &lt;a href="http://linux.die.net/man/8/mount"&gt;mount command&lt;/a&gt; to mount the specified partition with the specified mount options listed in the mount unit file. Basically, you need to specify the following options in your unit file:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;What=&lt;/code&gt; a partition name, path or UUID to mount&lt;/li&gt;
@@ -122,7 +122,7 @@ Query OK, 0 rows affected (0.00 sec)
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;img alt="I Got This!" src="/images/2015-09-02-systemd-mount-partition/i-got-this.gif" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="I Got This!" src="https://nairobilug.or.ke/images/systemd-mount-partition/i-got-this.gif" /&gt;&lt;/p&gt;
 &lt;p&gt;So I wrote a simple systemd mount unit file — &lt;code&gt;/etc/systemd/system/mnt-backups.mount&lt;/code&gt; — which didn't work at first because I fell victim to one of the &lt;code&gt;systemd.mount&lt;/code&gt; pitfalls:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Mount units must be named after the mount point directories they control. Example: the mount point /home/lennart must be configured in a unit file home-lennart.mount.&lt;/p&gt;
@@ -179,28 +179,13 @@ systemctl start mnt-backups.mount
 
 &lt;p&gt;As always, enable the unit to start automatically during boot.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; mnt-backups.mount
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">James Oguya</dc:creator><pubDate>Wed, 02 Sep 2015 11:00:00 +0300</pubDate><guid isPermaLink="false">tag:nairobilug.or.ke,2015-09-02:2015/09/systemd-mount-partition.html</guid><category>linux</category><category>systemd</category></item><item><title>Rebooting Server(s) Using Ansible</title><link>https://nairobilug.or.ke/2015/03/rebooting-server-using-ansible.html</link><description>&lt;p&gt;In this blogpost, we'll talk about rebooting servers using ansible &amp;amp; pausing the
-playbook by waiting for a given amount of time for a given service on a given
-port to start.&lt;/p&gt;
-&lt;p&gt;Of late, I've seen a lot of guys on &lt;code&gt;#ansible&lt;/code&gt; irc channel &amp;amp; google groups
-asking questions about rebooting servers/nodes &amp;amp; temporarily pausing the
-playbook for a given amount of time before continuing with the execution of the
-playbook. In some cases, you'd want to set some kernel parameters which take
-effect at boot time or perform major upgrades which might require a reboot
-before configuring the server/node.&lt;/p&gt;
-&lt;p&gt;Using ansible's &lt;code&gt;wait_for&lt;/code&gt; module&lt;a href="http://docs.ansible.com/wait_for_module.html"&gt;&lt;sup&gt;[1]&lt;/sup&gt;&lt;/a&gt;,
-we can temporarily stop running the playbook while we wait for the server to
-finish rebooting or for a service to start &amp;amp; bind to a port. We can also use the
-same module to wait for a port to become available which can be useful in
-situations where services are not immediately available after their &lt;code&gt;init&lt;/code&gt;
-scripts finish running - as is the case with Java application server e.g. Tomcat.&lt;/p&gt;
-&lt;h3&gt;gettin' started&lt;/h3&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">James Oguya</dc:creator><pubDate>Wed, 02 Sep 2015 11:00:00 +0300</pubDate><guid isPermaLink="false">tag:nairobilug.or.ke,2015-09-02:2015/09/systemd-mount-partition.html</guid><category>linux</category><category>systemd</category></item><item><title>Rebooting Server(s) Using Ansible</title><link>https://nairobilug.or.ke/2015/03/rebooting-server-using-ansible.html</link><description>&lt;p&gt;Of late, I've seen a lot of guys on &lt;code&gt;#ansible&lt;/code&gt; irc channel &amp;amp; google groups asking questions about rebooting servers/nodes &amp;amp; temporarily pausing the playbook for a given amount of time before continuing with the execution of the playbook. In some cases, you'd want to set some kernel parameters which take effect at boot time or perform major upgrades which might require a reboot before configuring the server/node.&lt;/p&gt;
+&lt;p&gt;Using ansible's &lt;code&gt;wait_for&lt;/code&gt; module&lt;a href="http://docs.ansible.com/wait_for_module.html"&gt;&lt;sup&gt;[1]&lt;/sup&gt;&lt;/a&gt;, we can temporarily stop running the playbook while we wait for the server to finish rebooting or for a service to start &amp;amp; bind to a port. We can also use the same module to wait for a port to become available which can be useful in situations where services are not immediately available after their &lt;code&gt;init&lt;/code&gt; scripts finish running - as is the case with Java application server e.g. Tomcat.&lt;/p&gt;
+&lt;h3&gt;Gettin' Started&lt;/h3&gt;
 &lt;p&gt;Basically, we can break our problem into 4 sections for easier conceptualization:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;Section 1: &lt;strong&gt;Pre-reboot&lt;/strong&gt;: Run your pre-reboot task, it can be performing major
-upgrades and/or performing some configuration which only take effect at boot time.
-For example - upgrade all packages using &lt;code&gt;yum&lt;/code&gt; module&lt;a href="http://docs.ansible.com/yum_module.html"&gt;&lt;sup&gt;[2]&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Section 1: &lt;strong&gt;Pre-reboot&lt;/strong&gt;: Run your pre-reboot task, it can be performing major upgrades and/or performing some configuration which only take effect at boot time. For example - upgrade all packages using &lt;code&gt;yum&lt;/code&gt; module&lt;a href="http://docs.ansible.com/yum_module.html"&gt;&lt;sup&gt;[2]&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;- name: upgrade all packages
   yum: name=* state=latest
 &lt;/pre&gt;&lt;/div&gt;
@@ -208,9 +193,7 @@ For example - upgrade all packages using &lt;code&gt;yum&lt;/code&gt; module&lt;
 
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Section 2: &lt;strong&gt;Reboot&lt;/strong&gt;: In this stage we'll use the &lt;code&gt;command&lt;/code&gt; module&lt;a href="http://docs.ansible.com/command_module.html"&gt;&lt;sup&gt;[3]&lt;/sup&gt;&lt;/a&gt;
-to reboot the remote machine/server by running the &lt;code&gt;reboot&lt;/code&gt; command  - nothing
-fancy - you can also use &lt;code&gt;shutdown --reboot&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Section 2: &lt;strong&gt;Reboot&lt;/strong&gt;: In this stage we'll use the &lt;code&gt;command&lt;/code&gt; module&lt;a href="http://docs.ansible.com/command_module.html"&gt;&lt;sup&gt;[3]&lt;/sup&gt;&lt;/a&gt; to reboot the remote machine/server by running the &lt;code&gt;reboot&lt;/code&gt; command  - nothing fancy - you can also use &lt;code&gt;shutdown --reboot&lt;/code&gt;.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;- name: reboot server
   command: /sbin/reboot
 &lt;/pre&gt;&lt;/div&gt;
@@ -218,16 +201,7 @@ fancy - you can also use &lt;code&gt;shutdown --reboot&lt;/code&gt;.&lt;/p&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Section 3: &lt;strong&gt;Pause the playbook&lt;/strong&gt;: We'll use the &lt;code&gt;wait_for&lt;/code&gt; module to wait for
-300 seconds for port 22 to become available before resuming the playbook. I'm
-using port 22 because most servers run openssh-server on port 22 &amp;amp; if we were to
-telnet to that port we'd probably see something like :&lt;code&gt;SSH-2.0-OpenSSH_6.6.1&lt;/code&gt;,
-so we can use regex to check whether the output matches "OpenSSH". I'm also
-using a &lt;code&gt;timeout&lt;/code&gt; value of 300 seconds because most physical servers take
-3 - 5 minutes to finish rebooting due to hardware checks e.t.c. but you can
-use any value that suites you.
-For example: - wait for 300 seconds for port 22 to become available &amp;amp; contain
-&lt;code&gt;OpenSSH&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Section 3: &lt;strong&gt;Pause the playbook&lt;/strong&gt;: We'll use the &lt;code&gt;wait_for&lt;/code&gt; module to wait for 300 seconds for port 22 to become available before resuming the playbook. I'm using port 22 because most servers run openssh-server on port 22 &amp;amp; if we were to telnet to that port we'd probably see something like :&lt;code&gt;SSH-2.0-OpenSSH_6.6.1&lt;/code&gt;, so we can use regex to check whether the output matches "OpenSSH". I'm also using a &lt;code&gt;timeout&lt;/code&gt; value of 300 seconds because most physical servers take 3 - 5 minutes to finish rebooting due to hardware checks e.t.c. but you can use any value that suites you. For example: - wait for 300 seconds for port 22 to become available &amp;amp; contain &lt;code&gt;OpenSSH&lt;/code&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;- name: wait for the server to finish rebooting
   local_action: wait_for host=&amp;quot;web01&amp;quot; search_regex=OpenSSH port=22 timeout=300
 &lt;/pre&gt;&lt;/div&gt;
@@ -235,12 +209,10 @@ For example: - wait for 300 seconds for port 22 to become available &amp;amp; co
 
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Section 4: &lt;strong&gt;Resume the playbook&lt;/strong&gt;: After we've got a response from port 22,
-we can resume running the playbook. This step can be optional depending on your
-needs.&lt;/p&gt;
+&lt;p&gt;Section 4: &lt;strong&gt;Resume the playbook&lt;/strong&gt;: After we've got a response from port 22, we can resume running the playbook. This step can be optional depending on your needs.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;puttin' it all together&lt;/h3&gt;
+&lt;h3&gt;Puttin' It All Together&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;We can merge all the above sections into one playbook as shown below:&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
 &lt;span class="x"&gt;  sudo: yes&lt;/span&gt;
@@ -264,24 +236,14 @@ needs.&lt;/p&gt;
 
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;stuff to note&lt;/h3&gt;
+&lt;h3&gt;Stuff to Note&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;I know you might be wondering why we didn't use handlers. Well, &lt;code&gt;notify&lt;/code&gt;
-tasks&lt;a href="http://docs.ansible.com/playbooks_intro.html#handlers-running-operations-on-change"&gt;&lt;sup&gt;[4]&lt;/sup&gt;&lt;/a&gt;
-are only executed at the end of the playbook regardless of their location in the
-playbook - remember we're interested in rebooting the server &amp;amp; waiting for a
-given amount of time for the server to finish rebooting.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;inventory_hostname&lt;/code&gt; variable&lt;a href="http://docs.ansible.com/playbooks_variables.html#magic-variables-and-how-to-access-information-about-other-hosts"&gt;&lt;sup&gt;[5]&lt;/sup&gt;&lt;/a&gt;
-is the name of the remote server as stated in
-the ansible hosts file&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;local_action&lt;/code&gt; directive&lt;a href="http://docs.ansible.com/glossary.html#local-action"&gt;&lt;sup&gt;[6]&lt;/sup&gt;&lt;/a&gt;
-runs the given step on the local machine, for example, it would run the
-&lt;code&gt;wait_for&lt;/code&gt; task on your local machine.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;yum&lt;/code&gt; module only works on RedHat based OS e.g. Fedora, CentOS &amp;amp; RHEL -
-and so we'll also use the &lt;code&gt;apt&lt;/code&gt; module for Debian based OS e.g. Ubuntu, Debian
-e.t.c.&lt;/li&gt;
+&lt;li&gt;I know you might be wondering why we didn't use handlers. Well, &lt;code&gt;notify&lt;/code&gt; tasks&lt;a href="http://docs.ansible.com/playbooks_intro.html#handlers-running-operations-on-change"&gt;&lt;sup&gt;[4]&lt;/sup&gt;&lt;/a&gt; are only executed at the end of the playbook regardless of their location in the playbook - remember we're interested in rebooting the server &amp;amp; waiting for a given amount of time for the server to finish rebooting.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;inventory_hostname&lt;/code&gt; variable&lt;a href="http://docs.ansible.com/playbooks_variables.html#magic-variables-and-how-to-access-information-about-other-hosts"&gt;&lt;sup&gt;[5]&lt;/sup&gt;&lt;/a&gt; is the name of the remote server as stated in the ansible hosts file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;local_action&lt;/code&gt; directive&lt;a href="http://docs.ansible.com/glossary.html#local-action"&gt;&lt;sup&gt;[6]&lt;/sup&gt;&lt;/a&gt; runs the given step on the local machine, for example, it would run the &lt;code&gt;wait_for&lt;/code&gt; task on your local machine.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yum&lt;/code&gt; module only works on RedHat based OS e.g. Fedora, CentOS &amp;amp; RHEL - and so we'll also use the &lt;code&gt;apt&lt;/code&gt; module for Debian based OS e.g. Ubuntu, Debian e.t.c.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;links&lt;/h3&gt;
+&lt;h3&gt;Links&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href="http://docs.ansible.com/wait_for_module.html"&gt;Ansible wait_for module&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://docs.ansible.com/command_module.html"&gt;Ansible command module&lt;/a&gt;&lt;/li&gt;
@@ -289,8 +251,7 @@ e.t.c.&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://docs.ansible.com/playbooks_intro.html#handlers-running-operations-on-change"&gt;Ansible Handlers: Running operations on change&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://docs.ansible.com/playbooks_variables.html#magic-variables-and-how-to-access-information-about-other-hosts"&gt;Playbook built-in variables&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://docs.ansible.com/glossary.html#local-action"&gt;Ansible local_action directives&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">James Oguya</dc:creator><pubDate>Tue, 03 Mar 2015 12:35:00 +0300</pubDate><guid isPermaLink="false">tag:nairobilug.or.ke,2015-03-03:2015/03/rebooting-server-using-ansible.html</guid><category>linux</category><category>ansible</category></item><item><title>Ansible 'Prompt' Handlers</title><link>https://nairobilug.or.ke/2015/01/ansible-prompt-handlers.html</link><description>&lt;p&gt;An awesome feature in &lt;a href="https://chef.io"&gt;Chef&lt;/a&gt; that is not available in &lt;a href="http://ansible.com"&gt;Ansible&lt;/a&gt; is immediate notification i.e. &lt;code&gt;notifies :immediately&lt;/code&gt;.
-Ansible has &lt;a href="http://docs.ansible.com/playbooks_intro.html#handlers-running-operations-on-change"&gt;notification handlers&lt;/a&gt; but they are only triggered at the end of the current playbook unlike &lt;a href="https://docs.chef.io/resource_common.html#notifies-syntax"&gt;Chef's notifications&lt;/a&gt; which can be triggered immediately! Moreover, you can configure Chef's notifications to be triggered at specific times e.g. at the very end of a chef-client run i.e. &lt;code&gt;notifies :delayed&lt;/code&gt; or immediately i.e. &lt;code&gt;notifies :immediately&lt;/code&gt;.&lt;/p&gt;
+&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">James Oguya</dc:creator><pubDate>Tue, 03 Mar 2015 12:35:00 +0300</pubDate><guid isPermaLink="false">tag:nairobilug.or.ke,2015-03-03:2015/03/rebooting-server-using-ansible.html</guid><category>linux</category><category>ansible</category></item><item><title>Ansible 'Prompt' Handlers</title><link>https://nairobilug.or.ke/2015/01/ansible-prompt-handlers.html</link><description>&lt;p&gt;An awesome feature in &lt;a href="https://chef.io"&gt;Chef&lt;/a&gt; that is not available in &lt;a href="http://ansible.com"&gt;Ansible&lt;/a&gt; is immediate notification i.e. &lt;code&gt;notifies :immediately&lt;/code&gt;. Ansible has &lt;a href="http://docs.ansible.com/playbooks_intro.html#handlers-running-operations-on-change"&gt;notification handlers&lt;/a&gt; but they are only triggered at the end of the current playbook unlike &lt;a href="https://docs.chef.io/resource_common.html#notifies-syntax"&gt;Chef's notifications&lt;/a&gt; which can be triggered immediately! Moreover, you can configure Chef's notifications to be triggered at specific times e.g. at the very end of a chef-client run i.e. &lt;code&gt;notifies :delayed&lt;/code&gt; or immediately i.e. &lt;code&gt;notifies :immediately&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Now, why I'm going into all these boring theories? Well, when installing tomcat on Ubuntu, dpkg starts it automatically once the process is complete. But in my case, I wanted to stop tomcat7 service first, configure it, deploy its webapps &amp;amp; finally start it. So on my ansible tasks file, after installing tomcat7 I added a notification action to call a task that stops tomcat7 service. Here's a snippet from the ansible task file:&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;tomcat.yml&lt;/em&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;
@@ -310,11 +271,9 @@ Ansible has &lt;a href="http://docs.ansible.com/playbooks_intro.html#handlers-ru
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;OK so the task file looks great, but did it work ? Unfortunately, no! Ansible notifications trigger tasks in handlers section to run only at the end of a playbook.
-So I had to come up with a quick fix for this issue.&lt;/p&gt;
-&lt;h3&gt;'Prompt' handlers&lt;/h3&gt;
-&lt;p&gt;My quick fix involved registering a variable in the task that installs tomcat packages i.e. &lt;code&gt;register: tomcat_installed&lt;/code&gt;, then the next task to stop tomcat service would be executed only if the registered variable has changed i.e. if tomcat7 has been installed - &lt;code&gt;when: tomcat_installed|changed&lt;/code&gt;.
-Basically, ansible notifications use a similar concept to this.&lt;/p&gt;
+&lt;p&gt;OK so the task file looks great, but did it work ? Unfortunately, no! Ansible notifications trigger tasks in handlers section to run only at the end of a playbook. So I had to come up with a quick fix for this issue.&lt;/p&gt;
+&lt;h3&gt;'Prompt' Handlers&lt;/h3&gt;
+&lt;p&gt;My quick fix involved registering a variable in the task that installs tomcat packages i.e. &lt;code&gt;register: tomcat_installed&lt;/code&gt;, then the next task to stop tomcat service would be executed only if the registered variable has changed i.e. if tomcat7 has been installed - &lt;code&gt;when: tomcat_installed|changed&lt;/code&gt;. Basically, ansible notifications use a similar concept to this.&lt;/p&gt;
 &lt;p&gt;Here's a snippet from the playbook showing the quick fix:&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;tomcat.yml&lt;/em&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;- hosts: all&lt;/span&gt;

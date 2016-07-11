@@ -89,9 +89,7 @@
         </li>
     </ul>
     <div class="post-content">
-      <p>During a recent meeting of the Nairobi GNU/Linux Users Group we discussed <a href="https://www.brck.com" title="BRCK | Rugged, Portable WiFi Hotspot &amp; Battery Extender">BRCK</a>, the Kenya-based makers of a slick, "rugged", battery-powered-GSM-router thing of the same name, and their apparent violation of the GNU General
-Public License (GPL). The lively discussion ended up making its way to the web in the form of a <a href="https://nairobilug.or.ke/2015/05/meetup-may-2015.html">blog
-post</a> on the group's blog.</p>
+      <p>During a recent meeting of the Nairobi GNU/Linux Users Group we discussed <a href="https://www.brck.com" title="BRCK | Rugged, Portable WiFi Hotspot &amp; Battery Extender">BRCK</a>, the Kenya-based makers of a slick, "rugged", battery-powered-GSM-router thing of the same name, and their apparent violation of the GNU General Public License (GPL). The lively discussion ended up making its way to the web in the form of a <a href="https://nairobilug.or.ke/2015/05/meetup-may-2015.html">blog post</a> on the group's blog.</p>
 <p>Their product is based on <a href="https://openwrt.org/">OpenWRT</a> — the GNU/Linux distribution geared towards embedded systems — which is <a href="http://wiki.openwrt.org/about/license">licensed</a> under the GPL v2. I believe this is problematic for BRCK for a number of reasons that I will enumerate below. When we reached out to BRCK they claimed that they were not in violation because they use "stock unmodified OpenWRT" source code. This claim is repeated verbatim in a <a href="http://forums.brck.com/t/where-is-the-openwrt-fork-source-at/482/8">thread on their forum</a>.</p>
 <p>I had intended this post to be a discussion of the spirit of the GPL ending with me expressing disappointment in BRCK for cowering behind perceived technicalities of the license. After sitting down to read the license, however, it became immediately apparent to me that they are indeed in violation. <em>*sigh*</em></p>
 <h2>The GNU General Public License</h2>
@@ -124,7 +122,7 @@ $ shasum brckv1_20141114.zip
 d6dcbb1d61e99bf2b35133c5e6897a352518da0c  brckv1_20141114.zip
 $ unzip brckv1_20141114.zip
 $ grep -r -E <span class="s1">&#39;gpl|GPL&#39;</span> brckv1_20141114/* <span class="p">|</span> wc -l
-       0
+0
 </pre></div>
 
 
@@ -182,7 +180,7 @@ will automatically terminate your rights under this License. [...]</li>
 <p>Interpretation of the license is a bit confusing at first, but very accessible if you actually read it. Put simply: copyleft obligations of the GPL v2 are triggered upon <em>distribution</em> of binary works derived from a GPL-licensed program.</p>
 <p>As BRCK is distributing an OpenWRT-derived work in object code form, Section 3 requires that they provide <em>complete corresponding machine-readable source code</em> used to produce the object code they are distributing. Section 1 grants them the permission to provide this code and stipulates that it must preserve the copyright notice and license of the original work.</p>
 <p>The implications of Section 2 are less clear, depending on whether or not BRCK is actually using "stock unmodified OpenWRT" source code. I suppose that's up to them to decide, but I would urge them to keep in mind the spirit of the GPL v2 when making that decision.</p>
-<h2>BRCK should know better</h2>
+<h2>BRCK Should Know Better</h2>
 <p>BRCK is not the "enemy", but they — of all people — should know better. We expect this behavior from large corporations, but not from quasi-community-based organizations operating in the technical sector.</p>
 <p>In the end none of this matters unless someone is willing to take BRCK to court over non-compliance. Even if someone was willing to do so, I think it would be sad if it had to come to that. Instead, I hope this serves as a lesson in GPL v2 compliance for Kenyan organizations in the future, and indeed a public record of my findings.</p>
 <p><strong>Update (2015-05-19):</strong> BRCK has <a href="http://forums.brck.com/t/where-is-the-openwrt-fork-source-at/482/11">responded</a> and posted <a href="https://www.brck.com/open-source-compliance/">licensing information and source code</a> on their website.</p>

@@ -38,7 +38,7 @@
   </script>
 
     <meta name="author" content="Alan Orth">
-    <meta name="description" content="Using systemd's timer functionality to to replace (and improve) cron jobs">
+    <meta name="description" content="Using systemd's timer functionality to to replace (and improve) cron jobs.">
   <meta name="tags" contents="linux, systemd, cron, ">
 </head>
 
@@ -91,7 +91,7 @@
     <div class="post-content">
       <p>systemd has a timer function that can be used to run tasks periodically — yes, like <code>cron</code>. There's nothing really wrong with cron, but have you ever tried to debug a cron job on a server? The script runs fine from the command line, but nothing seems to happen when it runs from cron. You quickly type <code>date</code> to see how many seconds until the next minute, adjust the cron job, and wait. Nothing. Repeat. <em>*facedesk*</em></p>
 <p>This is the systemd value proposition in this context: <em>timers can be run on demand</em> from the command line, and <em>their output is logged to the systemd journal</em> where you can see it like any other systemd units.</p>
-<h2>System backups using a timer</h2>
+<h2>System Backups Using a Timer</h2>
 <p>As an example, I have a simple shell script — <code>system-backup.sh</code> — that uses <code>rsync</code> to back up my system to an external USB hard drive once per day. Converting this job to use systemd timers requires the creation of both a <em>timer</em> and a <em>service</em>.</p>
 <p><em>/etc/systemd/system/system-backup.timer</em>:</p>
 <div class="highlight"><pre><span></span><span class="k">[Unit]</span>
@@ -130,7 +130,7 @@ $ sudo systemctl list-timers --all
 </pre></div>
 
 
-<h2>What this gets you</h2>
+<h2>What This Gets You</h2>
 <p>Using <code>OnCalendar=daily</code> this job will run every day at midnight, similar to cron's <code>@daily</code> keyword. If you ever want to run the job manually you can invoke its service on demand:</p>
 <div class="highlight"><pre><span></span>$ sudo systemctl start system-backup.service
 </pre></div>
@@ -143,7 +143,7 @@ $ sudo systemctl list-timers --all
 
 
 <p>I find this much more elegant than appending to, looking through, and rotating log files manually. Furthermore, I like the ability to set CPU and I/O scheduling priorities in the service itself rather than relying on external <code>nice</code> and <code>ionice</code> binaries in the script. :)</p>
-<h2>More information</h2>
+<h2>More Information</h2>
 <p>See the following for more information:</p>
 <ul>
 <li><code>man systemd.timer</code></li>
