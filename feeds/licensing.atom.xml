@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Nairobi LUG</title><link href="https://nairobilug.or.ke/" rel="alternate"></link><link href="https://nairobilug.or.ke/feeds/licensing.atom.xml" rel="self"></link><id>https://nairobilug.or.ke/</id><updated>2015-05-18T15:21:00+03:00</updated><entry><title>BRCK in Violation of the GPL</title><link href="https://nairobilug.or.ke/2015/05/brck-violating-gpl.html" rel="alternate"></link><published>2015-05-18T15:21:00+03:00</published><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-05-18:2015/05/brck-violating-gpl.html</id><summary type="html">&lt;p&gt;During a recent meeting of the Nairobi GNU/Linux Users Group we discussed &lt;a href="https://www.brck.com" title="BRCK | Rugged, Portable WiFi Hotspot &amp;amp; Battery Extender"&gt;BRCK&lt;/a&gt;, the Kenya-based makers of a slick, "rugged", battery-powered-GSM-router thing of the same name, and their apparent violation of the GNU General Public License (GPL). The lively discussion ended up making its way to the web in the form of a &lt;a href="https://nairobilug.or.ke/2015/05/meetup-may-2015.html"&gt;blog post&lt;/a&gt; on the group's blog.&lt;/p&gt;
+&lt;p&gt;Their product is based on &lt;a href="https://openwrt.org/"&gt;OpenWRT&lt;/a&gt; — the GNU/Linux distribution geared towards embedded systems — which is &lt;a href="http://wiki.openwrt.org/about/license"&gt;licensed&lt;/a&gt; under the GPL v2. I believe this is problematic for BRCK for a number of reasons that I will enumerate below. When we reached out to BRCK they claimed that they were not in violation because they use "stock unmodified OpenWRT" source code. This claim is repeated verbatim in a &lt;a href="http://forums.brck.com/t/where-is-the-openwrt-fork-source-at/482/8"&gt;thread on their forum&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I had intended this post to be a discussion of the spirit of the GPL ending with me expressing disappointment in BRCK for cowering behind perceived technicalities of the license. After sitting down to read the license, however, it became immediately apparent to me that they are indeed in violation. &lt;em&gt;*sigh*&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;The GNU General Public License&lt;/h2&gt;
+&lt;p&gt;I'll save the discussion about the spirit of the GPL for later, but here's the gist:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[...] if you distribute copies of such a program, whether gratis or
+for a fee, you must give the recipients all the rights that you have.
+You must make sure that they, too, receive or can get the source code.
+And you must show them these terms so they know their rights.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;That's from the preamble of the &lt;a href="https://www.gnu.org/licenses/gpl2.txt"&gt;GPL Version 2&lt;/a&gt;. The license goes on to outline the terms and conditions for copying, distribution and modification.&lt;/p&gt;
+&lt;p&gt;After several readings of the text it is my opinion that BRCK is &lt;em&gt;in violation of Sections 1, 2, and 3&lt;/em&gt; of the GPL v2 and that &lt;em&gt;their rights to distribute OpenWRT-derived works should be terminated under Section 4&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;My analysis follows.&lt;/p&gt;
+&lt;h3&gt;Section 1&lt;/h3&gt;
+&lt;p&gt;Section 1 deals with the distribution of source code. Specifically:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You may copy and distribute verbatim copies of the Program's source
+code as you receive it, in any medium, provided that you conspicuously
+and appropriately publish on each copy an appropriate copyright notice
+and disclaimer of warranty; keep intact all the notices that refer to
+this License and to the absence of any warranty; and give any other
+recipients of the Program a copy of this License along with the
+Program.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This is very important because compliance with Section 1 is required by subsequent Sections of the license. Use of the language "&lt;em&gt;may copy&lt;/em&gt;" merely grants BRCK the permission to distribute program source code which is explicitly required by Sections 2 and 3. In addition, Section 1 states that the copyright notice and license from the original work must be preserved.&lt;/p&gt;
+&lt;p&gt;While BRCK does not provide source code for their work, they do offer public &lt;a href="https://www.brck.com/firmware/"&gt;downloads of their firmware binaries&lt;/a&gt;. Unfortunately there is neither a &lt;code&gt;LICENSE.txt&lt;/code&gt; file nor any mention of the the GPL in the archive provided:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ls -l brckv1_20141114.zip
+-rw-r----- &lt;span class="m"&gt;1&lt;/span&gt; aorth staff &lt;span class="m"&gt;5547580&lt;/span&gt; May &lt;span class="m"&gt;17&lt;/span&gt; 14:01 brckv1_20141114.zip
+$ shasum brckv1_20141114.zip
+d6dcbb1d61e99bf2b35133c5e6897a352518da0c  brckv1_20141114.zip
+$ unzip brckv1_20141114.zip
+$ grep -r -E &lt;span class="s1"&gt;&amp;#39;gpl|GPL&amp;#39;&lt;/span&gt; brckv1_20141114/* &lt;span class="p"&gt;|&lt;/span&gt; wc -l
+0
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;brckv1_20141114.zip&lt;/code&gt; was retrieved on May 17, 2015 and had the file size and SHA1 fingerprint shown above.&lt;/p&gt;
+&lt;h3&gt;Section 2&lt;/h3&gt;
+&lt;p&gt;Section 2 deals with modifications to the program. Specifically:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;a) You must cause the modified files to carry prominent notices
+stating that you changed the files and the date of any change.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;At first this Section doesn't seem to apply, as BRCK claims to be using "stock unmodified OpenWRT", but I find their claim dubious for two reasons:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The OpenWRT project doesn't provide source code producing firmware for any device called "BRCK", so it is unclear from which source code the firmware builds are created.&lt;/li&gt;
+&lt;li&gt;BRCK themselves allude to "optimizing" for a 4MB image size, which implies modification.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Nevertheless, if BRCK does indeed use "stock unmodified OpenWRT" source code then the &lt;a href="https://www.kernel.org/doc/pending/gplv2-howto.html"&gt;Linux kernel's GPL v2 compliance guide&lt;/a&gt; suggests:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The minimum sufficient answer includes the version number, whether or
+not it was modified, and where we can get it from. I.E. something
+like: "We used Linux 2.6.22.4, from www.kernel.org, and we didn't
+modify it." If you didn't modify a package, say so. Even when you used
+unmodified source code, the GPL requires you to _identify_ the
+source code you used, clearly and explicitly, at least in response to
+direct questions about it.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;One &lt;a href="https://copyleft.org/guide/comprehensive-gpl-guidech6.html"&gt;popular interpretation&lt;/a&gt; of the GPL v2 states that Section 2 "&lt;em&gt;[...] seeks to ensure that those receiving modified versions know the history of changes to the software.&lt;/em&gt;"&lt;/p&gt;
+&lt;p&gt;As BRCK neither publishes the corresponding source code for their modified binaries, nor explicitly states the exact "unmodified" versions used, they are in clear violation of Section 2.&lt;/p&gt;
+&lt;h3&gt;Section 3&lt;/h3&gt;
+&lt;p&gt;Section 3 deals with the distribution of derived works in object code or executable form. Specifically:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;a) Accompany it with the complete corresponding machine-readable
+source code, which must be distributed under the terms of Sections 1
+and 2 above&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It goes on to state:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;For an executable work, complete source code means all the source code
+for all modules it contains, plus any associated interface definition
+files, plus the scripts used to control compilation and installation
+of the executable.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Not only does BRCK need to provide the complete source code for their OpenWRT-derived work itself, they need to provide the bits used to produce their firmware builds &lt;em&gt;from&lt;/em&gt; that source code.&lt;/p&gt;
+&lt;h3&gt;Sections 4 and 5&lt;/h3&gt;
+&lt;p&gt;Section 5 stipulates implicit acceptance of the license terms upon distribution of the work, and Section 4 is crystal clear on the termination of the rights in case of non-compliance:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;You may not copy, modify, sublicense, or distribute the Program
+except as expressly provided under this License. Any attempt otherwise
+to copy, modify, sublicense or distribute the Program is void, and
+will automatically terminate your rights under this License. [...]&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;By my reading this means BRCK's rights to distribute OpenWRT-derived works are void.&lt;/p&gt;
+&lt;h2&gt;Compliance&lt;/h2&gt;
+&lt;p&gt;Interpretation of the license is a bit confusing at first, but very accessible if you actually read it. Put simply: copyleft obligations of the GPL v2 are triggered upon &lt;em&gt;distribution&lt;/em&gt; of binary works derived from a GPL-licensed program.&lt;/p&gt;
+&lt;p&gt;As BRCK is distributing an OpenWRT-derived work in object code form, Section 3 requires that they provide &lt;em&gt;complete corresponding machine-readable source code&lt;/em&gt; used to produce the object code they are distributing. Section 1 grants them the permission to provide this code and stipulates that it must preserve the copyright notice and license of the original work.&lt;/p&gt;
+&lt;p&gt;The implications of Section 2 are less clear, depending on whether or not BRCK is actually using "stock unmodified OpenWRT" source code. I suppose that's up to them to decide, but I would urge them to keep in mind the spirit of the GPL v2 when making that decision.&lt;/p&gt;
+&lt;h2&gt;BRCK Should Know Better&lt;/h2&gt;
+&lt;p&gt;BRCK is not the "enemy", but they — of all people — should know better. We expect this behavior from large corporations, but not from quasi-community-based organizations operating in the technical sector.&lt;/p&gt;
+&lt;p&gt;In the end none of this matters unless someone is willing to take BRCK to court over non-compliance. Even if someone was willing to do so, I think it would be sad if it had to come to that. Instead, I hope this serves as a lesson in GPL v2 compliance for Kenyan organizations in the future, and indeed a public record of my findings.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Update (2015-05-19):&lt;/strong&gt; BRCK has &lt;a href="http://forums.brck.com/t/where-is-the-openwrt-fork-source-at/482/11"&gt;responded&lt;/a&gt; and posted &lt;a href="https://www.brck.com/open-source-compliance/"&gt;licensing information and source code&lt;/a&gt; on their website.&lt;/p&gt;
+&lt;p&gt;This was &lt;a href="https://mjanja.ch/2015/05/brck-in-violation-of-the-gpl/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="licensing"></category><category term="gpl"></category></entry></feed>
