@@ -15,13 +15,13 @@ Understanding the tools and technology related to video encoding is like trying 
 VP9 is the newer of two related open and royalty-free video codecs developed by Google. It delivers seriously impressive quality at very low file sizes, but takes _fucking forever_ to encode. At this point in time there is [pretty good support of VP9 in web browsers](http://caniuse.com/#feat=webm), though generally not [hardware accelerated](http://wiki.webmproject.org/hardware/socs). The following is a two-pass encode using the "constrained quality" mode from the [WebM VP9 encoding guide](http://wiki.webmproject.org/ffmpeg/vp9-encoding-guide):
 
 ```
-$ ffmpeg -i input.mp4 -c:v libvpx-vp9 -pass 1 -b:v 1400K -crf 23 -threads 4 -speed 4 -tile-columns 6 -frame-parallel 1 -an -f webm /dev/null
-$ ffmpeg -i input.mp4 -c:v libvpx-vp9 -pass 2 -b:v 1400K -crf 23 -threads 4 -speed 2 -tile-columns 6 -frame-parallel 1 -auto-alt-ref 1 -lag-in-frames 25 -c:a libvorbis -f webm output.webm
+$ ffmpeg -i input.mp4 -c:v libvpx-vp9 -pass 1 -b:v 1400K -crf 23 -threads 2 -speed 4 -tile-columns 6 -frame-parallel 1 -an -f webm /dev/null
+$ ffmpeg -i input.mp4 -c:v libvpx-vp9 -pass 2 -b:v 1400K -crf 23 -threads 2 -speed 2 -tile-columns 6 -frame-parallel 1 -auto-alt-ref 1 -lag-in-frames 25 -c:a libvorbis -f webm output.webm
 ```
 
 The constrained quality mode gives you more control over the target bitrate. If you want higher quality, bump up the bitrate or reduce the CRF value a bit. Pay attention to the `threads` option and adjust for how many CPU cores your computer has. Also note that I'm encoding the audio with the older `vorbis` codec because [`opus` isn't well supported yet](http://caniuse.com/#feat=opus). You can read more about the other options on the [ffmpeg VP9 encoding guide](https://trac.ffmpeg.org/wiki/Encode/VP9).
 
-For reference, these two passes took 206 and 2419 seconds to complete respectively, and the file size of the resulting video was 3.2 megabytes. The VP9 encoder seems to be able to use multiple CPU cores, but I only noticed them being used in the second pass.
+For reference, these two passes took 224 and 1763 seconds to complete respectively, and the file size of the resulting video was 2.7 megabytes. The VP9 encoder seems to be able to use multiple CPU cores, but I only noticed them being used in the second pass.
 
 ## H.264
 
@@ -58,6 +58,6 @@ So, for the love of the open web: use VP9! Maybe the 2017 or 2018 edition of thi
 
 ### Technical Notes
 
-I was using ffmpeg version 3.1.1 on a 2015 MacBook Pro with a dual-core [2.7 GHz Core i5 (I5-5257U)](http://ark.intel.com/products/84985/Intel-Core-i5-5257U-Processor-3M-Cache-up-to-3_10-GHz) processor. Now that I think about it I should run the VP9 encode again with two threads instead of four, as I only realized just now that my processor was dual core. :)
+I was using ffmpeg version 3.1.1 on a 2015 MacBook Pro with a dual-core [2.7 GHz Core i5 (I5-5257U)](http://ark.intel.com/products/84985/Intel-Core-i5-5257U-Processor-3M-Cache-up-to-3_10-GHz) processor.
 
 This was [originally posted](https://mjanja.ch/2016/07/video-encoding-for-the-web-in-2016/) on my personal blog; re-posted here for posterity.
