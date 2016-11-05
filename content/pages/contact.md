@@ -11,11 +11,11 @@ Online, we primarily communicate through an email mailing list. If you need help
 
 ## IRC
 
-We have a real-time chat channel, [#nairobilug](irc://chat.freenode.net/#nairobilug), on the Freenode IRC network. If you are new to IRC, you can connect through Freenode's web site here: [http://webchat.freenode.net/?channels=nairobilug](http://webchat.freenode.net/?channels=nairobilug)
+We have a real-time chat channel, [#nairobilug](irc://chat.freenode.net/#nairobilug), on the Freenode IRC network. If you are new to IRC, you can connect through Freenode's web site [here](http://webchat.freenode.net/?channels=nairobilug).
 
 ## Social Media
 
 Find us around the web in the following places:
 
-- Google+: [https://plus.google.com/u/0/communities/107260210367217532462](https://plus.google.com/u/0/communities/107260210367217532462)
-- Twitter: [@nairobilug](https://twitter.com/nairobilug)
+- [Google+](https://plus.google.com/u/0/communities/107260210367217532462)
+- [Twitter](https://twitter.com/nairobilug)
