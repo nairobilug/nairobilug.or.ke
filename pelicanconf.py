@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
-
-
 # Pelican settings ------------------------------------------------------------
 
-AUTHOR = u'Multiple'
-SITENAME = u'Nairobi GNU/Linux Users Group'
+AUTHOR = 'Multiple'
+SITENAME = 'Nairobi GNU/Linux Users Group'
+# Intentionally left blank, see publishconf.py
 SITEURL = ''
 
+TIMEZONE = 'Africa/Nairobi'
+DEFAULT_LANG = 'en'
 PATH = 'content'
 THEME = 'theme/alchemy'
-
-TIMEZONE = 'Africa/Nairobi'
-DEFAULT_LANG = u'en'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -68,7 +65,7 @@ SHOW_ARTICLE_AUTHOR = True
 EXTRA_FAVICON = True
 
 MENU_ITEMS = (
-    ('IRC', 'https://kiwiirc.com/client/irc.freenode.net/#nairobilug'),
+    ('IRC', 'http://webchat.freenode.net/?channels=nairobilug'),
     ('Mailing List', 'https://groups.google.com/forum/#!forum/nairobi-gnu'),
 )
 
