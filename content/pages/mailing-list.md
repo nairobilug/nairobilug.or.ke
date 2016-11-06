@@ -5,23 +5,22 @@ Slug: mailing-list
 Author: Raymond Wanyoike
 Summary: Nairobi GNU/Linux User Group mailing list.
 
-This list is for the discussion of Linux related issues, news, and ideas.
+The primary day-to-day method of communication with the LUG is done via a mailing list. It is the centre of NairobiLUG activity.
 
-Particularly for this list:
+## What Is It?
 
-- Try to stay out of political, social, or religious issues.
-- Avoid bad jokes, personal rants or similar non-Linux related discussion.
-- Don't request pirated software, license keys or cracks.
-- No commercial advertising.
-- Job postings are ok, but:
-    1. You have to be subscribed to the mailing list.
-    2. The skillset required must be relevant.
-- Where possible, please try to post and reply in plain text.
-- Please trim quotes in replies.
-- Have fun on the list.
+A mailing list is a service that sends e-mail out to everyone else who is subscribed. To ask a question, or help answer one, you simply send your e-mail to a special e-mail address. Your e-mail is then sent out to all the mailing list subscribers. Other members can then reply to the original e-mail by sending their reply to the same mailing list e-mail address. That reply is then also sent out to all the subscribers. A conversation-like dialog develops, and every member can learn from, or contribute to, the discussion.
 
-To subscribe send an email to: **nairobi-gnu+subscribe [@] googlegroups.com**
+If you're confused by that description, then try the list out for a week or so and you'll soon pick it up!
 
-Or signup using this link [here](https://groups.google.com/forum/#!forum/nairobi-gnu/join). You can view the list archive [here](https://groups.google.com/forum/#!forum/nairobi-gnu).
+## Joining
 
-If you are having issues subscribing to the mailing list please use our [contact page]({filename}/pages/contact.md).
+You must sign up before you can post to the list. You can send an email to **nairobi-gnu+subscribe [@] googlegroups.com**, or use [this link](https://groups.google.com/forum/#!forum/nairobi-gnu/join).
+
+If you are having issues subscribing to the mailing list please let us know via our [contact page]({filename}/pages/contact.md).
+
+We do our utmost to obscure your email address from falling into the hands of spammers. The archives obfuscate email addresses by removing all domain names.
+
+## Archives
+
+You can also view an [archive](https://groups.google.com/forum/#!forum/nairobi-gnu) of old emails. As you can see, this list is publicly viewable.
