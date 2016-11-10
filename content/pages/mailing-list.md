@@ -2,8 +2,6 @@ Title: Mailing List
 Date: 2016-06-30 18:00
 Category: Pages
 Slug: mailing-list
-Author: Raymond Wanyoike
-Summary: Nairobi GNU/Linux User Group mailing list.
 
 The primary day-to-day method of communication with the LUG is done via a mailing list. It is the centre of NairobiLUG activity.
 
