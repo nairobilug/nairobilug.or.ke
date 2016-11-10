@@ -2,8 +2,6 @@ Title: About Us
 Date: 2013-10-08 13:00
 Category: Pages
 Slug: about-us
-Authors: Ken King'ori, Raymond Wanyoike
-Summary: About the Nairobi GNU/Linux User Group.
 
 The Nairobi GNU/Linux Users Group (NairobiLUG) is a not-for-profit community serving the greater Nairobi area. We are a collection of people dedicated to GNU/Linux, Free Software, Open Source, and related topics. Members meet regularly (in person) at various meetup locations, and participate in our email discussion list. Through participation in the LUG forums, we combine our efforts to both teach and disseminate information, allowing us to better understand and control the open source world we are using, building and promoting to others.
 
