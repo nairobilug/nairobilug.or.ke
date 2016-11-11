@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 
-# Pelican settings ------------------------------------------------------------
+from __future__ import unicode_literals
 
 AUTHOR = 'Multiple'
-SITENAME = 'Nairobi GNU/Linux Users Group'
-# Intentionally left blank, see publishconf.py
-SITEURL = ''
+SITENAME = 'Nairobi LUG'
+SITEURL = ''  # Intentionally left blank, see ./publishconf.py
+
+PATH = 'content'
 
 TIMEZONE = 'Africa/Nairobi'
 DEFAULT_LANG = 'en'
-PATH = 'content'
-THEME = 'theme/alchemy'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -20,14 +19,16 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 ARTICLE_URL = '{date:%Y}/{date:%m}/{slug}.html'
-ARTICLE_SAVE_AS = '{date:%Y}/{date:%m}/{slug}.html'
-ARTICLE_LANG_SAVE_AS = '{date:%Y}/{date:%m}/{slug}-{lang}.html'
+ARTICLE_SAVE_AS = ARTICLE_URL
 ARTICLE_LANG_URL = '{date:%Y}/{date:%m}/{slug}-{lang}.html'
+ARTICLE_LANG_SAVE_AS = ARTICLE_LANG_URL
 
 PAGE_URL = '{date:%Y}/{date:%m}/pages/{slug}.html'
-PAGE_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}.html'
-PAGE_LANG_SAVE_AS = '{date:%Y}/{date:%m}/pages/{slug}-{lang}.html'
+PAGE_SAVE_AS = PAGE_URL
 PAGE_LANG_URL = '{date:%Y}/{date:%m}/pages/{slug}-{lang}.html'
+PAGE_LANG_SAVE_AS = PAGE_LANG_URL
+
+DEFAULT_PAGINATION = 8
 
 STATIC_PATHS = [
     'extra/CNAME',
@@ -50,9 +51,9 @@ EXTRA_PATH_METADATA = {
     'extra/favicon-196x196.png': {'path': 'favicon-196x196.png'},
 }
 
-DEFAULT_PAGINATION = 20
-
 # Theme settings --------------------------------------------------------------
+
+THEME = 'theme/alchemy'
 
 SITE_SUBTEXT = 'A lively community of GNU/Linux enthusiasts'
 META_DESCRIPTION = 'A not-for-profit community serving the greater Nairobi ' \
