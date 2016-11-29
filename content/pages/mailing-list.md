@@ -1,5 +1,4 @@
 Title: Mailing List
-Date: 2016-06-30 18:00
 Category: Pages
 Slug: mailing-list
 
