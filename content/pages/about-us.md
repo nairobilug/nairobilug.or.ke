@@ -1,5 +1,4 @@
 Title: About Us
-Date: 2013-10-08 13:00
 Category: Pages
 Slug: about-us
 
