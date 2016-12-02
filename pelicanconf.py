@@ -30,25 +30,15 @@ PAGE_LANG_SAVE_AS = PAGE_LANG_URL
 
 DEFAULT_PAGINATION = 8
 
-STATIC_PATHS = [
-    'extra/CNAME',
-    'extra/favicon.ico',
-    'extra/favicon-16x16.png',
-    'extra/favicon-32x32.png',
-    'extra/favicon-96x96.png',
-    'extra/favicon-160x160.png',
-    'extra/favicon-196x196.png',
-    'images',
-]
-
+STATIC_PATHS = ['extras', 'images']
 EXTRA_PATH_METADATA = {
-    'extra/CNAME': {'path': 'CNAME'},
-    'extra/favicon.ico': {'path': 'favicon.ico'},
-    'extra/favicon-16x16.png': {'path': 'favicon-16x16.png'},
-    'extra/favicon-32x32.png': {'path': 'favicon-32x32.png'},
-    'extra/favicon-96x96.png': {'path': 'favicon-96x96.png'},
-    'extra/favicon-160x160.png': {'path': 'favicon-160x160.png'},
-    'extra/favicon-196x196.png': {'path': 'favicon-196x196.png'},
+    'extras/CNAME': {'path': 'CNAME'},
+    'extras/favicon-160x160.png': {'path': 'favicon-160x160.png'},
+    'extras/favicon-16x16.png': {'path': 'favicon-16x16.png'},
+    'extras/favicon-196x196.png': {'path': 'favicon-196x196.png'},
+    'extras/favicon-32x32.png': {'path': 'favicon-32x32.png'},
+    'extras/favicon-96x96.png': {'path': 'favicon-96x96.png'},
+    'extras/favicon.ico': {'path': 'favicon.ico'},
 }
 
 # Theme settings --------------------------------------------------------------
