@@ -28,7 +28,7 @@ PAGE_SAVE_AS = PAGE_URL
 PAGE_LANG_URL = '{date:%Y}/{date:%m}/pages/{slug}-{lang}.html'
 PAGE_LANG_SAVE_AS = PAGE_LANG_URL
 
-DEFAULT_PAGINATION = 8
+DEFAULT_PAGINATION = 10
 
 STATIC_PATHS = ['extras', 'images']
 EXTRA_PATH_METADATA = {
