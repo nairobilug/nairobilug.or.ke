@@ -1,3 +1,3 @@
-[submodule "theme"]
-    path = theme
-    url = https://github.com/nairobilug/pelican-alchemy.git
+[submodule "themes/pelican-alchemy"]
+	path = themes/pelican-alchemy
+	url = https://github.com/nairobilug/pelican-alchemy
