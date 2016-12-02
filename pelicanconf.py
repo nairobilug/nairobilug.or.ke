@@ -41,6 +41,16 @@ EXTRA_PATH_METADATA = {
     'extras/favicon.ico': {'path': 'favicon.ico'},
 }
 
+# http://docs.getpelican.com/en/stable/plugins.html#how-to-use-plugins
+PLUGIN_PATHS = ['plugins']
+PLUGINS = ['pelican-bootstrapify']
+
+BOOTSTRAPIFY = {
+    'table': ['table', 'table-striped', 'table-hover'],
+    'img': ['img-fluid'],
+    'blockquote': ['blockquote'],
+}
+
 # Theme settings --------------------------------------------------------------
 
 THEME = 'theme/alchemy'
