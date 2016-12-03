@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Nairobi LUG</title><link href="https://nairobilug.or.ke/" rel="alternate"></link><link href="https://nairobilug.or.ke/feeds/tech.atom.xml" rel="self"></link><id>https://nairobilug.or.ke/</id><updated>2014-09-04T18:37:00+03:00</updated><entry><title>The "SCTP" Protocol</title><link href="https://nairobilug.or.ke/2014/09/sctp-protocol.html" rel="alternate"></link><published>2014-09-04T18:37:00+03:00</published><updated>2014-09-04T18:37:00+03:00</updated><author><name>John Troon</name></author><id>tag:nairobilug.or.ke,2014-09-04:2014/09/sctp-protocol.html</id><summary type="html">&lt;p&gt;TCP and UDP protocols have been in around for approximately 20+ years now. Even though they have helped in building nice Internet applications since inception, things are changing in the techie world and they will always change. TCP being a connection state protocol while UDP a connectionless state protocol, there have been attempts to build a general purpose protocol above the IP layer, SCTP so far is the only one endorsed by the IETF.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Nairobi GNU/Linux Users Group</title><link href="https://nairobilug.or.ke/" rel="alternate"></link><link href="https://nairobilug.or.ke/feeds/tech.atom.xml" rel="self"></link><id>https://nairobilug.or.ke/</id><updated>2014-09-04T18:37:00+03:00</updated><entry><title>The "SCTP" Protocol</title><link href="https://nairobilug.or.ke/2014/09/sctp-protocol.html" rel="alternate"></link><published>2014-09-04T18:37:00+03:00</published><updated>2014-09-04T18:37:00+03:00</updated><author><name>John Troon</name></author><id>tag:nairobilug.or.ke,2014-09-04:2014/09/sctp-protocol.html</id><summary type="html">&lt;p&gt;TCP and UDP protocols have been in around for approximately 20+ years now. Even though they have helped in building nice Internet applications since inception, things are changing in the techie world and they will always change. TCP being a connection state protocol while UDP a connectionless state protocol, there have been attempts to build a general purpose protocol above the IP layer, SCTP so far is the only one endorsed by the IETF.&lt;/p&gt;
 &lt;p&gt;SCTP combines concepts from TCP and UDP for even better control over the transport of packets (with additional API calls for SCTP). TCP applications can be ported to SCTP.&lt;/p&gt;
 &lt;h2&gt;Some Cool Features:&lt;/h2&gt;
 &lt;ol&gt;
@@ -23,7 +23,7 @@
 &lt;p&gt;&lt;strong&gt;Still message-oriented.. :&lt;/strong&gt; TCP is a byte-oriented protocol, and UDP is message-oriented. The majority of applications are message-oriented, and applications using TCP have to jump through hoops, such as sending the message length as a first parameter. SCTP is message-oriented, so such tricks are not so necessary.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;blockquote&gt;
+&lt;blockquote class="blockquote"&gt;
 &lt;p&gt;It is no longer necessary to open up multiple sockets; instead, a single socket can be used for multiple streams to a connected host. SCTP tries to provide a more reliable and robust protocol than either TCP or UDP. Btw, SCTP is not in any Microsoft release, another reason to love Linux? :)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2&gt;Resources&lt;/h2&gt;
@@ -71,7 +71,7 @@ For an introduction to coreboot see &lt;a href="https://johnlewis.ie/mediawiki/i
 &lt;h3&gt;Finally&lt;/h3&gt;
 &lt;p&gt;Now you have Debian on your system, it is time to do the post-installation steps. As I told you, those are found on the page you &lt;a href="https://wiki.debian.org/InstallingDebianOn/Acer/C710-2615-Chromebook"&gt;started off with&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Great! Now go ye and be productive!&lt;/p&gt;
-&lt;hr /&gt;
+&lt;hr/&gt;
 &lt;h2&gt;EDITS&lt;/h2&gt;
 &lt;p&gt;April 21, 2014: Sometimes the trackpad does not work - to correct that, you could do the following (from &lt;a href="http://marstella.net/?p=278"&gt;marstella.net&lt;/a&gt; also, thanks to eebrah)&lt;/p&gt;
 &lt;ol&gt;
@@ -79,8 +79,6 @@ For an introduction to coreboot see &lt;a href="https://johnlewis.ie/mediawiki/i
 &lt;p&gt;Edit &lt;code&gt;/etc/modprobe.d/blacklist.conf&lt;/code&gt; and include the following line&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;blacklist chromeos_laptop
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Edit &lt;code&gt;/etc/modules&lt;/code&gt; and include the following lines:&lt;/p&gt;
@@ -89,7 +87,5 @@ i2c-dev
 chromeos_laptop
 cyapa
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;/li&gt;
 &lt;/ol&gt;</summary><category term="hardware"></category><category term="chromebook"></category><category term="debian"></category></entry></feed>

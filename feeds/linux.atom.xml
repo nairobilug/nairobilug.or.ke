@@ -1,36 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Nairobi LUG</title><link href="https://nairobilug.or.ke/" rel="alternate"></link><link href="https://nairobilug.or.ke/feeds/linux.atom.xml" rel="self"></link><id>https://nairobilug.or.ke/</id><updated>2016-07-11T14:42:00+03:00</updated><entry><title>Using systemd Timers to Renew Let’s Encrypt Certificates</title><link href="https://nairobilug.or.ke/2016/07/using-systemd-timers-to-renew-lets-encrypt-certificates.html" rel="alternate"></link><published>2016-07-11T14:42:00+03:00</published><updated>2016-07-11T14:42:00+03:00</updated><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2016-07-11:2016/07/using-systemd-timers-to-renew-lets-encrypt-certificates.html</id><summary type="html">&lt;p&gt;This is a quick blog post to share the systemd timers that I use to automate the renewal of my &lt;a href="https://letsencrypt.org"&gt;Let's Encrypt&lt;/a&gt; certificates. I prefer &lt;a href="https://nairobilug.or.ke/2015/06/cron-systemd-timers.html"&gt;systemd timers to cron jobs&lt;/a&gt; for task scheduling because they are more flexible and easier to debug. I assume that you know what Let's Encrypt is and that you already have some certificates. If not, I recommend that you check out &lt;a href="https://certbot.eff.org"&gt;Certbot&lt;/a&gt; (the official reference client) and get some.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://letsencrypt.org/" title="Let's Encrypt homepage"&gt;&lt;img alt="Let's Encrypt logo" src="https://nairobilug.or.ke/images/letsencrypt-systemd-timers/lets-encrypt.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Nairobi GNU/Linux Users Group</title><link href="https://nairobilug.or.ke/" rel="alternate"></link><link href="https://nairobilug.or.ke/feeds/linux.atom.xml" rel="self"></link><id>https://nairobilug.or.ke/</id><updated>2016-07-11T14:42:00+03:00</updated><entry><title>Using systemd Timers to Renew Let’s Encrypt Certificates</title><link href="https://nairobilug.or.ke/2016/07/using-systemd-timers-to-renew-lets-encrypt-certificates.html" rel="alternate"></link><published>2016-07-11T14:42:00+03:00</published><updated>2016-07-11T14:42:00+03:00</updated><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2016-07-11:2016/07/using-systemd-timers-to-renew-lets-encrypt-certificates.html</id><summary type="html">&lt;p&gt;This is a quick blog post to share the systemd timers that I use to automate the renewal of my &lt;a href="https://letsencrypt.org"&gt;Let's Encrypt&lt;/a&gt; certificates. I prefer &lt;a href="https://nairobilug.or.ke/2015/06/cron-systemd-timers.html"&gt;systemd timers to cron jobs&lt;/a&gt; for task scheduling because they are more flexible and easier to debug. I assume that you know what Let's Encrypt is and that you already have some certificates. If not, I recommend that you check out &lt;a href="https://certbot.eff.org"&gt;Certbot&lt;/a&gt; (the official reference client) and get some.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://letsencrypt.org/" title="Let's Encrypt homepage"&gt;&lt;img alt="Let's Encrypt logo" class="img-fluid" src="https://nairobilug.or.ke/images/letsencrypt-systemd-timers/lets-encrypt.png"/&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Because Let's Encrypt issues &lt;abbr title="Transport Layer Security"&gt;TLS&lt;/abbr&gt; certificates with much &lt;a href="https://letsencrypt.org/2015/11/09/why-90-days.html"&gt;shorter lifetimes&lt;/a&gt; (currently ninety days) than traditional certificate authorities, they expect you to reduce the burden of the issuance and renewal processes by performing them programmatically and automating them.&lt;/p&gt;
 &lt;h2&gt;Check Early, Check Often&lt;/h2&gt;
 &lt;p&gt;Your certificates are good for ninety days, but checking them for renewal on a daily or weekly basis allows for some margin of error in case of server downtime, network interruptions, beach holidays, etc. In the future Let's Encrypt might use even shorter lifespans so it's good to get familiar with this automation now. You will need to create both the &lt;code&gt;service&lt;/code&gt; and &lt;code&gt;timer&lt;/code&gt; unit files below.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;/etc/systemd/system/renew-letsencrypt.service&lt;/em&gt; :&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
-&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Renew Let&amp;#39;s Encrypt certificates&lt;/span&gt;
+&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Renew Let's Encrypt certificates&lt;/span&gt;
 
 &lt;span class="k"&gt;[Service]&lt;/span&gt;
 &lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;oneshot&lt;/span&gt;
 &lt;span class="c1"&gt;# check for renewal, only start/stop nginx if certs need to be renewed&lt;/span&gt;
-&lt;span class="na"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/opt/certbot-auto renew --standalone --pre-hook &amp;quot;/bin/systemctl stop nginx&amp;quot; --post-hook &amp;quot;/bin/systemctl start nginx&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/opt/certbot-auto renew --standalone --pre-hook "/bin/systemctl stop nginx" --post-hook "/bin/systemctl start nginx"&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;&lt;em&gt;/etc/systemd/system/renew-letsencrypt.timer&lt;/em&gt; :&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
-&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Daily renewal of Let&amp;#39;s Encrypt&amp;#39;s certificates&lt;/span&gt;
+&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Daily renewal of Let's Encrypt's certificates&lt;/span&gt;
 
 &lt;span class="k"&gt;[Timer]&lt;/span&gt;
 &lt;span class="c1"&gt;# once a day, at 2AM&lt;/span&gt;
 &lt;span class="na"&gt;OnCalendar&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;*-*-* 02:00:00&lt;/span&gt;
-&lt;span class="c1"&gt;# Be kind to the Let&amp;#39;s Encrypt servers: add a random delay of 0–3600 seconds&lt;/span&gt;
+&lt;span class="c1"&gt;# Be kind to the Let's Encrypt servers: add a random delay of 0–3600 seconds&lt;/span&gt;
 &lt;span class="na"&gt;RandomizedDelaySec&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;3600&lt;/span&gt;
 &lt;span class="na"&gt;Persistent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
 
 &lt;span class="k"&gt;[Install]&lt;/span&gt;
 &lt;span class="na"&gt;WantedBy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;timers.target&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;This timer runs once a day at 2AM, but each execution is delayed by a random amount of time between zero and 3600 seconds using the &lt;code&gt;RandomizedDelaySec&lt;/code&gt; option.&lt;/p&gt;
 &lt;p&gt;Pay attention to the location of the &lt;code&gt;certbot-auto&lt;/code&gt; script in the service file and adjust accordingly for your setup. Also note that I'm using the &lt;code&gt;standalone&lt;/code&gt; mode of execution because the &lt;code&gt;nginx&lt;/code&gt; one isn't stable yet. See the &lt;a href="https://certbot.eff.org/docs/using.html#renewal"&gt;Certbot renewal documentation&lt;/a&gt; for more examples.&lt;/p&gt;
 &lt;h2&gt;Activate and Enable the Timer&lt;/h2&gt;
@@ -39,15 +35,11 @@
 $ sudo systemctl start renew-letsencrypt.timer
 $ sudo systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; renew-letsencrypt.timer
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;Starting the timer is necessary because otherwise it wouldn't be active until the next time you rebooted (assuming it was enabled, that is). You can verify that the timer has been started, its planned execution times, service logs, etc using the following commands:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo systemctl list-timers
 $ sudo journalctl -u renew-letsencrypt
-$ sudo journalctl -u renew-letsencrypt --since&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;yesterday&amp;quot;&lt;/span&gt;
+$ sudo journalctl -u renew-letsencrypt --since&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"yesterday"&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;h2&gt;More Information&lt;/h2&gt;
 &lt;p&gt;See the following for more information:&lt;/p&gt;
 &lt;ul&gt;
@@ -70,7 +62,7 @@ $ sudo journalctl -u renew-letsencrypt --since&lt;span class="o"&gt;=&lt;/span&g
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;get the path to slow query log file&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;MariaDB [(none)]&amp;gt; show variables like &amp;#39;%slow_query%&amp;#39;;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;MariaDB [(none)]&amp;gt; show variables like '%slow_query%';
 +---------------------+-------------------------------+
 | Variable_name       | Value                         |
 +---------------------+-------------------------------+
@@ -79,40 +71,30 @@ $ sudo journalctl -u renew-letsencrypt --since&lt;span class="o"&gt;=&lt;/span&g
 +---------------------+-------------------------------+
 2 rows in set (0.00 sec)
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;temporarily disable slow query logging&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;MariaDB [(none)]&amp;gt; set global slow_query_log=off;
 Query OK, 0 rows affected (0.00 sec)
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;flush only slow logs&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;MariaDB [(none)]&amp;gt; flush slow logs;
 Query OK, 0 rows affected (0.00 sec)
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;rename the old log file and or compress it&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# mv /var/lib/mysql/mysql-slow.log /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log
 # gzip -c /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log &amp;gt; /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log.gz
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;finally, re-enable slow query logging&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;MariaDB [(none)]&amp;gt; set global slow_query_log=on;
 Query OK, 0 rows affected (0.00 sec)
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Using Logrotate&lt;/h2&gt;
@@ -129,13 +111,11 @@ Query OK, 0 rows affected (0.00 sec)
     nocopytruncate
     create 660 mysql mysql
     postrotate
-        /usr/bin/mysql -e &amp;#39;select @@global.slow_query_log into @sq_log_save; set global slow_query_log=off; select sleep(5); FLUSH SLOW LOGS; select sleep(10); set global slow_query_log=@sq_log_save;&amp;#39;
+        /usr/bin/mysql -e 'select @@global.slow_query_log into @sq_log_save; set global slow_query_log=off; select sleep(5); FLUSH SLOW LOGS; select sleep(10); set global slow_query_log=@sq_log_save;'
     endscript
     rotate 150
 }
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;More info. about each config. directive:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;size 1G&lt;/code&gt;: Rotate a log file only if it's bigger than 1Gb&lt;/li&gt;
@@ -166,7 +146,7 @@ Query OK, 0 rows affected (0.00 sec)
 &lt;li&gt;Has (or supports) a sexy graph dashboard&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Prometheus and Heka came up top. Prometheus comes bundled with an integrated time-series database and a graph dashboard. Heka, on the other hand, only collects and processes the time-series data. It might look like Prometheus has a leg up on Heka (it probably does in most use-cases). Using Prometheus, however, means that you have to use everything Prometheus. I hate being locked down — hey boo ;)! Heka supports a &lt;a href="https://hekad.readthedocs.org/en/v0.10.0b0/config/outputs/index.html"&gt;variety of data outputs&lt;/a&gt; including a host of storage engines (&lt;a href="https://influxdata.com"&gt;InfluxDB&lt;/a&gt; being one of them), IRC, ElasticSearch, HTTP, etc. &lt;a href="http://grafana.org"&gt;Grafana&lt;/a&gt; can graph data stored in an InfluxDB database. InfluxDB and Grafana are also very easy to install and run as daemons. Sorted!&lt;/p&gt;
-&lt;blockquote&gt;
+&lt;blockquote class="blockquote"&gt;
 &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;
 Currently, the latest versions for both Heka and InfluxDB are pre v1 (v0.10.0 for Heka and v0.9.6 for InfluxDB). Both are also very young projects. I have however not experienced any issues with my setup. Live a little!&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -186,77 +166,65 @@ Currently, the latest versions for both Heka and InfluxDB are pre v1 (v0.10.0 fo
 &lt;h4&gt;1. Input&lt;/h4&gt;
 &lt;p&gt;For this step, you configure the source for what you're monitoring. It might be a log file, Docker event, etc. In this example, my source is Apache2's access log file.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Apache2AccessLogInput]&lt;/span&gt;
-&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;LogstreamerInput&amp;quot;&lt;/span&gt;
-&lt;span class="na"&gt;log_directory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/var/log/apache2&amp;quot;&lt;/span&gt;
-&lt;span class="na"&gt;file_match&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;access\.log&amp;#39;&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"LogstreamerInput"&lt;/span&gt;
+&lt;span class="na"&gt;log_directory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"/var/log/apache2"&lt;/span&gt;
+&lt;span class="na"&gt;file_match&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'access\.log'&lt;/span&gt;
 &lt;span class="na"&gt;ticker_interval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;5&lt;/span&gt;
-&lt;span class="na"&gt;decoder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Apache2LogDecoder&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;decoder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"Apache2LogDecoder"&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;The first line, with the square brackets, specifies the name you've given the plugin you're defining for the step. You can also use the &lt;strong&gt;type&lt;/strong&gt; as the name and hence won't be required to define the type as a field below the name. I used the 'LogStreamerInput' type to handle for my input plugin. I also had to specify which decoder plugin (described in the next sub-section) I want coupled with the input plugin. Pretty straightforward.&lt;/p&gt;
 &lt;h4&gt;2. Decode&lt;/h4&gt;
 &lt;p&gt;The decoder plugin translates the input gotten by the input plugin to something that can be processed by the plugins that follow it.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Apache2LogDecoder]&lt;/span&gt;
-&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;SandboxDecoder&amp;quot;&lt;/span&gt;
-&lt;span class="na"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;lua_decoders/apache_access.lua&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"SandboxDecoder"&lt;/span&gt;
+&lt;span class="na"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"lua_decoders/apache_access.lua"&lt;/span&gt;
 &lt;span class="s"&gt;    [Apache2LogDecoder.config]&lt;/span&gt;
 &lt;span class="s"&gt;    user_agent_transform = false&lt;/span&gt;
-&lt;span class="s"&gt;    log_format = &amp;quot;%h %l %u %t \&amp;quot;%r\&amp;quot; %&amp;gt;s %O \&amp;quot;%{Referer}i\&amp;quot; \&amp;quot;%{User-Agent}i\&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;    log_format = "%h %l %u %t \"%r\" %&amp;gt;s %O \"%{Referer}i\" \"%{User-Agent}i\""&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;The name you give the decoder plugin has to be consistent with the one defined as the decoder in the input plugin. For the SandboxDecoder type, you also have to provide the file in which the plugin type is defined.&lt;/p&gt;
 &lt;p&gt;There is a set of files that define types that come bundled with Heka in &lt;em&gt;/usr/share/heka&lt;/em&gt;. I, for instance, used the &lt;em&gt;/usr/share/heka/lua_decoders/apache_access.lua&lt;/em&gt; file that defines a SandboxDecoder type. Another cool thing about Heka, you can define your own plugin types and point to where you've defined them in your config files.&lt;/p&gt;
 &lt;h4&gt;3. Filter&lt;/h4&gt;
 &lt;p&gt;You might want to filter out decoded data that you consider unnecessary in your filter plugin.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Apache2HTTPStatusFilter]&lt;/span&gt;
-&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;SandboxFilter&amp;quot;&lt;/span&gt;
-&lt;span class="na"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;lua_filters/http_status.lua&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"SandboxFilter"&lt;/span&gt;
+&lt;span class="na"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"lua_filters/http_status.lua"&lt;/span&gt;
 &lt;span class="na"&gt;ticker_interval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;5&lt;/span&gt;
 &lt;span class="na"&gt;preserve_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;false&lt;/span&gt;
-&lt;span class="na"&gt;message_matcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Type == &amp;#39;logfile&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;message_matcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"Type == 'logfile'"&lt;/span&gt;
 &lt;span class="s"&gt;    [Apache2HTTPStatusFilter.config]&lt;/span&gt;
 &lt;span class="s"&gt;    sec_per_row = 60&lt;/span&gt;
 &lt;span class="s"&gt;    rows = 1440&lt;/span&gt;
 &lt;span class="s"&gt;    preservation_version = 14&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;Some meta-variables are appended to the monitoring data by the decoder plugin depending on the type of decoder used. For instance, the SandboxDecoder in &lt;em&gt;lua_decoders/apache_access.lua&lt;/em&gt; appends the &lt;strong&gt;Type&lt;/strong&gt; meta-variable to the decoded data. You can use these variables to filter out the data you need — because a lot of data is decoded and you might not want to store all of it. Check the decoder type documentation for the full list of appended variables. I only needed data that had the Type set to 'logfile' so I defined this in the &lt;strong&gt;message_matcher&lt;/strong&gt; field.&lt;/p&gt;
-&lt;blockquote&gt;
+&lt;blockquote class="blockquote"&gt;
 &lt;p&gt;&lt;strong&gt;Tip:&lt;/strong&gt;
 I initially set the &lt;strong&gt;message_matcher&lt;/strong&gt; field to "TRUE" so that none of the data was actually filtered out then checked the output to see what I could use to filter out the data.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4&gt;4. Encode&lt;/h4&gt;
 &lt;p&gt;You need to define an encoder plugin for encoding the data to a form that can be processed by whatever you are outputting to. This might be as simple as defining the type for the encoder plugin.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Apache2HTTPStatusInfluxDBEncoder]&lt;/span&gt;
-&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;SandboxEncoder&amp;quot;&lt;/span&gt;
-&lt;span class="na"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;lua_encoders/schema_influx_line.lua&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"SandboxEncoder"&lt;/span&gt;
+&lt;span class="na"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"lua_encoders/schema_influx_line.lua"&lt;/span&gt;
 &lt;span class="s"&gt;    [Apache2HTTPStatusInfluxDBEncoder.config]&lt;/span&gt;
-&lt;span class="s"&gt;    timestamp_precision= &amp;quot;s&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;    timestamp_precision= "s"&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;h4&gt;5. Output&lt;/h4&gt;
 &lt;p&gt;Finally, you need to define the output plugin. I am sending the data to an InfluxDB database so I had to define a plugin for this purpose.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Apache2HTTPStatusInfluxDBOutput]&lt;/span&gt;
-&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;HttpOutput&amp;quot;&lt;/span&gt;
-&lt;span class="na"&gt;message_matcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Type == &amp;#39;logfile&amp;#39;&amp;quot;&lt;/span&gt;
-&lt;span class="na"&gt;address&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;http://127.0.0.1:8086/write?db=a2_access_log&amp;amp;rp=default&amp;amp;precision=s&amp;quot;&lt;/span&gt;
-&lt;span class="na"&gt;username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;root&amp;quot;&lt;/span&gt;
-&lt;span class="na"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;root&amp;quot;&lt;/span&gt;
-&lt;span class="na"&gt;encoder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Apache2HTTPStatusInfluxDBEncoder&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"HttpOutput"&lt;/span&gt;
+&lt;span class="na"&gt;message_matcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"Type == 'logfile'"&lt;/span&gt;
+&lt;span class="na"&gt;address&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"http://127.0.0.1:8086/write?db=a2_access_log&amp;amp;rp=default&amp;amp;precision=s"&lt;/span&gt;
+&lt;span class="na"&gt;username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"root"&lt;/span&gt;
+&lt;span class="na"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"root"&lt;/span&gt;
+&lt;span class="na"&gt;encoder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"Apache2HTTPStatusInfluxDBEncoder"&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;You can define more than one output plugin (you can probably also do this for some of the other steps). I wanted to log the output, during testing, so that I didn't have to query InfluxDB for the data.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[LogOutput]&lt;/span&gt;
-&lt;span class="na"&gt;message_matcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Type == &amp;#39;logfile&amp;#39;&amp;quot;&lt;/span&gt;
-&lt;span class="na"&gt;encoder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Apache2HTTPStatusInfluxDBEncoder&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;message_matcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"Type == 'logfile'"&lt;/span&gt;
+&lt;span class="na"&gt;encoder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"Apache2HTTPStatusInfluxDBEncoder"&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;h3&gt;Conclusion&lt;/h3&gt;
 &lt;p&gt;I love the setup so far:&lt;/p&gt;
 &lt;ul&gt;
@@ -265,9 +233,9 @@ I initially set the &lt;strong&gt;message_matcher&lt;/strong&gt; field to "TRUE"
 &lt;li&gt;InfluxDB isn't using a lot of disk space. The database storing HTTP status codes is 900K on the disk, one month on.&lt;/li&gt;
 &lt;li&gt;The graphs on Grafana look sexy. Here's a screenshot of the graphs on HTTP status codes:&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img alt="Image showing HTTP status codes on Grafana" src="https://nairobilug.or.ke/images/heka-influxdb-and-grafana/heka-influxdb-and-grafana.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Image showing HTTP status codes on Grafana" class="img-fluid" src="https://nairobilug.or.ke/images/heka-influxdb-and-grafana/heka-influxdb-and-grafana.png"/&gt;&lt;/p&gt;
 &lt;p&gt;This was &lt;a href="https://jasonrogena.github.io/2016/01/02/heka-influxdb-and-grafana.html"&gt;originally posted&lt;/a&gt; on my personal blog; re-posting here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="heka"></category><category term="influxdb"></category><category term="grafana"></category></entry><entry><title>Mounting Partitions Using systemd</title><link href="https://nairobilug.or.ke/2015/09/systemd-mount-partition.html" rel="alternate"></link><published>2015-09-02T11:00:00+03:00</published><updated>2015-09-02T11:00:00+03:00</updated><author><name>James Oguya</name></author><id>tag:nairobilug.or.ke,2015-09-02:2015/09/systemd-mount-partition.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.freedesktop.org/wiki/Software/systemd"&gt;systemd&lt;/a&gt; is gradually becoming the de facto init system &amp;amp; service manager replacing the old sysV init scripts &amp;amp; upstart. Recently, I discovered you can mount partitions using &lt;a href="http://www.freedesktop.org/software/systemd/man/systemd.mount.html"&gt;systemd.mount&lt;/a&gt; by writing your own &lt;code&gt;.mount&lt;/code&gt; &lt;a href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html"&gt;systemd unit file&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="super suprised" src="https://nairobilug.or.ke/images/systemd-mount-partition/suprised-cat.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="super suprised" class="img-fluid" src="https://nairobilug.or.ke/images/systemd-mount-partition/suprised-cat.jpg"/&gt;&lt;/p&gt;
 &lt;p&gt;After &lt;em&gt;RTFM'ing&lt;/em&gt;, I realized, under the hood, systemd just runs &lt;a href="http://linux.die.net/man/8/mount"&gt;mount command&lt;/a&gt; to mount the specified partition with the specified mount options listed in the mount unit file. Basically, you need to specify the following options in your unit file:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;What=&lt;/code&gt; a partition name, path or UUID to mount&lt;/li&gt;
@@ -278,8 +246,6 @@ I initially set the &lt;strong&gt;message_matcher&lt;/strong&gt; field to "TRUE"
 &lt;p&gt;In the end, you can convert your typical fstab entry such as this:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;UUID=86fef3b2-bdc9-47fa-bbb1-4e528a89d222 /mnt/backups    ext4    defaults      0 0
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;to:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Mount]&lt;/span&gt;
 &lt;span class="na"&gt;What&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/dev/disk/by-uuid/86fef3b2-bdc9-47fa-bbb1-4e528a89d222&lt;/span&gt;
@@ -287,11 +253,9 @@ I initially set the &lt;strong&gt;message_matcher&lt;/strong&gt; field to "TRUE"
 &lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;ext4&lt;/span&gt;
 &lt;span class="na"&gt;Options&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;defaults&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;&lt;img alt="I Got This!" src="https://nairobilug.or.ke/images/systemd-mount-partition/i-got-this.gif" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="I Got This!" class="img-fluid" src="https://nairobilug.or.ke/images/systemd-mount-partition/i-got-this.gif"/&gt;&lt;/p&gt;
 &lt;p&gt;So I wrote a simple systemd mount unit file — &lt;code&gt;/etc/systemd/system/mnt-backups.mount&lt;/code&gt; — which didn't work at first because I fell victim to one of the &lt;code&gt;systemd.mount&lt;/code&gt; pitfalls:&lt;/p&gt;
-&lt;blockquote&gt;
+&lt;blockquote class="blockquote"&gt;
 &lt;p&gt;Mount units must be named after the mount point directories they control. Example: the mount point /home/lennart must be configured in a unit file home-lennart.mount.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;Huh? Yes that's right! The unit filename should match the mount point path.&lt;/p&gt;
@@ -305,14 +269,10 @@ I initially set the &lt;strong&gt;message_matcher&lt;/strong&gt; field to "TRUE"
 &lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;ext4&lt;/span&gt;
 &lt;span class="na"&gt;Options&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;defaults&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;Reload systemd daemon &amp;amp; start the unit.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;systemctl daemon-reload
 systemctl start mnt-backups.mount
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;And just like any other unit, you can view its status using &lt;code&gt;systemctl status mnt-backups.mount&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;root&lt;/span&gt;&lt;span class="k"&gt;@vast&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nt"&gt;systemctl&lt;/span&gt; &lt;span class="nt"&gt;status&lt;/span&gt; &lt;span class="nt"&gt;mnt-backups&lt;/span&gt;&lt;span class="nc"&gt;.mount&lt;/span&gt;
 &lt;span class="err"&gt;●&lt;/span&gt; &lt;span class="nt"&gt;mnt-backups&lt;/span&gt;&lt;span class="nc"&gt;.mount&lt;/span&gt; &lt;span class="nt"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;Mount&lt;/span&gt; &lt;span class="nt"&gt;System&lt;/span&gt; &lt;span class="nt"&gt;Backups&lt;/span&gt; &lt;span class="nt"&gt;Directory&lt;/span&gt;
@@ -325,8 +285,6 @@ systemctl start mnt-backups.mount
 &lt;span class="nt"&gt;Aug&lt;/span&gt; &lt;span class="nt"&gt;31&lt;/span&gt; &lt;span class="nt"&gt;08&lt;/span&gt;&lt;span class="nd"&gt;:09:15&lt;/span&gt; &lt;span class="nt"&gt;vast&lt;/span&gt; &lt;span class="nt"&gt;systemd&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nt"&gt;Mounting&lt;/span&gt; &lt;span class="nt"&gt;Mount&lt;/span&gt; &lt;span class="nt"&gt;System&lt;/span&gt; &lt;span class="nt"&gt;Backups&lt;/span&gt; &lt;span class="nt"&gt;Directory&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;
 &lt;span class="nt"&gt;Aug&lt;/span&gt; &lt;span class="nt"&gt;31&lt;/span&gt; &lt;span class="nt"&gt;08&lt;/span&gt;&lt;span class="nd"&gt;:09:15&lt;/span&gt; &lt;span class="nt"&gt;vast&lt;/span&gt; &lt;span class="nt"&gt;systemd&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nt"&gt;Mounted&lt;/span&gt; &lt;span class="nt"&gt;Mount&lt;/span&gt; &lt;span class="nt"&gt;System&lt;/span&gt; &lt;span class="nt"&gt;Backups&lt;/span&gt; &lt;span class="nt"&gt;Directory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;h2&gt;Gotchas!!&lt;/h2&gt;
 &lt;p&gt;After a reboot, I noticed the unit wasn't started &amp;amp; as result the mount point dir. was empty. The unit file was missing an &lt;code&gt;[Install]&lt;/code&gt; section which contains installation information such as unit dependencies(&lt;code&gt;WantedBy=, RequiredBy=&lt;/code&gt;), aliases(&lt;code&gt;Alias=&lt;/code&gt;), additional units(&lt;code&gt;Also=&lt;/code&gt;), e.t.c for the specified unit. In this case, I set the unit to start in multi-user runlevel a.k.a &lt;code&gt;multi-user.target&lt;/code&gt;. Oh, did you know you can change runlevel using &lt;code&gt;systemctl isolate $RUN_LEVEL.target&lt;/code&gt;? &lt;a href="https://wiki.archlinux.org/index.php/Systemd#Targets_table"&gt;Read more&lt;/a&gt; about systemd runlevels/targets.&lt;/p&gt;
 &lt;p&gt;Here's the complete &lt;code&gt;/etc/systemd/system/mnt-backups.mount&lt;/code&gt; unit file with an &lt;code&gt;[Install]&lt;/code&gt; section:&lt;/p&gt;
@@ -342,8 +300,6 @@ systemctl start mnt-backups.mount
 &lt;span class="k"&gt;[Install]&lt;/span&gt;
 &lt;span class="na"&gt;WantedBy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;multi-user.target&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;As always, enable the unit to start automatically during boot.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; mnt-backups.mount
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="systemd"></category></entry><entry><title>Stop Skype and PulseAudio From "Uncorking" Media Players</title><link href="https://nairobilug.or.ke/2015/08/stop-pulseaudio-uncorking.html" rel="alternate"></link><published>2015-08-02T15:21:00+03:00</published><updated>2015-08-02T15:21:00+03:00</updated><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-08-02:2015/08/stop-pulseaudio-uncorking.html</id><summary type="html">&lt;p&gt;PulseAudio has a neat feature that allows applications to "uncork" media players like Rhythmbox, Banshee, etc when certain events happen. For example: when a call comes in Skype pauses your music so you can answer without fiddling around to pause manually. Unfortunately Skype also deems the "contact coming online" and "contact going offline" events as worthy of uncorking, so your music gets interrupted for several seconds when these events fire (aka all the time).&lt;/p&gt;
@@ -351,15 +307,11 @@ systemctl start mnt-backups.mount
 &lt;p&gt;A short term solution is to unload the corking module from your user's PulseAudio session:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ pactl unload-module module-role-cork
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;That will take effect immediately for the remainder of the current user's session. A more permanent solution would be to comment out the loading of the "cork" module in PulseAudio's configuration file.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;/etc/pulse/default.pa&lt;/em&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;### Cork music/video streams when a phone stream is active
 #load-module module-role-cork
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;h2&gt;Other Annoyances&lt;/h2&gt;
 &lt;p&gt;Now if only there were a way to address some other Skype annoyances like requiring the installation of a bunch of 32-bit libraries or how chat windows hijack the desktop environment's alt-tab ordering when there is a new message. Oh, it would also be nice if there wasn't massive, gaping &lt;a href="http://www.theguardian.com/world/2013/jul/11/microsoft-nsa-collaboration-user-data"&gt;backdoor giving the NSA access to your chats&lt;/a&gt;. &lt;em&gt;*sigh*&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;This was &lt;a href="https://mjanja.ch/2015/08/stop-skype-and-pulseaudio-from-uncorking-media-players/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="pulseaudio"></category><category term="skype"></category><category term="nsa"></category></entry><entry><title>Replacing Cron Jobs With Systemd Timers</title><link href="https://nairobilug.or.ke/2015/06/cron-systemd-timers.html" rel="alternate"></link><published>2015-06-08T15:21:00+03:00</published><updated>2015-06-08T15:21:00+03:00</updated><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2015-06-08:2015/06/cron-systemd-timers.html</id><summary type="html">&lt;p&gt;systemd has a timer function that can be used to run tasks periodically — yes, like &lt;code&gt;cron&lt;/code&gt;. There's nothing really wrong with cron, but have you ever tried to debug a cron job on a server? The script runs fine from the command line, but nothing seems to happen when it runs from cron. You quickly type &lt;code&gt;date&lt;/code&gt; to see how many seconds until the next minute, adjust the cron job, and wait. Nothing. Repeat. &lt;em&gt;*facedesk*&lt;/em&gt;&lt;/p&gt;
@@ -376,8 +328,6 @@ systemctl start mnt-backups.mount
 &lt;span class="k"&gt;[Install]&lt;/span&gt;
 &lt;span class="na"&gt;WantedBy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;timers.target&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;&lt;em&gt;/etc/systemd/system/system-backup.service&lt;/em&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
 &lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Perform system backup&lt;/span&gt;
@@ -389,32 +339,22 @@ systemctl start mnt-backups.mount
 &lt;span class="na"&gt;IOSchedulingPriority&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;7&lt;/span&gt;
 &lt;span class="na"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/root/system-backup.sh&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;Start and enable the timer:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo systemctl start system-backup.timer
 $ sudo systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; system-backup.timer
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;Starting the timer is necessary because otherwise it wouldn't be active until the next time you rebooted (assuming it was enabled, that is). You can verify that the timer has been started using either of the following commands:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo systemctl status system-backup.timer
 $ sudo systemctl list-timers --all
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;h2&gt;What This Gets You&lt;/h2&gt;
 &lt;p&gt;Using &lt;code&gt;OnCalendar=daily&lt;/code&gt; this job will run every day at midnight, similar to cron's &lt;code&gt;@daily&lt;/code&gt; keyword. If you ever want to run the job manually you can invoke its service on demand:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo systemctl start system-backup.service
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;Unless you're handling stdout manually in your script (like appending to a log file), any output from will go to the systemd journal. You can see the logs just like you'd do for any other system unit file using &lt;code&gt;journalctl&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;For example, to see logs from this timer since yesterday:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo journalctl -u system-backup --since&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;yesterday&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo journalctl -u system-backup --since&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"yesterday"&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;I find this much more elegant than appending to, looking through, and rotating log files manually. Furthermore, I like the ability to set CPU and I/O scheduling priorities in the service itself rather than relying on external &lt;code&gt;nice&lt;/code&gt; and &lt;code&gt;ionice&lt;/code&gt; binaries in the script. :)&lt;/p&gt;
 &lt;h2&gt;More Information&lt;/h2&gt;
 &lt;p&gt;See the following for more information:&lt;/p&gt;
@@ -428,24 +368,18 @@ $ sudo systemctl list-timers --all
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git push github
 $ git push bitbucket
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;This works fine but it's a bit manual. Also, assuming you want both remotes to essentially be mirrors of each other, there's a better way.&lt;/p&gt;
 &lt;h3&gt;A Better Way&lt;/h3&gt;
 &lt;p&gt;If you're using any relatively modern version of git (1.9?) you can manipulate the remote to include two push URLs. Instead of adding a second remote, you simply add a second push URL to the existing remote.&lt;/p&gt;
 &lt;p&gt;For example, adding a BitBucket URL to the remote called "origin":&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git remote set-url origin --add git@bitbucket.org:alanorth/repo.git
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;After that the remote looks like this:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git remote -v
 origin  git@github.com:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;fetch&lt;span class="o"&gt;)&lt;/span&gt;
 origin  git@github.com:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;push&lt;span class="o"&gt;)&lt;/span&gt;
 origin  git@bitbucket.org:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;push&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;Now there are two push URLs, so every time you push it will go to both remotes, while pull or update operations will only come from the URL labeled "fetch".&lt;/p&gt;
 &lt;p&gt;You're welcome. ;)&lt;/p&gt;
 &lt;p&gt;This was &lt;a href="https://mjanja.ch/2015/05/simultaneously-pushing-to-two-remotes-in-a-git-repository/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="git"></category></entry><entry><title>Rebooting Server(s) Using Ansible</title><link href="https://nairobilug.or.ke/2015/03/rebooting-server-using-ansible.html" rel="alternate"></link><published>2015-03-03T12:35:00+03:00</published><updated>2015-03-03T12:35:00+03:00</updated><author><name>James Oguya</name></author><id>tag:nairobilug.or.ke,2015-03-03:2015/03/rebooting-server-using-ansible.html</id><summary type="html">&lt;p&gt;Of late, I've seen a lot of guys on &lt;code&gt;#ansible&lt;/code&gt; irc channel &amp;amp; google groups asking questions about rebooting servers/nodes &amp;amp; temporarily pausing the playbook for a given amount of time before continuing with the execution of the playbook. In some cases, you'd want to set some kernel parameters which take effect at boot time or perform major upgrades which might require a reboot before configuring the server/node.&lt;/p&gt;
@@ -458,24 +392,18 @@ origin  git@bitbucket.org:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;- name: upgrade all packages
   yum: name=* state=latest
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Section 2: &lt;strong&gt;Reboot&lt;/strong&gt;: In this stage we'll use the &lt;code&gt;command&lt;/code&gt; module&lt;a href="http://docs.ansible.com/command_module.html"&gt;&lt;sup&gt;[3]&lt;/sup&gt;&lt;/a&gt; to reboot the remote machine/server by running the &lt;code&gt;reboot&lt;/code&gt; command  - nothing fancy - you can also use &lt;code&gt;shutdown --reboot&lt;/code&gt;.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;- name: reboot server
   command: /sbin/reboot
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Section 3: &lt;strong&gt;Pause the playbook&lt;/strong&gt;: We'll use the &lt;code&gt;wait_for&lt;/code&gt; module to wait for 300 seconds for port 22 to become available before resuming the playbook. I'm using port 22 because most servers run openssh-server on port 22 &amp;amp; if we were to telnet to that port we'd probably see something like :&lt;code&gt;SSH-2.0-OpenSSH_6.6.1&lt;/code&gt;, so we can use regex to check whether the output matches "OpenSSH". I'm also using a &lt;code&gt;timeout&lt;/code&gt; value of 300 seconds because most physical servers take 3 - 5 minutes to finish rebooting due to hardware checks e.t.c. but you can use any value that suites you. For example: - wait for 300 seconds for port 22 to become available &amp;amp; contain &lt;code&gt;OpenSSH&lt;/code&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;- name: wait for the server to finish rebooting
-  local_action: wait_for host=&amp;quot;web01&amp;quot; search_regex=OpenSSH port=22 timeout=300
+  local_action: wait_for host="web01" search_regex=OpenSSH port=22 timeout=300
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Section 4: &lt;strong&gt;Resume the playbook&lt;/strong&gt;: After we've got a response from port 22, we can resume running the playbook. This step can be optional depending on your needs.&lt;/p&gt;
@@ -487,11 +415,11 @@ origin  git@bitbucket.org:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;
 &lt;span class="x"&gt;  sudo: yes&lt;/span&gt;
 &lt;span class="x"&gt;  tasks:&lt;/span&gt;
 &lt;span class="x"&gt;    - name: Upgrade all packages in RedHat-based machines&lt;/span&gt;
-&lt;span class="x"&gt;      when: ansible_os_family == &amp;quot;Redhat&amp;quot;&lt;/span&gt;
+&lt;span class="x"&gt;      when: ansible_os_family == "Redhat"&lt;/span&gt;
 &lt;span class="x"&gt;      yum: name=* state=latest&lt;/span&gt;
 
 &lt;span class="x"&gt;    - name: Upgrade all packages in Debian-based machines&lt;/span&gt;
-&lt;span class="x"&gt;      when: ansible_os_family == &amp;quot;Debian&amp;quot;&lt;/span&gt;
+&lt;span class="x"&gt;      when: ansible_os_family == "Debian"&lt;/span&gt;
 &lt;span class="x"&gt;      apt: upgrade=dist update_cache=yes&lt;/span&gt;
 
 &lt;span class="x"&gt;    - name: Reboot server&lt;/span&gt;
@@ -499,10 +427,8 @@ origin  git@bitbucket.org:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;
 
 &lt;span class="x"&gt;    - name: Wait for the server to finish rebooting&lt;/span&gt;
 &lt;span class="x"&gt;      sudo: no&lt;/span&gt;
-&lt;span class="x"&gt;      local_action: wait_for host=&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;{{&lt;/span&gt; &lt;span class="nv"&gt;inventory_hostname&lt;/span&gt; &lt;span class="cp"&gt;}}&lt;/span&gt;&lt;span class="x"&gt;&amp;quot; search_regex=OpenSSH port=22 timeout=300&lt;/span&gt;
+&lt;span class="x"&gt;      local_action: wait_for host="&lt;/span&gt;&lt;span class="cp"&gt;{{&lt;/span&gt; &lt;span class="nv"&gt;inventory_hostname&lt;/span&gt; &lt;span class="cp"&gt;}}&lt;/span&gt;&lt;span class="x"&gt;" search_regex=OpenSSH port=22 timeout=300&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;Stuff to Note&lt;/h3&gt;
@@ -524,19 +450,16 @@ origin  git@bitbucket.org:alanorth/repo.git &lt;span class="o"&gt;(&lt;/span&gt;
 &lt;p&gt;Somehow I stumbled upon &lt;a href="http://docs.ansible.com/developing_api.html"&gt;Ansible's Python API&lt;/a&gt;, which solves this problem elegantly! It helped that other people are doing cool things and &lt;a href="http://jpmens.net/2012/12/13/obtaining-remote-data-with-ansible-s-api/"&gt;writing about their experiences&lt;/a&gt; too.&lt;/p&gt;
 &lt;h2&gt;Enter ansible.runner&lt;/h2&gt;
 &lt;p&gt;According to the documentation, the Python API is:&lt;/p&gt;
-&lt;blockquote&gt;[...] very powerful, and is how the ansible CLI and ansible-playbook are implemented.&lt;/blockquote&gt;
-
+&lt;blockquote class="blockquote"&gt;[...] very powerful, and is how the ansible CLI and ansible-playbook are implemented.&lt;/blockquote&gt;
 &lt;p&gt;Indeed! Using &lt;code&gt;ansible.runner&lt;/code&gt; I whipped something up and extracted data from several dozen servers in just a few minutes (and I don't even know Python!):&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ./ansible-runner.py
 mjanjavm10, 2, 30, Ubuntu 14.04, 192.168.7.34
 mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;I had to massage the data a bit to get clean numbers for RAM and storage capacity, but other than that it was extremely straightforward (as most things with Ansible generally are).&lt;/p&gt;
 &lt;h2&gt;The Code&lt;/h2&gt;
 &lt;p&gt;Here's the source code for the &lt;em&gt;ansible-runner.py&lt;/em&gt; script above:&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+&lt;table class="table highlighttable table-striped table-hover"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
  2
  3
  4
@@ -590,7 +513,7 @@ mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;ansible.runner&lt;/span&gt;
 
 &lt;span class="c1"&gt;# hosts to contact&lt;/span&gt;
-&lt;span class="n"&gt;hostlist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;virtual&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;hostlist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'virtual'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 
 &lt;span class="c1"&gt;# MiB -&amp;gt; GiB&lt;/span&gt;
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;mibs_to_gibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mibs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -605,28 +528,28 @@ mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num_bytes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt;
 
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;parse_results&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;results&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;results&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;contacted&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-        &lt;span class="n"&gt;memory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mibs_to_gibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_memtotal_mb&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;results&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'contacted'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="n"&gt;memory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mibs_to_gibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'ansible_facts'&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;'ansible_memtotal_mb'&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
 
         &lt;span class="c1"&gt;# enumerate all disk devices to get total capacity&lt;/span&gt;
         &lt;span class="n"&gt;disk_total_capacity&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
-        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;disk_device&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_devices&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iterkeys&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-            &lt;span class="n"&gt;disk_sectors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_devices&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;disk_device&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;sectors&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-            &lt;span class="n"&gt;disk_sectors_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_devices&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;disk_device&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;sectorsize&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;disk_device&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'ansible_facts'&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;'ansible_devices'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iterkeys&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+            &lt;span class="n"&gt;disk_sectors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'ansible_facts'&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;'ansible_devices'&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;disk_device&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;'sectors'&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+            &lt;span class="n"&gt;disk_sectors_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'ansible_facts'&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;'ansible_devices'&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;disk_device&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;'sectorsize'&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
             &lt;span class="n"&gt;disk_bytes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;disk_sectors&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;disk_sectors_size&lt;/span&gt;
 
             &lt;span class="n"&gt;disk_total_capacity&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;bytes_to_gibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;disk_bytes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
-        &lt;span class="n"&gt;os&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_distribution&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_distribution_version&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-        &lt;span class="n"&gt;ip&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_facts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ansible_default_ipv4&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;address&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+        &lt;span class="n"&gt;os&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'ansible_facts'&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;'ansible_distribution'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'ansible_facts'&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;'ansible_distribution_version'&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+        &lt;span class="n"&gt;ip&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'ansible_facts'&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;'ansible_default_ipv4'&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;'address'&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
 
-        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%.0f&lt;/span&gt;&lt;span class="s2"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%2.0f&lt;/span&gt;&lt;span class="s2"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;memory&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;disk_total_capacity&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ip&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%.0f&lt;/span&gt;&lt;span class="s2"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%2.0f&lt;/span&gt;&lt;span class="s2"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt;, &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;memory&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;disk_total_capacity&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ip&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ansible&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;runner&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Runner&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-        &lt;span class="n"&gt;module_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;setup&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="n"&gt;module_args&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="n"&gt;remote_user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;provisioning&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;module_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'setup'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;module_args&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;''&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;remote_user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'provisioning'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
         &lt;span class="n"&gt;sudo&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
         &lt;span class="n"&gt;pattern&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;hostlist&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
         &lt;span class="n"&gt;forks&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;
@@ -637,7 +560,6 @@ mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
 &lt;span class="c1"&gt;# vim: set sw=4 ts=4:&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;p&gt;Feel free to use, improve, and share it.&lt;/p&gt;
 &lt;p&gt;This was &lt;a href="https://mjanja.ch/2015/01/leveraging-the-ansible-python-api-for-infrastructure-reporting/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="ansible"></category><category term="python"></category></entry><entry><title>Ansible 'Prompt' Handlers</title><link href="https://nairobilug.or.ke/2015/01/ansible-prompt-handlers.html" rel="alternate"></link><published>2015-01-02T11:00:00+03:00</published><updated>2015-01-02T11:00:00+03:00</updated><author><name>James Oguya</name></author><id>tag:nairobilug.or.ke,2015-01-02:2015/01/ansible-prompt-handlers.html</id><summary type="html">&lt;p&gt;An awesome feature in &lt;a href="https://chef.io"&gt;Chef&lt;/a&gt; that is not available in &lt;a href="http://ansible.com"&gt;Ansible&lt;/a&gt; is immediate notification i.e. &lt;code&gt;notifies :immediately&lt;/code&gt;. Ansible has &lt;a href="http://docs.ansible.com/playbooks_intro.html#handlers-running-operations-on-change"&gt;notification handlers&lt;/a&gt; but they are only triggered at the end of the current playbook unlike &lt;a href="https://docs.chef.io/resource_common.html#notifies-syntax"&gt;Chef's notifications&lt;/a&gt; which can be triggered immediately! Moreover, you can configure Chef's notifications to be triggered at specific times e.g. at the very end of a chef-client run i.e. &lt;code&gt;notifies :delayed&lt;/code&gt; or immediately i.e. &lt;code&gt;notifies :immediately&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Now, why I'm going into all these boring theories? Well, when installing tomcat on Ubuntu, dpkg starts it automatically once the process is complete. But in my case, I wanted to stop tomcat7 service first, configure it, deploy its webapps &amp;amp; finally start it. So on my ansible tasks file, after installing tomcat7 I added a notification action to call a task that stops tomcat7 service. Here's a snippet from the ansible task file:&lt;/p&gt;
@@ -657,8 +579,6 @@ mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
 &lt;span class="x"&gt;      - name: Temporarily stop tomcat7&lt;/span&gt;
 &lt;span class="x"&gt;      service: name=tomcat7 state=stopped&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;OK so the task file looks great, but did it work ? Unfortunately, no! Ansible notifications trigger tasks in handlers section to run only at the end of a playbook. So I had to come up with a quick fix for this issue.&lt;/p&gt;
 &lt;h3&gt;'Prompt' Handlers&lt;/h3&gt;
 &lt;p&gt;My quick fix involved registering a variable in the task that installs tomcat packages i.e. &lt;code&gt;register: tomcat_installed&lt;/code&gt;, then the next task to stop tomcat service would be executed only if the registered variable has changed i.e. if tomcat7 has been installed - &lt;code&gt;when: tomcat_installed|changed&lt;/code&gt;. Basically, ansible notifications use a similar concept to this.&lt;/p&gt;
@@ -678,8 +598,6 @@ mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
 &lt;span class="x"&gt;        service: name=tomcat7 state=stopped&lt;/span&gt;
 &lt;span class="x"&gt;        when: tomcat_installed|changed&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;As you can see from the snippet, I've not used a handler. Yes that's right, inorder to achieve the effect of an 'immediate' handler, I moved the task that stops tomcat7 service from the handler section to the tasks section.&lt;/p&gt;
 &lt;h3&gt;Conclusion&lt;/h3&gt;
 &lt;p&gt;Though I'm sure there are better solutions out there, I think the concept behind my quick fix can be useful in tackling other ansible-related issues.&lt;/p&gt;</summary><category term="linux"></category><category term="ansible"></category><category term="tomcat"></category></entry><entry><title>Maps and Custom Error Pages in Nginx</title><link href="https://nairobilug.or.ke/2014/12/maps-and-custom-error-pages-nginx.html" rel="alternate"></link><published>2014-12-09T17:00:00+03:00</published><updated>2014-12-09T17:00:00+03:00</updated><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-12-09:2014/12/maps-and-custom-error-pages-nginx.html</id><summary type="html">&lt;p&gt;During a recent web application upgrade I had to limit access to the the web servers; I wanted the administrators and myself to be able to access the site, but for everyone else to see an "&lt;em&gt;Under Construction&lt;/em&gt;" page. My initial plan was to test if the &lt;code&gt;$remote_addr&lt;/code&gt; was one of the allowed IPs, and then redirect those clients to a maintenance page, but I couldn't figure out how to test more than one IP address (seriously)!&lt;/p&gt;
@@ -713,8 +631,6 @@ mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
     &lt;span class="m"&gt;192&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;64&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;147&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;150&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;By default all IP addresses are denied (ie, &lt;code&gt;$denied=1&lt;/code&gt;), but depending on the client's IP address, the &lt;code&gt;$denied&lt;/code&gt; variable can be set to 0. In the root location block I essentially test if the IP address is denied and conditionally return an HTTP 503 (&lt;em&gt;Service Unavailable&lt;/em&gt;), which is handled by a custom &lt;code&gt;error_page&lt;/code&gt; handler with a named location block. So cool!&lt;/p&gt;
 &lt;h3&gt;In Retrospect&lt;/h3&gt;
 &lt;p&gt;In retrospect I probably could have used a regex in the &lt;code&gt;$remote_addr&lt;/code&gt; test, but maps are really a more flexible, efficient, and "nginx" way of accomplishing this. On that note, I'm using nginx more and more lately and, in addition to being fast as hell and having better TLS support, it's just more fun to use than Apache. ;)&lt;/p&gt;
@@ -724,22 +640,18 @@ mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
 &lt;p&gt;&lt;abbr title="Too long; didn't read"&gt;TL;DR&lt;/abbr&gt;: Strip EXIF data, interlace, convert to 80% quality, and scale to ~50% of original image dimensions.&lt;/p&gt;
 &lt;h3&gt;It's Easy!&lt;/h3&gt;
 &lt;p&gt;After a bit of Google-fu I learned that this is easier than I had originally thought. For example, take this picture of me eating a piece of halloumi cheese:&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Alan eating halloumi" src="https://nairobilug.or.ke/images/image-compression-open-source/alan-halloumi.jpg" title="Alan eating halloumi" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Alan eating halloumi" class="img-fluid" src="https://nairobilug.or.ke/images/image-compression-open-source/alan-halloumi.jpg" title="Alan eating halloumi"/&gt;&lt;/p&gt;
 &lt;p&gt;Straight from the fancy DSLR camera the image is &lt;em&gt;3.6 megabytes&lt;/em&gt; — much too large to share practically on the web. Amazingly, after uploading to Compressor.io the image is reduced to &lt;em&gt;1.6 megabytes&lt;/em&gt;. That's an impressive feat considering the image wasn't downscaled and is visually indistinguishable from the original!&lt;/p&gt;
 &lt;p&gt;As it turns out, it's actually pretty easy to achieve this level of savings:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ jpegtran -copy none -progressive -outfile DSC_0685-trimmed.JPG DSC_0685.JPG
 $ gm mogrify DSC_0685-trimmed.JPG -quality 80
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;The result is actually &lt;em&gt;better&lt;/em&gt; than Compressor.io:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ls -lht DSC_0685*
 -rw-r--r-- &lt;span class="m"&gt;1&lt;/span&gt; aorth staff 1.4M Oct &lt;span class="m"&gt;14&lt;/span&gt; 21:52 DSC_0685-trimmed.JPG
 -rw-r--r-- &lt;span class="m"&gt;1&lt;/span&gt; aorth staff 1.6M Oct &lt;span class="m"&gt;14&lt;/span&gt; 20:47 DSC_0685-compressor.jpg
 -rw-r--r-- &lt;span class="m"&gt;1&lt;/span&gt; aorth staff 3.6M Jun &lt;span class="m"&gt;28&lt;/span&gt; 11:21 DSC_0685.JPG
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;The first operation — &lt;code&gt;jpegtran&lt;/code&gt; — is "lossless". That is, it doesn't change the image data itself, instead optimizing the image's compression algorithm and stripping the EXIF data, and converts to &lt;em&gt;&lt;a href="http://www.bookofspeed.com/chapter5.html"&gt;progressive JPEGs&lt;/a&gt;&lt;/em&gt;. EXIF data, like GPS coordinates, exposure length, ISO, etc are useful to the photographer or image manipulation software, but not essential when uploading to the web.&lt;/p&gt;
 &lt;p&gt;The second operation — GraphicsMagick — is "lossy" because it reduces the image to 80% quality. GraphicsMagick's &lt;code&gt;mogrify&lt;/code&gt; command is very similar to the &lt;code&gt;convert&lt;/code&gt; command, but it &lt;em&gt;edits files in place&lt;/em&gt; (so be careful!).&lt;/p&gt;
 &lt;h3&gt;Extra Points&lt;/h3&gt;
@@ -747,8 +659,6 @@ $ gm mogrify DSC_0685-trimmed.JPG -quality 80
 &lt;p&gt;Given that high-end smart phones literally can't even fit more than 50% of this image on the screen, it's safe to assume that we can scale down the dimensions by a factor of at least 50% without sacrificing too much... I'll sympathize with the bandwidth deprived and go for 40%:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ gm convert DSC_0685-trimmed.JPG -resize 40% -quality &lt;span class="m"&gt;80&lt;/span&gt; -interlace Line DSC_0685-trimmed-scaled.JPG
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;After this the file is a mere &lt;em&gt;357 kilobytes&lt;/em&gt;, yet still nearly indistinguishable from the original!&lt;/p&gt;
 &lt;p&gt;This command is a bit of a mystery to me, though. For some reason, in this particular invocation, &lt;code&gt;convert&lt;/code&gt; yields a smaller file size than &lt;code&gt;mogrify&lt;/code&gt;, even with the same exact options. Also, even though we converted to progressive with &lt;code&gt;jpegtran&lt;/code&gt; earlier, doing it again here seems to have a substantial effect on the resulting file size (12k in this example). Oh well, I suppose you can't understand everything all at once. ;)&lt;/p&gt;
 &lt;h3&gt;Great Success!&lt;/h3&gt;
@@ -757,17 +667,15 @@ $ gm mogrify DSC_0685-trimmed.JPG -quality 80
 &lt;p&gt;Anyways, I'll leave the infosec community to &lt;a href="https://www.dfranke.us/posts/2014-09-27-shell-shock-exploitation-vectors.html" title="Shell Shock Exploitation Vectors"&gt;expound on attack vectors&lt;/a&gt;. The point of this post is really to illustrate that you should be using an infrastructure orchestration tool like &lt;a href="http://www.ansible.com/home" title="Ansible homepage"&gt;Ansible&lt;/a&gt; to manage your servers.&lt;/p&gt;
 &lt;h3&gt;Painless Patching With Ansible&lt;/h3&gt;
 &lt;p&gt;Patching your systems is painlessly easy if you manage your server infrastructure with something like Ansible. Using a one-off command you can easily update all "web" servers, for example:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; ansible web -m apt -a &lt;span class="s2"&gt;&amp;quot;name=bash state=latest update_cache=yes&amp;quot;&lt;/span&gt; -K -s
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; ansible web -m apt -a &lt;span class="s2"&gt;"name=bash state=latest update_cache=yes"&lt;/span&gt; -K -s
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;That's great, but what if you have both Ubuntu and CentOS hosts in the "web" group? CentOS doesn't use &lt;code&gt;apt&lt;/code&gt; for package management, so this has effectively only updated hosts running Debian-family GNU/Linux distros.&lt;/p&gt;
 &lt;h3&gt;Playbooks: The Power of Ansible&lt;/h3&gt;
 &lt;p&gt;When you have more than a handful of servers, the combinations of DNS names, IP addresses, roles, and distros becomes overwhelming. With Ansible you define your inventory of hosts, allocate them into groups, and then write "playbooks" to mold your servers into functional roles, ie web, database, compute, proxy, etc servers; the &lt;a href="https://xkcd.com/910/" title="XKCD coming about naming servers"&gt;personal relationship&lt;/a&gt; between sysadmin and server is gone.&lt;/p&gt;
 &lt;p&gt;Here's a simple playbook I wrote which takes into account the different OS families in our infrastructure and updates the &lt;code&gt;bash&lt;/code&gt; package on each host.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;shellshock.yml&lt;/em&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nn"&gt;---&lt;/span&gt;
-&lt;span class="c1"&gt;# To update hosts for &amp;quot;Shellshock&amp;quot; bash vulnerability&lt;/span&gt;
+&lt;span class="c1"&gt;# To update hosts for "Shellshock" bash vulnerability&lt;/span&gt;
 &lt;span class="c1"&gt;# See: https://en.wikipedia.org/wiki/Shellshock_(software_bug)&lt;/span&gt;
 
 &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;hosts&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;all&lt;/span&gt;
@@ -775,21 +683,17 @@ $ gm mogrify DSC_0685-trimmed.JPG -quality 80
   &lt;span class="l l-Scalar l-Scalar-Plain"&gt;tasks&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
     &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Update on Debian-based distros&lt;/span&gt;
       &lt;span class="l l-Scalar l-Scalar-Plain"&gt;apt&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name=bash state=latest update_cache=yes&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;when&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ansible_os_family == &amp;quot;Debian&amp;quot;&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;when&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ansible_os_family == "Debian"&lt;/span&gt;
 
     &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Update on RedHat-based distros&lt;/span&gt;
       &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yum&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name=bash state=latest&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;when&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ansible_os_family == &amp;quot;RedHat&amp;quot;&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;when&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ansible_os_family == "RedHat"&lt;/span&gt;
 
 &lt;span class="c1"&gt;# vim: set sw=2 ts=2:&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;And then run the playbook with:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; ansible-playbook shellshock.yml -K -s
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;In our case we patched twenty-five CentOS 6.x, Debian 6, Debian 7, Ubuntu 12.04, and Ubuntu 14.04 hosts living locally, in Amazon EC2, and in Linode. With one command. In less than five minutes!&lt;/p&gt;
 &lt;h3&gt;Stay Vigilant!&lt;/h3&gt;
 &lt;p&gt;Vendors started pushing patched versions of &lt;code&gt;bash&lt;/code&gt; on September 26th, two days after the initial disclosure. Two days after those patched versions were released there were &lt;a href="http://lcamtuf.blogspot.com/2014/09/bash-bug-apply-unofficial-patch-now.html" title="Bash bug: apply Florian"&gt;new variations of this bug discovered&lt;/a&gt;, and new packages issued (and we patched our systems again!).&lt;/p&gt;
@@ -801,25 +705,25 @@ $ gm mogrify DSC_0685-trimmed.JPG -quality 80
 &lt;li&gt;Attacking Machine: 192.168.43.39 (Slowloris "DOSing" the server)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;Apache httpd error logs&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Error from bad requests" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/badheader.png" title="Apache error logs" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Error from bad requests" class="img-fluid" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/badheader.png" title="Apache error logs"/&gt;&lt;/p&gt;
 &lt;p&gt;The loaded module (&lt;em&gt;mod_evasion&lt;/em&gt;), can't save Apache httpd from the DOS attack, even loading the site from a browser is somehow impossible.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Apache DOSed" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/apachedown.png" title="Can't access via Browser" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Apache DOSed" class="img-fluid" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/apachedown.png" title="Can't access via Browser"/&gt;&lt;/p&gt;
 &lt;p&gt;But this module can prevent a brute-force attack (&lt;em&gt;e.g. an automated script to guess a password field in a web-form&lt;/em&gt;) in a web server (running Apache httpd).&lt;/p&gt;
-&lt;p&gt;&lt;img alt="mod_evasion can prevent Brute-force.." src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/bruteforce.png" title="mod_evasion can prevent Brute-force attack" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="mod_evasion can prevent Brute-force.." class="img-fluid" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/bruteforce.png" title="mod_evasion can prevent Brute-force attack"/&gt;&lt;/p&gt;
 &lt;p&gt;Just to make an interesting comparison, I replaced Apache httpd with Nginx on the same Server (192.168.43.221) and &lt;strong&gt;ta! da!..&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Nginx is not DOSed by Slowloris" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/nginxup.png" title="Nginx is not DOSed by Slowloris" /&gt; Nginx gracefully made it by ignoring the request from Slowloris. But I noticed a brute-force attack is possible while using Nginx default settings! &lt;strong&gt;Nginx access logs&lt;/strong&gt;
-&lt;img alt="Nginx Brute-forced" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/bfnginx.png" title="Nginx can be Brute-forced" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Nginx is not DOSed by Slowloris" class="img-fluid" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/nginxup.png" title="Nginx is not DOSed by Slowloris"/&gt; Nginx gracefully made it by ignoring the request from Slowloris. But I noticed a brute-force attack is possible while using Nginx default settings! &lt;strong&gt;Nginx access logs&lt;/strong&gt;
+&lt;img alt="Nginx Brute-forced" class="img-fluid" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/bfnginx.png" title="Nginx can be Brute-forced"/&gt;&lt;/p&gt;
 &lt;h2&gt;Second Setup&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Server: 192.168.43.221 (running Apache httpd with mod_antiloris loaded)&lt;/li&gt;
 &lt;li&gt;Attacking Machine: 192.168.43.39 (Sowloris "DOSing" the server)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;em&gt;mod_antiloris&lt;/em&gt; played it nice by monitoring the requests coming from the client and rejected extra connections. Accessing the web services from the browser was not interfered.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="mod_antiloris logs" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/antiloris.png" title="mod_antiloris logs" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="mod_antiloris logs" class="img-fluid" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/antiloris.png" title="mod_antiloris logs"/&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;mod_evasion&lt;/em&gt; is cool but can't save Apache httpd from Slowloris. On the other hand, &lt;em&gt;mod_antiloris&lt;/em&gt; worked fine and denied Slowloris a chance to mess up with the Apache httpd server.&lt;/p&gt;
 &lt;h2&gt;Explanation&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Putting the Lens on the Logs...&lt;/strong&gt; (Apache httpd access log)&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Apache-httpd access log" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/accesslog.png" title="Apache httpd access logs" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Apache-httpd access log" class="img-fluid" src="https://nairobilug.or.ke/images/exploring-anti-dos-tools-for-apache-httpd/accesslog.png" title="Apache httpd access logs"/&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Why did mod_antiloris pass the test and mod_evasion fail?..&lt;/em&gt; &lt;em&gt;Why did Slowloris work on Apache httpd and not on Nginx?&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Apache httpd waits for a &lt;strong&gt;complete HTTP request header&lt;/strong&gt; to be received, this makes it good to serve web-content even in slow connections. So, by default, the timeout value is 300 seconds and it's reset each time the client sends more packets. Slowloris takes advantage by sending incomplete HTTP request headers and maintains the connection by sending more incomplete request headers resetting the time-out counter.&lt;/p&gt;
 &lt;p&gt;Slowloris is written in Perl, it simply plays around with &lt;strong&gt;CR (Carriage Return)&lt;/strong&gt; and &lt;strong&gt;LF (Line Feed)&lt;/strong&gt; at the end of every incomplete HTTP request header. A blank line after the request header is used to represent the completion of the header in HTTP. Since the request is incomplete and the timeout is 300 seconds, Apache httpd will keep the connection alive waiting for the remaining data, while Slowloris keeps on sending the incomplete HTTP requests resetting the timeout counter.&lt;/p&gt;
@@ -845,14 +749,10 @@ $ gm mogrify DSC_0685-trimmed.JPG -quality 80
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; mkvirtualenv -p &lt;span class="sb"&gt;`&lt;/span&gt;which python2&lt;span class="sb"&gt;`&lt;/span&gt; swift
 &lt;span class="gp"&gt;$&lt;/span&gt; pip install python-swiftclient python-keystoneclient
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;h2&gt;Setup the Environment&lt;/h2&gt;
 &lt;p&gt;Source the environment RC script you downloaded from the OpenStack dashboard:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; . ~/Downloads/aorth-openrc.sh
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;It will prompt you for your OpenStack dashboard password.&lt;/p&gt;
 &lt;h2&gt;Test&lt;/h2&gt;
 &lt;p&gt;Check if the settings are correct:&lt;/p&gt;
@@ -868,8 +768,6 @@ $ gm mogrify DSC_0685-trimmed.JPG -quality 80
 &lt;span class="go"&gt;    X-Trans-Id: tx5d47eff065074335a3a9f-0053d7c93e&lt;/span&gt;
 &lt;span class="go"&gt;  Content-Type: text/plain; charset=utf-8&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;This means the API key and all other settings are ok, and authentication was successful; you're now ready to use OpenStack CLI tools.&lt;/p&gt;
 &lt;h2&gt;Create a Container&lt;/h2&gt;
 &lt;p&gt;You could create a container in the OpenStack dashboard (&lt;code&gt;Object Store -&amp;gt; Containers -&amp;gt; Create Container&lt;/code&gt;), but it's much nicer to be able to do this from the commandline using the API.&lt;/p&gt;
@@ -877,15 +775,11 @@ $ gm mogrify DSC_0685-trimmed.JPG -quality 80
 &lt;span class="gp"&gt;$&lt;/span&gt; swift list
 &lt;span class="go"&gt;Documents&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;h2&gt;Upload Files&lt;/h2&gt;
 &lt;p&gt;My use case is to backup Documents from my desktop.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; ~/Documents
 &lt;span class="gp"&gt;$&lt;/span&gt; swift upload Documents *
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; I &lt;code&gt;cd&lt;/code&gt; into the directory I want to upload first, because I found that if I wasn't &lt;em&gt;inside&lt;/em&gt; it, I would end up with another layer of hierarchy in my container itself, ie &lt;code&gt;Documents/Documents&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Check the status of the container:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; swift stat Documents
@@ -904,8 +798,6 @@ $ gm mogrify DSC_0685-trimmed.JPG -quality 80
 &lt;span class="go"&gt;    X-Trans-Id: txbf31671156c64147bd9ad-0053d767c9&lt;/span&gt;
 &lt;span class="go"&gt;  Content-Type: text/plain; charset=utf-8&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;Looks good! ~250MB of data in my &lt;code&gt;Documents&lt;/code&gt; container now, which just about matches the size of the folder on my disk.&lt;/p&gt;
 &lt;h2&gt;Bonus Points&lt;/h2&gt;
 &lt;p&gt;Bonus points and future research:&lt;/p&gt;
@@ -922,14 +814,10 @@ $ gm mogrify DSC_0685-trimmed.JPG -quality 80
 &lt;p&gt;I figured syncing the brick hierarchy from the good node to the bad node was simple enough, so I stopped the &lt;code&gt;glusterd&lt;/code&gt; service on the bad node and invoked:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;#&lt;/span&gt; rsync -aAXv --delete --exclude&lt;span class="o"&gt;=&lt;/span&gt;.glusterfs storage0:/path/to/bricks/homes/ storage1:/path/to/bricks/homes/
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;After a day or so I noticed I had only copied ~1.5TB (over 1 hop on a dedicated 10GbE switch!), and I realized something must be wrong. I attached to the &lt;code&gt;rsync&lt;/code&gt; process with &lt;code&gt;strace -p&lt;/code&gt; and saw a bunch of system calls in one particular user’s directory. I dug deeper:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;#&lt;/span&gt; find /path/to/bricks/homes/ukenyatta/maker/genN_datastore/ -type d &lt;span class="p"&gt;|&lt;/span&gt; wc -l
 &lt;span class="go"&gt;1398640&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;So this one particular directory in one user's home contained over a million &lt;em&gt;other&lt;/em&gt; directories and $god knows how many files, and this command itself took several hours to finish! To make matters worse, careful trial and error inspection of other user home directories revealed more massive directory structures as well.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;rsync is single threaded&lt;/li&gt;
@@ -947,9 +835,9 @@ $ gm mogrify DSC_0685-trimmed.JPG -quality 80
 
 &lt;span class="c1"&gt;# RSYNC SETUP&lt;/span&gt;
 &lt;span class="nv"&gt;RSYNC_PROG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/bin/rsync
-&lt;span class="c1"&gt;# note the important use of --relative to use relative paths so we don&amp;#39;t have to specify the exact path on dest&lt;/span&gt;
-&lt;span class="nv"&gt;RSYNC_OPTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-aAXv --numeric-ids --progress --human-readable --delete --exclude=.glusterfs --relative&amp;quot;&lt;/span&gt;
-&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;RSYNC_RSH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;ssh -T -c arcfour -o Compression=no -x&amp;quot;&lt;/span&gt;
+&lt;span class="c1"&gt;# note the important use of --relative to use relative paths so we don't have to specify the exact path on dest&lt;/span&gt;
+&lt;span class="nv"&gt;RSYNC_OPTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"-aAXv --numeric-ids --progress --human-readable --delete --exclude=.glusterfs --relative"&lt;/span&gt;
+&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;RSYNC_RSH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"ssh -T -c arcfour -o Compression=no -x"&lt;/span&gt;
 
 &lt;span class="c1"&gt;# ENV SETUP&lt;/span&gt;
 &lt;span class="nv"&gt;SRCDIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/path/to/good/brick
@@ -964,10 +852,8 @@ $ gm mogrify DSC_0685-trimmed.JPG -quality 80
 &lt;span class="c1"&gt;# note the combination of -print0 and -0!&lt;/span&gt;
 find &lt;span class="o"&gt;{&lt;/span&gt;a..z&lt;span class="o"&gt;}&lt;/span&gt;* &lt;span class="o"&gt;{&lt;/span&gt;A..Z&lt;span class="o"&gt;}&lt;/span&gt;* &lt;span class="o"&gt;{&lt;/span&gt;0..9&lt;span class="o"&gt;}&lt;/span&gt;* -mindepth &lt;span class="m"&gt;1&lt;/span&gt; -maxdepth &lt;span class="m"&gt;1&lt;/span&gt; -print0 &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
     xargs -0 -n1 -P&lt;span class="nv"&gt;$THREADS&lt;/span&gt; -I% &lt;span class="se"&gt;\&lt;/span&gt;
-        &lt;span class="nv"&gt;$RSYNC_PROG&lt;/span&gt; &lt;span class="nv"&gt;$RSYNC_OPTS&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;%&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;$BAD_NODE&lt;/span&gt;:&lt;span class="nv"&gt;$DESTDIR&lt;/span&gt;
+        &lt;span class="nv"&gt;$RSYNC_PROG&lt;/span&gt; &lt;span class="nv"&gt;$RSYNC_OPTS&lt;/span&gt; &lt;span class="s2"&gt;"%"&lt;/span&gt; &lt;span class="nv"&gt;$BAD_NODE&lt;/span&gt;:&lt;span class="nv"&gt;$DESTDIR&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;Pay attention to the source/destination paths, the number of &lt;code&gt;THREADS&lt;/code&gt;, and the &lt;code&gt;BAD_NODE&lt;/code&gt; name, then you should be ready to roll.&lt;/p&gt;
 &lt;h3&gt;The Magic, Explained&lt;/h3&gt;
 &lt;p&gt;It's a bit of magic, but here are the important parts:&lt;/p&gt;
@@ -981,12 +867,12 @@ find &lt;span class="o"&gt;{&lt;/span&gt;a..z&lt;span class="o"&gt;}&lt;/span&gt
 &lt;/ul&gt;
 &lt;p&gt;Hope this helps!&lt;/p&gt;
 &lt;p&gt;This was &lt;a href="https://mjanja.ch/2014/07/parallelizing-rsync/"&gt;originally posted&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="rsync"></category></entry><entry><title>Hacking on the Eudyptula Challenge</title><link href="https://nairobilug.or.ke/2014/05/hacking-on-eudyptula.html" rel="alternate"></link><published>2014-05-26T23:00:00+03:00</published><updated>2014-05-26T23:00:00+03:00</updated><author><name>Alan Orth</name></author><id>tag:nairobilug.or.ke,2014-05-26:2014/05/hacking-on-eudyptula.html</id><summary type="html">&lt;p&gt;Last weekend a few of us met up at a coffee shop in Nairobi to hack on the &lt;a href="http://eudyptula-challenge.org/"&gt;Eudyptula Challenge&lt;/a&gt;. From their website, the Eudyptula Challenge is:&lt;/p&gt;
-&lt;blockquote&gt;
+&lt;blockquote class="blockquote"&gt;
 &lt;p&gt;... a series of programming exercises for the Linux kernel, that start from a very basic “Hello world” kernel module, moving on up in complexity to getting patches accepted into the main Linux kernel source tree.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2&gt;With Coffee, Anything Is Possible!&lt;/h2&gt;
 &lt;p&gt;Kaldis Coffee House in downtown Nairobi has free Wi-Fi, coffee, decent food, and it’s not too busy on Saturday mornings, so we got a nice table in the corner and dove in.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Hacking on Eudyptula at Kaldis" src="https://nairobilug.or.ke/images/hacking-on-eudyptula/eudyptula-may-2014.jpg" title="Hacking on Eudyptula at Kaldis" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Hacking on Eudyptula at Kaldis" class="img-fluid" src="https://nairobilug.or.ke/images/hacking-on-eudyptula/eudyptula-may-2014.jpg" title="Hacking on Eudyptula at Kaldis"/&gt;&lt;/p&gt;
 &lt;p&gt;While none of us are new to GNU/Linux or development, it still took us several hours to set up our build environments, text editors, email clients, and to read up on the Linux kernel’s build system and programming conventions. We learned a lot, and had a good time doing it!&lt;/p&gt;
 &lt;h2&gt;Little Penguins&lt;/h2&gt;
 &lt;p&gt;BTW, &lt;em&gt;&lt;a href="https://en.wikipedia.org/wiki/Eudyptula"&gt;Eudyptula&lt;/a&gt;&lt;/em&gt; is the scientific classification for a genus of penguins containing two species; the little blue penguin and the white-flippered penguin. The more you know.™ ;)&lt;/p&gt;
@@ -996,39 +882,35 @@ find &lt;span class="o"&gt;{&lt;/span&gt;a..z&lt;span class="o"&gt;}&lt;/span&gt
 &lt;p&gt;First, with AES-NI enabled (the default, on hardware that supports it):&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; openssl speed -elapsed -evp aes-128-cbc
 &lt;span class="go"&gt;You have chosen to measure elapsed time instead of user CPU time.&lt;/span&gt;
-&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 16 size blocks: 57196857 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
-&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 64 size blocks: 15343650 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
-&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 256 size blocks: 3897351 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
-&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 1024 size blocks: 978726 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
-&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 8192 size blocks: 122310 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 16 size blocks: 57196857 aes-128-cbc's in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 64 size blocks: 15343650 aes-128-cbc's in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 256 size blocks: 3897351 aes-128-cbc's in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 1024 size blocks: 978726 aes-128-cbc's in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 8192 size blocks: 122310 aes-128-cbc's in 3.00s&lt;/span&gt;
 &lt;span class="go"&gt;OpenSSL 1.0.1e 11 Feb 2013&lt;/span&gt;
 &lt;span class="go"&gt;built on: Sun Oct 20 14:49:13 CEST 2013&lt;/span&gt;
 &lt;span class="go"&gt;options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx)&lt;/span&gt;
 &lt;span class="go"&gt;compiler: gcc -fPIC -DOPENSSL_PIC -DZLIB -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -Wa,--noexecstack -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -m64 -DL_ENDIAN -DTERMIO -O3 -Wall -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM&lt;/span&gt;
-&lt;span class="go"&gt;The &amp;#39;numbers&amp;#39; are in 1000s of bytes per second processed.&lt;/span&gt;
+&lt;span class="go"&gt;The 'numbers' are in 1000s of bytes per second processed.&lt;/span&gt;
 &lt;span class="go"&gt;type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes&lt;/span&gt;
 &lt;span class="go"&gt;aes-128-cbc     305049.90k   327331.20k   332573.95k   334071.81k   333987.84k&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;Then, setting the capability mask to turn off the hardware AES features:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nv"&gt;OPENSSL_ia32cap&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;~0x200000200000000&amp;quot;&lt;/span&gt; openssl speed -elapsed -evp aes-128-cbc
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nv"&gt;OPENSSL_ia32cap&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"~0x200000200000000"&lt;/span&gt; openssl speed -elapsed -evp aes-128-cbc
 &lt;span class="go"&gt;You have chosen to measure elapsed time instead of user CPU time.&lt;/span&gt;
-&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 16 size blocks: 27883366 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
-&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 64 size blocks: 7736907 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
-&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 256 size blocks: 1949328 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
-&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 1024 size blocks: 498847 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
-&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 8192 size blocks: 62446 aes-128-cbc&amp;#39;s in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 16 size blocks: 27883366 aes-128-cbc's in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 64 size blocks: 7736907 aes-128-cbc's in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 256 size blocks: 1949328 aes-128-cbc's in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 1024 size blocks: 498847 aes-128-cbc's in 3.00s&lt;/span&gt;
+&lt;span class="go"&gt;Doing aes-128-cbc for 3s on 8192 size blocks: 62446 aes-128-cbc's in 3.00s&lt;/span&gt;
 &lt;span class="go"&gt;OpenSSL 1.0.1e 11 Feb 2013&lt;/span&gt;
 &lt;span class="go"&gt;built on: Sun Oct 20 14:49:13 CEST 2013&lt;/span&gt;
 &lt;span class="go"&gt;options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx)&lt;/span&gt;
 &lt;span class="go"&gt;compiler: gcc -fPIC -DOPENSSL_PIC -DZLIB -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -Wa,--noexecstack -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -m64 -DL_ENDIAN -DTERMIO -O3 -Wall -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM&lt;/span&gt;
-&lt;span class="go"&gt;The &amp;#39;numbers&amp;#39; are in 1000s of bytes per second processed.&lt;/span&gt;
+&lt;span class="go"&gt;The 'numbers' are in 1000s of bytes per second processed.&lt;/span&gt;
 &lt;span class="go"&gt;type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes&lt;/span&gt;
 &lt;span class="go"&gt;aes-128-cbc     148711.29k   165054.02k   166342.66k   170273.11k   170519.21k&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;You can see that hardware-accelerated AES is pretty consistently &lt;strong&gt;twice&lt;/strong&gt; as fast as the implementation without &lt;em&gt;aesni&lt;/em&gt;. So it's not an exponential win, but getting &lt;strong&gt;twice&lt;/strong&gt; the performance is certainly very serious! This is great for not only for servers using AES encryption (SSL/TLS, hello!), but also for consumers wanting to connect to said servers as well as things like full-disk encryption.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; It seems Arch Linux's OpenSSL is built with AES-NI support but not as an &lt;em&gt;engine&lt;/em&gt;, so &lt;code&gt;openssl speed&lt;/code&gt; could be misleading (ie, you'd see no difference with or without the capabilities masked). To get the AES-NI support you need to use &lt;code&gt;-evp&lt;/code&gt; ("envelope") mode, which is some sort of &lt;a href="http://wiki.openssl.org/index.php/EVP"&gt;high-level interface&lt;/a&gt; for crypto functions in OpenSSL.&lt;/p&gt;
 &lt;p&gt;This was originally &lt;a href="https://mjanja.ch/2013/11/disabling-aes-ni-on-linux-openssl/"&gt;posted on&lt;/a&gt; on my personal blog; re-posted here for posterity.&lt;/p&gt;</summary><category term="linux"></category><category term="crypto"></category></entry></feed>

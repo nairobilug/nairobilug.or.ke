@@ -2,103 +2,94 @@
 <html lang="en">
 
 <head>
-      <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="canonical" href="https://nairobilug.or.ke/2016/07/video-encoding-for-the-web-in-2016.html" />
+  <!-- Required meta tags always come first -->
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>  Nairobi LUG &mdash; Video Encoding for the Web in 2016
+  <title>Video Encoding for the Web in 2016 | Nairobi GNU/Linux Users Group
 </title>
+  <link rel="canonical" href="https://nairobilug.or.ke/2016/07/video-encoding-for-the-web-in-2016.html">
 
-      <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196">
-      <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
-      <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
-      <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-      <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="alternate" type="application/atom+xml" href="https://nairobilug.or.ke/feeds/all.atom.xml" title="Full Atom Feed">
+  <link rel="alternate" type="application/atom+xml" href="https://nairobilug.or.ke/feeds/video.atom.xml" title="Categories Atom Feed">
+
+  <link rel="apple-touch-icon" href="https://nairobilug.or.ke/apple-touch-icon.png" sizes="180x180">
+  <link rel="icon" type="image/png" href="https://nairobilug.or.ke/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="https://nairobilug.or.ke/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="https://nairobilug.or.ke/manifest.json">
+  <meta name="theme-color" content="#333333">
+
+  <link rel="stylesheet" href="https://nairobilug.or.ke/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://nairobilug.or.ke/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://nairobilug.or.ke/theme/css/pygments/monokai.min.css">
+  <link rel="stylesheet" href="https://nairobilug.or.ke/theme/css/style.css">
 
 
-
-    <link rel="stylesheet" href="https://nairobilug.or.ke/theme/css/style.css">
-
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-59440070-1', 'auto');
-    ga('send', 'pageview');
-
-  </script>
-
-    <meta name="author" content="Alan Orth">
-    <meta name="description" content="Understanding video encoding technology is like trying to hit a moving target. I spent time reading the ffmpeg docs and decided you should use VP9!">
-  <meta name="tags" contents="ffmpeg, H.264, VP8, VP9, ">
+<meta name="description" content="Understanding video encoding technology is like trying to hit a moving target. I spent time reading the ffmpeg docs and decided you should use VP9!">
 </head>
 
 <body>
-<header class="header">
-  <div class="container">
-      <div class="header-image pull-left">
-        <a class="nodec" href="https://nairobilug.or.ke"><img src=/images/profile.svg width="200" height="200"></a>
+  <header class="header">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <a href="https://nairobilug.or.ke">
+            <img class="img-fluid" src=https://nairobilug.or.ke/images/profile.png alt="Nairobi GNU/Linux Users Group">
+          </a>
+        </div>
+        <div class="col-sm-8">
+          <h1 class="title"><a href="https://nairobilug.or.ke">Nairobi GNU/Linux Users Group</a></h1>
+          <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
+          <ul class="list-inline">
+            <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+            <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://nairobilug.or.ke/pages/about-us.html">About Us</a></li>
+            <li class="list-inline-item"><a href="https://nairobilug.or.ke/pages/contact.html">Contact</a></li>
+            <li class="list-inline-item"><a href="https://nairobilug.or.ke/pages/mailing-list.html">Mailing List</a></li>
+            <li class="list-inline-item"><a href="https://nairobilug.or.ke/pages/meetups.html">Meetups</a></li>
+            <li class=" list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a class="fa fa-feed" href="https://nairobilug.or.ke/feeds/all.atom.xml" target="_blank"></a></li>
+            <li class="list-inline-item"><a class="fa fa-github" href="http://github.com/nairobilug" target="_blank"></a></li>
+            <li class="list-inline-item"><a class="fa fa-twitter" href="http://twitter.com/nairobilug" target="_blank"></a></li>
+          </ul>
+        </div>
       </div>
-    <div class="header-inner">
-      <h1 class="header-name">
-        <a class="nodec" href="https://nairobilug.or.ke">Nairobi LUG</a>
-      </h1>
-      <h3 class="header-text">A lively community of GNU/Linux enthusiasts</h3>
-      <ul class="header-menu list-inline">
-          <li><a class="nodec" href="http://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
-          <li><a class="nodec" href="https://groups.google.com/forum/#!forum/nairobi-gnu" target="_blank">Mailing List</a></li>
-              <li class="muted">|</li>
-            <li><a class="nodec" href="https://nairobilug.or.ke/2016/12/pages/about-us.html">About Us</a></li>
-            <li><a class="nodec" href="https://nairobilug.or.ke/2016/12/pages/contact.html">Contact</a></li>
-            <li><a class="nodec" href="https://nairobilug.or.ke/2016/12/pages/mailing-list.html">Mailing List</a></li>
-            <li><a class="nodec" href="https://nairobilug.or.ke/2016/12/pages/meetups.html">Meetups</a></li>
-              <li class="muted">|</li>
-          <li><a class="nodec icon-github" href="https://github.com/nairobilug"></a></li>
-          <li><a class="nodec icon-twitter" href="https://twitter.com/nairobilug"></a></li>
-      </ul>
     </div>
-  </div>
-</header> <!-- /.header -->  <div class="container">
-  <div class="post full-post">
-    <h1 class="post-title">
-      <a href="/2016/07/video-encoding-for-the-web-in-2016.html" title="Permalink to Video Encoding for the Web in 2016">Video Encoding for the Web in 2016</a>
-    </h1>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>Video Encoding for the Web in 2016
+</h1>
+      <hr>
+<article class="article">
+  <header>
     <ul class="list-inline">
-      <li class="post-date">
-        <a class="text-muted" href="/2016/07/video-encoding-for-the-web-in-2016.html" title="2016-07-21T17:42:00+03:00">Thu 21 July 2016</a>
+      <li class="list-inline-item text-muted" title="2016-07-21T17:42:00+03:00">
+        <i class="fa fa-clock-o"></i>
+        Thu 21 July 2016
       </li>
-      <li class="muted">&middot;</li>
-      <li class="post-category">
+      <li class="list-inline-item">
+        <i class="fa fa-folder-open-o"></i>
         <a href="https://nairobilug.or.ke/category/video.html">Video</a>
       </li>
-        <li class="muted">&middot;</li>
-        <li>
-            <a href="https://nairobilug.or.ke/tag/ffmpeg.html">ffmpeg</a>,             <a href="https://nairobilug.or.ke/tag/h264.html">H.264</a>,             <a href="https://nairobilug.or.ke/tag/vp8.html">VP8</a>,             <a href="https://nairobilug.or.ke/tag/vp9.html">VP9</a>        </li>
-        <li class="muted">&middot;</li>
-        <li>
-          <address class="post-author">
-            By <a href="https://nairobilug.or.ke/author/alan-orth.html">Alan Orth</a>
-          </address>
-        </li>
+      <li class="list-inline-item">
+        <i class="fa fa-user-o"></i>
+        <a href="https://nairobilug.or.ke/author/alan-orth.html">Alan Orth</a>      </li>
+      <li class="list-inline-item">
+        <i class="fa fa-files-o"></i>
+        <a href="https://nairobilug.or.ke/tag/ffmpeg.html">#ffmpeg</a>,         <a href="https://nairobilug.or.ke/tag/h264.html">#H.264</a>,         <a href="https://nairobilug.or.ke/tag/vp8.html">#VP8</a>,         <a href="https://nairobilug.or.ke/tag/vp9.html">#VP9</a>      </li>
     </ul>
-    <div class="post-content">
-      <p>Understanding the tools and technology related to video encoding is like trying to hit a moving target — every few years the scene changes entirely and you have to learn all the latest best practices over again. I recently spent more time than I should have preparing a video of <a href="https://englishbulgaria.net/2016/05/tanks-rolling-streets-sofia/">some tanks rolling down the street near my house</a> and figured I'd compile my notes into a sort of guide so that someone else could benefit as well.</p>
+  </header>
+  <div class="content">
+    <p>Understanding the tools and technology related to video encoding is like trying to hit a moving target — every few years the scene changes entirely and you have to learn all the latest best practices over again. I recently spent more time than I should have preparing a video of <a href="https://englishbulgaria.net/2016/05/tanks-rolling-streets-sofia/">some tanks rolling down the street near my house</a> and figured I'd compile my notes into a sort of guide so that someone else could benefit as well.</p>
 <p><abbr title="Too long, didn't read">TL;DR</abbr>: Use VP9 with Vorbis audio and fall back to H.264 for Apple devices and corner cases. Read on for code snippets and rationale.</p>
 <h2>VP9</h2>
 <p>VP9 is the newer of two related open and royalty-free video codecs developed by Google. It delivers seriously impressive quality at very low file sizes, but takes <em>fucking forever</em> to encode. At this point in time there is <a href="http://caniuse.com/#feat=webm">pretty good support of VP9 in web browsers</a>, though generally not <a href="http://wiki.webmproject.org/hardware/socs">hardware accelerated</a>. The following is a two-pass encode using the "constrained quality" mode from the <a href="http://wiki.webmproject.org/ffmpeg/vp9-encoding-guide">WebM VP9 encoding guide</a>:</p>
 <div class="highlight"><pre><span></span>$ ffmpeg -i input.mp4 -c:v libvpx-vp9 -pass <span class="m">1</span> -b:v 1400K -crf <span class="m">23</span> -threads <span class="m">2</span> -speed <span class="m">4</span> -tile-columns <span class="m">6</span> -frame-parallel <span class="m">1</span> -an -f webm /dev/null
 $ ffmpeg -i input.mp4 -c:v libvpx-vp9 -pass <span class="m">2</span> -b:v 1400K -crf <span class="m">23</span> -threads <span class="m">2</span> -speed <span class="m">2</span> -tile-columns <span class="m">6</span> -frame-parallel <span class="m">1</span> -auto-alt-ref <span class="m">1</span> -lag-in-frames <span class="m">25</span> -c:a libvorbis -f webm output.webm
 </pre></div>
-
-
 <p>The constrained quality mode gives you more control over the target bitrate. If you want higher quality, bump up the bitrate or reduce the CRF value a bit. Pay attention to the <code>threads</code> option and adjust for how many CPU cores your computer has. Also note that I'm encoding the audio with the older <code>vorbis</code> codec because <a href="http://caniuse.com/#feat=opus"><code>opus</code> isn't well supported yet</a>. You can read more about the other options on the <a href="https://trac.ffmpeg.org/wiki/Encode/VP9">ffmpeg VP9 encoding guide</a>.</p>
 <p>For reference, these two passes took 224 and 1763 seconds to complete respectively, and the file size of the resulting video was 2.7 megabytes. The VP9 encoder seems to be able to use multiple CPU cores, but I only noticed them being used in the second pass.</p>
 <h2>H.264</h2>
@@ -106,8 +97,6 @@ $ ffmpeg -i input.mp4 -c:v libvpx-vp9 -pass <span class="m">2</span> -b:v 1400K 
 <p>In any case, the following will produce a video with decent quality that is playable on basically any device on the planet right now:</p>
 <div class="highlight"><pre><span></span>$ ffmpeg -i input.mp4 -movflags +faststart -c:a aac -c:v libx264 -preset veryslow -b:v 2000k -profile:v baseline -level 3.0 output.mp4
 </pre></div>
-
-
 <p>Note the adherence to the baseline profile at level 3.0, which the <a href="https://developer.android.com/guide/appendix/media-formats.html#recommendations">Android developer docs</a> recommend for compatibility with current Android devices. If you only need to support Apple devices then you can target a higher profile, which will allow the encoder to use more of H.264's advanced features — read about that and more on the <a href="https://trac.ffmpeg.org/wiki/Encode/H.264">ffmpeg H.264 encoding guide</a>.</p>
 <p>Software patents and licensing issues aside, H.264 is actually very impressive. The encoder is fast on multi-core CPUs, video quality is great, and file sizes are low for the standards we had five to ten years ago. For reference, this encode took 132 seconds and the resulting file size was 4.5 megabytes.</p>
 <h2>VP8</h2>
@@ -115,8 +104,6 @@ $ ffmpeg -i input.mp4 -c:v libvpx-vp9 -pass <span class="m">2</span> -b:v 1400K 
 <p>If you find yourself needing to target older Android or something where VP9 isn't supported, then this one-liner from the <a href="https://trac.ffmpeg.org/wiki/Encode/VP8">ffmpeg VP8 encoding guide</a> will do the trick:</p>
 <div class="highlight"><pre><span></span>$ ffmpeg -i input.mp4 -c:v libvpx -qmin <span class="m">0</span> -qmax <span class="m">50</span> -crf <span class="m">5</span> -b:v 2000k -c:a libvorbis output.webm
 </pre></div>
-
-
 <p>In this example it's worth noting that 2000 kilobits/sec is the "target bitrate," but the effective bitrate ended up being about 3000k because I enabled "constant quality" mode by specifying the crf, qmin, and qmax options. Also, VP8 apparently supports multi-threaded encoding, but in my tests it was actually <em>slower</em> and produced a larger file! This single-threaded encode took 691 seconds and the resulting file size was 5.1 megabytes.</p>
 <h2>For the Love of the Open Web: Use VP9</h2>
 <p>Ten years ago you didn't really have much of a choice for video codec providing both very high quality and low file sizes. H.264 came on the scene and set the bar very high with a fast encoder, amazing video quality, and fantastic hardware and software support. VP8 was an honest attempt to bring an open royalty-free and high-quality video codec to the market but it never really stood a chance.</p>
@@ -125,46 +112,44 @@ $ ffmpeg -i input.mp4 -c:v libvpx-vp9 -pass <span class="m">2</span> -b:v 1400K 
 <h3>Technical Notes</h3>
 <p>I was using ffmpeg version 3.1.1 on a 2015 MacBook Pro with a dual-core <a href="http://ark.intel.com/products/84985/Intel-Core-i5-5257U-Processor-3M-Cache-up-to-3_10-GHz">2.7 GHz Core i5 (I5-5257U)</a> processor.</p>
 <p>This was <a href="https://mjanja.ch/2016/07/video-encoding-for-the-web-in-2016/">originally posted</a> on my personal blog; re-posted here for posterity.</p>
+  </div>
+</article>
+<hr>
+<div id="disqus_thread"></div>
+<script>
+  var disqus_config = function() {
+    this.page.url = 'https://nairobilug.or.ke/2016/07/video-encoding-for-the-web-in-2016.html';
+    this.page.identifier = 'video-encoding-for-the-web-in-2016';
+  };
+  (function() {
+    var d = document;
+    var s = d.createElement('script');
+    s.src = '//nairobilug.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript class="text-muted">
+  Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
     </div>
   </div>
-  <hr class="separator">
-  <div class="col-md-8 col-md-offset-2">
-  <div id="disqus_thread">
-    <script>
-      var disqus_shortname = 'nairobilug';
-      (function() {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] ||
-         document.getElementsByTagName('body')[0]).appendChild(dsq);
-      })();
-    </script>
-    <noscript>
-      Please enable JavaScript to view the
-      <a href="https://disqus.com/?ref_noscript=nairobilug">
-        comments powered by Disqus.
-      </a>
-    </noscript>
-    <a href="https://disqus.com" class="dsq-brlink">
-      blog comments powered by <span class="logo-disqus">Disqus</span>
-    </a>
-  </div>
-  </div>
-  </div>
-<footer class="footer">
-  <div class="container">
-    <p class="text-center">
-      Multiple, <a href="" target="_blank"></a> unless otherwise noted.
-    </p>
-    <div class="text-center">
-      Generated by <a href="http://getpelican.com" target="_blank">Pelican</a> with the <a href="http://github.com/nairobilug/pelican-alchemy">alchemy</a> theme.
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+       <ul class="col-sm-6 list-inline">
+          <li class="list-inline-item"><a href="https://nairobilug.or.ke/authors.html">Authors</a></li>
+          <li class="list-inline-item"><a href="https://nairobilug.or.ke/archives.html">Archives</a></li>
+          <li class="list-inline-item"><a href="https://nairobilug.or.ke/categories.html">Categories</a></li>
+          <li class="list-inline-item"><a href="https://nairobilug.or.ke/tags.html">Tags</a></li>
+        </ul>
+        <p class="col-sm-6 text-sm-right text-muted">
+          Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a> / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+        </p>
+      </div>
     </div>
-  </div>
-</footer> <!-- /.footer -->
-  <script src="https://nairobilug.or.ke/theme/js/jquery.min.js"></script>
-  <script src="https://nairobilug.or.ke/theme/js/bootstrap.min.js"></script>
-</body> <!-- 42 -->
+  </footer>
+</body>
 
 </html>
