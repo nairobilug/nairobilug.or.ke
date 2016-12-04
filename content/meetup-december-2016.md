@@ -74,7 +74,7 @@ Organise your life with org-mode. Emacs rocks! Hehe
 
 Yes, I am one of those people. I preach Emacs. Hate me later.
 
-## Expensive cities
+## Expensive Cities
 
 Remember them: London, San Francisco, and New York.
 
