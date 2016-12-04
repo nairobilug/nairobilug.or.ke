@@ -1,4 +1,4 @@
-Title: Meet Up Summary (December, 2016)- Advice to the young'uns
+Title: Meet Up Summary (December, 2016)
 Date: 2016-12-03 16:00
 Category: Meetups
 Tags: meetup
@@ -60,7 +60,7 @@ The kernel sounds scary? Yes it is. But...
 *Yes you can*
 
 ### Project Euler
-Challenge yourself. Do some(while at it, try to beat [link jnduli](https://projecteuler.net/country=Kenya)) challenges.  
+Challenge yourself. Do some(while at it, try to beat [link jnduli](https://projecteuler.net/)) challenges.(you have to be a member to view the country rankings)  
 *Always challenge yourself*
 
 ### Finally ... 
