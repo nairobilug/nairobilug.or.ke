@@ -21,3 +21,7 @@ DELETE_OUTPUT_DIRECTORY = True
 # Following items are often useful when publishing
 DISQUS_SITENAME = 'nairobilug'
 GOOGLE_ANALYTICS_ID = 'UA-59440070-1'
+
+# Theme settings --------------------------------------------------------------
+
+ICONS.insert(0, ('feed', SITEURL + '/' + FEED_ALL_ATOM))
