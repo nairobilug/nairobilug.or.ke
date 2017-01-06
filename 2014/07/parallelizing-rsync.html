@@ -2,98 +2,103 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags always come first -->
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="https://nairobilug.or.ke/2014/07/parallelizing-rsync.html" />
 
-  <title>Parallelizing Rsync | Nairobi GNU/Linux Users Group
+    <title>  Nairobi LUG &mdash; Parallelizing Rsync
 </title>
-  <link rel="canonical" href="https://rwanyoike.github.io/lugspeedtest/2014/07/parallelizing-rsync.html">
 
-  <link rel="alternate" type="application/atom+xml" href="https://rwanyoike.github.io/lugspeedtest/feeds/all.atom.xml" title="Full Atom Feed">
-  <link rel="alternate" type="application/atom+xml" href="https://rwanyoike.github.io/lugspeedtest/feeds/linux.atom.xml" title="Categories Atom Feed">
-
-  <link rel="apple-touch-icon" href="https://rwanyoike.github.io/lugspeedtest/apple-touch-icon.png" sizes="180x180">
-  <link rel="icon" type="image/png" href="https://rwanyoike.github.io/lugspeedtest/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="https://rwanyoike.github.io/lugspeedtest/favicon-16x16.png" sizes="16x16">
-  <link rel="manifest" href="https://rwanyoike.github.io/lugspeedtest/manifest.json">
-  <meta name="theme-color" content="#333333">
-
-  <link rel="stylesheet" href="https://rwanyoike.github.io/lugspeedtest/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://rwanyoike.github.io/lugspeedtest/theme/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://rwanyoike.github.io/lugspeedtest/theme/css/pygments/monokai.min.css">
-  <link rel="stylesheet" href="https://rwanyoike.github.io/lugspeedtest/theme/css/style.css">
+      <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196">
+      <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+      <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+      <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+      <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
 
 
-<meta name="description" content="Using find and xargs to parallelize rsync and speed up transfers of large directory hierarchies">
+
+    <link rel="stylesheet" href="https://nairobilug.or.ke/theme/css/style.css">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-59440070-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+    <meta name="author" content="Alan Orth">
+    <meta name="description" content="Using find and xargs to parallelize rsync and speed up transfers of large directory hierarchies">
+  <meta name="tags" contents="linux, rsync, ">
 </head>
 
 <body>
-  <header class="header">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-4">
-          <a href="https://rwanyoike.github.io/lugspeedtest">
-            <img class="img-fluid" src=https://rwanyoike.github.io/lugspeedtest/images/profile.png alt="Nairobi GNU/Linux Users Group">
-          </a>
-        </div>
-        <div class="col-sm-8">
-          <h1 class="title"><a href="https://rwanyoike.github.io/lugspeedtest">Nairobi GNU/Linux Users Group</a></h1>
-          <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
-          <ul class="list-inline">
-            <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
-            <li class="list-inline-item text-muted">|</li>
-            <li class="list-inline-item"><a href="https://rwanyoike.github.io/lugspeedtest/pages/about-us.html">About Us</a></li>
-            <li class="list-inline-item"><a href="https://rwanyoike.github.io/lugspeedtest/pages/contact.html">Contact</a></li>
-            <li class="list-inline-item"><a href="https://rwanyoike.github.io/lugspeedtest/pages/mailing-list.html">Mailing List</a></li>
-            <li class="list-inline-item"><a href="https://rwanyoike.github.io/lugspeedtest/pages/meetups.html">Meetups</a></li>
-            <li class=" list-inline-item text-muted">|</li>
-            <li class="list-inline-item"><a class="fa fa-feed" href="https://rwanyoike.github.io/lugspeedtest/feeds/all.atom.xml" target="_blank"></a></li>
-            <li class="list-inline-item"><a class="fa fa-github" href="http://github.com/nairobilug" target="_blank"></a></li>
-            <li class="list-inline-item"><a class="fa fa-twitter" href="http://twitter.com/nairobilug" target="_blank"></a></li>
-          </ul>
-        </div>
+<header class="header">
+  <div class="container">
+      <div class="header-image pull-left">
+        <a class="nodec" href="https://nairobilug.or.ke"><img src=/images/profile.svg width="200" height="200"></a>
       </div>
+    <div class="header-inner">
+      <h1 class="header-name">
+        <a class="nodec" href="https://nairobilug.or.ke">Nairobi LUG</a>
+      </h1>
+      <h3 class="header-text">A lively community of GNU/Linux enthusiasts</h3>
+      <ul class="header-menu list-inline">
+          <li><a class="nodec" href="http://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+          <li><a class="nodec" href="https://groups.google.com/forum/#!forum/nairobi-gnu" target="_blank">Mailing List</a></li>
+          <li><a class="nodec icon-github" href="https://github.com/nairobilug"></a></li>
+          <li><a class="nodec icon-twitter" href="https://twitter.com/nairobilug"></a></li>
+      </ul>
     </div>
-  </header>
-
-  <div class="main">
-    <div class="container">
-      <h1>Parallelizing Rsync
-</h1>
-      <hr>
-<article class="article">
-  <header>
+  </div>
+</header> <!-- /.header -->  <div class="container">
+  <div class="post full-post">
+    <h1 class="post-title">
+      <a href="/2014/07/parallelizing-rsync.html" title="Permalink to Parallelizing Rsync">Parallelizing Rsync</a>
+    </h1>
     <ul class="list-inline">
-      <li class="list-inline-item text-muted" title="2014-07-11T16:40:00+03:00">
-        <i class="fa fa-clock-o"></i>
-        Fri 11 July 2014
+      <li class="post-date">
+        <a class="text-muted" href="/2014/07/parallelizing-rsync.html" title="2014-07-11T16:40:00+03:00">Fri 11 July 2014</a>
       </li>
-      <li class="list-inline-item">
-        <i class="fa fa-folder-open-o"></i>
-        <a href="https://rwanyoike.github.io/lugspeedtest/category/linux.html">Linux</a>
+      <li class="muted">&middot;</li>
+      <li class="post-category">
+        <a href="https://nairobilug.or.ke/category/linux.html">Linux</a>
       </li>
-      <li class="list-inline-item">
-        <i class="fa fa-user-o"></i>
-        <a href="https://rwanyoike.github.io/lugspeedtest/author/alan-orth.html">Alan Orth</a>      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-files-o"></i>
-        <a href="https://rwanyoike.github.io/lugspeedtest/tag/linux.html">#linux</a>,         <a href="https://rwanyoike.github.io/lugspeedtest/tag/rsync.html">#rsync</a>      </li>
+        <li class="muted">&middot;</li>
+        <li>
+            <a href="https://nairobilug.or.ke/tag/linux.html">linux</a>,             <a href="https://nairobilug.or.ke/tag/rsync.html">rsync</a>        </li>
+        <li class="muted">&middot;</li>
+        <li>
+          <address class="post-author">
+            By <a href="https://nairobilug.or.ke/author/alan-orth.html">Alan Orth</a>
+          </address>
+        </li>
     </ul>
-  </header>
-  <div class="content">
-    <p>Last week I had a massive hardware failure on one of the GlusterFS storage nodes in the <a href="http://hpc.ilri.cgiar.org/">ILRI, Kenya Research Computing cluster</a>; two drives failed simultaneously on the underlying RAID5. As RAID5 can only withstand one drive failure, the entire 31TB array was toast. FML.</p>
+    <div class="post-content">
+      <p>Last week I had a massive hardware failure on one of the GlusterFS storage nodes in the <a href="http://hpc.ilri.cgiar.org/">ILRI, Kenya Research Computing cluster</a>; two drives failed simultaneously on the underlying RAID5. As RAID5 can only withstand one drive failure, the entire 31TB array was toast. FML.</p>
 <p>After replacing the failed disks, rebuilding the array, and formatting my bricks, I decided I would use <code>rsync</code> to pre-seed my bricks from the good node before bringing <code>glusterd</code> back up.</p>
 <p><em>tl;dr</em>: <code>rsync</code> is amazing, but it’s single threaded and struggles when you tell it to sync large directory hierarchies. <a href="#sync_bricks">Here's how you can speed it up</a>.</p>
 <h3>rsync #fail</h3>
 <p>I figured syncing the brick hierarchy from the good node to the bad node was simple enough, so I stopped the <code>glusterd</code> service on the bad node and invoked:</p>
 <div class="highlight"><pre><span></span><span class="gp">#</span> rsync -aAXv --delete --exclude<span class="o">=</span>.glusterfs storage0:/path/to/bricks/homes/ storage1:/path/to/bricks/homes/
 </pre></div>
+
+
 <p>After a day or so I noticed I had only copied ~1.5TB (over 1 hop on a dedicated 10GbE switch!), and I realized something must be wrong. I attached to the <code>rsync</code> process with <code>strace -p</code> and saw a bunch of system calls in one particular user’s directory. I dug deeper:</p>
 <div class="highlight"><pre><span></span><span class="gp">#</span> find /path/to/bricks/homes/ukenyatta/maker/genN_datastore/ -type d <span class="p">|</span> wc -l
 <span class="go">1398640</span>
 </pre></div>
+
+
 <p>So this one particular directory in one user's home contained over a million <em>other</em> directories and $god knows how many files, and this command itself took several hours to finish! To make matters worse, careful trial and error inspection of other user home directories revealed more massive directory structures as well.</p>
 <ul>
 <li>rsync is single threaded</li>
@@ -111,9 +116,9 @@
 
 <span class="c1"># RSYNC SETUP</span>
 <span class="nv">RSYNC_PROG</span><span class="o">=</span>/usr/bin/rsync
-<span class="c1"># note the important use of --relative to use relative paths so we don't have to specify the exact path on dest</span>
-<span class="nv">RSYNC_OPTS</span><span class="o">=</span><span class="s2">"-aAXv --numeric-ids --progress --human-readable --delete --exclude=.glusterfs --relative"</span>
-<span class="nb">export</span> <span class="nv">RSYNC_RSH</span><span class="o">=</span><span class="s2">"ssh -T -c arcfour -o Compression=no -x"</span>
+<span class="c1"># note the important use of --relative to use relative paths so we don&#39;t have to specify the exact path on dest</span>
+<span class="nv">RSYNC_OPTS</span><span class="o">=</span><span class="s2">&quot;-aAXv --numeric-ids --progress --human-readable --delete --exclude=.glusterfs --relative&quot;</span>
+<span class="nb">export</span> <span class="nv">RSYNC_RSH</span><span class="o">=</span><span class="s2">&quot;ssh -T -c arcfour -o Compression=no -x&quot;</span>
 
 <span class="c1"># ENV SETUP</span>
 <span class="nv">SRCDIR</span><span class="o">=</span>/path/to/good/brick
@@ -128,8 +133,10 @@
 <span class="c1"># note the combination of -print0 and -0!</span>
 find <span class="o">{</span>a..z<span class="o">}</span>* <span class="o">{</span>A..Z<span class="o">}</span>* <span class="o">{</span>0..9<span class="o">}</span>* -mindepth <span class="m">1</span> -maxdepth <span class="m">1</span> -print0 <span class="p">|</span> <span class="se">\</span>
     xargs -0 -n1 -P<span class="nv">$THREADS</span> -I% <span class="se">\</span>
-        <span class="nv">$RSYNC_PROG</span> <span class="nv">$RSYNC_OPTS</span> <span class="s2">"%"</span> <span class="nv">$BAD_NODE</span>:<span class="nv">$DESTDIR</span>
+        <span class="nv">$RSYNC_PROG</span> <span class="nv">$RSYNC_OPTS</span> <span class="s2">&quot;%&quot;</span> <span class="nv">$BAD_NODE</span>:<span class="nv">$DESTDIR</span>
 </pre></div>
+
+
 <p>Pay attention to the source/destination paths, the number of <code>THREADS</code>, and the <code>BAD_NODE</code> name, then you should be ready to roll.</p>
 <h3>The Magic, Explained</h3>
 <p>It's a bit of magic, but here are the important parts:</p>
@@ -143,26 +150,46 @@ find <span class="o">{</span>a..z<span class="o">}</span>* <span class="o">{</sp
 </ul>
 <p>Hope this helps!</p>
 <p>This was <a href="https://mjanja.ch/2014/07/parallelizing-rsync/">originally posted</a> on my personal blog; re-posted here for posterity.</p>
-  </div>
-</article>
     </div>
   </div>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="row">
-       <ul class="col-sm-6 list-inline">
-          <li class="list-inline-item"><a href="https://rwanyoike.github.io/lugspeedtest/authors.html">Authors</a></li>
-          <li class="list-inline-item"><a href="https://rwanyoike.github.io/lugspeedtest/archives.html">Archives</a></li>
-          <li class="list-inline-item"><a href="https://rwanyoike.github.io/lugspeedtest/categories.html">Categories</a></li>
-          <li class="list-inline-item"><a href="https://rwanyoike.github.io/lugspeedtest/tags.html">Tags</a></li>
-        </ul>
-        <p class="col-sm-6 text-sm-right text-muted">
-          Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a> / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
-        </p>
-      </div>
+  <hr class="separator">
+  <div class="col-md-8 col-md-offset-2">
+  <div id="disqus_thread">
+    <script>
+      var disqus_shortname = 'nairobilug';
+      (function() {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] ||
+         document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript=nairobilug">
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a href="https://disqus.com" class="dsq-brlink">
+      blog comments powered by <span class="logo-disqus">Disqus</span>
+    </a>
+  </div>
+  </div>
+  </div>
+<footer class="footer">
+  <div class="container">
+    <p class="text-center">
+      Multiple, <a href="" target="_blank"></a> unless otherwise noted.
+    </p>
+    <div class="text-center">
+      Generated by <a href="http://getpelican.com" target="_blank">Pelican</a> with the <a href="http://github.com/nairobilug/pelican-alchemy">alchemy</a> theme.
     </div>
-  </footer>
-</body>
+  </div>
+</footer> <!-- /.footer -->
+  <script src="https://nairobilug.or.ke/theme/js/jquery.min.js"></script>
+  <script src="https://nairobilug.or.ke/theme/js/bootstrap.min.js"></script>
+</body> <!-- 42 -->
 
 </html>

@@ -2,88 +2,89 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags always come first -->
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="https://nairobilug.or.ke/2016/02/heka-influxdb-and-grafana.html" />
 
-  <title>Heka, InfluxDB, and Grafana | Nairobi GNU/Linux Users Group
+    <title>  Nairobi LUG &mdash; Heka, InfluxDB, and Grafana
 </title>
-  <link rel="canonical" href="https://rwanyoike.github.io/lugspeedtest/2016/02/heka-influxdb-and-grafana.html">
 
-  <link rel="alternate" type="application/atom+xml" href="https://rwanyoike.github.io/lugspeedtest/feeds/all.atom.xml" title="Full Atom Feed">
-  <link rel="alternate" type="application/atom+xml" href="https://rwanyoike.github.io/lugspeedtest/feeds/linux.atom.xml" title="Categories Atom Feed">
-
-  <link rel="apple-touch-icon" href="https://rwanyoike.github.io/lugspeedtest/apple-touch-icon.png" sizes="180x180">
-  <link rel="icon" type="image/png" href="https://rwanyoike.github.io/lugspeedtest/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="https://rwanyoike.github.io/lugspeedtest/favicon-16x16.png" sizes="16x16">
-  <link rel="manifest" href="https://rwanyoike.github.io/lugspeedtest/manifest.json">
-  <meta name="theme-color" content="#333333">
-
-  <link rel="stylesheet" href="https://rwanyoike.github.io/lugspeedtest/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://rwanyoike.github.io/lugspeedtest/theme/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://rwanyoike.github.io/lugspeedtest/theme/css/pygments/monokai.min.css">
-  <link rel="stylesheet" href="https://rwanyoike.github.io/lugspeedtest/theme/css/style.css">
+      <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196">
+      <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+      <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+      <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+      <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
 
 
-<meta name="description" content="My experience configuring Heka, InfluxDB, and Grafana for monitoring logs and live server stats.">
+
+    <link rel="stylesheet" href="https://nairobilug.or.ke/theme/css/style.css">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-59440070-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+    <meta name="author" content="Jason Rogena">
+    <meta name="description" content="My experience configuring Heka, InfluxDB, and Grafana for monitoring logs and live server stats.">
+  <meta name="tags" contents="linux, heka, influxdb, grafana, ">
 </head>
 
 <body>
-  <header class="header">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-4">
-          <a href="https://rwanyoike.github.io/lugspeedtest">
-            <img class="img-fluid" src=https://rwanyoike.github.io/lugspeedtest/images/profile.png alt="Nairobi GNU/Linux Users Group">
-          </a>
-        </div>
-        <div class="col-sm-8">
-          <h1 class="title"><a href="https://rwanyoike.github.io/lugspeedtest">Nairobi GNU/Linux Users Group</a></h1>
-          <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
-          <ul class="list-inline">
-            <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
-            <li class="list-inline-item text-muted">|</li>
-            <li class="list-inline-item"><a href="https://rwanyoike.github.io/lugspeedtest/pages/about-us.html">About Us</a></li>
-            <li class="list-inline-item"><a href="https://rwanyoike.github.io/lugspeedtest/pages/contact.html">Contact</a></li>
-            <li class="list-inline-item"><a href="https://rwanyoike.github.io/lugspeedtest/pages/mailing-list.html">Mailing List</a></li>
-            <li class="list-inline-item"><a href="https://rwanyoike.github.io/lugspeedtest/pages/meetups.html">Meetups</a></li>
-            <li class=" list-inline-item text-muted">|</li>
-            <li class="list-inline-item"><a class="fa fa-feed" href="https://rwanyoike.github.io/lugspeedtest/feeds/all.atom.xml" target="_blank"></a></li>
-            <li class="list-inline-item"><a class="fa fa-github" href="http://github.com/nairobilug" target="_blank"></a></li>
-            <li class="list-inline-item"><a class="fa fa-twitter" href="http://twitter.com/nairobilug" target="_blank"></a></li>
-          </ul>
-        </div>
+<header class="header">
+  <div class="container">
+      <div class="header-image pull-left">
+        <a class="nodec" href="https://nairobilug.or.ke"><img src=/images/profile.svg width="200" height="200"></a>
       </div>
+    <div class="header-inner">
+      <h1 class="header-name">
+        <a class="nodec" href="https://nairobilug.or.ke">Nairobi LUG</a>
+      </h1>
+      <h3 class="header-text">A lively community of GNU/Linux enthusiasts</h3>
+      <ul class="header-menu list-inline">
+          <li><a class="nodec" href="http://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+          <li><a class="nodec" href="https://groups.google.com/forum/#!forum/nairobi-gnu" target="_blank">Mailing List</a></li>
+          <li><a class="nodec icon-github" href="https://github.com/nairobilug"></a></li>
+          <li><a class="nodec icon-twitter" href="https://twitter.com/nairobilug"></a></li>
+      </ul>
     </div>
-  </header>
-
-  <div class="main">
-    <div class="container">
-      <h1>Heka, InfluxDB, and Grafana
-</h1>
-      <hr>
-<article class="article">
-  <header>
+  </div>
+</header> <!-- /.header -->  <div class="container">
+  <div class="post full-post">
+    <h1 class="post-title">
+      <a href="/2016/02/heka-influxdb-and-grafana.html" title="Permalink to Heka, InfluxDB, and Grafana">Heka, InfluxDB, and Grafana</a>
+    </h1>
     <ul class="list-inline">
-      <li class="list-inline-item text-muted" title="2016-02-07T17:00:00+03:00">
-        <i class="fa fa-clock-o"></i>
-        Sun 07 February 2016
+      <li class="post-date">
+        <a class="text-muted" href="/2016/02/heka-influxdb-and-grafana.html" title="2016-02-07T17:00:00+03:00">Sun 07 February 2016</a>
       </li>
-      <li class="list-inline-item">
-        <i class="fa fa-folder-open-o"></i>
-        <a href="https://rwanyoike.github.io/lugspeedtest/category/linux.html">Linux</a>
+      <li class="muted">&middot;</li>
+      <li class="post-category">
+        <a href="https://nairobilug.or.ke/category/linux.html">Linux</a>
       </li>
-      <li class="list-inline-item">
-        <i class="fa fa-user-o"></i>
-        <a href="https://rwanyoike.github.io/lugspeedtest/author/jason-rogena.html">Jason Rogena</a>      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-files-o"></i>
-        <a href="https://rwanyoike.github.io/lugspeedtest/tag/linux.html">#linux</a>,         <a href="https://rwanyoike.github.io/lugspeedtest/tag/heka.html">#heka</a>,         <a href="https://rwanyoike.github.io/lugspeedtest/tag/influxdb.html">#influxdb</a>,         <a href="https://rwanyoike.github.io/lugspeedtest/tag/grafana.html">#grafana</a>      </li>
+        <li class="muted">&middot;</li>
+        <li>
+            <a href="https://nairobilug.or.ke/tag/linux.html">linux</a>,             <a href="https://nairobilug.or.ke/tag/heka.html">heka</a>,             <a href="https://nairobilug.or.ke/tag/influxdb.html">influxdb</a>,             <a href="https://nairobilug.or.ke/tag/grafana.html">grafana</a>        </li>
+        <li class="muted">&middot;</li>
+        <li>
+          <address class="post-author">
+            By <a href="https://nairobilug.or.ke/author/jason-rogena.html">Jason Rogena</a>
+          </address>
+        </li>
     </ul>
-  </header>
-  <div class="content">
-    <p>I recently started working at a startup :). My first task there was to configure their new Linux server to host some live apps. I, professionally, haven't done sysadmin work but since I've been configuring Linux VPSs to play with for some time now I figured it wouldn't be that hard doing the initial setup. I did the usual; install and configure the necessary packages, firewall stuff, automated deployment of the apps, and of course, monitoring. I tried to do as much as possible on Ansible — I'm no idiot.</p>
+    <div class="post-content">
+      <p>I recently started working at a startup :). My first task there was to configure their new Linux server to host some live apps. I, professionally, haven't done sysadmin work but since I've been configuring Linux VPSs to play with for some time now I figured it wouldn't be that hard doing the initial setup. I did the usual; install and configure the necessary packages, firewall stuff, automated deployment of the apps, and of course, monitoring. I tried to do as much as possible on Ansible — I'm no idiot.</p>
 <p>Settling on what I should use for monitoring took quite some time. There a so many ways you can kill this rat; Logstash, Gaphite, <a href="http://prometheus.io">Prometheus</a>, <a href="https://hekad.readthedocs.org/en/latest">Heka</a>, and the list goes on and on. I knew, however, what I wanted:</p>
 <ol>
 <li>Easily deployable — mainly because I didn't want to have to do a lot of work on Ansible</li>
@@ -92,7 +93,7 @@
 <li>Has (or supports) a sexy graph dashboard</li>
 </ol>
 <p>Prometheus and Heka came up top. Prometheus comes bundled with an integrated time-series database and a graph dashboard. Heka, on the other hand, only collects and processes the time-series data. It might look like Prometheus has a leg up on Heka (it probably does in most use-cases). Using Prometheus, however, means that you have to use everything Prometheus. I hate being locked down — hey boo ;)! Heka supports a <a href="https://hekad.readthedocs.org/en/v0.10.0b0/config/outputs/index.html">variety of data outputs</a> including a host of storage engines (<a href="https://influxdata.com">InfluxDB</a> being one of them), IRC, ElasticSearch, HTTP, etc. <a href="http://grafana.org">Grafana</a> can graph data stored in an InfluxDB database. InfluxDB and Grafana are also very easy to install and run as daemons. Sorted!</p>
-<blockquote class="blockquote">
+<blockquote>
 <p><strong>Note:</strong>
 Currently, the latest versions for both Heka and InfluxDB are pre v1 (v0.10.0 for Heka and v0.9.6 for InfluxDB). Both are also very young projects. I have however not experienced any issues with my setup. Live a little!</p>
 </blockquote>
@@ -112,65 +113,77 @@ Currently, the latest versions for both Heka and InfluxDB are pre v1 (v0.10.0 fo
 <h4>1. Input</h4>
 <p>For this step, you configure the source for what you're monitoring. It might be a log file, Docker event, etc. In this example, my source is Apache2's access log file.</p>
 <div class="highlight"><pre><span></span><span class="k">[Apache2AccessLogInput]</span>
-<span class="na">type</span> <span class="o">=</span> <span class="s">"LogstreamerInput"</span>
-<span class="na">log_directory</span> <span class="o">=</span> <span class="s">"/var/log/apache2"</span>
-<span class="na">file_match</span> <span class="o">=</span> <span class="s">'access\.log'</span>
+<span class="na">type</span> <span class="o">=</span> <span class="s">&quot;LogstreamerInput&quot;</span>
+<span class="na">log_directory</span> <span class="o">=</span> <span class="s">&quot;/var/log/apache2&quot;</span>
+<span class="na">file_match</span> <span class="o">=</span> <span class="s">&#39;access\.log&#39;</span>
 <span class="na">ticker_interval</span> <span class="o">=</span> <span class="s">5</span>
-<span class="na">decoder</span> <span class="o">=</span> <span class="s">"Apache2LogDecoder"</span>
+<span class="na">decoder</span> <span class="o">=</span> <span class="s">&quot;Apache2LogDecoder&quot;</span>
 </pre></div>
+
+
 <p>The first line, with the square brackets, specifies the name you've given the plugin you're defining for the step. You can also use the <strong>type</strong> as the name and hence won't be required to define the type as a field below the name. I used the 'LogStreamerInput' type to handle for my input plugin. I also had to specify which decoder plugin (described in the next sub-section) I want coupled with the input plugin. Pretty straightforward.</p>
 <h4>2. Decode</h4>
 <p>The decoder plugin translates the input gotten by the input plugin to something that can be processed by the plugins that follow it.</p>
 <div class="highlight"><pre><span></span><span class="k">[Apache2LogDecoder]</span>
-<span class="na">type</span> <span class="o">=</span> <span class="s">"SandboxDecoder"</span>
-<span class="na">filename</span> <span class="o">=</span> <span class="s">"lua_decoders/apache_access.lua"</span>
+<span class="na">type</span> <span class="o">=</span> <span class="s">&quot;SandboxDecoder&quot;</span>
+<span class="na">filename</span> <span class="o">=</span> <span class="s">&quot;lua_decoders/apache_access.lua&quot;</span>
 <span class="s">    [Apache2LogDecoder.config]</span>
 <span class="s">    user_agent_transform = false</span>
-<span class="s">    log_format = "%h %l %u %t \"%r\" %&gt;s %O \"%{Referer}i\" \"%{User-Agent}i\""</span>
+<span class="s">    log_format = &quot;%h %l %u %t \&quot;%r\&quot; %&gt;s %O \&quot;%{Referer}i\&quot; \&quot;%{User-Agent}i\&quot;&quot;</span>
 </pre></div>
+
+
 <p>The name you give the decoder plugin has to be consistent with the one defined as the decoder in the input plugin. For the SandboxDecoder type, you also have to provide the file in which the plugin type is defined.</p>
 <p>There is a set of files that define types that come bundled with Heka in <em>/usr/share/heka</em>. I, for instance, used the <em>/usr/share/heka/lua_decoders/apache_access.lua</em> file that defines a SandboxDecoder type. Another cool thing about Heka, you can define your own plugin types and point to where you've defined them in your config files.</p>
 <h4>3. Filter</h4>
 <p>You might want to filter out decoded data that you consider unnecessary in your filter plugin.</p>
 <div class="highlight"><pre><span></span><span class="k">[Apache2HTTPStatusFilter]</span>
-<span class="na">type</span> <span class="o">=</span> <span class="s">"SandboxFilter"</span>
-<span class="na">filename</span> <span class="o">=</span> <span class="s">"lua_filters/http_status.lua"</span>
+<span class="na">type</span> <span class="o">=</span> <span class="s">&quot;SandboxFilter&quot;</span>
+<span class="na">filename</span> <span class="o">=</span> <span class="s">&quot;lua_filters/http_status.lua&quot;</span>
 <span class="na">ticker_interval</span> <span class="o">=</span> <span class="s">5</span>
 <span class="na">preserve_data</span> <span class="o">=</span> <span class="s">false</span>
-<span class="na">message_matcher</span> <span class="o">=</span> <span class="s">"Type == 'logfile'"</span>
+<span class="na">message_matcher</span> <span class="o">=</span> <span class="s">&quot;Type == &#39;logfile&#39;&quot;</span>
 <span class="s">    [Apache2HTTPStatusFilter.config]</span>
 <span class="s">    sec_per_row = 60</span>
 <span class="s">    rows = 1440</span>
 <span class="s">    preservation_version = 14</span>
 </pre></div>
+
+
 <p>Some meta-variables are appended to the monitoring data by the decoder plugin depending on the type of decoder used. For instance, the SandboxDecoder in <em>lua_decoders/apache_access.lua</em> appends the <strong>Type</strong> meta-variable to the decoded data. You can use these variables to filter out the data you need — because a lot of data is decoded and you might not want to store all of it. Check the decoder type documentation for the full list of appended variables. I only needed data that had the Type set to 'logfile' so I defined this in the <strong>message_matcher</strong> field.</p>
-<blockquote class="blockquote">
+<blockquote>
 <p><strong>Tip:</strong>
 I initially set the <strong>message_matcher</strong> field to "TRUE" so that none of the data was actually filtered out then checked the output to see what I could use to filter out the data.</p>
 </blockquote>
 <h4>4. Encode</h4>
 <p>You need to define an encoder plugin for encoding the data to a form that can be processed by whatever you are outputting to. This might be as simple as defining the type for the encoder plugin.</p>
 <div class="highlight"><pre><span></span><span class="k">[Apache2HTTPStatusInfluxDBEncoder]</span>
-<span class="na">type</span> <span class="o">=</span> <span class="s">"SandboxEncoder"</span>
-<span class="na">filename</span> <span class="o">=</span> <span class="s">"lua_encoders/schema_influx_line.lua"</span>
+<span class="na">type</span> <span class="o">=</span> <span class="s">&quot;SandboxEncoder&quot;</span>
+<span class="na">filename</span> <span class="o">=</span> <span class="s">&quot;lua_encoders/schema_influx_line.lua&quot;</span>
 <span class="s">    [Apache2HTTPStatusInfluxDBEncoder.config]</span>
-<span class="s">    timestamp_precision= "s"</span>
+<span class="s">    timestamp_precision= &quot;s&quot;</span>
 </pre></div>
+
+
 <h4>5. Output</h4>
 <p>Finally, you need to define the output plugin. I am sending the data to an InfluxDB database so I had to define a plugin for this purpose.</p>
 <div class="highlight"><pre><span></span><span class="k">[Apache2HTTPStatusInfluxDBOutput]</span>
-<span class="na">type</span> <span class="o">=</span> <span class="s">"HttpOutput"</span>
-<span class="na">message_matcher</span> <span class="o">=</span> <span class="s">"Type == 'logfile'"</span>
-<span class="na">address</span> <span class="o">=</span> <span class="s">"http://127.0.0.1:8086/write?db=a2_access_log&amp;rp=default&amp;precision=s"</span>
-<span class="na">username</span> <span class="o">=</span> <span class="s">"root"</span>
-<span class="na">password</span> <span class="o">=</span> <span class="s">"root"</span>
-<span class="na">encoder</span> <span class="o">=</span> <span class="s">"Apache2HTTPStatusInfluxDBEncoder"</span>
+<span class="na">type</span> <span class="o">=</span> <span class="s">&quot;HttpOutput&quot;</span>
+<span class="na">message_matcher</span> <span class="o">=</span> <span class="s">&quot;Type == &#39;logfile&#39;&quot;</span>
+<span class="na">address</span> <span class="o">=</span> <span class="s">&quot;http://127.0.0.1:8086/write?db=a2_access_log&amp;rp=default&amp;precision=s&quot;</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">&quot;root&quot;</span>
+<span class="na">password</span> <span class="o">=</span> <span class="s">&quot;root&quot;</span>
+<span class="na">encoder</span> <span class="o">=</span> <span class="s">&quot;Apache2HTTPStatusInfluxDBEncoder&quot;</span>
 </pre></div>
+
+
 <p>You can define more than one output plugin (you can probably also do this for some of the other steps). I wanted to log the output, during testing, so that I didn't have to query InfluxDB for the data.</p>
 <div class="highlight"><pre><span></span><span class="k">[LogOutput]</span>
-<span class="na">message_matcher</span> <span class="o">=</span> <span class="s">"Type == 'logfile'"</span>
-<span class="na">encoder</span> <span class="o">=</span> <span class="s">"Apache2HTTPStatusInfluxDBEncoder"</span>
+<span class="na">message_matcher</span> <span class="o">=</span> <span class="s">&quot;Type == &#39;logfile&#39;&quot;</span>
+<span class="na">encoder</span> <span class="o">=</span> <span class="s">&quot;Apache2HTTPStatusInfluxDBEncoder&quot;</span>
 </pre></div>
+
+
 <h3>Conclusion</h3>
 <p>I love the setup so far:</p>
 <ul>
@@ -179,28 +192,48 @@ I initially set the <strong>message_matcher</strong> field to "TRUE" so that non
 <li>InfluxDB isn't using a lot of disk space. The database storing HTTP status codes is 900K on the disk, one month on.</li>
 <li>The graphs on Grafana look sexy. Here's a screenshot of the graphs on HTTP status codes:</li>
 </ul>
-<p><img alt="Image showing HTTP status codes on Grafana" class="img-fluid" src="https://rwanyoike.github.io/lugspeedtest/images/heka-influxdb-and-grafana/heka-influxdb-and-grafana.png"/></p>
+<p><img alt="Image showing HTTP status codes on Grafana" src="https://nairobilug.or.ke/images/heka-influxdb-and-grafana/heka-influxdb-and-grafana.png"></p>
 <p>This was <a href="https://jasonrogena.github.io/2016/01/02/heka-influxdb-and-grafana.html">originally posted</a> on my personal blog; re-posting here for posterity.</p>
-  </div>
-</article>
     </div>
   </div>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="row">
-       <ul class="col-sm-6 list-inline">
-          <li class="list-inline-item"><a href="https://rwanyoike.github.io/lugspeedtest/authors.html">Authors</a></li>
-          <li class="list-inline-item"><a href="https://rwanyoike.github.io/lugspeedtest/archives.html">Archives</a></li>
-          <li class="list-inline-item"><a href="https://rwanyoike.github.io/lugspeedtest/categories.html">Categories</a></li>
-          <li class="list-inline-item"><a href="https://rwanyoike.github.io/lugspeedtest/tags.html">Tags</a></li>
-        </ul>
-        <p class="col-sm-6 text-sm-right text-muted">
-          Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a> / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
-        </p>
-      </div>
+  <hr class="separator">
+  <div class="col-md-8 col-md-offset-2">
+  <div id="disqus_thread">
+    <script>
+      var disqus_shortname = 'nairobilug';
+      (function() {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] ||
+         document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript=nairobilug">
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a href="https://disqus.com" class="dsq-brlink">
+      blog comments powered by <span class="logo-disqus">Disqus</span>
+    </a>
+  </div>
+  </div>
+  </div>
+<footer class="footer">
+  <div class="container">
+    <p class="text-center">
+      Multiple, <a href="" target="_blank"></a> unless otherwise noted.
+    </p>
+    <div class="text-center">
+      Generated by <a href="http://getpelican.com" target="_blank">Pelican</a> with the <a href="http://github.com/nairobilug/pelican-alchemy">alchemy</a> theme.
     </div>
-  </footer>
-</body>
+  </div>
+</footer> <!-- /.footer -->
+  <script src="https://nairobilug.or.ke/theme/js/jquery.min.js"></script>
+  <script src="https://nairobilug.or.ke/theme/js/bootstrap.min.js"></script>
+</body> <!-- 42 -->
 
 </html>
