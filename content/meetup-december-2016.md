@@ -14,19 +14,19 @@ Gosu's are people who are skilled and quite knowledgeable in their field set due
 
 This article is meant to be a roadmap to the young'uns, both starting out and unemployed out there. And also to the gosus, to reflect and have a good chuckle.
 
-## The Unemployed v1.0
+## The unemployed v1.0
 
 What can you do?
 
 > Difficult question right there.
 
-## Eating an Elephant
+## Eating an elephant
 
 It is possible. Trust me.
 
 > Eat it in modules.
 
-## An Interview?
+## An interview?
 
 So you think you can code?
 
@@ -34,7 +34,7 @@ So you think you can code?
 
 GitHub is your friend. Use it.
 
-## Version Control
+## Version control
 
 Log your achievements (and life). Knowing where you came from is important.
 
@@ -60,13 +60,13 @@ As a young dev, chances are (we've all been there at one point of our lives) tha
 
 > Be confident in your work. Believe in your code... however:
 
-## Do Not Be Proud
+## Do not be proud
 
 The more you know, the more you realise you do not know.
 
 > Be humble.
 
-## Org Mode
+## Org mode
 
 Organise your life with org-mode. Emacs rocks! Hehe
 
@@ -74,19 +74,19 @@ Organise your life with org-mode. Emacs rocks! Hehe
 
 Yes, I am one of those people. I preach Emacs. Hate me later.
 
-## Expensive Cities
+## Expensive cities
 
 Remember them: London, San Francisco, and New York.
 
 > Life there is goddamn expensive. Before taking a job there, think long and hard about your income.
 
-## Local vs International Jobs
+## Local vs international jobs
 
 Know this:
 
 > They pay differently.
 
-## The Kernel
+## The kernel
 
 The kernel sounds scary? Yes it is. But...
 
