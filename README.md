@@ -4,7 +4,7 @@ This repository hosts the code for the [Nairobi GNU/Linux Users Group](https://n
 
 The website is powered by [Pelican](http://getpelican.com/) — a static site generator written in Python — and uses a magical theme called [Alchemy](https://github.com/nairobilug/pelican-alchemy).
 
-![Screenshot](/screenshot.png "Screenshot")
+![Screenshot](screenshot.jpg "Screenshot")
 
 ---
 
