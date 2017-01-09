@@ -73,8 +73,8 @@ LINKS = (
 )
 
 ICONS = [
-    ('github', 'http://github.com/nairobilug'),
-    ('twitter', 'http://twitter.com/nairobilug'),
+    ('github', 'https://github.com/nairobilug'),
+    ('twitter', 'https://twitter.com/nairobilug'),
 ]
 
 PYGMENTS_STYLE = 'monokai'
