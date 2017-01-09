@@ -44,6 +44,16 @@ EXTRA_PATH_METADATA = {
     'extras/mstile-150x150.png': {'path': 'mstile-150x150.png'},
 }
 
+# http://docs.getpelican.com/en/stable/plugins.html#how-to-use-plugins
+PLUGIN_PATHS = ['plugins']
+PLUGINS = ['pelican-bootstrapify']
+
+BOOTSTRAPIFY = {
+    'table': ['table', 'table-striped', 'table-hover'],
+    'img': ['img-fluid'],
+    'blockquote': ['blockquote'],
+}
+
 # Theme settings --------------------------------------------------------------
 
 THEME = 'theme/alchemy'
