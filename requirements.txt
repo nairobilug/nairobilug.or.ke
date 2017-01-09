@@ -1,4 +1,4 @@
-ghp-import==0.4.1
-Markdown==2.6.7
-pelican==3.6.3
+ghp-import
+Markdown
+pelican==3.7.0
 bs4 # pelican-bootstrapify
