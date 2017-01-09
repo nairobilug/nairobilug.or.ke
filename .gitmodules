@@ -1,6 +1,6 @@
-[submodule "theme"]
-    path = theme
-    url = https://github.com/nairobilug/pelican-alchemy.git
+[submodule "themes/pelican-alchemy"]
+	path = themes/pelican-alchemy
+	url = https://github.com/nairobilug/pelican-alchemy
 [submodule "plugins/pelican-bootstrapify"]
 	path = plugins/pelican-bootstrapify
 	url = https://github.com/ingwinlu/pelican-bootstrapify

@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = 'Multiple'
-SITENAME = 'Nairobi LUG'
+SITENAME = 'Nairobi GNU/Linux Users Group'
 SITEURL = ''  # Intentionally left blank, see ./publishconf.py
 
 PATH = 'content'
@@ -22,11 +22,6 @@ ARTICLE_URL = '{date:%Y}/{date:%m}/{slug}.html'
 ARTICLE_SAVE_AS = ARTICLE_URL
 ARTICLE_LANG_URL = '{date:%Y}/{date:%m}/{slug}-{lang}.html'
 ARTICLE_LANG_SAVE_AS = ARTICLE_LANG_URL
-
-PAGE_URL = '{date:%Y}/{date:%m}/pages/{slug}.html'
-PAGE_SAVE_AS = PAGE_URL
-PAGE_LANG_URL = '{date:%Y}/{date:%m}/pages/{slug}-{lang}.html'
-PAGE_LANG_SAVE_AS = PAGE_LANG_URL
 
 DEFAULT_PAGINATION = 10
 
@@ -54,25 +49,37 @@ BOOTSTRAPIFY = {
     'blockquote': ['blockquote'],
 }
 
+PLUGIN_PATHS = ['plugins']
+PLUGINS = ['pelican-bootstrapify']
+
+BOOTSTRAPIFY = {
+    'table': ['table', 'table-striped', 'table-hover'],
+    'img': ['img-fluid'],
+    'blockquote': ['blockquote'],
+}
+
 # Theme settings --------------------------------------------------------------
 
-THEME = 'theme/alchemy'
+THEME = 'themes/pelican-alchemy/alchemy'
 
-SITE_SUBTEXT = 'A lively community of GNU/Linux enthusiasts'
-META_DESCRIPTION = 'A not-for-profit community serving the greater Nairobi ' \
-                   'area. We are a collection of people dedicated to ' \
-                   'GNU/Linux, Free Software, Open Source, and related topics.'
+SITESUBTITLE = 'A lively community of GNU/Linux enthusiasts'
+SITEIMAGE = '/images/profile.png'
+DESCRIPTION = 'A not-for-profit community serving the greater Nairobi area. ' \
+              'We are a collection of people dedicated to GNU/Linux, Free ' \
+              'Software, Open Source, and related topics.'
 
-PAGES_ON_MENU = True
-PROFILE_IMAGE = '/images/profile.svg width="200" height="200"'
-SHOW_ARTICLE_AUTHOR = True
-EXTRA_FAVICON = True
-
-MENU_ITEMS = (
-    ('IRC', 'http://webchat.freenode.net/?channels=nairobilug'),
-    ('Mailing List', 'https://groups.google.com/forum/#!forum/nairobi-gnu'),
+LINKS = (
+    ('IRC', 'https://webchat.freenode.net/?channels=nairobilug'),
 )
 
-GITHUB_ADDRESS = 'https://github.com/nairobilug'
-TWITTER_ADDRESS = 'https://twitter.com/nairobilug'
-GPLUS_ADDRESS = 'https://plus.google.com/communities/107260210367217532462'
+ICONS = [
+    ('github', 'http://github.com/nairobilug'),
+    ('twitter', 'http://twitter.com/nairobilug'),
+]
+
+PYGMENTS_STYLE = 'monokai'
+RFG_FAVICONS = True
+
+# Default value is ['index', 'tags', 'categories', 'authors', 'archives']
+DIRECT_TEMPLATES = ['index', 'tags', 'categories', 'authors', 'archives', 'sitemap']
+SITEMAP_SAVE_AS = 'sitemap.xml'
