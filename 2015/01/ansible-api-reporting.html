@@ -87,8 +87,8 @@
 <blockquote class="blockquote">[...] very powerful, and is how the ansible CLI and ansible-playbook are implemented.</blockquote>
 <p>Indeed! Using <code>ansible.runner</code> I whipped something up and extracted data from several dozen servers in just a few minutes (and I don't even know Python!):</p>
 <div class="highlight"><pre><span></span>$ ./ansible-runner.py
-mjanjavm10, 2, 30, Ubuntu 14.04, 192.168.7.34
-mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
+mjanjavm10, <span class="m">2</span>, <span class="m">30</span>, Ubuntu <span class="m">14</span>.04, <span class="m">192</span>.168.7.34
+mjanjavm14, <span class="m">2</span>, <span class="m">30</span>, Ubuntu <span class="m">14</span>.04, <span class="m">192</span>.168.7.37
 </pre></div>
 <p>I had to massage the data a bit to get clean numbers for RAM and storage capacity, but other than that it was extremely straightforward (as most things with Ansible generally are).</p>
 <h2>The Code</h2>
@@ -179,7 +179,7 @@ mjanjavm14, 2, 30, Ubuntu 14.04, 192.168.7.37
 
         <span class="k">print</span> <span class="s2">"</span><span class="si">%s</span><span class="s2">, </span><span class="si">%.0f</span><span class="s2">, </span><span class="si">%2.0f</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">memory</span><span class="p">,</span> <span class="n">disk_total_capacity</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">ip</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
     <span class="n">results</span> <span class="o">=</span> <span class="n">ansible</span><span class="o">.</span><span class="n">runner</span><span class="o">.</span><span class="n">Runner</span><span class="p">(</span>
         <span class="n">module_name</span><span class="o">=</span><span class="s1">'setup'</span><span class="p">,</span>
         <span class="n">module_args</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span>

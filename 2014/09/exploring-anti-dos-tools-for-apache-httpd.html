@@ -93,8 +93,8 @@
 <p>But this module can prevent a brute-force attack (<em>e.g. an automated script to guess a password field in a web-form</em>) in a web server (running Apache httpd).</p>
 <p><img alt="mod_evasion can prevent Brute-force.." class="img-fluid" src="/images/exploring-anti-dos-tools-for-apache-httpd/bruteforce.png" title="mod_evasion can prevent Brute-force attack"/></p>
 <p>Just to make an interesting comparison, I replaced Apache httpd with Nginx on the same Server (192.168.43.221) and <strong>ta! da!..</strong></p>
-<p><img alt="Nginx is not DOSed by Slowloris" class="img-fluid" src="/images/exploring-anti-dos-tools-for-apache-httpd/nginxup.png" title="Nginx is not DOSed by Slowloris"> Nginx gracefully made it by ignoring the request from Slowloris. But I noticed a brute-force attack is possible while using Nginx default settings! <strong>Nginx access logs</strong>
-<img alt="Nginx Brute-forced" class="img-fluid" src="/images/exploring-anti-dos-tools-for-apache-httpd/bfnginx.png" title="Nginx can be Brute-forced"/></img></p>
+<p><img alt="Nginx is not DOSed by Slowloris" class="img-fluid" src="/images/exploring-anti-dos-tools-for-apache-httpd/nginxup.png" title="Nginx is not DOSed by Slowloris"/> Nginx gracefully made it by ignoring the request from Slowloris. But I noticed a brute-force attack is possible while using Nginx default settings! <strong>Nginx access logs</strong>
+<img alt="Nginx Brute-forced" class="img-fluid" src="/images/exploring-anti-dos-tools-for-apache-httpd/bfnginx.png" title="Nginx can be Brute-forced"/></p>
 <h2>Second Setup</h2>
 <ul>
 <li>Server: 192.168.43.221 (running Apache httpd with mod_antiloris loaded)</li>

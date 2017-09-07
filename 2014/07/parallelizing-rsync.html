@@ -116,14 +116,14 @@
 <span class="nv">SRCDIR</span><span class="o">=</span>/path/to/good/brick
 <span class="nv">DESTDIR</span><span class="o">=</span>/path/to/bad/brick
 <span class="c1"># Recommend to match # of CPUs</span>
-<span class="nv">THREADS</span><span class="o">=</span>4
+<span class="nv">THREADS</span><span class="o">=</span><span class="m">4</span>
 <span class="nv">BAD_NODE</span><span class="o">=</span>server1
 
 <span class="nb">cd</span> <span class="nv">$SRCDIR</span>
 
 <span class="c1"># COPY</span>
 <span class="c1"># note the combination of -print0 and -0!</span>
-find <span class="o">{</span>a..z<span class="o">}</span>* <span class="o">{</span>A..Z<span class="o">}</span>* <span class="o">{</span>0..9<span class="o">}</span>* -mindepth <span class="m">1</span> -maxdepth <span class="m">1</span> -print0 <span class="p">|</span> <span class="se">\</span>
+find <span class="o">{</span>a..z<span class="o">}</span>* <span class="o">{</span>A..Z<span class="o">}</span>* <span class="o">{</span><span class="m">0</span>..9<span class="o">}</span>* -mindepth <span class="m">1</span> -maxdepth <span class="m">1</span> -print0 <span class="p">|</span> <span class="se">\</span>
     xargs -0 -n1 -P<span class="nv">$THREADS</span> -I% <span class="se">\</span>
         <span class="nv">$RSYNC_PROG</span> <span class="nv">$RSYNC_OPTS</span> <span class="s2">"%"</span> <span class="nv">$BAD_NODE</span>:<span class="nv">$DESTDIR</span>
 </pre></div>
