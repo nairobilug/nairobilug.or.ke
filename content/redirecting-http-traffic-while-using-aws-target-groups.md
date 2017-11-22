@@ -24,18 +24,19 @@ When we find the user's authentication cookies are not set, or are expired, we
 reload the page so that they can get a new authentication cookie.
 We implemented this as shown below, by checking for a 401 status from the [OnaData API]. More of that code is [here].
 
-    (defn http-request
-      "Wraps cljs-http.client/request and redirects if status is 401"
-      [request-fn & args]
-      (let [response-channel (chan)]
-        (go
-          (let [original-response-channel (apply request-fn args)
-                {:keys [status] :as response} (<! original-response-channel)]
-            (if (= status 401)
-              (set! js/window.location (.href js/window.location))
-              (put! response-channel response))))
-    response-channel))
-
+```clojurescript
+(defn http-request
+  "Wraps cljs-http.client/request and redirects if status is 401"
+  [request-fn & args]
+  (let [response-channel (chan)]
+    (go
+      (let [original-response-channel (apply request-fn args)
+            {:keys [status] :as response} (<! original-response-channel)]
+        (if (= status 401)
+          (set! js/window.location (.href js/window.location))
+          (put! response-channel response))))
+response-channel))
+```
 
 As a consequence of this setup, when a user connects over HTTP and is not redirected
 to HTTPS they can end up in an endless loop of reloads when they try to sign-up,
@@ -83,11 +84,12 @@ based on the load balancer they are attached to and the requested path. For the 
 As you can see below, we had no problem handling HTTPS traffic with our setup. We responded with a `200 OK` as
 intended.
 
-
-    $ curl --head -X GET "https://ona.io/login"
-    HTTP/1.1 200 OK
-    Set-Cookie: AWSALB=PqCh/O; Expires=Thu, 23 Mar 2017 06:18:24 GMT; Path=/
-    Strict-Transport-Security: max-age=31536000; includeSubDomains;
+```console
+$ curl --head -X GET "https://ona.io/login"
+HTTP/1.1 200 OK
+Set-Cookie: AWSALB=PqCh/O; Expires=Thu, 23 Mar 2017 06:18:24 GMT; Path=/
+Strict-Transport-Security: max-age=31536000; includeSubDomains;
+```
 
 > Note: The AWS load balancer cookie is used by the load balancer to route a user's
 > requests to the same application server they used in the previous request.
@@ -99,11 +101,12 @@ included the HSTS header, even though the HSTS header is only in the HTTPS
 section of the server configuration. Somehow the application server was
 responding to HTTP traffic using HTTPS instructions.
 
-    $ curl --head -X GET "http://ona.io/login"
-    HTTP/1.1 200 OK
-    Set-Cookie: AWSALB=ZplUR; Expires=Thu, 23 Mar 2017 06:20:07 GMT; Path=/
-    Strict-Transport-Security: max-age=31536000; includeSubDomains;
-
+```console
+$ curl --head -X GET "http://ona.io/login"
+HTTP/1.1 200 OK
+Set-Cookie: AWSALB=ZplUR; Expires=Thu, 23 Mar 2017 06:20:07 GMT; Path=/
+Strict-Transport-Security: max-age=31536000; includeSubDomains;
+```
 
 #### What we knew and what we wanted
 
@@ -124,12 +127,14 @@ HTTPS logs.
 We knew that the load balancer makes health check requests to the
 application servers using the IP address and not the domain name, which seems to be reasonable, yet we were blocking IP address requests as shown below.
 
-    server {
-        listen 80 default_server;
-        server_name  _;
-        return 444;
-        deny all;
-    }
+```nginx
+server {
+    listen 80 default_server;
+    server_name  _;
+    return 444;
+    deny all;
+}
+```
 
 We block IP address requests in order to avoid crawlers or malicious actors that target a range of IP addresses, and through this end up placing unnecessary load on our servers. We also don't want our application server to respond to IP address requests, again
 to avoid unnecessary load on the application servers. For example, here's a normal crawling request by IP address from
@@ -160,8 +165,10 @@ status code 301 permanent redirect.
 We then added a listener on the load balancer for the Target Group.
 We could now see IP address requests behaving as in the snippet below:
 
-    $ curl --head -X GET "http://35.157.7.224"
-    curl: (52) Empty reply from server
+```console
+$ curl --head -X GET "http://35.157.7.224"
+curl: (52) Empty reply from server
+```
 
 This was a result of the load balancer finding the application server unhealthy
 on port 80 because its requests were being denied.
@@ -170,11 +177,13 @@ them to the corresponding domain name. So our default configuration had to
 change to the below, with `<nginx_server_name>` being the domain name we wish to
 expose for that server.
 
-    server {
-        listen 80 default_server;
-        server_name _;
-        return 301 http://<nginx_server_name>$request_uri;
-    }
+```nginx
+server {
+    listen 80 default_server;
+    server_name _;
+    return 301 http://<nginx_server_name>$request_uri;
+}
+```
 
 Now the health check will find the expected response and deem the server healthy.
 
@@ -185,36 +194,42 @@ We also make sure not to manipulate the protocol, HTTP to HTTPS, on IP address
 requests because they would fail if the reverse proxy doesn't support
 HTTPS. This also gives the correct response to crawlers.
 
-    $ curl --head -X GET "http://52.59.26.201"
-    HTTP/1.1 301 Moved Permanently
-    Location: http://ona.io/
+```console
+$ curl --head -X GET "http://52.59.26.201"
+HTTP/1.1 301 Moved Permanently
+Location: http://ona.io/
+```
 
 Which you can see happening on some popular domains:
 
-    $ curl --head -X GET "http://74.125.230.163"
-    HTTP/1.1 301 Moved Permanently
-    Location: http://www.google.com/
-
+```console
+$ curl --head -X GET "http://74.125.230.163"
+HTTP/1.1 301 Moved Permanently
+Location: http://www.google.com/
+```
 Name requests also get properly routed to HTTPS using a 301 redirect.
 
-    $ curl --head -X GET "http://ona.io/login"
-    HTTP/1.1 301 Moved Permanently
-    Location: https://ona.io/login
+```console
+$ curl --head -X GET "http://ona.io/login"
+HTTP/1.1 301 Moved Permanently
+Location: https://ona.io/login
+```
 
 #### Handling HTTP at the reverse proxy
 
 We also want NGINX to handle port 80 traffic using recommendations from
 [NGINX Pitfalls and Common Mistakes under Taxing Rewrites]. With this we can "effectively avoid doing any capturing or matching at all."
 
-    server {
-        listen 80;
-        listen [::]:80;
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
 
-        server_name ona.io;
+    server_name ona.io;
 
-        return 301 https://$server_name$request_uri;
-    }
-
+    return 301 https://$server_name$request_uri;
+}
+```
 
 #### Recommendations from the [HSTS Preload List Submission] site
 
