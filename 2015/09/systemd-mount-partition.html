@@ -1,86 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-  <!-- Required meta tags always come first -->
+  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Mounting Partitions Using systemd | Nairobi GNU/Linux Users Group
+  <title>  Mounting Partitions Using systemd | Nairobi GNU/Linux Users Group
 </title>
   <link rel="canonical" href="/2015/09/systemd-mount-partition.html">
 
-
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#333333">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#333333">
 
   <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
   <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
   <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
-  <link rel="stylesheet" href="/theme/css/style.css">
+  <link rel="stylesheet" href="/theme/css/theme.css">
+
+  
+  <meta name="description" content="Recently, I discovered you can mount partitions using systemd.mount by writing a mount unit file. In this blog post, we'll talk about systemd.mount & how you can use it to mount partitions.">
 
 
-<meta name="description" content="Recently, I discovered you can mount partitions using systemd.mount by writing a mount unit file. In this blog post, we'll talk about systemd.mount & how you can use it to mount partitions.">
 </head>
 
 <body>
   <header class="header">
     <div class="container">
-      <div class="row">
-        <div class="col-sm-4">
-          <a href="">
-            <img class="img-fluid" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
-          </a>
-        </div>
-        <div class="col-sm-8">
-          <h1 class="title"><a href="">Nairobi GNU/Linux Users Group</a></h1>
-          <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
-          <ul class="list-inline">
-            <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
-            <li class="list-inline-item text-muted">|</li>
+<div class="row">
+    <div class="col-sm-4">
+      <a href="/">
+        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
+      <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+              <li class="list-inline-item text-muted">|</li>
             <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class=" list-inline-item text-muted">|</li>
-            <li class="list-inline-item"><a class="fa fa-github" href="http://github.com/nairobilug" target="_blank"></a></li>
-            <li class="list-inline-item"><a class="fa fa-twitter" href="http://twitter.com/nairobilug" target="_blank"></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+          <li class="list-inline-item"><a class="fa fa-github" href="http://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fa fa-twitter" href="http://twitter.com/nairobilug" target="_blank"></a></li>
+      </ul>
+  </div>
+</div>    </div>
   </header>
 
   <div class="main">
     <div class="container">
-      <h1>Mounting Partitions Using systemd
+      <h1>  Mounting Partitions Using systemd
 </h1>
       <hr>
-<article class="article">
-  <header>
-    <ul class="list-inline">
-      <li class="list-inline-item text-muted" title="2015-09-02T11:00:00+03:00">
-        <i class="fa fa-clock-o"></i>
-        Wed 02 September 2015
-      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-folder-open-o"></i>
-        <a href="/category/linux.html">Linux</a>
-      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-user-o"></i>
-        <a href="/author/james-oguya.html">James Oguya</a>      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-files-o"></i>
-        <a href="/tag/linux.html">#linux</a>,         <a href="/tag/systemd.html">#systemd</a>      </li>
-    </ul>
-  </header>
-  <div class="content">
-    <p><a href="http://www.freedesktop.org/wiki/Software/systemd">systemd</a> is gradually becoming the de facto init system &amp; service manager replacing the old sysV init scripts &amp; upstart. Recently, I discovered you can mount partitions using <a href="http://www.freedesktop.org/software/systemd/man/systemd.mount.html">systemd.mount</a> by writing your own <code>.mount</code> <a href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html">systemd unit file</a>.</p>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2015-09-02T11:00:00+03:00">
+          <i class="fa fa-clock-o"></i>
+          Wed 02 September 2015
+        </li>
+        <li class="list-inline-item">
+          <i class="fa fa-folder-open-o"></i>
+          <a href="/category/linux.html">Linux</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fa fa-user-o"></i>
+              <a href="/author/james-oguya.html">James Oguya</a>          </li>
+          <li class="list-inline-item">
+            <i class="fa fa-files-o"></i>
+              <a href="/tag/linux.html">#linux</a>,               <a href="/tag/systemd.html">#systemd</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p><a href="http://www.freedesktop.org/wiki/Software/systemd">systemd</a> is gradually becoming the de facto init system &amp; service manager replacing the old sysV init scripts &amp; upstart. Recently, I discovered you can mount partitions using <a href="http://www.freedesktop.org/software/systemd/man/systemd.mount.html">systemd.mount</a> by writing your own <code>.mount</code> <a href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html">systemd unit file</a>.</p>
 <p><img alt="super suprised" class="img-fluid" src="/images/systemd-mount-partition/suprised-cat.jpg"/></p>
 <p>After <em>RTFM'ing</em>, I realized, under the hood, systemd just runs <a href="http://linux.die.net/man/8/mount">mount command</a> to mount the specified partition with the specified mount options listed in the mount unit file. Basically, you need to specify the following options in your unit file:</p>
 <ul>
@@ -149,25 +148,25 @@ systemctl start mnt-backups.mount
 <p>As always, enable the unit to start automatically during boot.</p>
 <div class="highlight"><pre><span></span>systemctl <span class="nb">enable</span> mnt-backups.mount
 </pre></div>
-  </div>
-</article>
+    </div>
+  </article>
     </div>
   </div>
 
   <footer class="footer">
     <div class="container">
-      <div class="row">
-       <ul class="col-sm-6 list-inline">
-          <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
-          <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
-          <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
-          <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
-        </ul>
-        <p class="col-sm-6 text-sm-right text-muted">
-          Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a> / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
-        </p>
-      </div>
-    </div>
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
   </footer>
 </body>
 

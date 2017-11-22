@@ -1,86 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-  <!-- Required meta tags always come first -->
+  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Experimenting With AES-NI | Nairobi GNU/Linux Users Group
+  <title>  Experimenting With AES-NI | Nairobi GNU/Linux Users Group
 </title>
   <link rel="canonical" href="/2013/11/experimenting-with-aesni.html">
 
-
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#333333">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#333333">
 
   <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
   <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
   <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
-  <link rel="stylesheet" href="/theme/css/style.css">
+  <link rel="stylesheet" href="/theme/css/theme.css">
+
+  
+  <meta name="description" content="Experimenting with hardware-accelerated AES on Sandy Bridge+ chipsets.">
 
 
-<meta name="description" content="Experimenting with hardware-accelerated AES on Sandy Bridge+ chipsets.">
 </head>
 
 <body>
   <header class="header">
     <div class="container">
-      <div class="row">
-        <div class="col-sm-4">
-          <a href="">
-            <img class="img-fluid" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
-          </a>
-        </div>
-        <div class="col-sm-8">
-          <h1 class="title"><a href="">Nairobi GNU/Linux Users Group</a></h1>
-          <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
-          <ul class="list-inline">
-            <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
-            <li class="list-inline-item text-muted">|</li>
+<div class="row">
+    <div class="col-sm-4">
+      <a href="/">
+        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
+      <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+              <li class="list-inline-item text-muted">|</li>
             <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class=" list-inline-item text-muted">|</li>
-            <li class="list-inline-item"><a class="fa fa-github" href="http://github.com/nairobilug" target="_blank"></a></li>
-            <li class="list-inline-item"><a class="fa fa-twitter" href="http://twitter.com/nairobilug" target="_blank"></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+          <li class="list-inline-item"><a class="fa fa-github" href="http://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fa fa-twitter" href="http://twitter.com/nairobilug" target="_blank"></a></li>
+      </ul>
+  </div>
+</div>    </div>
   </header>
 
   <div class="main">
     <div class="container">
-      <h1>Experimenting With AES-NI
+      <h1>  Experimenting With AES-NI
 </h1>
       <hr>
-<article class="article">
-  <header>
-    <ul class="list-inline">
-      <li class="list-inline-item text-muted" title="2013-11-10T13:00:00+03:00">
-        <i class="fa fa-clock-o"></i>
-        Sun 10 November 2013
-      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-folder-open-o"></i>
-        <a href="/category/linux.html">Linux</a>
-      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-user-o"></i>
-        <a href="/author/alan-orth.html">Alan Orth</a>      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-files-o"></i>
-        <a href="/tag/linux.html">#linux</a>,         <a href="/tag/crypto.html">#crypto</a>      </li>
-    </ul>
-  </header>
-  <div class="content">
-    <p>Ever since the <a href="https://en.wikipedia.org/wiki/Sandy_Bridge">Sandy Bridge microarchitecture</a>, Intel CPUs have been coming with hardware-accelerated <abbr title="Advanced Encryption Standard">AES</abbr> support (aka "AES-NI", <em>new instructions</em>).  I figured it would be interesting see a comparison between AES with and without the hardware acceleration on my <a href="http://ark.intel.com/products/65707">Intel Core i5-3317U CPU</a> (Ivy Bridge) on Arch Linux.</p>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2013-11-10T13:00:00+03:00">
+          <i class="fa fa-clock-o"></i>
+          Sun 10 November 2013
+        </li>
+        <li class="list-inline-item">
+          <i class="fa fa-folder-open-o"></i>
+          <a href="/category/linux.html">Linux</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fa fa-user-o"></i>
+              <a href="/author/alan-orth.html">Alan Orth</a>          </li>
+          <li class="list-inline-item">
+            <i class="fa fa-files-o"></i>
+              <a href="/tag/linux.html">#linux</a>,               <a href="/tag/crypto.html">#crypto</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>Ever since the <a href="https://en.wikipedia.org/wiki/Sandy_Bridge">Sandy Bridge microarchitecture</a>, Intel CPUs have been coming with hardware-accelerated <abbr title="Advanced Encryption Standard">AES</abbr> support (aka "AES-NI", <em>new instructions</em>).  I figured it would be interesting see a comparison between AES with and without the hardware acceleration on my <a href="http://ark.intel.com/products/65707">Intel Core i5-3317U CPU</a> (Ivy Bridge) on Arch Linux.</p>
 <p>According to <a href="http://openssl.6102.n7.nabble.com/having-a-lot-of-troubles-trying-to-get-AES-NI-working-td44285.html">a post</a> on the OpenSSL Users mailing list, you can force <code>openssl</code> to avoid hardware AES instructions using the <code>OPENSSL_ia32cap</code> environment variable.</p>
 <h2>Benchmarks</h2>
 <p>First, with AES-NI enabled (the default, on hardware that supports it):</p>
@@ -118,25 +117,25 @@
 <p>You can see that hardware-accelerated AES is pretty consistently <strong>twice</strong> as fast as the implementation without <em>aesni</em>. So it's not an exponential win, but getting <strong>twice</strong> the performance is certainly very serious! This is great for not only for servers using AES encryption (SSL/TLS, hello!), but also for consumers wanting to connect to said servers as well as things like full-disk encryption.</p>
 <p><strong>Note:</strong> It seems Arch Linux's OpenSSL is built with AES-NI support but not as an <em>engine</em>, so <code>openssl speed</code> could be misleading (ie, you'd see no difference with or without the capabilities masked). To get the AES-NI support you need to use <code>-evp</code> ("envelope") mode, which is some sort of <a href="http://wiki.openssl.org/index.php/EVP">high-level interface</a> for crypto functions in OpenSSL.</p>
 <p>This was originally <a href="https://mjanja.ch/2013/11/disabling-aes-ni-on-linux-openssl/">posted on</a> on my personal blog; re-posted here for posterity.</p>
-  </div>
-</article>
+    </div>
+  </article>
     </div>
   </div>
 
   <footer class="footer">
     <div class="container">
-      <div class="row">
-       <ul class="col-sm-6 list-inline">
-          <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
-          <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
-          <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
-          <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
-        </ul>
-        <p class="col-sm-6 text-sm-right text-muted">
-          Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a> / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
-        </p>
-      </div>
-    </div>
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
   </footer>
 </body>
 
