@@ -49,15 +49,6 @@ BOOTSTRAPIFY = {
     'blockquote': ['blockquote'],
 }
 
-PLUGIN_PATHS = ['plugins']
-PLUGINS = ['pelican-bootstrapify']
-
-BOOTSTRAPIFY = {
-    'table': ['table', 'table-striped', 'table-hover'],
-    'img': ['img-fluid'],
-    'blockquote': ['blockquote'],
-}
-
 # Theme settings --------------------------------------------------------------
 
 THEME = 'themes/pelican-alchemy/alchemy'
@@ -73,8 +64,8 @@ LINKS = (
 )
 
 ICONS = [
-    ('github', 'http://github.com/nairobilug'),
-    ('twitter', 'http://twitter.com/nairobilug'),
+    ('github', 'https://github.com/nairobilug'),
+    ('twitter', 'https://twitter.com/nairobilug'),
 ]
 
 PYGMENTS_STYLE = 'monokai'
