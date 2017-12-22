@@ -1,85 +1,86 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
+  <!-- Required meta tags always come first -->
   <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>  Maps and Custom Error Pages in Nginx | Nairobi GNU/Linux Users Group
+  <title>Maps and Custom Error Pages in Nginx | Nairobi GNU/Linux Users Group
 </title>
   <link rel="canonical" href="/2014/12/maps-and-custom-error-pages-nginx.html">
 
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#333333">
+
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#333333">
 
   <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
   <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
   <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
-  <link rel="stylesheet" href="/theme/css/theme.css">
-
-  
-  <meta name="description" content="Using nginx maps to allow IP ranges during web server maintenance.">
+  <link rel="stylesheet" href="/theme/css/style.css">
 
 
+<meta name="description" content="Using nginx maps to allow IP ranges during web server maintenance.">
 </head>
 
 <body>
   <header class="header">
     <div class="container">
-<div class="row">
-    <div class="col-sm-4">
-      <a href="/">
-        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
-      </a>
-    </div>
-  <div class="col-sm-8">
-    <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
-      <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
-      <ul class="list-inline">
-          <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
-              <li class="list-inline-item text-muted">|</li>
+      <div class="row">
+        <div class="col-sm-4">
+          <a href="">
+            <img class="img-fluid" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+          </a>
+        </div>
+        <div class="col-sm-8">
+          <h1 class="title"><a href="">Nairobi GNU/Linux Users Group</a></h1>
+          <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
+          <ul class="list-inline">
+            <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+            <li class="list-inline-item text-muted">|</li>
             <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class=" list-inline-item text-muted">|</li>
-          <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
-          <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
-      </ul>
-  </div>
-</div>    </div>
+            <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+            <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </header>
 
   <div class="main">
     <div class="container">
-      <h1>  Maps and Custom Error Pages in Nginx
+      <h1>Maps and Custom Error Pages in Nginx
 </h1>
       <hr>
-  <article class="article">
-    <header>
-      <ul class="list-inline">
-        <li class="list-inline-item text-muted" title="2014-12-09T17:00:00+03:00">
-          <i class="fa fa-clock-o"></i>
-          Tue 09 December 2014
-        </li>
-        <li class="list-inline-item">
-          <i class="fa fa-folder-open-o"></i>
-          <a href="/category/linux.html">Linux</a>
-        </li>
-          <li class="list-inline-item">
-            <i class="fa fa-user-o"></i>
-              <a href="/author/alan-orth.html">Alan Orth</a>          </li>
-          <li class="list-inline-item">
-            <i class="fa fa-files-o"></i>
-              <a href="/tag/linux.html">#linux</a>,               <a href="/tag/nginx.html">#nginx</a>          </li>
-      </ul>
-    </header>
-    <div class="content">
-      <p>During a recent web application upgrade I had to limit access to the the web servers; I wanted the administrators and myself to be able to access the site, but for everyone else to see an "<em>Under Construction</em>" page. My initial plan was to test if the <code>$remote_addr</code> was one of the allowed IPs, and then redirect those clients to a maintenance page, but I couldn't figure out how to test more than one IP address (seriously)!</p>
+<article class="article">
+  <header>
+    <ul class="list-inline">
+      <li class="list-inline-item text-muted" title="2014-12-09T17:00:00+03:00">
+        <i class="fa fa-clock-o"></i>
+        Tue 09 December 2014
+      </li>
+      <li class="list-inline-item">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/category/linux.html">Linux</a>
+      </li>
+      <li class="list-inline-item">
+        <i class="fa fa-user-o"></i>
+        <a href="/author/alan-orth.html">Alan Orth</a>      </li>
+      <li class="list-inline-item">
+        <i class="fa fa-files-o"></i>
+        <a href="/tag/linux.html">#linux</a>,         <a href="/tag/nginx.html">#nginx</a>      </li>
+    </ul>
+  </header>
+  <div class="content">
+    <p>During a recent web application upgrade I had to limit access to the the web servers; I wanted the administrators and myself to be able to access the site, but for everyone else to see an "<em>Under Construction</em>" page. My initial plan was to test if the <code>$remote_addr</code> was one of the allowed IPs, and then redirect those clients to a maintenance page, but I couldn't figure out how to test more than one IP address (seriously)!</p>
 <p>I eventually stumbled upon the <a href="http://nginx.org/en/docs/http/ngx_http_map_module.html">nginx map module</a> which, combined with a custom error page, ended up being an elegant, fun solution to this problem.</p>
 <h3>Elegant Maps</h3>
 <p>Here is a snippet from <em>/etc/nginx/conf.d/default.conf</em> which shows the important bits:</p>
@@ -115,25 +116,25 @@
 <p>In retrospect I probably could have used a regex in the <code>$remote_addr</code> test, but maps are really a more flexible, efficient, and "nginx" way of accomplishing this. On that note, I'm using nginx more and more lately and, in addition to being fast as hell and having better TLS support, it's just more fun to use than Apache. ;)</p>
 <p>Furthermore, to deploy this I wrote an Ansible playbook which included a list of allowed IPs and reconfigured the nginx vhost by using a Jinja2 template which iterated over the IPs to create the map block above. Very cool, and very easy to reverse when the maintenance was over!</p>
 <p>This was originally <a href="https://mjanja.ch/2014/12/maps-and-custom-error-pages-in-nginx/">posted on</a> on my personal blog; re-posted here for posterity.</p>
-    </div>
-  </article>
+  </div>
+</article>
     </div>
   </div>
 
   <footer class="footer">
     <div class="container">
-<div class="row">
-  <ul class="col-sm-6 list-inline">
-      <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
-    <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
-    <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
-      <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
-  </ul>
-  <p class="col-sm-6 text-sm-right text-muted">
-    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
-    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
-  </p>
-</div>    </div>
+      <div class="row">
+       <ul class="col-sm-6 list-inline">
+          <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
+          <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
+          <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
+          <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
+        </ul>
+        <p class="col-sm-6 text-sm-right text-muted">
+          Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a> / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+        </p>
+      </div>
+    </div>
   </footer>
 </body>
 

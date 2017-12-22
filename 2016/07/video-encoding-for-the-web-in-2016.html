@@ -1,85 +1,86 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
+  <!-- Required meta tags always come first -->
   <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>  Video Encoding for the Web in 2016 | Nairobi GNU/Linux Users Group
+  <title>Video Encoding for the Web in 2016 | Nairobi GNU/Linux Users Group
 </title>
   <link rel="canonical" href="/2016/07/video-encoding-for-the-web-in-2016.html">
 
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#333333">
+
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#333333">
 
   <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
   <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
   <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
-  <link rel="stylesheet" href="/theme/css/theme.css">
-
-  
-  <meta name="description" content="Understanding video encoding technology is like trying to hit a moving target. I spent time reading the ffmpeg docs and decided you should use VP9!">
+  <link rel="stylesheet" href="/theme/css/style.css">
 
 
+<meta name="description" content="Understanding video encoding technology is like trying to hit a moving target. I spent time reading the ffmpeg docs and decided you should use VP9!">
 </head>
 
 <body>
   <header class="header">
     <div class="container">
-<div class="row">
-    <div class="col-sm-4">
-      <a href="/">
-        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
-      </a>
-    </div>
-  <div class="col-sm-8">
-    <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
-      <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
-      <ul class="list-inline">
-          <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
-              <li class="list-inline-item text-muted">|</li>
+      <div class="row">
+        <div class="col-sm-4">
+          <a href="">
+            <img class="img-fluid" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+          </a>
+        </div>
+        <div class="col-sm-8">
+          <h1 class="title"><a href="">Nairobi GNU/Linux Users Group</a></h1>
+          <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
+          <ul class="list-inline">
+            <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+            <li class="list-inline-item text-muted">|</li>
             <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class=" list-inline-item text-muted">|</li>
-          <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
-          <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
-      </ul>
-  </div>
-</div>    </div>
+            <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+            <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </header>
 
   <div class="main">
     <div class="container">
-      <h1>  Video Encoding for the Web in 2016
+      <h1>Video Encoding for the Web in 2016
 </h1>
       <hr>
-  <article class="article">
-    <header>
-      <ul class="list-inline">
-        <li class="list-inline-item text-muted" title="2016-07-21T17:42:00+03:00">
-          <i class="fa fa-clock-o"></i>
-          Thu 21 July 2016
-        </li>
-        <li class="list-inline-item">
-          <i class="fa fa-folder-open-o"></i>
-          <a href="/category/video.html">Video</a>
-        </li>
-          <li class="list-inline-item">
-            <i class="fa fa-user-o"></i>
-              <a href="/author/alan-orth.html">Alan Orth</a>          </li>
-          <li class="list-inline-item">
-            <i class="fa fa-files-o"></i>
-              <a href="/tag/ffmpeg.html">#ffmpeg</a>,               <a href="/tag/h264.html">#H.264</a>,               <a href="/tag/vp8.html">#VP8</a>,               <a href="/tag/vp9.html">#VP9</a>          </li>
-      </ul>
-    </header>
-    <div class="content">
-      <p>Understanding the tools and technology related to video encoding is like trying to hit a moving target — every few years the scene changes entirely and you have to learn all the latest best practices over again. I recently spent more time than I should have preparing a video of <a href="https://englishbulgaria.net/2016/05/tanks-rolling-streets-sofia/">some tanks rolling down the street near my house</a> and figured I'd compile my notes into a sort of guide so that someone else could benefit as well.</p>
+<article class="article">
+  <header>
+    <ul class="list-inline">
+      <li class="list-inline-item text-muted" title="2016-07-21T17:42:00+03:00">
+        <i class="fa fa-clock-o"></i>
+        Thu 21 July 2016
+      </li>
+      <li class="list-inline-item">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/category/video.html">Video</a>
+      </li>
+      <li class="list-inline-item">
+        <i class="fa fa-user-o"></i>
+        <a href="/author/alan-orth.html">Alan Orth</a>      </li>
+      <li class="list-inline-item">
+        <i class="fa fa-files-o"></i>
+        <a href="/tag/ffmpeg.html">#ffmpeg</a>,         <a href="/tag/h264.html">#H.264</a>,         <a href="/tag/vp8.html">#VP8</a>,         <a href="/tag/vp9.html">#VP9</a>      </li>
+    </ul>
+  </header>
+  <div class="content">
+    <p>Understanding the tools and technology related to video encoding is like trying to hit a moving target — every few years the scene changes entirely and you have to learn all the latest best practices over again. I recently spent more time than I should have preparing a video of <a href="https://englishbulgaria.net/2016/05/tanks-rolling-streets-sofia/">some tanks rolling down the street near my house</a> and figured I'd compile my notes into a sort of guide so that someone else could benefit as well.</p>
 <p><abbr title="Too long, didn't read">TL;DR</abbr>: Use VP9 with Vorbis audio and fall back to H.264 for Apple devices and corner cases. Read on for code snippets and rationale.</p>
 <h2>VP9</h2>
 <p>VP9 is the newer of two related open and royalty-free video codecs developed by Google. It delivers seriously impressive quality at very low file sizes, but takes <em>fucking forever</em> to encode. At this point in time there is <a href="http://caniuse.com/#feat=webm">pretty good support of VP9 in web browsers</a>, though generally not <a href="http://wiki.webmproject.org/hardware/socs">hardware accelerated</a>. The following is a two-pass encode using the "constrained quality" mode from the <a href="http://wiki.webmproject.org/ffmpeg/vp9-encoding-guide">WebM VP9 encoding guide</a>:</p>
@@ -108,25 +109,25 @@ $ ffmpeg -i input.mp4 -c:v libvpx-vp9 -pass <span class="m">2</span> -b:v 1400K 
 <h3>Technical Notes</h3>
 <p>I was using ffmpeg version 3.1.1 on a 2015 MacBook Pro with a dual-core <a href="http://ark.intel.com/products/84985/Intel-Core-i5-5257U-Processor-3M-Cache-up-to-3_10-GHz">2.7 GHz Core i5 (I5-5257U)</a> processor.</p>
 <p>This was <a href="https://mjanja.ch/2016/07/video-encoding-for-the-web-in-2016/">originally posted</a> on my personal blog; re-posted here for posterity.</p>
-    </div>
-  </article>
+  </div>
+</article>
     </div>
   </div>
 
   <footer class="footer">
     <div class="container">
-<div class="row">
-  <ul class="col-sm-6 list-inline">
-      <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
-    <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
-    <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
-      <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
-  </ul>
-  <p class="col-sm-6 text-sm-right text-muted">
-    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
-    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
-  </p>
-</div>    </div>
+      <div class="row">
+       <ul class="col-sm-6 list-inline">
+          <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
+          <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
+          <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
+          <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
+        </ul>
+        <p class="col-sm-6 text-sm-right text-muted">
+          Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a> / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+        </p>
+      </div>
+    </div>
   </footer>
 </body>
 
