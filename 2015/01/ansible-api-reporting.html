@@ -1,86 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-  <!-- Required meta tags always come first -->
+  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Leveraging the Ansible Python API for Infrastructure Reporting | Nairobi GNU/Linux Users Group
+  <title>  Leveraging the Ansible Python API for Infrastructure Reporting | Nairobi GNU/Linux Users Group
 </title>
   <link rel="canonical" href="/2015/01/ansible-api-reporting.html">
 
-
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#333333">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#333333">
 
   <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
   <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
   <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
-  <link rel="stylesheet" href="/theme/css/style.css">
+  <link rel="stylesheet" href="/theme/css/theme.css">
+
+  
+  <meta name="description" content="Leveraging Ansible's Python API to generate infrastructure reports.">
 
 
-<meta name="description" content="Leveraging Ansible's Python API to generate infrastructure reports.">
 </head>
 
 <body>
   <header class="header">
     <div class="container">
-      <div class="row">
-        <div class="col-sm-4">
-          <a href="">
-            <img class="img-fluid" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
-          </a>
-        </div>
-        <div class="col-sm-8">
-          <h1 class="title"><a href="">Nairobi GNU/Linux Users Group</a></h1>
-          <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
-          <ul class="list-inline">
-            <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
-            <li class="list-inline-item text-muted">|</li>
+<div class="row">
+    <div class="col-sm-4">
+      <a href="/">
+        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
+      <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+              <li class="list-inline-item text-muted">|</li>
             <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class=" list-inline-item text-muted">|</li>
-            <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
-            <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+          <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+      </ul>
+  </div>
+</div>    </div>
   </header>
 
   <div class="main">
     <div class="container">
-      <h1>Leveraging the Ansible Python API for Infrastructure Reporting
+      <h1>  Leveraging the Ansible Python API for Infrastructure Reporting
 </h1>
       <hr>
-<article class="article">
-  <header>
-    <ul class="list-inline">
-      <li class="list-inline-item text-muted" title="2015-01-21T16:40:00+03:00">
-        <i class="fa fa-clock-o"></i>
-        Wed 21 January 2015
-      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-folder-open-o"></i>
-        <a href="/category/linux.html">Linux</a>
-      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-user-o"></i>
-        <a href="/author/alan-orth.html">Alan Orth</a>      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-files-o"></i>
-        <a href="/tag/linux.html">#linux</a>,         <a href="/tag/ansible.html">#ansible</a>,         <a href="/tag/python.html">#python</a>      </li>
-    </ul>
-  </header>
-  <div class="content">
-    <p>A few days ago I had to get some basic information from a handful of servers for an inventory report; just basic stuff like hostname, IP address, storage capacity, distro version, etc. I already manage all of my servers with Ansible, and there's a wealth of information available in Ansible's <code>setup</code> module, so I knew there had to be a clever way to do this.</p>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2015-01-21T16:40:00+03:00">
+          <i class="fa fa-clock-o"></i>
+          Wed 21 January 2015
+        </li>
+        <li class="list-inline-item">
+          <i class="fa fa-folder-open-o"></i>
+          <a href="/category/linux.html">Linux</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fa fa-user-o"></i>
+              <a href="/author/alan-orth.html">Alan Orth</a>          </li>
+          <li class="list-inline-item">
+            <i class="fa fa-files-o"></i>
+              <a href="/tag/linux.html">#linux</a>,               <a href="/tag/ansible.html">#ansible</a>,               <a href="/tag/python.html">#python</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>A few days ago I had to get some basic information from a handful of servers for an inventory report; just basic stuff like hostname, IP address, storage capacity, distro version, etc. I already manage all of my servers with Ansible, and there's a wealth of information available in Ansible's <code>setup</code> module, so I knew there had to be a clever way to do this.</p>
 <p>Somehow I stumbled upon <a href="http://docs.ansible.com/developing_api.html">Ansible's Python API</a>, which solves this problem elegantly! It helped that other people are doing cool things and <a href="http://jpmens.net/2012/12/13/obtaining-remote-data-with-ansible-s-api/">writing about their experiences</a> too.</p>
 <h2>Enter ansible.runner</h2>
 <p>According to the documentation, the Python API is:</p>
@@ -93,7 +92,7 @@ mjanjavm14, <span class="m">2</span>, <span class="m">30</span>, Ubuntu <span cl
 <p>I had to massage the data a bit to get clean numbers for RAM and storage capacity, but other than that it was extremely straightforward (as most things with Ansible generally are).</p>
 <h2>The Code</h2>
 <p>Here's the source code for the <em>ansible-runner.py</em> script above:</p>
-<table class="table highlighttable table-striped table-hover"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<table class="table table-striped table-hover highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -196,25 +195,25 @@ mjanjavm14, <span class="m">2</span>, <span class="m">30</span>, Ubuntu <span cl
 </td></tr></table>
 <p>Feel free to use, improve, and share it.</p>
 <p>This was <a href="https://mjanja.ch/2015/01/leveraging-the-ansible-python-api-for-infrastructure-reporting/">originally posted</a> on my personal blog; re-posted here for posterity.</p>
-  </div>
-</article>
+    </div>
+  </article>
     </div>
   </div>
 
   <footer class="footer">
     <div class="container">
-      <div class="row">
-       <ul class="col-sm-6 list-inline">
-          <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
-          <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
-          <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
-          <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
-        </ul>
-        <p class="col-sm-6 text-sm-right text-muted">
-          Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a> / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
-        </p>
-      </div>
-    </div>
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
   </footer>
 </body>
 

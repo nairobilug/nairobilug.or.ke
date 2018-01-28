@@ -1,86 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-  <!-- Required meta tags always come first -->
+  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Rate Limiting Baiduspider Using nginx | Nairobi GNU/Linux Users Group
+  <title>  Rate Limiting Baiduspider Using nginx | Nairobi GNU/Linux Users Group
 </title>
   <link rel="canonical" href="/2017/11/rate-limiting-baiduspider-using-nginx.html">
 
-
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#333333">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#333333">
 
   <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
   <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
   <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
-  <link rel="stylesheet" href="/theme/css/style.css">
+  <link rel="stylesheet" href="/theme/css/theme.css">
+
+  
+  <meta name="description" content="Using nginx maps and limit request zones to rate limit Baiduspider for its disregard of robots.txt, sitemaps, and server resource usage.">
 
 
-<meta name="description" content="Using nginx maps and limit request zones to rate limit Baiduspider for its disregard of robots.txt, sitemaps, and server resource usage.">
 </head>
 
 <body>
   <header class="header">
     <div class="container">
-      <div class="row">
-        <div class="col-sm-4">
-          <a href="">
-            <img class="img-fluid" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
-          </a>
-        </div>
-        <div class="col-sm-8">
-          <h1 class="title"><a href="">Nairobi GNU/Linux Users Group</a></h1>
-          <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
-          <ul class="list-inline">
-            <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
-            <li class="list-inline-item text-muted">|</li>
+<div class="row">
+    <div class="col-sm-4">
+      <a href="/">
+        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
+      <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+              <li class="list-inline-item text-muted">|</li>
             <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class=" list-inline-item text-muted">|</li>
-            <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
-            <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+          <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+      </ul>
+  </div>
+</div>    </div>
   </header>
 
   <div class="main">
     <div class="container">
-      <h1>Rate Limiting Baiduspider Using nginx
+      <h1>  Rate Limiting Baiduspider Using nginx
 </h1>
       <hr>
-<article class="article">
-  <header>
-    <ul class="list-inline">
-      <li class="list-inline-item text-muted" title="2017-11-22T17:42:00+03:00">
-        <i class="fa fa-clock-o"></i>
-        Wed 22 November 2017
-      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-folder-open-o"></i>
-        <a href="/category/linux.html">Linux</a>
-      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-user-o"></i>
-        <a href="/author/alan-orth.html">Alan Orth</a>      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-files-o"></i>
-        <a href="/tag/baidu.html">#Baidu</a>,         <a href="/tag/nginx.html">#nginx</a>,         <a href="/tag/performance.html">#Performance</a>      </li>
-    </ul>
-  </header>
-  <div class="content">
-    <p>The Baidu search engine has a voracious appetite for content and crawls one of my sites aggressively. It's bad enough having to deal with load generated by bots from large technology companies with vast resources, but it's another thing entirely when those bots crawl from <em>dozens of IP addresses simultaneously</em> and routinely browse thousands of URLs disallowed in my <code>robots.txt</code>. After months of periodic alerts from my server about high resource usage — not to mention complaints from my users about the site being "slow" — I've finally had enough.</p>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2017-11-22T17:42:00+03:00">
+          <i class="fa fa-clock-o"></i>
+          Wed 22 November 2017
+        </li>
+        <li class="list-inline-item">
+          <i class="fa fa-folder-open-o"></i>
+          <a href="/category/linux.html">Linux</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fa fa-user-o"></i>
+              <a href="/author/alan-orth.html">Alan Orth</a>          </li>
+          <li class="list-inline-item">
+            <i class="fa fa-files-o"></i>
+              <a href="/tag/baidu.html">#Baidu</a>,               <a href="/tag/nginx.html">#nginx</a>,               <a href="/tag/performance.html">#Performance</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>The Baidu search engine has a voracious appetite for content and crawls one of my sites aggressively. It's bad enough having to deal with load generated by bots from large technology companies with vast resources, but it's another thing entirely when those bots crawl from <em>dozens of IP addresses simultaneously</em> and routinely browse thousands of URLs disallowed in my <code>robots.txt</code>. After months of periodic alerts from my server about high resource usage — not to mention complaints from my users about the site being "slow" — I've finally had enough.</p>
 <p>I used nginx's <a href="https://nginx.org/en/docs/http/ngx_http_map_module.html"><code>map</code></a> and <a href="https://nginx.org/en/docs/http/ngx_http_limit_req_module.html"><code>limit_req</code></a> modules to selectively apply a rate limit to Baidu's requests and now the server's resource usage has improved. Blocking these requests entirely would have been more simple, but I didn't feel comfortable completely stifling the flow of information, and this powerful, flexible technique could be useful in the future anyways.</p>
 <h2>No Respect for robots.txt</h2>
 <p>According to the Baiduspider help center <a href="http://www.baidu.com/search/robots_english.html">Baidu respects the robots exclusion protocol</a> — I even found a <a href="http://ziyuan.baidu.com/robots/">testing tool</a> that confirms my <code>robots.txt</code> file is valid. Curiously, my site's daily access log shows a client that identifies itself as "Baiduspider" making 2,500 requests to URLs that are disallowed by my <code>robots.txt</code>:</p>
@@ -133,25 +132,25 @@
 <li><a href="https://nginx.org/en/docs/http/ngx_http_limit_req_module.html">Module ngx_http_limit_req_module</a></li>
 </ul>
 <p>This was <a href="https://mjanja.ch/2017/11/rate-limiting-baiduspider-using-nginx/">originally posted</a> on my personal blog; re-posted here for posterity.</p>
-  </div>
-</article>
+    </div>
+  </article>
     </div>
   </div>
 
   <footer class="footer">
     <div class="container">
-      <div class="row">
-       <ul class="col-sm-6 list-inline">
-          <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
-          <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
-          <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
-          <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
-        </ul>
-        <p class="col-sm-6 text-sm-right text-muted">
-          Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a> / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
-        </p>
-      </div>
-    </div>
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
   </footer>
 </body>
 

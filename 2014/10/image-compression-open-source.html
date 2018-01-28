@@ -1,86 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-  <!-- Required meta tags always come first -->
+  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Image Compression Like Compressor.io, but With Open-Source Tools | Nairobi GNU/Linux Users Group
+  <title>  Image Compression Like Compressor.io, but With Open-Source Tools | Nairobi GNU/Linux Users Group
 </title>
   <link rel="canonical" href="/2014/10/image-compression-open-source.html">
 
-
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#333333">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#333333">
 
   <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
   <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
   <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
-  <link rel="stylesheet" href="/theme/css/style.css">
+  <link rel="stylesheet" href="/theme/css/theme.css">
+
+  
+  <meta name="description" content="Image compression like Compressor.io, but with open-source tools.">
 
 
-<meta name="description" content="Image compression like Compressor.io, but with open-source tools.">
 </head>
 
 <body>
   <header class="header">
     <div class="container">
-      <div class="row">
-        <div class="col-sm-4">
-          <a href="">
-            <img class="img-fluid" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
-          </a>
-        </div>
-        <div class="col-sm-8">
-          <h1 class="title"><a href="">Nairobi GNU/Linux Users Group</a></h1>
-          <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
-          <ul class="list-inline">
-            <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
-            <li class="list-inline-item text-muted">|</li>
+<div class="row">
+    <div class="col-sm-4">
+      <a href="/">
+        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
+      <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+              <li class="list-inline-item text-muted">|</li>
             <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class=" list-inline-item text-muted">|</li>
-            <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
-            <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+          <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+      </ul>
+  </div>
+</div>    </div>
   </header>
 
   <div class="main">
     <div class="container">
-      <h1>Image Compression Like Compressor.io, but With Open-Source Tools
+      <h1>  Image Compression Like Compressor.io, but With Open-Source Tools
 </h1>
       <hr>
-<article class="article">
-  <header>
-    <ul class="list-inline">
-      <li class="list-inline-item text-muted" title="2014-10-23T10:40:00+03:00">
-        <i class="fa fa-clock-o"></i>
-        Thu 23 October 2014
-      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-folder-open-o"></i>
-        <a href="/category/linux.html">Linux</a>
-      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-user-o"></i>
-        <a href="/author/alan-orth.html">Alan Orth</a>      </li>
-      <li class="list-inline-item">
-        <i class="fa fa-files-o"></i>
-        <a href="/tag/linux.html">#linux</a>,         <a href="/tag/images.html">#images</a>,         <a href="/tag/compression.html">#compression</a>      </li>
-    </ul>
-  </header>
-  <div class="content">
-    <p>When I first tried <a href="https://compressor.io">Compressor.io</a> I was shocked; how can they reduce an image's file size by hundreds of kilobytes or more without downscaling the image and no noticeable loss in quality? Although it's a cool, free tool, it bothered me that, because I didn't know how to do this myself, I was depending on a "cloud" service to do it for me. Surely that web service is just a snazzy front end for the free, libre, open-source tools we all know and love?</p>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2014-10-23T10:40:00+03:00">
+          <i class="fa fa-clock-o"></i>
+          Thu 23 October 2014
+        </li>
+        <li class="list-inline-item">
+          <i class="fa fa-folder-open-o"></i>
+          <a href="/category/linux.html">Linux</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fa fa-user-o"></i>
+              <a href="/author/alan-orth.html">Alan Orth</a>          </li>
+          <li class="list-inline-item">
+            <i class="fa fa-files-o"></i>
+              <a href="/tag/linux.html">#linux</a>,               <a href="/tag/images.html">#images</a>,               <a href="/tag/compression.html">#compression</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>When I first tried <a href="https://compressor.io">Compressor.io</a> I was shocked; how can they reduce an image's file size by hundreds of kilobytes or more without downscaling the image and no noticeable loss in quality? Although it's a cool, free tool, it bothered me that, because I didn't know how to do this myself, I was depending on a "cloud" service to do it for me. Surely that web service is just a snazzy front end for the free, libre, open-source tools we all know and love?</p>
 <p>I was pretty sure the answers lay in GraphicsMagick / ImageMagick, but with which options? What was the magic invocation that would produce the same result?</p>
 <p><abbr title="Too long; didn't read">TL;DR</abbr>: Strip EXIF data, interlace, convert to 80% quality, and scale to ~50% of original image dimensions.</p>
 <h3>It's Easy!</h3>
@@ -109,25 +108,25 @@ $ gm mogrify DSC_0685-trimmed.JPG -quality <span class="m">80</span>
 <h3>Great Success!</h3>
 <p>So there you have it, now you get that Compressor.io-like effect from the safety of your own home, with free, libre, open-source software!</p>
 <p>This was <a href="https://mjanja.ch/2014/10/image-compression-like-compressor-io-but-with-open-source-tools/">originally posted</a> on my personal blog; re-posted here for posterity.</p>
-  </div>
-</article>
+    </div>
+  </article>
     </div>
   </div>
 
   <footer class="footer">
     <div class="container">
-      <div class="row">
-       <ul class="col-sm-6 list-inline">
-          <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
-          <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
-          <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
-          <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
-        </ul>
-        <p class="col-sm-6 text-sm-right text-muted">
-          Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a> / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
-        </p>
-      </div>
-    </div>
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
   </footer>
 </body>
 
