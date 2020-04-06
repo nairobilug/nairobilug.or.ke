@@ -11,6 +11,7 @@ This is a list of some public cloud providers in Kenya.
 * [Angani](https://www.angani.co/)
 * [Cloudpap](http://www.cloudpap.com/)
 * [Icolo](https://www.icolo.io/)
+* [HostPoa](https://hostpoa.co.ke)
 * [Kenya Web Experts](https://kenyawebexperts.com)
 * [Liquid Telecom](https://www.liquidtelecom.com/)
 * [Node Africa](https://node.africa/)
