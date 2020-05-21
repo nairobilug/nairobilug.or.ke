@@ -14,6 +14,7 @@ This is a list of some public cloud providers in Kenya.
 * [HostPoa](https://hostpoa.co.ke)
 * [Kenya Web Experts](https://kenyawebexperts.com)
 * [Liquid Telecom](https://www.liquidtelecom.com/)
+* [Servernah](https://servernah.com/)
 * [Node Africa](https://node.africa/)
 * [Safaricom](https://www.safaricom.co.ke/business)
 * [Sasa Host](https://www.sasahost.co.ke)
