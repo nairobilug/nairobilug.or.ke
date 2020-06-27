@@ -35,10 +35,10 @@ collaboration and working together. Collaboration reduces redundancy of work
 done and improves the quality of our results. You should aim to collaborate with
 other members of the this community, as well as members of other organizations
 within the user group community. Your work should be done transparently and
-ideas from NAILUG projects should be given back to the community when they are
+ideas from Nairobi LUG projects should be given back to the community when they are
 made, not just when your project is completed. If you wish to work on new
-initiatives or projects for NAILUG, don't feel obliged to have LUG-wide
-agreement before you begin. Simply keep the NAILUG community informed of your
+initiatives or projects for Nairobi LUG, don't feel obliged to have LUG-wide
+agreement before you begin. Simply keep the Nairobi LUG community informed of your
 work, and publish your work in a way that allows outsiders to test, discuss and
 contribute to your efforts.
 
@@ -53,17 +53,17 @@ other doesn’t get us anywhere. Instead, focus on helping to resolve issues and
 learning from mistakes.
 
 - **When you disagree, consult others**: Disagreements, both political and
-technical, happen all the time and the NAILUG community is no exception. The
+technical, happen all the time and the Nairobi LUG community is no exception. The
 important goal is not to avoid disagreements or differing views but to resolve
 them constructively.
 
 - **When you are unsure, ask for help**: Nobody knows everything, and nobody is
-expected to be perfect in the NAILUG community. Asking questions avoids many
+expected to be perfect in the Nairobi LUG community. Asking questions avoids many
 problems down the road, and so questions are encouraged. Those who are asked
 should be responsive and helpful. Don't ask to ask, just ask.
 
 - **Step down considerately**: People come and go from any collaborative group.
-When you leave or disengage from NAILUG, in whole or in part, we ask that you do
+When you leave or disengage from Nairobi LUG, in whole or in part, we ask that you do
 so in a way that minimizes disruption to the LUG. This is mainly important for
 those providing volunteer services that others have come to depend on.
 
@@ -86,7 +86,7 @@ disabilities.
 #### Mailing lists, IRC, Discord and Telegram Channels
 
 Mailing lists, and other communication platforms are important parts of the
-NAILUG community platform. This code of conduct applies very much to your
+Nairobi LUG community platform. This code of conduct applies very much to your
 behavior in those forums too. Please follow these guidelines.
 
 - Please use a valid email address to which direct responses can be made.
