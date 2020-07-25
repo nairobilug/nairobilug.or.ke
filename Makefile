@@ -72,16 +72,16 @@ regenerate:
 
 serve:
 ifdef PORT
-	cd $(OUTPUTDIR) && $(PY) -m pelican.server $(PORT)
+	$(PY) -m pelican -lp $(PORT) -o $(OUTPUTDIR)
 else
-	cd $(OUTPUTDIR) && $(PY) -m pelican.server
+	$(PY) -m pelican -lo $(OUTPUTDIR)
 endif
 
 serve-global:
 ifdef SERVER
-	cd $(OUTPUTDIR) && $(PY) -m pelican.server 80 $(SERVER)
+	cd $(BASEDIR) && $(PY) -m pelican -lp 80 $(SERVER) -o $(OUTPUTDIR)
 else
-	cd $(OUTPUTDIR) && $(PY) -m pelican.server 80 0.0.0.0
+	cd $(BASEDIR) && $(PY) -m pelican -l -o $(OUTPUTDIR)
 endif
 
 devserver:
