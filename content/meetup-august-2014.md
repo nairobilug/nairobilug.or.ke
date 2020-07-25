@@ -20,7 +20,7 @@ Leave comments down below and if I've left anything, feel free to make a pull re
 
 Picture courtesy of Mungai
 
-![Drinks]({filename}/images/meetup-august-2014/meetup-august-2014.jpg "Nairobi GNU/Linux Users Group members")
+![Drinks]({static}/images/meetup-august-2014/meetup-august-2014.jpg "Nairobi GNU/Linux Users Group members")
 
 ### September Meetup
 

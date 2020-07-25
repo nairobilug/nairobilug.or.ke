@@ -14,7 +14,7 @@ Last weekend a few of us met up at a coffee shop in Nairobi to hack on the [Eudy
 
 Kaldis Coffee House in downtown Nairobi has free Wi-Fi, coffee, decent food, and it’s not too busy on Saturday mornings, so we got a nice table in the corner and dove in.
 
-![Hacking on Eudyptula at Kaldis]({filename}/images/hacking-on-eudyptula/eudyptula-may-2014.jpg "Hacking on Eudyptula at Kaldis")
+![Hacking on Eudyptula at Kaldis]({static}/images/hacking-on-eudyptula/eudyptula-may-2014.jpg "Hacking on Eudyptula at Kaldis")
 
 While none of us are new to GNU/Linux or development, it still took us several hours to set up our build environments, text editors, email clients, and to read up on the Linux kernel’s build system and programming conventions. We learned a lot, and had a good time doing it!
 

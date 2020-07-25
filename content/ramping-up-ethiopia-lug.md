@@ -30,7 +30,7 @@ Generally, I drew parallels between the early days of the Nairobi GNU/Linux User
 
 Here's a shoutout to Eyob, who saw the message on the mailing list and bothered to show up. I had brought a GitHub shirt with me to give out and it just seemed right to give it to him!
 
-![Eyob with his new GitHub shirt]({filename}/images/ramping-up-ethiopia-lug/addis-meetup-2015-04-25.jpg "Eyob with his new GitHub shirt")
+![Eyob with his new GitHub shirt]({static}/images/ramping-up-ethiopia-lug/addis-meetup-2015-04-25.jpg "Eyob with his new GitHub shirt")
 
 Hopefully that's motivation for people to show up to meetings from time to time! Also, I think he might be the first one in Addis with a GitHub shirt. w00t?
 

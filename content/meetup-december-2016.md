@@ -8,7 +8,7 @@ Summary: A discussion that ranged from text-editors to some quite useful life ad
 
 There are tons of ninjas out there in this pale blue dot of ours. Sometimes, these young ninjas can get caught up in life and don't have the experiences, perspective, and wisdom necessary to overcome some pitfalls that life occasionally throws at them. Today's meet up consisted of only a handful of ninjas. Amongst these handful of people were the young'uns and [gosus](https://en.wikipedia.org/wiki/Gosu).
 
-![Meetup December 2016]({filename}/images/meetup-december-2016/meetup-december-2016.jpg "Meetup December 2016")
+![Meetup December 2016]({static}/images/meetup-december-2016/meetup-december-2016.jpg "Meetup December 2016")
 
 Gosu's are people who are skilled and quite knowledgeable in their field set due to their initiative and insight gained from working on shitloads of stuff. That should be shared.
 

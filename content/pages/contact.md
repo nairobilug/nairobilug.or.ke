@@ -2,7 +2,7 @@ Title: Contact
 Category: Pages
 Slug: contact
 
-Online, we primarily communicate through an email [mailing list]({filename}/pages/mailing-list.md), a service that sends e-mail out to everyone else who is subscribed.
+Online, we primarily communicate through an email [mailing list]({static}/pages/mailing-list.md), a service that sends e-mail out to everyone else who is subscribed.
 
 ## Internet Relay Chat
 

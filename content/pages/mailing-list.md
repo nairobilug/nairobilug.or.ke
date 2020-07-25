@@ -14,7 +14,7 @@ If you're confused by that description, then try the list out for a week or so a
 
 You must sign up before you can post to the list. You can send an email to **nairobi-gnu+subscribe [@] googlegroups.com**, or use [this link](https://groups.google.com/forum/#!forum/nairobi-gnu/join).
 
-If you are having issues subscribing to the mailing list please let us know via our [contact page]({filename}/pages/contact.md).
+If you are having issues subscribing to the mailing list please let us know via our [contact page]({static}/pages/contact.md).
 
 We do our utmost to obscure your email address from falling into the hands of spammers. The archives obfuscate email addresses by removing all domain names.
 
