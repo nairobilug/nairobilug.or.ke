@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Scars in Web App Trenches | Nairobi GNU/Linux Users Group
+</title>
+  <link rel="canonical" href="/2014/02/scars-in-web-app-trenches.html">
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#333333">
+
+  <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
+  <link rel="stylesheet" href="/theme/css/theme.css">
+
+  
+  <meta name="description" content="My experiences building web-apps and some suggestions.">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="/">
+        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
+      <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
+            <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
+            <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
+            <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
+            <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
+            <li class=" list-inline-item text-muted">|</li>
+          <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Scars in Web App Trenches
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2014-02-17T13:00:00+03:00">
+          <i class="fa fa-clock-o"></i>
+          Mon 17 February 2014
+        </li>
+        <li class="list-inline-item">
+          <i class="fa fa-folder-open-o"></i>
+          <a href="/category/development.html">Development</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fa fa-user-o"></i>
+              <a href="/author/muriithi-frederick-muriuki.html">Muriithi Frederick Muriuki</a>          </li>
+          <li class="list-inline-item">
+            <i class="fa fa-files-o"></i>
+              <a href="/tag/web.html">#web</a>,               <a href="/tag/applications.html">#applications</a>,               <a href="/tag/development.html">#development</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>Hey there.</p>
+<p>I have been developing web applications for a while now, working freelance on oDesk, and from my work, I can state I do have some experience in doing this. Now, I will not claim to be a web-app ninja, but I will try to state my case as objectively as I can, but you decide how much salt you'll take it with. Deal?</p>
+<h2>HTML - The M is for Markup</h2>
+<p>From what I have come to understand from the gurus and ninjas in this field, HTML was built as a markup language. It was meant to give meaning to the content of the page, e.g.</p>
+<ul>
+<li>&lt; h1 &gt; is greater than &lt; h2 &gt;, which in turn is greater than &lt; h3 &gt; etc</li>
+<li>&lt; form &gt; represents an electronic form where you can fill in and submit data</li>
+<li>&lt; button &gt; and &lt; input type='button' ... &gt; represent input elements that can be used to activate certain actions like submit forms, etc</li>
+<li>&lt; a &gt; - the anchor tag, is meant to represent links to a different part of the page, other pages, or another site</li>
+</ul>
+<p>and many others. . . (For awesome HTML, CSS and Javascript tutorials, click <a href="http://htmldog.com/">here</a>)</p>
+<p>Now, if there is one thing that I have found painful in my work, it is when people make use on the anchor tag to submit forms.</p>
+<p>Why?</p>
+<p>I am one of those people still living in a third world country (and if things keep going the way they are, we just might have to come up with a whole new class beneath that for the country), and as such, bandwidth is expensive (I dare say, artificially so).</p>
+<p>Now, we all know that the tag &lt; input type='submit' ... &gt; will submit any form it is in, no questions asked, but 'NOOOOOOOOO!', we have to bloat that up by getting rid of it, replacing it with a link, and then using the jQuery library to submit the form. A form submission, I tell you!</p>
+<h3>But The Web is Javascript!</h3>
+<p>For all that have this argument, I refer you <a href="http://motherfuckingwebsite.com/">here</a>. Now, tell me you cannot see the content in that site. Then, riddle me this, before Javascript, jQuery, and others came along, pray tell, how were people submitting their html forms?</p>
+<p>Now understand this <strong>I love Javascript</strong> and though I am not a jQuery ninja, I cannot argue against it's merits, but if we are going to use javascript everywhere, we might as well start killing mosquitoes with handguns, or slings, or catapults (take your pick).</p>
+<h2>Back to the Basics</h2>
+<p>Hear me out, before you fetch the noose. I am making a simple suggestion here, based on the experience I have had with web applications, and even some plain websites.</p>
+<p>When I land on your site, almost always, I am searching for information about your company, skill, etc. You, on the other hand, decide to make me have to struggle further to find the friggin content by putting those silly pictures, animations and shiznit in my path. Then, to insult me further, you make it so that, if I turn javascript off (It's off by default on my browser), I cannot see your content. As if you have not hurt me enough, you make all your forms submit only via javascript/jQuery.</p>
+<p>DEAR <deity>! I cannot count the number of times I have left websites and gone looking for other options due to this.</deity></p>
+<p>First, you eat away my bandwidth with silly content, then you force me to use even more of my bandwidth, just to get functionality that is already built into html.</p>
+<h2>Collaboration</h2>
+<p>Let us view another scenario. You have to collaborate with a person in a different timezone building a web application. Now, you are a javascript, jQuery, etc ninja, and you can build anything in it. Her/him, not so much, but they are good at their PHP, Ruby, Python, C or whatever language they use on the backend.</p>
+<p>Now, I do not know what you think, but I dare say, it is easier to pass to each other data, than force the backend to rely on the design of the frontend. Think also, of when you decide you want to change the look and feel of the website, then you have to make changes to both the front and backends, introducing new bugs, and possibly throwing away months of work debugging the data communication etc.</p>
+<p>Now, if you had simply passed data between the frontend and backend, say using <strong>json, xml, plain text, plain html</strong> and others, then you can change the frontend any time without worrying about the backend, since the data interchange format is standardised, agreed upon, and <strong>DE</strong>fucking<strong>BUGGED!</strong>.</p>
+<p>The backend guy/gal, can now concentrate on building and testing the backend, even with plain, unstyled, ugly, but functional html, and you can concentrate on styling (CSS) and behaviour (Javascript), without breaking the backend every time you make a tiny little change to the front end.</p>
+<p>Now, think of your client, and how happy they are, every time they contact you to change the look and feel of the website, and you do that in a few weeks without breaking the backend, and they think you are a god! Yeah, keep doing the shit you're doing, and that will never happen.</p>
+<p>I'm angry, and so are you. Let me know what you think in the comments. Try to be civil, though I probably haven't.</p>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+</body>
+
+</html>

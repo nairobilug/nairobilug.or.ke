@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Exploring Anti-DOS Tools for Apache Httpd | Nairobi GNU/Linux Users Group
+</title>
+  <link rel="canonical" href="/2014/09/exploring-anti-dos-tools-for-apache-httpd.html">
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#333333">
+
+  <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
+  <link rel="stylesheet" href="/theme/css/theme.css">
+
+  
+  <meta name="description" content="Analyzing how Apache can be crippled by a DOS tool like Slowloris and a side note on Nginx...">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="/">
+        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
+      <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
+            <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
+            <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
+            <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
+            <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
+            <li class=" list-inline-item text-muted">|</li>
+          <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Exploring Anti-DOS Tools for Apache Httpd
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2014-09-13T18:28:00+03:00">
+          <i class="fa fa-clock-o"></i>
+          Sat 13 September 2014
+        </li>
+        <li class="list-inline-item">
+          <i class="fa fa-folder-open-o"></i>
+          <a href="/category/linux.html">Linux</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fa fa-user-o"></i>
+              <a href="/author/john-troon.html">John Troon</a>          </li>
+          <li class="list-inline-item">
+            <i class="fa fa-files-o"></i>
+              <a href="/tag/linux.html">#linux</a>,               <a href="/tag/security.html">#security</a>,               <a href="/tag/httpd.html">#httpd</a>,               <a href="/tag/nginx.html">#nginx</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>Slowloris is among the well known "Denial Of Service" (or DOS) <a href="http://resources.infosecinstitute.com/dos-attacks-free-dos-attacking-tools/">tool</a> used by both experienced attackers and script kiddies. This evening, I've been testing <em>mod_evasion</em> and <em>mod_antiloris</em> on Apache httpd /2.2.15 (Oracle Linux 6.5 using Redhat built Kernel).</p>
+<h2>First Setup</h2>
+<ul>
+<li>Server: 192.168.43.221 (running Apache httpd with <em>mod_evasion</em> loaded)</li>
+<li>Attacking Machine: 192.168.43.39 (Slowloris "DOSing" the server)</li>
+</ul>
+<p><strong>Apache httpd error logs</strong></p>
+<p><img alt="Error from bad requests" class="img-fluid" src="/images/exploring-anti-dos-tools-for-apache-httpd/badheader.png" title="Apache error logs"/></p>
+<p>The loaded module (<em>mod_evasion</em>), can't save Apache httpd from the DOS attack, even loading the site from a browser is somehow impossible.</p>
+<p><img alt="Apache DOSed" class="img-fluid" src="/images/exploring-anti-dos-tools-for-apache-httpd/apachedown.png" title="Can't access via Browser"/></p>
+<p>But this module can prevent a brute-force attack (<em>e.g. an automated script to guess a password field in a web-form</em>) in a web server (running Apache httpd).</p>
+<p><img alt="mod_evasion can prevent Brute-force.." class="img-fluid" src="/images/exploring-anti-dos-tools-for-apache-httpd/bruteforce.png" title="mod_evasion can prevent Brute-force attack"/></p>
+<p>Just to make an interesting comparison, I replaced Apache httpd with Nginx on the same Server (192.168.43.221) and <strong>ta! da!..</strong></p>
+<p><img alt="Nginx is not DOSed by Slowloris" class="img-fluid" src="/images/exploring-anti-dos-tools-for-apache-httpd/nginxup.png" title="Nginx is not DOSed by Slowloris"/> Nginx gracefully made it by ignoring the request from Slowloris. But I noticed a brute-force attack is possible while using Nginx default settings! <strong>Nginx access logs</strong>
+<img alt="Nginx Brute-forced" class="img-fluid" src="/images/exploring-anti-dos-tools-for-apache-httpd/bfnginx.png" title="Nginx can be Brute-forced"/></p>
+<h2>Second Setup</h2>
+<ul>
+<li>Server: 192.168.43.221 (running Apache httpd with mod_antiloris loaded)</li>
+<li>Attacking Machine: 192.168.43.39 (Sowloris "DOSing" the server)</li>
+</ul>
+<p><em>mod_antiloris</em> played it nice by monitoring the requests coming from the client and rejected extra connections. Accessing the web services from the browser was not interfered.</p>
+<p><img alt="mod_antiloris logs" class="img-fluid" src="/images/exploring-anti-dos-tools-for-apache-httpd/antiloris.png" title="mod_antiloris logs"/></p>
+<p><em>mod_evasion</em> is cool but can't save Apache httpd from Slowloris. On the other hand, <em>mod_antiloris</em> worked fine and denied Slowloris a chance to mess up with the Apache httpd server.</p>
+<h2>Explanation</h2>
+<p><strong>Putting the Lens on the Logs...</strong> (Apache httpd access log)</p>
+<p><img alt="Apache-httpd access log" class="img-fluid" src="/images/exploring-anti-dos-tools-for-apache-httpd/accesslog.png" title="Apache httpd access logs"/></p>
+<p><em>Why did mod_antiloris pass the test and mod_evasion fail?..</em> <em>Why did Slowloris work on Apache httpd and not on Nginx?</em></p>
+<p>Apache httpd waits for a <strong>complete HTTP request header</strong> to be received, this makes it good to serve web-content even in slow connections. So, by default, the timeout value is 300 seconds and it's reset each time the client sends more packets. Slowloris takes advantage by sending incomplete HTTP request headers and maintains the connection by sending more incomplete request headers resetting the time-out counter.</p>
+<p>Slowloris is written in Perl, it simply plays around with <strong>CR (Carriage Return)</strong> and <strong>LF (Line Feed)</strong> at the end of every incomplete HTTP request header. A blank line after the request header is used to represent the completion of the header in HTTP. Since the request is incomplete and the timeout is 300 seconds, Apache httpd will keep the connection alive waiting for the remaining data, while Slowloris keeps on sending the incomplete HTTP requests resetting the timeout counter.</p>
+<p>As a result, all available connections will be sucked up by Slowloris and cause a Denial of Service. mod_antiloris helped Apache httpd beat Slowloris but you can also use IPtables by setting a connection limit or putting Apache httpd behind Varnish. Another solution I've not tested is using a Hardware Load Balancer that only accepts full HTTP connections.</p>
+<p>Nginx uses a much more event-driven (asynchronous) architecture that can be scaled, instead of the "Maximum Connections" as in Apache httpd. So, in a nutshell, Nginx ignores the requests from Slowloris and processes other "full" connections.</p>
+<p>This is not to claim that Nginx is bullet proof by default, tools like <a href="https://github.com/valyala/goloris">golris</a> can mess with your Nginx server (when running with default settings), though you can always protect this from happening by using Nginx "Http limit connection" module / IPtables / deny POST requests or patch Nginx, so it drops connection if the client sends POST body at a very slow rate.</p>
+<p><strong>But I'll always go with Nginx whenever possible!</strong></p>
+<h3>Conclusion</h3>
+<p>I think Apache httpd should find a way of prioritizing clients sending full HTTP requests to minimize DOS attacks of the (above) described nature...</p>
+<p>Ciao!</p>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+</body>
+
+</html>
