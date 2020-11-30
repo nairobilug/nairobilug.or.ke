@@ -1,0 +1,32 @@
+name: Update Website
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true # Gets all submodules
+          fetch-depth: 0 # get entire git history
+
+      - name: Python
+        uses: actions/setup-python@v2     
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate site
+        run: make html
+
+      - name: push to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output
