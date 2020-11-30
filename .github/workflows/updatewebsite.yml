@@ -14,21 +14,34 @@ jobs:
         with: 
              repository: nairobilug/nairobilug.or.ke
              submodules: recursive
+             ref: master
       - name: Build site
         shell: bash
         run: |
-          pip install -r requirements.txt
+          sudo apt-get install build-essential
+          sudo apt-get install python3-setuptools
+          sudo apt-get install python3-blinker
+          sudo apt-get install python3-markdown
+          sudo apt-get install ghp-import
+          sudo apt-get install pelican
+          pip3 install BeautifulSoup4
+          pip3 install bs4
           make html
+          mv output ../
+      - name: Checkout gh-pages
+        uses: actions/checkout@v2
+        with:
+             ref: gh-pages
+      - name: Upload site
+        shell: bash
+        run: |
+          cd ..
+          cp -r output/* nairobilug.or.ke
+          rm -rf output
+          cd nairobilug.or.ke
       - name: Commit generated webpage files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git status
-          git add output
-          git checkout gh-pages
-          git checkout master -- output
-          git add *.*
-          git checkout master
-          git rm output
           git commit -m "Update website" || echo "Nothing to commit"
           git push
