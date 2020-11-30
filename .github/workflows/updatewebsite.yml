@@ -1,0 +1,34 @@
+name: Update Website
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with: 
+             repository: nairobilug/nairobilug.or.ke
+             submodules: recursive
+      - name: Build site
+        shell: bash
+        run: |
+          pip install -r requirements.txt
+          make html
+      - name: Commit generated webpage files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git status
+          git add output
+          git checkout gh-pages
+          git checkout master -- output
+          git add *.*
+          git checkout master
+          git rm output
+          git commit -m "Update website" || echo "Nothing to commit"
+          git push
