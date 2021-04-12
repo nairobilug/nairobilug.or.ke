@@ -7,11 +7,16 @@ to have some idea of local hosting providers. Some of the hosting providers
 in Kenya are:
 
 * [Angani](http://www.angani.co/)
+* [Atlancis](https://atlancis.com/)
 * [CloudPAP](https://www.cloudpap.com)
 * [Garanntor](https://www.garanntor.co.ke/)
+* [Hostnali](https://hostnali.com/)
+* [Host Pinnacle](https://www.hostpinnacle.co.ke/)
 * [Icolo](https://www.icolo.io/)
 * [Kenya Web Experts](https://kenyawebexperts.com/)
+* [Mambo Microsystems](https://www.mambo.co.ke/)
 * [Movetechsolutions](https://www.movetechsolutions.com/)
+* [Node Africa](https://node.africa/)
 * [Safaricom](https://www.safaricom.co.ke/business/corporate/cloud-and-hosting-services/website-and-email-services)
 * [Sasahost](https://www.sasahost.co.ke/)
 * [Truehost](https://www.truehost.co.ke/servers-vps-in-kenya/)
