@@ -9,6 +9,7 @@ in Kenya are:
 * [Angani](http://www.angani.co/)
 * [Atlancis](https://atlancis.com/)
 * [CloudPAP](https://www.cloudpap.com)
+* [EACdirectory](https://www.eacdirectory.co.ke)
 * [Garanntor](https://www.garanntor.co.ke/)
 * [Hostnali](https://hostnali.com/)
 * [Host Pinnacle](https://www.hostpinnacle.co.ke/)
