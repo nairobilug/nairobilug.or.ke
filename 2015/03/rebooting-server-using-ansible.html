@@ -46,6 +46,7 @@
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
+            <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
             <li class=" list-inline-item text-muted">|</li>
           <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
           <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
@@ -86,21 +87,21 @@
 <ul>
 <li>
 <p>Section 1: <strong>Pre-reboot</strong>: Run your pre-reboot task, it can be performing major upgrades and/or performing some configuration which only take effect at boot time. For example - upgrade all packages using <code>yum</code> module<a href="http://docs.ansible.com/yum_module.html"><sup>[2]</sup></a></p>
-<div class="highlight"><pre><span></span>- name: upgrade all packages
+<div class="highlight"><pre><span></span><code>- name: upgrade all packages
   yum: name=* state=latest
-</pre></div>
+</code></pre></div>
 </li>
 <li>
 <p>Section 2: <strong>Reboot</strong>: In this stage we'll use the <code>command</code> module<a href="http://docs.ansible.com/command_module.html"><sup>[3]</sup></a> to reboot the remote machine/server by running the <code>reboot</code> command  - nothing fancy - you can also use <code>shutdown --reboot</code>.</p>
-<div class="highlight"><pre><span></span>- name: reboot server
+<div class="highlight"><pre><span></span><code>- name: reboot server
   command: /sbin/reboot
-</pre></div>
+</code></pre></div>
 </li>
 <li>
 <p>Section 3: <strong>Pause the playbook</strong>: We'll use the <code>wait_for</code> module to wait for 300 seconds for port 22 to become available before resuming the playbook. I'm using port 22 because most servers run openssh-server on port 22 &amp; if we were to telnet to that port we'd probably see something like :<code>SSH-2.0-OpenSSH_6.6.1</code>, so we can use regex to check whether the output matches "OpenSSH". I'm also using a <code>timeout</code> value of 300 seconds because most physical servers take 3 - 5 minutes to finish rebooting due to hardware checks e.t.c. but you can use any value that suites you. For example: - wait for 300 seconds for port 22 to become available &amp; contain <code>OpenSSH</code></p>
-<div class="highlight"><pre><span></span>- name: wait for the server to finish rebooting
-  local_action: wait_for host="web01" search_regex=OpenSSH port=22 timeout=300
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="o">-</span> <span class="nl">name:</span> <span class="k">wait</span> <span class="k">for</span> <span class="n">the</span> <span class="n">server</span> <span class="n">to</span> <span class="n">finish</span> <span class="n">rebooting</span>
+  <span class="nl">local_action:</span> <span class="n">wait_for</span> <span class="n">host</span><span class="o">=</span><span class="s">"web01"</span> <span class="n">search_regex</span><span class="o">=</span><span class="n">OpenSSH</span> <span class="n">port</span><span class="o">=</span><span class="mh">22</span> <span class="n">timeout</span><span class="o">=</span><span class="mh">300</span>
+</code></pre></div>
 </li>
 <li>
 <p>Section 4: <strong>Resume the playbook</strong>: After we've got a response from port 22, we can resume running the playbook. This step can be optional depending on your needs.</p>
@@ -108,7 +109,7 @@
 </ul>
 <h3>Puttin' It All Together</h3>
 <ul>
-<li>We can merge all the above sections into one playbook as shown below:<div class="highlight"><pre><span></span><span class="x">- hosts: all</span>
+<li>We can merge all the above sections into one playbook as shown below:<div class="highlight"><pre><span></span><code><span class="x">- hosts: all</span>
 <span class="x">  sudo: yes</span>
 <span class="x">  tasks:</span>
 <span class="x">    - name: Upgrade all packages in RedHat-based machines</span>
@@ -125,7 +126,7 @@
 <span class="x">    - name: Wait for the server to finish rebooting</span>
 <span class="x">      sudo: no</span>
 <span class="x">      local_action: wait_for host="</span><span class="cp">{{</span> <span class="nv">inventory_hostname</span> <span class="cp">}}</span><span class="x">" search_regex=OpenSSH port=22 timeout=300</span>
-</pre></div>
+</code></pre></div>
 </li>
 </ul>
 <h3>Stuff to Note</h3>

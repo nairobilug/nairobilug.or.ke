@@ -46,6 +46,7 @@
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
+            <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
             <li class=" list-inline-item text-muted">|</li>
           <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
           <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
@@ -92,60 +93,60 @@
 <ul>
 <li>
 <p>get the path to slow query log file</p>
-<div class="highlight"><pre><span></span>MariaDB [(none)]&gt; show variables like '%slow_query%';
-+---------------------+-------------------------------+
-| Variable_name       | Value                         |
-+---------------------+-------------------------------+
-| slow_query_log      | ON                            |
-| slow_query_log_file | /var/lib/mysql/mysql-slow.log |
-+---------------------+-------------------------------+
-2 rows in set (0.00 sec)
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="c">MariaDB </span><span class="k">[</span><span class="c">(none)</span><span class="k">]</span><span class="nv">&gt;</span><span class="c"> show variables like '%slow_query%';</span>
+<span class="nb">+---------------------+-------------------------------+</span><span class="c"></span>
+<span class="c">| Variable_name       | Value                         |</span>
+<span class="nb">+---------------------+-------------------------------+</span><span class="c"></span>
+<span class="c">| slow_query_log      | ON                            |</span>
+<span class="c">| slow_query_log_file | /var/lib/mysql/mysql</span><span class="nb">-</span><span class="c">slow</span><span class="nt">.</span><span class="c">log |</span>
+<span class="nb">+---------------------+-------------------------------+</span><span class="c"></span>
+<span class="c">2 rows in set (0</span><span class="nt">.</span><span class="c">00 sec)</span>
+</code></pre></div>
 </li>
 <li>
 <p>temporarily disable slow query logging</p>
-<div class="highlight"><pre><span></span>MariaDB [(none)]&gt; set global slow_query_log=off;
+<div class="highlight"><pre><span></span><code>MariaDB [(none)]&gt; set global slow_query_log=off;
 Query OK, 0 rows affected (0.00 sec)
-</pre></div>
+</code></pre></div>
 </li>
 <li>
 <p>flush only slow logs</p>
-<div class="highlight"><pre><span></span>MariaDB [(none)]&gt; flush slow logs;
+<div class="highlight"><pre><span></span><code>MariaDB [(none)]&gt; flush slow logs;
 Query OK, 0 rows affected (0.00 sec)
-</pre></div>
+</code></pre></div>
 </li>
 <li>
 <p>rename the old log file and or compress it</p>
-<div class="highlight"><pre><span></span># mv /var/lib/mysql/mysql-slow.log /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log
-# gzip -c /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log &gt; /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log.gz
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># mv /var/lib/mysql/mysql-slow.log /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log</span>
+<span class="c1"># gzip -c /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log &gt; /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log.gz</span>
+</code></pre></div>
 </li>
 <li>
 <p>finally, re-enable slow query logging</p>
-<div class="highlight"><pre><span></span>MariaDB [(none)]&gt; set global slow_query_log=on;
+<div class="highlight"><pre><span></span><code>MariaDB [(none)]&gt; set global slow_query_log=on;
 Query OK, 0 rows affected (0.00 sec)
-</pre></div>
+</code></pre></div>
 </li>
 </ul>
 <h2>Using Logrotate</h2>
 <p>Instead of manual rotation, you can use a lograte config file to acheive the same effect by using logrotate: <code>/etc/logrotate.d/mysql-slow-logs</code></p>
-<div class="highlight"><pre><span></span>/var/lib/mysql/mysql-slow.log {
-    size 1G
-    dateext
-    compress
-    missingok
-    rotate 20
-    notifempty
-    delaycompress
-    sharedscripts
-    nocopytruncate
-    create 660 mysql mysql
-    postrotate
-        /usr/bin/mysql -e 'select @@global.slow_query_log into @sq_log_save; set global slow_query_log=off; select sleep(5); FLUSH SLOW LOGS; select sleep(10); set global slow_query_log=@sq_log_save;'
-    endscript
-    rotate 150
-}
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">slow</span><span class="o">.</span><span class="n">log</span> <span class="p">{</span>
+    <span class="n">size</span> <span class="mi">1</span><span class="n">G</span>
+    <span class="n">dateext</span>
+    <span class="n">compress</span>
+    <span class="n">missingok</span>
+    <span class="n">rotate</span> <span class="mi">20</span>
+    <span class="n">notifempty</span>
+    <span class="n">delaycompress</span>
+    <span class="n">sharedscripts</span>
+    <span class="n">nocopytruncate</span>
+    <span class="n">create</span> <span class="mi">660</span> <span class="n">mysql</span> <span class="n">mysql</span>
+    <span class="n">postrotate</span>
+        <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">mysql</span> <span class="o">-</span><span class="n">e</span> <span class="s1">'select @@global.slow_query_log into @sq_log_save; set global slow_query_log=off; select sleep(5); FLUSH SLOW LOGS; select sleep(10); set global slow_query_log=@sq_log_save;'</span>
+    <span class="n">endscript</span>
+    <span class="n">rotate</span> <span class="mi">150</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>More info. about each config. directive:</p>
 <ul>
 <li><code>size 1G</code>: Rotate a log file only if it's bigger than 1Gb</li>

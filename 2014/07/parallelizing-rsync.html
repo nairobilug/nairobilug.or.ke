@@ -46,6 +46,7 @@
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
+            <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
             <li class=" list-inline-item text-muted">|</li>
           <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
           <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
@@ -84,12 +85,12 @@
 <p><em>tl;dr</em>: <code>rsync</code> is amazing, but it’s single threaded and struggles when you tell it to sync large directory hierarchies. <a href="#sync_bricks">Here's how you can speed it up</a>.</p>
 <h3>rsync #fail</h3>
 <p>I figured syncing the brick hierarchy from the good node to the bad node was simple enough, so I stopped the <code>glusterd</code> service on the bad node and invoked:</p>
-<div class="highlight"><pre><span></span><span class="gp">#</span> rsync -aAXv --delete --exclude<span class="o">=</span>.glusterfs storage0:/path/to/bricks/homes/ storage1:/path/to/bricks/homes/
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp"># </span>rsync -aAXv --delete --exclude<span class="o">=</span>.glusterfs storage0:/path/to/bricks/homes/ storage1:/path/to/bricks/homes/
+</code></pre></div>
 <p>After a day or so I noticed I had only copied ~1.5TB (over 1 hop on a dedicated 10GbE switch!), and I realized something must be wrong. I attached to the <code>rsync</code> process with <code>strace -p</code> and saw a bunch of system calls in one particular user’s directory. I dug deeper:</p>
-<div class="highlight"><pre><span></span><span class="gp">#</span> find /path/to/bricks/homes/ukenyatta/maker/genN_datastore/ -type d <span class="p">|</span> wc -l
+<div class="highlight"><pre><span></span><code><span class="gp"># </span>find /path/to/bricks/homes/ukenyatta/maker/genN_datastore/ -type d <span class="p">|</span> wc -l
 <span class="go">1398640</span>
-</pre></div>
+</code></pre></div>
 <p>So this one particular directory in one user's home contained over a million <em>other</em> directories and $god knows how many files, and this command itself took several hours to finish! To make matters worse, careful trial and error inspection of other user home directories revealed more massive directory structures as well.</p>
 <ul>
 <li>rsync is single threaded</li>
@@ -102,7 +103,7 @@
 <p>Basically, he describes a clever use of <code>find</code> and <code>xargs</code> to split up the problem set into smaller pieces that <code>rsync</code> can process more quickly.</p>
 <h3>sync_brick.sh</h3>
 <p>So here's my adaptation of his script for the purpose of syncing failed GlusterFS bricks, <code>sync_brick.sh</code>:</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/bin/env bash</span>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/env bash</span>
 <span class="c1"># borrowed / adapted from: https://wiki.ncsa.illinois.edu/display/~wglick/Parallel+Rsync</span>
 
 <span class="c1"># RSYNC SETUP</span>
@@ -125,7 +126,7 @@
 find <span class="o">{</span>a..z<span class="o">}</span>* <span class="o">{</span>A..Z<span class="o">}</span>* <span class="o">{</span><span class="m">0</span>..9<span class="o">}</span>* -mindepth <span class="m">1</span> -maxdepth <span class="m">1</span> -print0 <span class="p">|</span> <span class="se">\</span>
     xargs -0 -n1 -P<span class="nv">$THREADS</span> -I% <span class="se">\</span>
         <span class="nv">$RSYNC_PROG</span> <span class="nv">$RSYNC_OPTS</span> <span class="s2">"%"</span> <span class="nv">$BAD_NODE</span>:<span class="nv">$DESTDIR</span>
-</pre></div>
+</code></pre></div>
 <p>Pay attention to the source/destination paths, the number of <code>THREADS</code>, and the <code>BAD_NODE</code> name, then you should be ready to roll.</p>
 <h3>The Magic, Explained</h3>
 <p>It's a bit of magic, but here are the important parts:</p>

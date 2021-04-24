@@ -46,6 +46,7 @@
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
+            <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
             <li class=" list-inline-item text-muted">|</li>
           <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
           <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
@@ -93,18 +94,18 @@ other form of data exchange over HTTPS, including setting cookies.</p>
 <p>When we find the user's authentication cookies are not set, or are expired, we
 reload the page so that they can get a new authentication cookie.
 We implemented this as shown below, by checking for a 401 status from the <a href="http://github.com/onaio/onadata">OnaData API</a>. More of that code is <a href="https://github.com/onaio/milia/blob/580969b2b2a88a446b5d903237adca7ab4003096/src/milia/api/io.cljs#L119">here</a>.</p>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="kd">defn </span><span class="nv">http-request</span>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="kd">defn </span><span class="nv">http-request</span>
   <span class="s">"Wraps cljs-http.client/request and redirects if status is 401"</span>
   <span class="p">[</span><span class="nv">request-fn</span> <span class="o">&amp;</span> <span class="nv">args</span><span class="p">]</span>
   <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">response-channel</span> <span class="p">(</span><span class="nf">chan</span><span class="p">)]</span>
     <span class="p">(</span><span class="nf">go</span>
-      <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">original-response-channel</span> <span class="p">(</span><span class="nb">apply</span> <span class="nv">request-fn</span> <span class="nv">args</span><span class="p">)</span>
+      <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">original-response-channel</span> <span class="p">(</span><span class="nf">apply</span> <span class="nv">request-fn</span> <span class="nv">args</span><span class="p">)</span>
             <span class="p">{</span><span class="ss">:keys</span> <span class="p">[</span><span class="nv">status</span><span class="p">]</span> <span class="ss">:as</span> <span class="nv">response</span><span class="p">}</span> <span class="p">(</span><span class="nf">&lt;!</span> <span class="nv">original-response-channel</span><span class="p">)]</span>
         <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nf">=</span> <span class="nv">status</span> <span class="mi">401</span><span class="p">)</span>
           <span class="p">(</span><span class="nb">set</span><span class="nv">!</span> <span class="nv">js/window.location</span> <span class="p">(</span><span class="nf">.href</span> <span class="nv">js/window.location</span><span class="p">))</span>
           <span class="p">(</span><span class="nf">put!</span> <span class="nv">response-channel</span> <span class="nv">response</span><span class="p">))))</span>
 <span class="nv">response-channel</span><span class="p">))</span>
-</pre></div>
+</code></pre></div>
 <p>As a consequence of this setup, when a user connects over HTTP and is not redirected
 to HTTPS they can end up in an endless loop of reloads when they try to sign-up,
 log-in or submit data in any other way.
@@ -115,7 +116,8 @@ install didn't have add-ons like <a href="https://www.eff.org/HTTPS-Everywhere">
 <h2>Narrowing down the problem</h2>
 <p>Now that we had verified there was a problem, we had to figure out why it didn't happen anywhere else, why we hadn't noticed it before, and why it only happened on fresh Firefox installs.</p>
 <h4>Enter <a href="https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security">HSTS</a></h4>
-<p>"HTTP Strict Transport Security (HSTS) is a web security policy
+<p><a href="https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security">From Wikipedia</a>:
+"HTTP Strict Transport Security (HSTS) is a web security policy
 mechanism which helps to protect websites against protocol downgrade attacks and
 cookie hijacking."</p>
 <p>We already included the HSTS header in our responses. If you use an HSTS-enabled
@@ -136,11 +138,11 @@ based on the load balancer they are attached to and the requested path. For the 
 <h4>HTTPS traffic</h4>
 <p>As you can see below, we had no problem handling HTTPS traffic with our setup. We responded with a <code>200 OK</code> as
 intended.</p>
-<div class="highlight"><pre><span></span>$ curl --head -X GET <span class="s2">"https://ona.io/login"</span>
+<div class="highlight"><pre><span></span><code>$ curl --head -X GET <span class="s2">"https://ona.io/login"</span>
 HTTP/1.1 <span class="m">200</span> OK
 Set-Cookie: <span class="nv">AWSALB</span><span class="o">=</span>PqCh/O<span class="p">;</span> <span class="nv">Expires</span><span class="o">=</span>Thu, <span class="m">23</span> Mar <span class="m">2017</span> <span class="m">06</span>:18:24 GMT<span class="p">;</span> <span class="nv">Path</span><span class="o">=</span>/
 Strict-Transport-Security: max-age<span class="o">=</span><span class="m">31536000</span><span class="p">;</span> includeSubDomains<span class="p">;</span>
-</pre></div>
+</code></pre></div>
 <blockquote class="blockquote">
 <p>Note: The AWS load balancer cookie is used by the load balancer to route a user's
 requests to the same application server they used in the previous request.</p>
@@ -150,11 +152,11 @@ requests to the same application server they used in the previous request.</p>
 included the HSTS header, even though the HSTS header is only in the HTTPS
 section of the server configuration. Somehow the application server was
 responding to HTTP traffic using HTTPS instructions.</p>
-<div class="highlight"><pre><span></span>$ curl --head -X GET <span class="s2">"http://ona.io/login"</span>
+<div class="highlight"><pre><span></span><code>$ curl --head -X GET <span class="s2">"http://ona.io/login"</span>
 HTTP/1.1 <span class="m">200</span> OK
 Set-Cookie: <span class="nv">AWSALB</span><span class="o">=</span>ZplUR<span class="p">;</span> <span class="nv">Expires</span><span class="o">=</span>Thu, <span class="m">23</span> Mar <span class="m">2017</span> <span class="m">06</span>:20:07 GMT<span class="p">;</span> <span class="nv">Path</span><span class="o">=</span>/
 Strict-Transport-Security: max-age<span class="o">=</span><span class="m">31536000</span><span class="p">;</span> includeSubDomains<span class="p">;</span>
-</pre></div>
+</code></pre></div>
 <h4>What we knew and what we wanted</h4>
 <p>Looking at our Target Groups, we didn't have a Target Group for port 80 (HTTP), but we
 did have a Target Group for port 443 (HTTPS). We knew that the load balancer, with Target Groups configured for port 443, was
@@ -169,18 +171,18 @@ HTTPS logs.</p>
 <h2>Solution: just add a rule for port 80. Wrong!</h2>
 <p>We knew that the load balancer makes health check requests to the
 application servers using the IP address and not the domain name, which seems to be reasonable, yet we were blocking IP address requests as shown below.</p>
-<div class="highlight"><pre><span></span>server {
-    listen 80 default_server;
-    server_name  _;
-    return 444;
-    deny all;
+<div class="highlight"><pre><span></span><code><span class="nv">server</span> {
+    <span class="nv">listen</span> <span class="mi">80</span> <span class="nv">default_server</span><span class="c1">;</span>
+    <span class="nv">server_name</span>  <span class="nv">_</span><span class="c1">;</span>
+    <span class="k">return</span> <span class="mi">444</span><span class="c1">;</span>
+    <span class="nv">deny</span> <span class="nv">all</span><span class="c1">;</span>
 }
-</pre></div>
+</code></pre></div>
 <p>We block IP address requests in order to avoid crawlers or malicious actors that target a range of IP addresses, and through this end up placing unnecessary load on our servers. We also don't want our application server to respond to IP address requests, again
 to avoid unnecessary load on the application servers. For example, here's a normal crawling request by IP address from
 our logs:</p>
-<div class="highlight"><pre><span></span><span class="nt">180</span><span class="p">.</span><span class="nc">76</span><span class="p">.</span><span class="nc">15</span><span class="p">.</span><span class="nc">155</span> <span class="nt">-</span> <span class="nt">-</span> <span class="cp">[</span><span class="mi">15</span><span class="p">/</span><span class="nx">Mar</span><span class="p">/</span><span class="nx">2017</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">43</span> <span class="o">+</span><span class="mi">0000</span><span class="cp">]</span> <span class="s2">"GET / HTTP/1.1"</span> <span class="nt">301</span> <span class="nt">185</span> <span class="s2">"-"</span> <span class="s2">"Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)"</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="mf">180.76.15.155</span> <span class="o">-</span> <span class="o">-</span> <span class="err">[</span><span class="mf">15</span><span class="o">/</span><span class="n">Mar</span><span class="o">/</span><span class="mf">2017</span><span class="p">:</span><span class="mf">13</span><span class="p">:</span><span class="mf">20</span><span class="p">:</span><span class="mf">43</span> <span class="o">+</span><span class="mf">0000</span><span class="err">]</span> <span class="s">"GET / HTTP/1.1"</span> <span class="mf">301</span> <span class="mf">185</span> <span class="s">"-"</span> <span class="s">"Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)"</span>
+</code></pre></div>
 <p>With IP address requests being blocked, just adding a Target Group
 for port 80 wouldn't work. The health check requests would get denied, and the load balancer would assume the application server is unhealthy on port 80
 and not route port 80 traffic at all. An arguably worse position to be in.</p>
@@ -200,45 +202,45 @@ redirect and send the request to HTTPS.</p>
 status code 301 permanent redirect.
 We then added a listener on the load balancer for the Target Group.
 We could now see IP address requests behaving as in the snippet below:</p>
-<div class="highlight"><pre><span></span>$ curl --head -X GET <span class="s2">"http://35.157.7.224"</span>
+<div class="highlight"><pre><span></span><code>$ curl --head -X GET <span class="s2">"http://35.157.7.224"</span>
 curl: <span class="o">(</span><span class="m">52</span><span class="o">)</span> Empty reply from server
-</pre></div>
+</code></pre></div>
 <p>This was a result of the load balancer finding the application server unhealthy
 on port 80 because its requests were being denied.
 To solve this, we had to stop denying IP address requests and instead redirect
 them to the corresponding domain name. So our default configuration had to
 change to the below, with <code>&lt;nginx_server_name&gt;</code> being the domain name we wish to
 expose for that server.</p>
-<div class="highlight"><pre><span></span><span class="nt">server</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="nt">server</span> <span class="p">{</span>
     <span class="err">listen</span> <span class="err">80</span> <span class="err">default_server</span><span class="p">;</span>
     <span class="err">server_name</span> <span class="err">_</span><span class="p">;</span>
     <span class="err">return</span> <span class="err">301</span> <span class="n">http</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">nginx_server_name</span><span class="o">&gt;</span><span class="err">$</span><span class="n">request_uri</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 <p>Now the health check will find the expected response and deem the server healthy.</p>
 <h2>Final and desired result</h2>
 <p>Our desired result is to redirect IP address requests to the corresponding domain name and let the configuration for the server handling that domain name handle said requests.
 We also make sure not to manipulate the protocol, HTTP to HTTPS, on IP address
 requests because they would fail if the reverse proxy doesn't support
 HTTPS. This also gives the correct response to crawlers.</p>
-<div class="highlight"><pre><span></span>$ curl --head -X GET <span class="s2">"http://52.59.26.201"</span>
+<div class="highlight"><pre><span></span><code>$ curl --head -X GET <span class="s2">"http://52.59.26.201"</span>
 HTTP/1.1 <span class="m">301</span> Moved Permanently
 Location: http://ona.io/
-</pre></div>
+</code></pre></div>
 <p>Which you can see happening on some popular domains:</p>
-<div class="highlight"><pre><span></span>$ curl --head -X GET <span class="s2">"http://74.125.230.163"</span>
+<div class="highlight"><pre><span></span><code>$ curl --head -X GET <span class="s2">"http://74.125.230.163"</span>
 HTTP/1.1 <span class="m">301</span> Moved Permanently
 Location: http://www.google.com/
-</pre></div>
+</code></pre></div>
 <p>Name requests also get properly routed to HTTPS using a 301 redirect.</p>
-<div class="highlight"><pre><span></span>$ curl --head -X GET <span class="s2">"http://ona.io/login"</span>
+<div class="highlight"><pre><span></span><code>$ curl --head -X GET <span class="s2">"http://ona.io/login"</span>
 HTTP/1.1 <span class="m">301</span> Moved Permanently
 Location: https://ona.io/login
-</pre></div>
+</code></pre></div>
 <h4>Handling HTTP at the reverse proxy</h4>
 <p>We also want NGINX to handle port 80 traffic using recommendations from
 <a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/#taxing-rewrites">NGINX Pitfalls and Common Mistakes under Taxing Rewrites</a>. With this we can "effectively avoid doing any capturing or matching at all."</p>
-<div class="highlight"><pre><span></span><span class="nt">server</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="nt">server</span> <span class="p">{</span>
     <span class="err">listen</span> <span class="err">80</span><span class="p">;</span>
     <span class="n">listen</span> <span class="cp">[</span><span class="p">::</span><span class="cp">]</span><span class="p">:</span><span class="mi">80</span><span class="p">;</span>
 
@@ -246,12 +248,12 @@ Location: https://ona.io/login
 
     <span class="err">return</span> <span class="err">301</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="err">$</span><span class="n">server_name</span><span class="err">$</span><span class="n">request_uri</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 <h4>Recommendations from the <a href="https://hstspreload.org">HSTS Preload List Submission</a> site</h4>
 <p>To double-check that we had fixed our problem with HSTS, we used the <a href="https://hstspreload.org">HSTS Preload List Submission</a> site to validate our configuration. Before we had this result:
-![hsts-preload-not-ok.png]</p>
+<img alt="hsts-preload-not-ok.png" class="img-fluid" src="/assets/images/2017-03-31/htsts-preload-not-ok.png"/></p>
 <p>Now we have this:
-![hsts-preload-ok.png]</p>
+<img alt="hsts-preload-ok.png" class="img-fluid" src="/assets/images/2017-03-31/hsts-preload-ok.png"/></p>
 <h2>Wrapping up</h2>
 <p>We started with a broken configuration that put a small subset of HTTP requests into a redirect loop. The users behind these requests likely ended up going to our HTTPS URL and incidentally fixing the HTTP problem, then never following up with us. After digging in, we found that we had misconfigured both our AWS Elastic Load Balancer Target Groups and our reverse proxy rules. This was a problem for our users and for our HSTS configuration. By correcting these configuration problems we have removed the redirect loop and fixed our HSTS configuration.</p>
     </div>

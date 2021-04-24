@@ -46,6 +46,7 @@
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
+            <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
             <li class=" list-inline-item text-muted">|</li>
           <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
           <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
@@ -82,7 +83,7 @@
       <p>An awesome feature in <a href="https://chef.io">Chef</a> that is not available in <a href="http://ansible.com">Ansible</a> is immediate notification i.e. <code>notifies :immediately</code>. Ansible has <a href="http://docs.ansible.com/playbooks_intro.html#handlers-running-operations-on-change">notification handlers</a> but they are only triggered at the end of the current playbook unlike <a href="https://docs.chef.io/resource_common.html#notifies-syntax">Chef's notifications</a> which can be triggered immediately! Moreover, you can configure Chef's notifications to be triggered at specific times e.g. at the very end of a chef-client run i.e. <code>notifies :delayed</code> or immediately i.e. <code>notifies :immediately</code>.</p>
 <p>Now, why I'm going into all these boring theories? Well, when installing tomcat on Ubuntu, dpkg starts it automatically once the process is complete. But in my case, I wanted to stop tomcat7 service first, configure it, deploy its webapps &amp; finally start it. So on my ansible tasks file, after installing tomcat7 I added a notification action to call a task that stops tomcat7 service. Here's a snippet from the ansible task file:</p>
 <p><em>tomcat.yml</em>:</p>
-<div class="highlight"><pre><span></span><span class="x">- hosts: all</span>
+<div class="highlight"><pre><span></span><code><span class="x">- hosts: all</span>
 <span class="x">  sudo: yes</span>
 <span class="x">  tasks:</span>
 <span class="x">    - name: Install tomcat7</span>
@@ -96,13 +97,13 @@
 <span class="x">  handlers:</span>
 <span class="x">      - name: Temporarily stop tomcat7</span>
 <span class="x">      service: name=tomcat7 state=stopped</span>
-</pre></div>
+</code></pre></div>
 <p>OK so the task file looks great, but did it work ? Unfortunately, no! Ansible notifications trigger tasks in handlers section to run only at the end of a playbook. So I had to come up with a quick fix for this issue.</p>
 <h3>'Prompt' Handlers</h3>
 <p>My quick fix involved registering a variable in the task that installs tomcat packages i.e. <code>register: tomcat_installed</code>, then the next task to stop tomcat service would be executed only if the registered variable has changed i.e. if tomcat7 has been installed - <code>when: tomcat_installed|changed</code>. Basically, ansible notifications use a similar concept to this.</p>
 <p>Here's a snippet from the playbook showing the quick fix:</p>
 <p><em>tomcat.yml</em>:</p>
-<div class="highlight"><pre><span></span><span class="x">- hosts: all</span>
+<div class="highlight"><pre><span></span><code><span class="x">- hosts: all</span>
 <span class="x">  sudo: yes</span>
 <span class="x">  tasks:</span>
 <span class="x">      - name: Install tomcat7</span>
@@ -115,7 +116,7 @@
 <span class="x">      - name: Temporarily stop tomcat7</span>
 <span class="x">        service: name=tomcat7 state=stopped</span>
 <span class="x">        when: tomcat_installed|changed</span>
-</pre></div>
+</code></pre></div>
 <p>As you can see from the snippet, I've not used a handler. Yes that's right, inorder to achieve the effect of an 'immediate' handler, I moved the task that stops tomcat7 service from the handler section to the tasks section.</p>
 <h3>Conclusion</h3>
 <p>Though I'm sure there are better solutions out there, I think the concept behind my quick fix can be useful in tackling other ansible-related issues.</p>

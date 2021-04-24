@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
+      <loc>/2020/06/Lightweight lab entirely in Docker without Vmware or VirtualBox.html</loc>
+      <priority>0.8</priority>
+    </url>
+    <url>
+      <loc>/2020/04/listing-cloud-providers.html</loc>
+      <priority>0.8</priority>
+    </url>
+    <url>
+      <loc>/2019/07/meetup-july-2019.html</loc>
+      <priority>0.8</priority>
+    </url>
+    <url>
       <loc>/2018/02/cache-maven-artifacts-with-artifactory.html</loc>
       <priority>0.8</priority>
     </url>
@@ -194,6 +206,10 @@
     </url>
     <url>
       <loc>/pages/meetups.html</loc>
+      <priority>1.0</priority>
+    </url>
+    <url>
+      <loc>/pages/software.html</loc>
       <priority>1.0</priority>
     </url>
 </urlset>

@@ -46,6 +46,7 @@
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
+            <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
             <li class=" list-inline-item text-muted">|</li>
           <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
           <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
@@ -83,33 +84,33 @@
 <p>I eventually stumbled upon the <a href="http://nginx.org/en/docs/http/ngx_http_map_module.html">nginx map module</a> which, combined with a custom error page, ended up being an elegant, fun solution to this problem.</p>
 <h3>Elegant Maps</h3>
 <p>Here is a snippet from <em>/etc/nginx/conf.d/default.conf</em> which shows the important bits:</p>
-<div class="highlight"><pre><span></span><span class="nt">server</span> <span class="p">{</span>
-<span class="err">...</span>
+<div class="highlight"><pre><span></span><code><span class="n">server</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
 
-    <span class="err">location</span> <span class="err">/</span> <span class="err">{</span>
-        <span class="err">if</span> <span class="err">($denied</span> <span class="err">!=</span> <span class="err">0)</span> <span class="err">{</span>
-            <span class="err">#</span> <span class="err">HTTP</span> <span class="err">503:</span> <span class="err">service</span> <span class="err">unavailable</span>
-            <span class="err">return</span> <span class="err">503</span><span class="p">;</span>
-         <span class="p">}</span>
+<span class="w">    </span><span class="n">location</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="err">$</span><span class="n">denied</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">            </span><span class="err">#</span><span class="w"> </span><span class="n">HTTP</span><span class="w"> </span><span class="mi">503</span><span class="err">:</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="n">unavailable</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="mi">503</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="err">}</span><span class="w"></span>
 
-         <span class="err">#</span> <span class="nt">Send</span> <span class="nt">requests</span> <span class="nt">to</span> <span class="nt">Tomcat</span>
-         <span class="nt">proxy_pass</span> <span class="nt">http</span><span class="o">://</span><span class="nt">127</span><span class="p">.</span><span class="nc">0</span><span class="p">.</span><span class="nc">0</span><span class="p">.</span><span class="nc">1</span><span class="p">:</span><span class="nd">8443</span><span class="o">;</span>
-    <span class="err">}</span>
+<span class="w">         </span><span class="err">#</span><span class="w"> </span><span class="n">Send</span><span class="w"> </span><span class="n">requests</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">Tomcat</span><span class="w"></span>
+<span class="w">         </span><span class="n">proxy_pass</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0.0.1</span><span class="err">:</span><span class="mi">8443</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">}</span><span class="w"></span>
 
-    <span class="nt">error_page</span> <span class="nt">503</span> <span class="p">@</span><span class="k">maintenance</span><span class="p">;</span>
+<span class="w">    </span><span class="n">error_page</span><span class="w"> </span><span class="mi">503</span><span class="w"> </span><span class="nv">@maintenance</span><span class="p">;</span><span class="w"></span>
 
-    <span class="nt">location</span> <span class="p">@</span><span class="k">maintenance</span> <span class="p">{</span>
-        <span class="nt">root</span> <span class="o">/</span><span class="nt">tmp</span><span class="o">;</span>
-        <span class="nt">rewrite</span> <span class="o">^(.*)$</span> <span class="o">/</span><span class="nt">maintenance</span><span class="p">.</span><span class="nc">html</span> <span class="nt">break</span><span class="o">;</span>
-    <span class="p">}</span>
-<span class="err">}</span>
+<span class="w">    </span><span class="n">location</span><span class="w"> </span><span class="nv">@maintenance</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">root</span><span class="w"> </span><span class="o">/</span><span class="n">tmp</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">rewrite</span><span class="w"> </span><span class="o">^</span><span class="p">(.</span><span class="o">*</span><span class="p">)</span><span class="err">$</span><span class="w"> </span><span class="o">/</span><span class="n">maintenance</span><span class="p">.</span><span class="n">html</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">}</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
 
-<span class="nt">map</span> <span class="o">$</span><span class="nt">remote_addr</span> <span class="o">$</span><span class="nt">denied</span> <span class="p">{</span>
-    <span class="err">default</span> <span class="err">1</span><span class="p">;</span>
-    <span class="err">2.18.216.110</span> <span class="err">0</span><span class="p">;</span>
-    <span class="err">192.64.147.150</span> <span class="err">0</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
+<span class="k">map</span><span class="w"> </span><span class="err">$</span><span class="n">remote_addr</span><span class="w"> </span><span class="err">$</span><span class="n">denied</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">default</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="mf">2.18.216.110</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="mf">192.64.147.150</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+</code></pre></div>
 <p>By default all IP addresses are denied (ie, <code>$denied=1</code>), but depending on the client's IP address, the <code>$denied</code> variable can be set to 0. In the root location block I essentially test if the IP address is denied and conditionally return an HTTP 503 (<em>Service Unavailable</em>), which is handled by a custom <code>error_page</code> handler with a named location block. So cool!</p>
 <h3>In Retrospect</h3>
 <p>In retrospect I probably could have used a regex in the <code>$remote_addr</code> test, but maps are really a more flexible, efficient, and "nginx" way of accomplishing this. On that note, I'm using nginx more and more lately and, in addition to being fast as hell and having better TLS support, it's just more fun to use than Apache. ;)</p>
