@@ -8,7 +8,7 @@ Online, we primarily communicate through an email [mailing list]({filename}/page
 
 The LUG has an IRC channel which everyone (especially members) is welcome to join. If you are new to IRC, you can connect through freenode's [Web IRC](https://web.libera.chat/?channels=#nairobilug).
 
-- Network: [Libera.caht](https://libera.chat)
+- Network: [libera.chat](https://libera.chat)
 - Channel: [#nairobilug](irc://libera.chat/#nairobilug)
 
 ## Social Media
