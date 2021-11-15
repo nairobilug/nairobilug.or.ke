@@ -6,6 +6,7 @@ to host your data in particular locations. It can therefore be of interest
 to have some idea of local hosting providers. Some of the hosting providers
 in Kenya are:
 
+* [AfriQ Network Solutions](https://afriqnetworks.co.ke/)
 * [Angani](http://www.angani.co/)
 * [Atlancis](https://atlancis.com/)
 * [China Telcom](https://chinatelecomglobal.com)
@@ -16,6 +17,7 @@ in Kenya are:
 * [Host Pinnacle](https://www.hostpinnacle.co.ke/)
 * [Icolo](https://www.icolo.io/)
 * [Kenya Web Experts](https://kenyawebexperts.com/)
+* [Liquid Telcom](https://liquid.tech)
 * [Mambo Microsystems](https://www.mambo.co.ke/)
 * [Movetechsolutions](https://www.movetechsolutions.com/)
 * [Node Africa](https://node.africa/)
