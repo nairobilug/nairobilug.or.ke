@@ -60,7 +60,7 @@ DESCRIPTION = 'A not-for-profit community serving the greater Nairobi area. ' \
               'Software, Open Source, and related topics.'
 
 LINKS = (
-    ('IRC', 'https://webchat.freenode.net/?channels=nairobilug'),
+    ('IRC', 'https://web.libera.chat/?channels=#nairobilug'),
 )
 
 ICONS = [

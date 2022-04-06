@@ -6,7 +6,7 @@ The Nairobi GNU/Linux Users Group (NairobiLUG) is a not-for-profit community ser
 
 We traditionally meet on the first Saturday of every month between 16:00 ~ 18:00 EAT (GMT +3) at KFC Kimathi Street. All meetups are free and open to the public.
 
-You can join our [mailing list]({filename}/pages/mailing-list.md), where meetups are announced and other general LUG conversation takes place. You can also follow us on [Twitter](https://twitter.com/nairobilug). Lastly if you prefer a more real-time medium, you can chat to us on IRC. We're on the Freenode network and the channel name is [#nairobilug](irc://chat.freenode.net/#nairobilug). Details are listed on our [contact page]({filename}/pages/contact.md).
+You can join our [mailing list]({filename}/pages/mailing-list.md), where meetups are announced and other general LUG conversation takes place. You can also follow us on [Twitter](https://twitter.com/nairobilug). Lastly if you prefer a more real-time medium, you can chat to us on IRC. We're on the Freenode network and the channel name is [#nairobilug](irc://libera.chat/#nairobilug). Details are listed on our [contact page]({filename}/pages/contact.md).
 
 **There is no level of technical expertise required to attend meetups** and we pride ourselves on being open and friendly to all. We're just as likely to be found talking about the latest film releases, music or anything else as hardcore techy topics.
 
