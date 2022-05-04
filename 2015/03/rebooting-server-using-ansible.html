@@ -40,7 +40,7 @@
     <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
       <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
       <ul class="list-inline">
-          <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+          <li class="list-inline-item"><a href="https://web.libera.chat/?channels=#nairobilug" target="_blank">IRC</a></li>
               <li class="list-inline-item text-muted">|</li>
             <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
@@ -99,8 +99,8 @@
 </li>
 <li>
 <p>Section 3: <strong>Pause the playbook</strong>: We'll use the <code>wait_for</code> module to wait for 300 seconds for port 22 to become available before resuming the playbook. I'm using port 22 because most servers run openssh-server on port 22 &amp; if we were to telnet to that port we'd probably see something like :<code>SSH-2.0-OpenSSH_6.6.1</code>, so we can use regex to check whether the output matches "OpenSSH". I'm also using a <code>timeout</code> value of 300 seconds because most physical servers take 3 - 5 minutes to finish rebooting due to hardware checks e.t.c. but you can use any value that suites you. For example: - wait for 300 seconds for port 22 to become available &amp; contain <code>OpenSSH</code></p>
-<div class="highlight"><pre><span></span><code><span class="o">-</span> <span class="nl">name:</span> <span class="k">wait</span> <span class="k">for</span> <span class="n">the</span> <span class="n">server</span> <span class="n">to</span> <span class="n">finish</span> <span class="n">rebooting</span>
-  <span class="nl">local_action:</span> <span class="n">wait_for</span> <span class="n">host</span><span class="o">=</span><span class="s">"web01"</span> <span class="n">search_regex</span><span class="o">=</span><span class="n">OpenSSH</span> <span class="n">port</span><span class="o">=</span><span class="mh">22</span> <span class="n">timeout</span><span class="o">=</span><span class="mh">300</span>
+<div class="highlight"><pre><span></span><code><span class="o">-</span><span class="w"> </span><span class="nl">name:</span><span class="w"> </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">finish</span><span class="w"> </span><span class="n">rebooting</span><span class="w"></span>
+<span class="w">  </span><span class="nl">local_action:</span><span class="w"> </span><span class="n">wait_for</span><span class="w"> </span><span class="n">host</span><span class="o">=</span><span class="s">"web01"</span><span class="w"> </span><span class="n">search_regex</span><span class="o">=</span><span class="n">OpenSSH</span><span class="w"> </span><span class="n">port</span><span class="o">=</span><span class="mh">22</span><span class="w"> </span><span class="n">timeout</span><span class="o">=</span><span class="mh">300</span><span class="w"></span>
 </code></pre></div>
 </li>
 <li>

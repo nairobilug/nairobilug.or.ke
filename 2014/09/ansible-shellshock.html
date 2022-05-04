@@ -40,7 +40,7 @@
     <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
       <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
       <ul class="list-inline">
-          <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+          <li class="list-inline-item"><a href="https://web.libera.chat/?channels=#nairobilug" target="_blank">IRC</a></li>
               <li class="list-inline-item text-muted">|</li>
             <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
@@ -91,22 +91,22 @@
 <p>When you have more than a handful of servers, the combinations of DNS names, IP addresses, roles, and distros becomes overwhelming. With Ansible you define your inventory of hosts, allocate them into groups, and then write "playbooks" to mold your servers into functional roles, ie web, database, compute, proxy, etc servers; the <a href="https://xkcd.com/910/" title="XKCD coming about naming servers">personal relationship</a> between sysadmin and server is gone.</p>
 <p>Here's a simple playbook I wrote which takes into account the different OS families in our infrastructure and updates the <code>bash</code> package on each host.</p>
 <p><em>shellshock.yml</em>:</p>
-<div class="highlight"><pre><span></span><code><span class="nn">---</span>
-<span class="c1"># To update hosts for "Shellshock" bash vulnerability</span>
-<span class="c1"># See: https://en.wikipedia.org/wiki/Shellshock_(software_bug)</span>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span><span class="w"></span>
+<span class="c1"># To update hosts for "Shellshock" bash vulnerability</span><span class="w"></span>
+<span class="c1"># See: https://en.wikipedia.org/wiki/Shellshock_(software_bug)</span><span class="w"></span>
 
-<span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
-  <span class="nt">sudo</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
-  <span class="nt">tasks</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Update on Debian-based distros</span>
-      <span class="nt">apt</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">name=bash state=latest update_cache=yes</span>
-      <span class="nt">when</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ansible_os_family == "Debian"</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span><span class="w"></span>
+<span class="w">  </span><span class="nt">sudo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Update on Debian-based distros</span><span class="w"></span>
+<span class="w">      </span><span class="nt">apt</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=bash state=latest update_cache=yes</span><span class="w"></span>
+<span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ansible_os_family == "Debian"</span><span class="w"></span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Update on RedHat-based distros</span>
-      <span class="nt">yum</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">name=bash state=latest</span>
-      <span class="nt">when</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ansible_os_family == "RedHat"</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Update on RedHat-based distros</span><span class="w"></span>
+<span class="w">      </span><span class="nt">yum</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=bash state=latest</span><span class="w"></span>
+<span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ansible_os_family == "RedHat"</span><span class="w"></span>
 
-<span class="c1"># vim: set sw=2 ts=2:</span>
+<span class="c1"># vim: set sw=2 ts=2:</span><span class="w"></span>
 </code></pre></div>
 <p>And then run the playbook with:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ansible-playbook shellshock.yml -K -s

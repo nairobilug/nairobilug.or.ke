@@ -40,7 +40,7 @@
     <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
       <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
       <ul class="list-inline">
-          <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+          <li class="list-inline-item"><a href="https://web.libera.chat/?channels=#nairobilug" target="_blank">IRC</a></li>
               <li class="list-inline-item text-muted">|</li>
             <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
@@ -87,8 +87,8 @@
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker pull docker.bintray.io/jfrog/artifactory-oss:latest
 <span class="gp">$ </span>docker volume create --name artifactory5_data
 <span class="gp">$ </span>docker run --name artifactory -d <span class="se">\</span>
-<span class="go">         -v artifactory5_data:/var/opt/jfrog/artifactory \</span>
-<span class="go">         -p 8081:8081 docker.bintray.io/jfrog/artifactory-oss:latest</span>
+         -v artifactory5_data:/var/opt/jfrog/artifactory <span class="se">\</span>
+         -p <span class="m">8081</span>:8081 docker.bintray.io/jfrog/artifactory-oss:latest
 </code></pre></div>
 <p>Assuming the container has started up correctly you should now be able to access the Artifactory web application at <a href="http://localhost:8081">http://localhost:8081</a>. The first time you access it you will be asked to set a password for the administrator account and to create repositories appropriate for your desired build system. In this case you should at least select Maven:</p>
 <p><img alt="Repository Setup in JFrog Artifactory 5 Web Application" class="img-fluid" src="/images/cache-maven-artifacts-with-artifactory/artifactory-create-repositories-1024x571.png"/></p>
@@ -158,9 +158,9 @@
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker rm -f artifactory
 <span class="gp">$ </span>docker network create maven-build
 <span class="gp">$ </span>docker run --name artifactory -d <span class="se">\</span>
-<span class="go">         --network maven-build \</span>
-<span class="go">         -v artifactory5_data:/var/opt/jfrog/artifactory \</span>
-<span class="go">         -p 8081:8081 docker.bintray.io/jfrog/artifactory-oss:latest</span>
+         --network maven-build <span class="se">\</span>
+         -v artifactory5_data:/var/opt/jfrog/artifactory <span class="se">\</span>
+         -p <span class="m">8081</span>:8081 docker.bintray.io/jfrog/artifactory-oss:latest
 </code></pre></div>
 <p>Now, any other container using this network will be able to look up the Artifactory container by name and access its repository cache. You can utilize this in the building of Docker images by replacing "localhost" with the name of your Artifactory container in <code>settings.xml</code> and copying it to your image in its <code>Dockerfile</code>. For example:</p>
 <div class="highlight"><pre><span></span><code>...

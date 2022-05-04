@@ -40,7 +40,7 @@
     <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
       <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
       <ul class="list-inline">
-          <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+          <li class="list-inline-item"><a href="https://web.libera.chat/?channels=#nairobilug" target="_blank">IRC</a></li>
               <li class="list-inline-item text-muted">|</li>
             <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
@@ -94,17 +94,17 @@ other form of data exchange over HTTPS, including setting cookies.</p>
 <p>When we find the user's authentication cookies are not set, or are expired, we
 reload the page so that they can get a new authentication cookie.
 We implemented this as shown below, by checking for a 401 status from the <a href="http://github.com/onaio/onadata">OnaData API</a>. More of that code is <a href="https://github.com/onaio/milia/blob/580969b2b2a88a446b5d903237adca7ab4003096/src/milia/api/io.cljs#L119">here</a>.</p>
-<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="kd">defn </span><span class="nv">http-request</span>
-  <span class="s">"Wraps cljs-http.client/request and redirects if status is 401"</span>
-  <span class="p">[</span><span class="nv">request-fn</span> <span class="o">&amp;</span> <span class="nv">args</span><span class="p">]</span>
-  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">response-channel</span> <span class="p">(</span><span class="nf">chan</span><span class="p">)]</span>
-    <span class="p">(</span><span class="nf">go</span>
-      <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">original-response-channel</span> <span class="p">(</span><span class="nf">apply</span> <span class="nv">request-fn</span> <span class="nv">args</span><span class="p">)</span>
-            <span class="p">{</span><span class="ss">:keys</span> <span class="p">[</span><span class="nv">status</span><span class="p">]</span> <span class="ss">:as</span> <span class="nv">response</span><span class="p">}</span> <span class="p">(</span><span class="nf">&lt;!</span> <span class="nv">original-response-channel</span><span class="p">)]</span>
-        <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nf">=</span> <span class="nv">status</span> <span class="mi">401</span><span class="p">)</span>
-          <span class="p">(</span><span class="nb">set</span><span class="nv">!</span> <span class="nv">js/window.location</span> <span class="p">(</span><span class="nf">.href</span> <span class="nv">js/window.location</span><span class="p">))</span>
-          <span class="p">(</span><span class="nf">put!</span> <span class="nv">response-channel</span> <span class="nv">response</span><span class="p">))))</span>
-<span class="nv">response-channel</span><span class="p">))</span>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="kd">defn </span><span class="nv">http-request</span><span class="w"></span>
+<span class="w">  </span><span class="s">"Wraps cljs-http.client/request and redirects if status is 401"</span><span class="w"></span>
+<span class="w">  </span><span class="p">[</span><span class="nv">request-fn</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="nv">args</span><span class="p">]</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">response-channel</span><span class="w"> </span><span class="p">(</span><span class="nf">chan</span><span class="p">)]</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="nf">go</span><span class="w"></span>
+<span class="w">      </span><span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">original-response-channel</span><span class="w"> </span><span class="p">(</span><span class="nf">apply</span><span class="w"> </span><span class="nv">request-fn</span><span class="w"> </span><span class="nv">args</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="ss">:keys</span><span class="w"> </span><span class="p">[</span><span class="nv">status</span><span class="p">]</span><span class="w"> </span><span class="ss">:as</span><span class="w"> </span><span class="nv">response</span><span class="p">}</span><span class="w"> </span><span class="p">(</span><span class="nf">&lt;!</span><span class="w"> </span><span class="nv">original-response-channel</span><span class="p">)]</span><span class="w"></span>
+<span class="w">        </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">=</span><span class="w"> </span><span class="nv">status</span><span class="w"> </span><span class="mi">401</span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="p">(</span><span class="nb">set</span><span class="nv">!</span><span class="w"> </span><span class="nv">js/window.location</span><span class="w"> </span><span class="p">(</span><span class="nf">.href</span><span class="w"> </span><span class="nv">js/window.location</span><span class="p">))</span><span class="w"></span>
+<span class="w">          </span><span class="p">(</span><span class="nf">put!</span><span class="w"> </span><span class="nv">response-channel</span><span class="w"> </span><span class="nv">response</span><span class="p">))))</span><span class="w"></span>
+<span class="nv">response-channel</span><span class="p">))</span><span class="w"></span>
 </code></pre></div>
 <p>As a consequence of this setup, when a user connects over HTTP and is not redirected
 to HTTPS they can end up in an endless loop of reloads when they try to sign-up,
@@ -181,7 +181,7 @@ application servers using the IP address and not the domain name, which seems to
 <p>We block IP address requests in order to avoid crawlers or malicious actors that target a range of IP addresses, and through this end up placing unnecessary load on our servers. We also don't want our application server to respond to IP address requests, again
 to avoid unnecessary load on the application servers. For example, here's a normal crawling request by IP address from
 our logs:</p>
-<div class="highlight"><pre><span></span><code><span class="mf">180.76.15.155</span> <span class="o">-</span> <span class="o">-</span> <span class="err">[</span><span class="mf">15</span><span class="o">/</span><span class="n">Mar</span><span class="o">/</span><span class="mf">2017</span><span class="p">:</span><span class="mf">13</span><span class="p">:</span><span class="mf">20</span><span class="p">:</span><span class="mf">43</span> <span class="o">+</span><span class="mf">0000</span><span class="err">]</span> <span class="s">"GET / HTTP/1.1"</span> <span class="mf">301</span> <span class="mf">185</span> <span class="s">"-"</span> <span class="s">"Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)"</span>
+<div class="highlight"><pre><span></span><code><span class="mf">180.76.15.155</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="err">[</span><span class="mf">15</span><span class="o">/</span><span class="n">Mar</span><span class="o">/</span><span class="mf">2017</span><span class="p">:</span><span class="mf">13</span><span class="p">:</span><span class="mf">20</span><span class="p">:</span><span class="mf">43</span><span class="w"> </span><span class="o">+</span><span class="mf">0000</span><span class="err">]</span><span class="w"> </span><span class="s">"GET / HTTP/1.1"</span><span class="w"> </span><span class="mf">301</span><span class="w"> </span><span class="mf">185</span><span class="w"> </span><span class="s">"-"</span><span class="w"> </span><span class="s">"Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)"</span><span class="w"></span>
 </code></pre></div>
 <p>With IP address requests being blocked, just adding a Target Group
 for port 80 wouldn't work. The health check requests would get denied, and the load balancer would assume the application server is unhealthy on port 80
@@ -211,11 +211,11 @@ To solve this, we had to stop denying IP address requests and instead redirect
 them to the corresponding domain name. So our default configuration had to
 change to the below, with <code>&lt;nginx_server_name&gt;</code> being the domain name we wish to
 expose for that server.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">server</span> <span class="p">{</span>
-    <span class="err">listen</span> <span class="err">80</span> <span class="err">default_server</span><span class="p">;</span>
-    <span class="err">server_name</span> <span class="err">_</span><span class="p">;</span>
-    <span class="err">return</span> <span class="err">301</span> <span class="n">http</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">nginx_server_name</span><span class="o">&gt;</span><span class="err">$</span><span class="n">request_uri</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="nt">server</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="err">listen</span><span class="w"> </span><span class="err">80</span><span class="w"> </span><span class="err">default_server</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">server_name</span><span class="w"> </span><span class="err">_</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">return</span><span class="w"> </span><span class="err">301</span><span class="w"> </span><span class="n">http</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">nginx_server_name</span><span class="o">&gt;</span><span class="err">$</span><span class="n">request_uri</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p>Now the health check will find the expected response and deem the server healthy.</p>
 <h2>Final and desired result</h2>
@@ -240,14 +240,14 @@ Location: https://ona.io/login
 <h4>Handling HTTP at the reverse proxy</h4>
 <p>We also want NGINX to handle port 80 traffic using recommendations from
 <a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/#taxing-rewrites">NGINX Pitfalls and Common Mistakes under Taxing Rewrites</a>. With this we can "effectively avoid doing any capturing or matching at all."</p>
-<div class="highlight"><pre><span></span><code><span class="nt">server</span> <span class="p">{</span>
-    <span class="err">listen</span> <span class="err">80</span><span class="p">;</span>
-    <span class="n">listen</span> <span class="cp">[</span><span class="p">::</span><span class="cp">]</span><span class="p">:</span><span class="mi">80</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">server</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="err">listen</span><span class="w"> </span><span class="err">80</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">listen</span><span class="w"> </span><span class="cp">[</span><span class="p">::</span><span class="cp">]</span><span class="p">:</span><span class="mi">80</span><span class="p">;</span><span class="w"></span>
 
-    <span class="err">server_name</span> <span class="err">ona.io</span><span class="p">;</span>
+<span class="w">    </span><span class="err">server_name</span><span class="w"> </span><span class="err">ona.io</span><span class="p">;</span><span class="w"></span>
 
-    <span class="err">return</span> <span class="err">301</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="err">$</span><span class="n">server_name</span><span class="err">$</span><span class="n">request_uri</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="err">return</span><span class="w"> </span><span class="err">301</span><span class="w"> </span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="err">$</span><span class="n">server_name</span><span class="err">$</span><span class="n">request_uri</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <h4>Recommendations from the <a href="https://hstspreload.org">HSTS Preload List Submission</a> site</h4>
 <p>To double-check that we had fixed our problem with HSTS, we used the <a href="https://hstspreload.org">HSTS Preload List Submission</a> site to validate our configuration. Before we had this result:

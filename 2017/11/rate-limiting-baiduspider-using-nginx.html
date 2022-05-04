@@ -40,7 +40,7 @@
     <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
       <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
       <ul class="list-inline">
-          <li class="list-inline-item"><a href="https://webchat.freenode.net/?channels=nairobilug" target="_blank">IRC</a></li>
+          <li class="list-inline-item"><a href="https://web.libera.chat/?channels=#nairobilug" target="_blank">IRC</a></li>
               <li class="list-inline-item text-muted">|</li>
             <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
             <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
@@ -94,26 +94,26 @@
 <p><em>Note: it might be possible to submit your sitemap to Baidu's webmaster tools — if you can navigate their site in Chinese!</em></p>
 <h2>Mapping and Request Limiting</h2>
 <p>The nginx <code>map</code> module works similarly to an if–then–else construct, allowing you to <em>set the value of one variable depending on the value of another variable</em>. I will combine this with a clever use of the <code>limit_req</code> module to create a rate limit that only punishes Baidu. Add the following code to the global <code>http</code> block of the nginx configuration (not in a server block):</p>
-<div class="highlight"><pre><span></span><code><span class="k">map</span> <span class="nv">$http_user_agent</span> <span class="nv">$limit_bots</span> <span class="p">{</span>
-    <span class="kn">~Baiduspider</span> <span class="s">'baidu'</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="k">map</span><span class="w"> </span><span class="nv">$http_user_agent</span><span class="w"> </span><span class="nv">$limit_bots</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kn">~Baiduspider</span><span class="w"> </span><span class="s">'baidu'</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1"># requests with an empty key are not evaluated by limit_req</span>
-    <span class="c1"># see: http://nginx.org/en/docs/http/ngx_http_limit_req_module.html</span>
-    <span class="kn">default</span> <span class="s">''</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="c1"># requests with an empty key are not evaluated by limit_req</span>
+<span class="w">    </span><span class="c1"># see: http://nginx.org/en/docs/http/ngx_http_limit_req_module.html</span>
+<span class="w">    </span><span class="kn">default</span><span class="w"> </span><span class="s">''</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="k">limit_req_zone</span> <span class="nv">$limit_bots</span> <span class="s">zone=badbots:1m</span> <span class="s">rate=1r/m</span><span class="p">;</span>
+<span class="k">limit_req_zone</span><span class="w"> </span><span class="nv">$limit_bots</span><span class="w"> </span><span class="s">zone=badbots:1m</span><span class="w"> </span><span class="s">rate=1r/m</span><span class="p">;</span><span class="w"></span>
 </code></pre></div>
 <p>This mapping uses the nginx built-in variable <code>$http_user_agent</code> as the source and a new variable <code>$limit_bots</code> as the target. Depending on whether or not the request's user agent matches the regular expression, <code>$limit_bots</code> will either be set to the value "baidu" or, by default, an empty string.</p>
 <p>Next, a <code>limit_req_zone</code> called "badbots" is created with a limit of one request per minute. The clever trick here is the use of <code>$limit_bots</code> as the zone's key, because <em>requests with an empty key are not evaluated</em>, and thus not subject to rate limiting.</p>
 <p>The last step is to assign this zone to a <code>location</code> block in an nginx <code>server</code> block:</p>
-<div class="highlight"><pre><span></span><code><span class="k">location</span> <span class="s">/</span> <span class="p">{</span>
-    <span class="c1"># rate limit for poorly behaved bots, see limit_req_zone below</span>
-    <span class="kn">limit_req</span> <span class="s">zone=badbots</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="k">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># rate limit for poorly behaved bots, see limit_req_zone below</span>
+<span class="w">    </span><span class="kn">limit_req</span><span class="w"> </span><span class="s">zone=badbots</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1"># Send requests to Tomcat</span>
-    <span class="kn">proxy_pass</span> <span class="s">http://tomcat_http</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="c1"># Send requests to Tomcat</span>
+<span class="w">    </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://tomcat_http</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p>After checking the configuration syntax with <code>nginx -t</code> and reloading the daemon with <code>nginx -s reload</code> you will be ready to test the new mapping.</p>
 <h2>Test the Configuration</h2>
