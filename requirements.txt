@@ -2,3 +2,4 @@ ghp-import
 Markdown
 pelican==3.7.1
 bs4 # pelican-bootstrapify
+Jinja2==3.0.3
