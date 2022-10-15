@@ -2,11 +2,11 @@ Title: About Us
 Category: Pages
 Slug: about-us
 
-The Nairobi GNU/Linux Users Group (NairobiLUG) is a not-for-profit community serving the greater Nairobi area. We are a collection of people dedicated to GNU/Linux, Free Software, Open Source, and related topics. Members meet regularly in person and online, and participate in our email discussion list. Through participation in the LUG forums, we combine our efforts to both teach and disseminate information, allowing us to better understand and control the open source world we are using, building it and promoting it to others.
+The Nairobi GNU/Linux Users Group (NairobiLUG) is a not-for-profit community serving the greater Nairobi area. We are a collection of people dedicated to GNU/Linux, Free Software, Open Source, and related topics. Members meet regularly in person and online, and participate in our email discussion list. Through participation in the LUG forums, we combine our efforts to both teach and disseminate information, allowing us to better understand and control the open source world we are using, building and promoting it to others.
 
 We traditionally meet on the first Saturday of every month. All meetups are free and open to the public.
 
-You can join our [mailing list]({filename}/pages/mailing-list.md) or [get togettther group](https://gettogether.community/nairobi-lug-None/), where meetups are announced. You can also follow us on [Twitter](https://twitter.com/nairobilug). Lastly if you prefer a more real-time medium, you can chat to us on IRC. We're on the Libera network and the channel name is [#nairobilug](irc://libera.chat/#nairobilug). Details are listed on our [contact page]({filename}/pages/contact.md).
+You can join our [mailing list]({filename}/pages/mailing-list.md) or [get togetther group](https://gettogether.community/nairobi-lug-None/), where meetups are announced. You can also follow us on [Twitter](https://twitter.com/nairobilug). Lastly if you prefer a more real-time medium, you can chat to us on IRC. We're on the Libera network and the channel name is [#nairobilug](irc://libera.chat/#nairobilug). Details are listed on our [contact page]({filename}/pages/contact.md).
 
 **There is no level of technical expertise required to attend meetups** and we pride ourselves on being open and friendly to all. We're just as likely to be found talking about the latest film releases, music or anything else as hardcore techy topics.
 
@@ -18,4 +18,4 @@ Have a look at our website, then come on out to a meetup and see what we can do 
 
 ---
 
-_We do not discriminate based on ethnic background, religion, gender, sexuality, body shape, disability, or even what operating system you use. We also do not tolerate harassment._
+_We do not discriminate based on ethnic background, religion, gender, sexuality, body shape, disability, or operating system you use. We also do not tolerate harassment._
