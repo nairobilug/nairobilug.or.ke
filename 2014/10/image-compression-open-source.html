@@ -89,21 +89,21 @@
 <p><img alt="Alan eating halloumi" class="img-fluid" src="/images/image-compression-open-source/alan-halloumi.jpg" title="Alan eating halloumi"/></p>
 <p>Straight from the fancy DSLR camera the image is <em>3.6 megabytes</em> — much too large to share practically on the web. Amazingly, after uploading to Compressor.io the image is reduced to <em>1.6 megabytes</em>. That's an impressive feat considering the image wasn't downscaled and is visually indistinguishable from the original!</p>
 <p>As it turns out, it's actually pretty easy to achieve this level of savings:</p>
-<div class="highlight"><pre><span></span><code>$ jpegtran -copy none -progressive -outfile DSC_0685-trimmed.JPG DSC_0685.JPG
-$ gm mogrify DSC_0685-trimmed.JPG -quality <span class="m">80</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>jpegtran<span class="w"> </span>-copy<span class="w"> </span>none<span class="w"> </span>-progressive<span class="w"> </span>-outfile<span class="w"> </span>DSC_0685-trimmed.JPG<span class="w"> </span>DSC_0685.JPG
+$<span class="w"> </span>gm<span class="w"> </span>mogrify<span class="w"> </span>DSC_0685-trimmed.JPG<span class="w"> </span>-quality<span class="w"> </span><span class="m">80</span>
 </code></pre></div>
 <p>The result is actually <em>better</em> than Compressor.io:</p>
-<div class="highlight"><pre><span></span><code>$ ls -lht DSC_0685*
--rw-r--r-- <span class="m">1</span> aorth staff <span class="m">1</span>.4M Oct <span class="m">14</span> <span class="m">21</span>:52 DSC_0685-trimmed.JPG
--rw-r--r-- <span class="m">1</span> aorth staff <span class="m">1</span>.6M Oct <span class="m">14</span> <span class="m">20</span>:47 DSC_0685-compressor.jpg
--rw-r--r-- <span class="m">1</span> aorth staff <span class="m">3</span>.6M Jun <span class="m">28</span> <span class="m">11</span>:21 DSC_0685.JPG
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>ls<span class="w"> </span>-lht<span class="w"> </span>DSC_0685*
+-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>aorth<span class="w"> </span>staff<span class="w"> </span><span class="m">1</span>.4M<span class="w"> </span>Oct<span class="w"> </span><span class="m">14</span><span class="w"> </span><span class="m">21</span>:52<span class="w"> </span>DSC_0685-trimmed.JPG
+-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>aorth<span class="w"> </span>staff<span class="w"> </span><span class="m">1</span>.6M<span class="w"> </span>Oct<span class="w"> </span><span class="m">14</span><span class="w"> </span><span class="m">20</span>:47<span class="w"> </span>DSC_0685-compressor.jpg
+-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>aorth<span class="w"> </span>staff<span class="w"> </span><span class="m">3</span>.6M<span class="w"> </span>Jun<span class="w"> </span><span class="m">28</span><span class="w"> </span><span class="m">11</span>:21<span class="w"> </span>DSC_0685.JPG
 </code></pre></div>
 <p>The first operation — <code>jpegtran</code> — is "lossless". That is, it doesn't change the image data itself, instead optimizing the image's compression algorithm and stripping the EXIF data, and converts to <em><a href="http://www.bookofspeed.com/chapter5.html">progressive JPEGs</a></em>. EXIF data, like GPS coordinates, exposure length, ISO, etc are useful to the photographer or image manipulation software, but not essential when uploading to the web.</p>
 <p>The second operation — GraphicsMagick — is "lossy" because it reduces the image to 80% quality. GraphicsMagick's <code>mogrify</code> command is very similar to the <code>convert</code> command, but it <em>edits files in place</em> (so be careful!).</p>
 <h3>Extra Points</h3>
 <p>Even though the file size has reduced by an amazing 60%, the image is actually still pretty massive — both in terms of file size as well as dimensions.  At <em>4608x3072 pixels</em> (14MP), the image is still too large for the average computer, tablet, or phone to consume practically.  Keep in mind that, in 2014, most high-end smart phones have a resolution of "only" <em>1920x1080 pixels</em>!</p>
 <p>Given that high-end smart phones literally can't even fit more than 50% of this image on the screen, it's safe to assume that we can scale down the dimensions by a factor of at least 50% without sacrificing too much... I'll sympathize with the bandwidth deprived and go for 40%:</p>
-<div class="highlight"><pre><span></span><code>$ gm convert DSC_0685-trimmed.JPG -resize <span class="m">40</span>% -quality <span class="m">80</span> -interlace Line DSC_0685-trimmed-scaled.JPG
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>gm<span class="w"> </span>convert<span class="w"> </span>DSC_0685-trimmed.JPG<span class="w"> </span>-resize<span class="w"> </span><span class="m">40</span>%<span class="w"> </span>-quality<span class="w"> </span><span class="m">80</span><span class="w"> </span>-interlace<span class="w"> </span>Line<span class="w"> </span>DSC_0685-trimmed-scaled.JPG
 </code></pre></div>
 <p>After this the file is a mere <em>357 kilobytes</em>, yet still nearly indistinguishable from the original!</p>
 <p>This command is a bit of a mystery to me, though. For some reason, in this particular invocation, <code>convert</code> yields a smaller file size than <code>mogrify</code>, even with the same exact options. Also, even though we converted to progressive with <code>jpegtran</code> earlier, doing it again here seems to have a substantial effect on the resulting file size (12k in this example). Oh well, I suppose you can't understand everything all at once. ;)</p>

@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Deploying Janus Gateway | Nairobi GNU/Linux Users Group
+</title>
+  <link rel="canonical" href="/2023/09/deploying-janus-gateway.html">
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#333333">
+
+  <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
+  <link rel="stylesheet" href="/theme/css/theme.css">
+
+  
+  <meta name="description" content="Steps to deploy a highly configurable real time streaming server on Fedora linux">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="/">
+        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
+      <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://web.libera.chat/?channels=#nairobilug" target="_blank">IRC</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
+            <li class="list-inline-item"><a href="/pages/code-of-conduct.html">Code of Conduct</a></li>
+            <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
+            <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
+            <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
+            <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
+            <li class=" list-inline-item text-muted">|</li>
+          <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Deploying Janus Gateway
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2023-09-21T12:45:00+03:00">
+          <i class="fa fa-clock-o"></i>
+          Thu 21 September 2023
+        </li>
+        <li class="list-inline-item">
+          <i class="fa fa-folder-open-o"></i>
+          <a href="/category/video.html">Video</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fa fa-user-o"></i>
+              <a href="/author/benson-muite.html">Benson Muite</a>          </li>
+          <li class="list-inline-item">
+            <i class="fa fa-files-o"></i>
+              <a href="/tag/streaming.html">#streaming</a>,               <a href="/tag/video-conferencing.html">#video conferencing</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>Introduction</h1>
+<p><a href="https://github.com/meetecho/janus-gateway">Janus Gateway</a> is an open source
+GPL licensed <a href="https://webrtc.org/">WebRTC</a> server developed by
+<a href="https://www.meetecho.com/">Meetecho</a>. It is written in C and can
+enable video conferencing when running on low resource devices such
+as single board computers. It can use 
+<a href="https://en.wikipedia.org/wiki/HTTP">http</a>,
+<a href="https://en.wikipedia.org/wiki/WebSocket">web sockets</a>,
+<a href="https://en.wikipedia.org/wiki/RabbitMQ">rabbitMQ</a>,
+<a href="https://mqtt.org/">MQTT</a> and 
+<a href="https://en.wikipedia.org/wiki/Unix_domain_socket">Unix Sockets</a> as transports.
+It is distributed with example programs
+to enable video conferencing, audio conferencing and real time chat, but
+is designed primarily as a platform to enable creation of custom
+video conferencing and messaging solutions.  As such it has a
+plugin architecture to
+enable easy customization and minimize resource requirements. Projects
+using Janus Gateway include:
+* <a href="https://github.com/flutterjanus/flutter_janus_client">A Flutter Janus Client</a>
+* <a href="https://github.com/ouxianghui/janus-client">A Qt Client</a>
+* <a href="https://pikvm.org">PiKVM</a>
+* <a href="https://github.com/webrtcventures/webrtc-tic-tac-toe">A Game Server</a>
+* <a href="https://pypi.org/project/janus-cloud/">Janus Cloud</a>
+* <a href="https://www.nethserver.org/">Nethserver</a>
+* <a href="https://github.com/jangouts/jangouts">Jangouts</a></p>
+<p>This tutorial will describe installation of Janus Gateway from
+source on Fedora 38 with <a href="https://nginx.org/en/">Nginx</a>
+as a reverse proxy and using
+<a href="https://github.com/ndilieto/uacme">uacme</a> to manage certificates.
+A package for Fedora should soon be available,
+thanks to <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2121585">Renich Ciric</a>.
+these steps mostly follow Renich Ciric's build procedure.
+Packages are already available for other distribution such as
+<a href="https://aur.archlinux.org/packages/janus-gateway">Arch Linux</a> and
+<a href="https://packages.ubuntu.com/jammy/janus">Ubuntu Linux</a>.</p>
+<h2>Installation Steps</h2>
+<p>Create a new Fedora 38 virtual machine and then install the
+build dependencies</p>
+<div class="highlight"><pre><span></span><code><span class="n">sudo</span><span class="w"> </span><span class="n">dnf</span><span class="w"> </span><span class="o">-</span><span class="n">y</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">wget</span><span class="w"> </span><span class="n">uacme</span><span class="w"> </span><span class="n">nginx</span><span class="w"> </span><span class="n">lua</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span>\
+<span class="w">  </span><span class="n">cmake</span><span class="w"> </span><span class="n">doxygen</span><span class="w"> </span><span class="n">duktape</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">gcc</span><span class="w"> </span><span class="n">glib2</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">graphviz</span><span class="w"> </span>\
+<span class="w">  </span><span class="n">intltool</span><span class="w"> </span><span class="n">jansson</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">libavcodec</span><span class="o">-</span><span class="n">free</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span>\
+<span class="w">  </span><span class="n">libavformat</span><span class="o">-</span><span class="n">free</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">libavutil</span><span class="o">-</span><span class="n">free</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span>\
+<span class="w">  </span><span class="n">libconfig</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">libcurl</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">libmicrohttpd</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span>\
+<span class="w">  </span><span class="n">libnice</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">libogg</span><span class="w"> </span><span class="n">libpcap</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">librabbitmq</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span>\
+<span class="w">  </span><span class="n">libsrtp</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">libtool</span><span class="w"> </span><span class="n">libwebsockets</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">lua</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">make</span><span class="w"> </span>\
+<span class="w">  </span><span class="n">nanomsg</span><span class="w"> </span><span class="n">nanomsg</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">openssl</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">opus</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">paho</span><span class="o">-</span><span class="n">c</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span>\
+<span class="w">  </span><span class="n">policycoreutils</span><span class="o">-</span><span class="n">python</span><span class="o">-</span><span class="n">utils</span><span class="w"> </span><span class="n">sofia</span><span class="o">-</span><span class="n">sip</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">speexdsp</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span>\
+<span class="w">  </span><span class="n">usrsctp</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">zlib</span><span class="o">-</span><span class="n">devel</span>
+</code></pre></div>
+<h3>Getting and Building Janus Gateway</h3>
+<p>Clone from GitHub directly and then build it</p>
+<div class="highlight"><pre><span></span><code>git clone https://github.com/meetecho/janus-gateway
+cd janus-gateways
+git checkout 9f03638
+sh autogen.sh
+./configure --prefix=/opt/janus
+make
+sudo make install
+sudo make configs
+</code></pre></div>
+<p>Note that Janus is by default installed in <code>/opt/janus</code>
+you may wish to change this to more standard locations for
+Fedora such as <code>/usr/bin</code>.</p>
+<p>Create a Janus user</p>
+<div class="highlight"><pre><span></span><code>sudo useradd -r janus
+</code></pre></div>
+<p>then create a Janus service file</p>
+<div class="highlight"><pre><span></span><code>sudo vi /etc/systemd/system/janus.service
+</code></pre></div>
+<p>with the following content</p>
+<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Janus WebRTC Server</span>
+<span class="na">After</span><span class="o">=</span><span class="s">network-online.target</span>
+<span class="na">Wants</span><span class="o">=</span><span class="s">network-online.target</span>
+
+<span class="k">[Service]</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/opt/janus/bin/janus -o</span>
+<span class="na">Restart</span><span class="o">=</span><span class="s">on-abnormal</span>
+<span class="na">LimitNOFILE</span><span class="o">=</span><span class="s">65536</span>
+<span class="na">User</span><span class="o">=</span><span class="s">janus</span>
+<span class="na">Group</span><span class="o">=</span><span class="s">janus</span>
+
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</code></pre></div>
+<h3>Setting up an SSL certificate</h3>
+<p>Use <a href="https://github.com/ndilieto/uacme">uacme</a> to issue an SSL
+certificate from <a href="https://letsencrypt.org/">Let's Encrypt</a>
+by first starting Ngnix</p>
+<div class="highlight"><pre><span></span><code>sudo systemctl enable nginx
+sudo systemctl start nginx
+</code></pre></div>
+<p>The start the verification process</p>
+<div class="highlight"><pre><span></span><code>sudo mkdir /etc/ssl/private/
+sudo mkdir -p /usr/share/nginx/html/.well-known/acme-challenge
+sudo uacme -v -c /etc/ssl new
+sudo uacme -v -c /etc/ssl issue my.domain.name
+</code></pre></div>
+<p>You will be asked to create the challenge file, do this using a separate
+login</p>
+<div class="highlight"><pre><span></span><code>sudo vi /usr/share/nginx/html/.well-known/acme-challenge/long-token-sequence
+</code></pre></div>
+<p>and enter the key authorization as a plain text string. Check that the
+authorization completes in the first terminal and then remove the challenge file.</p>
+<div class="highlight"><pre><span></span><code>sudo rm /usr/share/nginx/html/.well-known/acme-challenge/long-token-sequence
+</code></pre></div>
+<p>You can now log out of the second terminal. If you expect to
+run Janus for a long time, you may wish to create a cron job
+to automatically renew the SSL certificate.</p>
+<h2>Configuration Steps</h2>
+<h3>Ports and Firewalls</h3>
+<p><a href="https://en.wikipedia.org/wiki/Security-Enhanced_Linux">SELinux</a>
+has permissions on what Nginx can connect to. Enable Nginx to
+connect to communication ports to be able to reverse proxy to them from
+port 443:</p>
+<div class="highlight"><pre><span></span><code>sudo setsebool -P httpd_can_network_connect 1
+sudo semanage port -a -t http_port_t -p tcp 8088
+sudo semanage port -a -t http_port_t -p udp 10000-20000
+sudo semanage port -a -t http_port_t -p tcp 10000-20000
+</code></pre></div>
+<p>You also need to enable your firewall to allow connections to
+tcp and udp ports 10000-20000 for <a href="https://en.wikipedia.org/wiki/STUN">STUN</a>
+and to tcp ports 80 and 443 for <a href="https://en.wikipedia.org/wiki/HTTP">http</a>
+and <a href="https://en.wikipedia.org/wiki/HTTPS">https</a> respectively.</p>
+<h3>Reverse Proxy</h3>
+<p>Enable Nginx to serve content from the demo directory</p>
+<div class="highlight"><pre><span></span><code>sudo semange fcontext -a -t httpd_sys_content_t '/usr/share/janus/demos/(/.*)?'
+sudo restorecon -R /usr/share/janus/demos/
+</code></pre></div>
+<p>As explained by
+<a href="https://facsiaginsa.com/janus/basic-janus-configuration-with-ssl">Bagus Aginsa</a>,
+edit the Nginx configuration file to route all http traffic to https
+and to act as a reverse proxy for Janus</p>
+<div class="highlight"><pre><span></span><code>sudo vi /etc/nginx/nginx.conf
+</code></pre></div>
+<p>and enter the following content</p>
+<div class="highlight"><pre><span></span><code><span class="nx">user</span><span class="w"> </span><span class="nx">nginx</span><span class="p">;</span>
+<span class="nx">worker_processes</span><span class="w"> </span><span class="kt">auto</span><span class="p">;</span>
+<span class="nx">error_log</span><span class="w"> </span><span class="o">/</span><span class="kd">var</span><span class="o">/</span><span class="nx">log</span><span class="o">/</span><span class="nx">nginx</span><span class="o">/</span><span class="nx">error</span><span class="p">.</span><span class="nx">log</span><span class="w"> </span><span class="nx">notice</span><span class="p">;</span>
+<span class="nx">pid</span><span class="w"> </span><span class="o">/</span><span class="nx">run</span><span class="o">/</span><span class="nx">nginx</span><span class="p">.</span><span class="nx">pid</span><span class="p">;</span>
+
+<span class="err">#</span><span class="w"> </span><span class="nx">Load</span><span class="w"> </span><span class="nx">dynamic</span><span class="w"> </span><span class="nx">modules</span><span class="p">.</span><span class="w"> </span><span class="nx">See</span><span class="w"> </span><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">share</span><span class="o">/</span><span class="nx">doc</span><span class="o">/</span><span class="nx">nginx</span><span class="o">/</span><span class="nx">README</span><span class="p">.</span><span class="nx">dynamic</span><span class="p">.</span>
+<span class="nx">include</span><span class="w"> </span><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">share</span><span class="o">/</span><span class="nx">nginx</span><span class="o">/</span><span class="nx">modules</span><span class="o">/*</span><span class="p">.</span><span class="nx">conf</span><span class="p">;</span>
+
+<span class="nx">events</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">worker_connections</span><span class="w"> </span><span class="mi">1024</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">http</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">log_format</span><span class="w">  </span><span class="nx">main</span><span class="w">  </span><span class="err">'$</span><span class="nx">remote_addr</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="err">$</span><span class="nx">remote_user</span><span class="w"> </span><span class="p">[</span><span class="err">$</span><span class="nx">time_local</span><span class="p">]</span><span class="w"> </span><span class="s">"$request"</span><span class="w"> </span><span class="err">'</span>
+<span class="w">                      </span><span class="err">'$</span><span class="nx">status</span><span class="w"> </span><span class="err">$</span><span class="nx">body_bytes_sent</span><span class="w"> </span><span class="s">"$http_referer"</span><span class="w"> </span><span class="err">'</span>
+<span class="w">                      </span><span class="err">'</span><span class="s">"$http_user_agent"</span><span class="w"> </span><span class="s">"$http_x_forwarded_for"</span><span class="err">'</span><span class="p">;</span>
+
+<span class="w">    </span><span class="nx">access_log</span><span class="w">  </span><span class="o">/</span><span class="kd">var</span><span class="o">/</span><span class="nx">log</span><span class="o">/</span><span class="nx">nginx</span><span class="o">/</span><span class="nx">access</span><span class="p">.</span><span class="nx">log</span><span class="w">  </span><span class="nx">main</span><span class="p">;</span>
+
+<span class="w">    </span><span class="nx">sendfile</span><span class="w">            </span><span class="nx">on</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">tcp_nopush</span><span class="w">          </span><span class="nx">on</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">keepalive_timeout</span><span class="w">   </span><span class="mi">65</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">types_hash_max_size</span><span class="w"> </span><span class="mi">4096</span><span class="p">;</span>
+
+<span class="w">    </span><span class="nx">include</span><span class="w">             </span><span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">nginx</span><span class="o">/</span><span class="nx">mime</span><span class="p">.</span><span class="nx">types</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">default_type</span><span class="w">        </span><span class="nx">application</span><span class="o">/</span><span class="nx">octet</span><span class="o">-</span><span class="nx">stream</span><span class="p">;</span>
+
+<span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="nx">Load</span><span class="w"> </span><span class="nx">modular</span><span class="w"> </span><span class="nx">configuration</span><span class="w"> </span><span class="nx">files</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">nginx</span><span class="o">/</span><span class="nx">conf</span><span class="p">.</span><span class="nx">d</span><span class="w"> </span><span class="nx">directory</span><span class="p">.</span>
+<span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="nx">See</span><span class="w"> </span><span class="nx">http</span><span class="p">:</span><span class="c1">//nginx.org/en/docs/ngx_core_module.html#include</span>
+<span class="w">    </span><span class="nx">include</span><span class="w"> </span><span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">nginx</span><span class="o">/</span><span class="nx">conf</span><span class="p">.</span><span class="nx">d</span><span class="o">/*</span><span class="p">.</span><span class="nx">conf</span><span class="p">;</span>
+
+<span class="w">    </span><span class="nx">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">listen</span><span class="w">       </span><span class="mi">80</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">listen</span><span class="w">       </span><span class="p">[</span><span class="o">::</span><span class="p">]:</span><span class="mi">80</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">server_name</span><span class="w">  </span><span class="nx">my</span><span class="p">.</span><span class="nx">domain</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">location</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">rewrite</span><span class="w"> </span><span class="o">^</span><span class="p">(.</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="nx">https</span><span class="p">:</span><span class="c1">//my.domain.name$1 permanent;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">    </span><span class="p">}</span>
+<span class="err">#</span><span class="w"> </span><span class="nx">Settings</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">TLS</span><span class="w"> </span><span class="nx">enabled</span><span class="w"> </span><span class="nx">server</span><span class="p">.</span>
+
+<span class="w">    </span><span class="nx">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">listen</span><span class="w">       </span><span class="mi">443</span><span class="w"> </span><span class="nx">ssl</span><span class="w"> </span><span class="nx">http2</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">listen</span><span class="w">       </span><span class="p">[</span><span class="o">::</span><span class="p">]:</span><span class="mi">443</span><span class="w"> </span><span class="nx">ssl</span><span class="w"> </span><span class="nx">http2</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">server_name</span><span class="w">  </span><span class="nx">my</span><span class="p">.</span><span class="nx">domain</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">root</span><span class="w">         </span><span class="o">/</span><span class="nx">opt</span><span class="o">/</span><span class="nx">janus</span><span class="o">/</span><span class="nx">share</span><span class="o">/</span><span class="nx">janus</span><span class="o">/</span><span class="nx">demos</span><span class="o">/</span><span class="p">;</span>
+
+<span class="w">        </span><span class="nx">ssl_certificate</span><span class="w"> </span><span class="s">"/etc/ssl/my.domain.name/cert.pem"</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">ssl_certificate_key</span><span class="w"> </span><span class="s">"/etc/ssl/private/my.domain.name/key.pem"</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">ssl_session_cache</span><span class="w"> </span><span class="nx">shared</span><span class="p">:</span><span class="nx">SSL</span><span class="p">:</span><span class="mi">1</span><span class="nx">m</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">ssl_session_timeout</span><span class="w">  </span><span class="mi">10</span><span class="nx">m</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">ssl_ciphers</span><span class="w"> </span><span class="nx">PROFILE</span><span class="p">=</span><span class="nx">SYSTEM</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">ssl_prefer_server_ciphers</span><span class="w"> </span><span class="nx">on</span><span class="p">;</span>
+
+<span class="w">        </span><span class="nx">location</span><span class="w">  </span><span class="o">/</span><span class="nx">janus</span><span class="o">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">proxy_pass</span><span class="w"> </span><span class="nx">http</span><span class="p">:</span><span class="c1">//127.0.0.1:8088/janus/;</span>
+<span class="w">                </span><span class="nx">proxy_set_header</span><span class="w"> </span><span class="nx">Upgrade</span><span class="w"> </span><span class="err">$</span><span class="nx">http_upgrade</span><span class="p">;</span>
+<span class="w">                </span><span class="nx">proxy_set_header</span><span class="w"> </span><span class="nx">Connection</span><span class="w"> </span><span class="s">"upgrade"</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="err">#</span><span class="w"> </span><span class="nx">Load</span><span class="w"> </span><span class="nx">configuration</span><span class="w"> </span><span class="nx">files</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="nx">block</span><span class="p">.</span>
+<span class="w">        </span><span class="nx">include</span><span class="w"> </span><span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">nginx</span><span class="o">/</span><span class="k">default</span><span class="p">.</span><span class="nx">d</span><span class="o">/*</span><span class="p">.</span><span class="nx">conf</span><span class="p">;</span>
+
+<span class="w">        </span><span class="nx">error_page</span><span class="w"> </span><span class="mi">404</span><span class="w"> </span><span class="o">/</span><span class="mi">404</span><span class="p">.</span><span class="nx">html</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">location</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">/</span><span class="mi">404</span><span class="p">.</span><span class="nx">html</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nx">error_page</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="mi">502</span><span class="w"> </span><span class="mi">503</span><span class="w"> </span><span class="mi">504</span><span class="w"> </span><span class="o">/</span><span class="mi">50</span><span class="nx">x</span><span class="p">.</span><span class="nx">html</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">location</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">/</span><span class="mi">50</span><span class="nx">x</span><span class="p">.</span><span class="nx">html</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3>Janus configuration</h3>
+<p>As explained by
+<a href="https://facsiaginsa.com/janus/configure-janus-behind-nat">Bagus Aginsa</a>
+configure Janus to use Google STUN servers as many
+virtual machines offered by cloud providers will
+use network address translation</p>
+<div class="highlight"><pre><span></span><code>sudo vi /opt/janus/etc/janus/janus.jcfg
+</code></pre></div>
+<p>and ensure the lines for STUN configuration contain</p>
+<div class="highlight"><pre><span></span><code>        stun_server = "stun.l.google.com"
+        stun_port = 19302
+        nice_debug = false
+        full_trickle = true
+</code></pre></div>
+<p>and the lines for media contain</p>
+<div class="highlight"><pre><span></span><code>        rtp_port_range = "10000-20000"
+</code></pre></div>
+<p>Configure the http transport</p>
+<div class="highlight"><pre><span></span><code>sudo vi /etc/janus/janus.transport.http.jcfg 
+</code></pre></div>
+<p>ensure that the http settings contain</p>
+<div class="highlight"><pre><span></span><code>        json = "indented"        # Whether the JSON messages should be indented (default),
+                                 # plain (no indentation) or compact (no indentation and no spaces)
+        base_path = "/janus"     # Base path to bind to in the web server (plain HTTP only)
+        http = true              # Whether to enable the plain HTTP interface
+        port = 8088              # Web server HTTP port
+</code></pre></div>
+<p>Then edit the client side javascript settings to enable connection to the server</p>
+<div class="highlight"><pre><span></span><code>sudo vi /opt/janus/share/janus/demos/settings.js
+</code></pre></div>
+<p>Ensure they contain</p>
+<div class="highlight"><pre><span></span><code><span class="o">//</span><span class="k">var</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">/</span><span class="n">janus</span><span class="o">/</span><span class="p">;</span>
+<span class="k">if</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">protocol</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">'http:'</span><span class="p">)</span>
+<span class="w">        </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"http://"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">window</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">hostname</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">"/janus/"</span><span class="p">;</span>
+<span class="k">else</span>
+<span class="w">        </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"https://"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">window</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">hostname</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">"/janus/"</span><span class="p">;</span>
+</code></pre></div>
+<h2>Testing</h2>
+<p>Restart Nginx and start Janus</p>
+<div class="highlight"><pre><span></span><code>sudo systemctl enable janus
+sudo systemctl start janus
+sudo systemctl restart nginx
+</code></pre></div>
+<p>You can check the server configuration by using</p>
+<div class="highlight"><pre><span></span><code>curl localhost:8088/janus/info
+</code></pre></div>
+<p>on the server running Janus, and</p>
+<div class="highlight"><pre><span></span><code>curl https://my.domain.name/janus/info
+</code></pre></div>
+<p>on another machine.</p>
+<p>If you now go to <code>https://my.domain.name/demos.html</code> you should
+be able to try out the demos using the http transport.  To enable
+other transports, see the <a href="https://janus.conf.meetecho.com/docs/">documentation</a>
+and setup appropriate firewall rules.</p>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+</body>
+
+</html>

@@ -85,32 +85,32 @@
 <p>Anyways, I'll leave the infosec community to <a href="https://www.dfranke.us/posts/2014-09-27-shell-shock-exploitation-vectors.html" title="Shell Shock Exploitation Vectors">expound on attack vectors</a>. The point of this post is really to illustrate that you should be using an infrastructure orchestration tool like <a href="http://www.ansible.com/home" title="Ansible homepage">Ansible</a> to manage your servers.</p>
 <h3>Painless Patching With Ansible</h3>
 <p>Patching your systems is painlessly easy if you manage your server infrastructure with something like Ansible. Using a one-off command you can easily update all "web" servers, for example:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ansible web -m apt -a <span class="s2">"name=bash state=latest update_cache=yes"</span> -K -s
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ansible<span class="w"> </span>web<span class="w"> </span>-m<span class="w"> </span>apt<span class="w"> </span>-a<span class="w"> </span><span class="s2">"name=bash state=latest update_cache=yes"</span><span class="w"> </span>-K<span class="w"> </span>-s
 </code></pre></div>
 <p>That's great, but what if you have both Ubuntu and CentOS hosts in the "web" group? CentOS doesn't use <code>apt</code> for package management, so this has effectively only updated hosts running Debian-family GNU/Linux distros.</p>
 <h3>Playbooks: The Power of Ansible</h3>
 <p>When you have more than a handful of servers, the combinations of DNS names, IP addresses, roles, and distros becomes overwhelming. With Ansible you define your inventory of hosts, allocate them into groups, and then write "playbooks" to mold your servers into functional roles, ie web, database, compute, proxy, etc servers; the <a href="https://xkcd.com/910/" title="XKCD coming about naming servers">personal relationship</a> between sysadmin and server is gone.</p>
 <p>Here's a simple playbook I wrote which takes into account the different OS families in our infrastructure and updates the <code>bash</code> package on each host.</p>
 <p><em>shellshock.yml</em>:</p>
-<div class="highlight"><pre><span></span><code><span class="nn">---</span><span class="w"></span>
-<span class="c1"># To update hosts for "Shellshock" bash vulnerability</span><span class="w"></span>
-<span class="c1"># See: https://en.wikipedia.org/wiki/Shellshock_(software_bug)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="c1"># To update hosts for "Shellshock" bash vulnerability</span>
+<span class="c1"># See: https://en.wikipedia.org/wiki/Shellshock_(software_bug)</span>
 
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span><span class="w"></span>
-<span class="w">  </span><span class="nt">sudo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
-<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Update on Debian-based distros</span><span class="w"></span>
-<span class="w">      </span><span class="nt">apt</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=bash state=latest update_cache=yes</span><span class="w"></span>
-<span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ansible_os_family == "Debian"</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span>
+<span class="w">  </span><span class="nt">sudo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Update on Debian-based distros</span>
+<span class="w">      </span><span class="nt">apt</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=bash state=latest update_cache=yes</span>
+<span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ansible_os_family == "Debian"</span>
 
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Update on RedHat-based distros</span><span class="w"></span>
-<span class="w">      </span><span class="nt">yum</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=bash state=latest</span><span class="w"></span>
-<span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ansible_os_family == "RedHat"</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Update on RedHat-based distros</span>
+<span class="w">      </span><span class="nt">yum</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=bash state=latest</span>
+<span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ansible_os_family == "RedHat"</span>
 
-<span class="c1"># vim: set sw=2 ts=2:</span><span class="w"></span>
+<span class="c1"># vim: set sw=2 ts=2:</span>
 </code></pre></div>
 <p>And then run the playbook with:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ansible-playbook shellshock.yml -K -s
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ansible-playbook<span class="w"> </span>shellshock.yml<span class="w"> </span>-K<span class="w"> </span>-s
 </code></pre></div>
 <p>In our case we patched twenty-five CentOS 6.x, Debian 6, Debian 7, Ubuntu 12.04, and Ubuntu 14.04 hosts living locally, in Amazon EC2, and in Linode. With one command. In less than five minutes!</p>
 <h3>Stay Vigilant!</h3>

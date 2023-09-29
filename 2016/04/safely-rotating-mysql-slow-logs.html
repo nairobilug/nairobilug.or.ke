@@ -95,12 +95,12 @@
 <li>
 <p>get the path to slow query log file</p>
 <div class="highlight"><pre><span></span><code><span class="c">MariaDB </span><span class="k">[</span><span class="c">(none)</span><span class="k">]</span><span class="nv">&gt;</span><span class="c"> show variables like '%slow_query%';</span>
-<span class="nb">+---------------------+-------------------------------+</span><span class="c"></span>
+<span class="nb">+---------------------+-------------------------------+</span>
 <span class="c">| Variable_name       | Value                         |</span>
-<span class="nb">+---------------------+-------------------------------+</span><span class="c"></span>
+<span class="nb">+---------------------+-------------------------------+</span>
 <span class="c">| slow_query_log      | ON                            |</span>
 <span class="c">| slow_query_log_file | /var/lib/mysql/mysql</span><span class="nb">-</span><span class="c">slow</span><span class="nt">.</span><span class="c">log |</span>
-<span class="nb">+---------------------+-------------------------------+</span><span class="c"></span>
+<span class="nb">+---------------------+-------------------------------+</span>
 <span class="c">2 rows in set (0</span><span class="nt">.</span><span class="c">00 sec)</span>
 </code></pre></div>
 </li>
@@ -118,8 +118,8 @@ Query OK, 0 rows affected (0.00 sec)
 </li>
 <li>
 <p>rename the old log file and or compress it</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># mv /var/lib/mysql/mysql-slow.log /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log</span><span class="w"></span>
-<span class="c1"># gzip -c /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log &gt; /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log.gz</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1"># mv /var/lib/mysql/mysql-slow.log /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log</span>
+<span class="c1"># gzip -c /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log &gt; /var/lib/mysql/mysql-slow-$(date +%Y-%m-%d).log.gz</span>
 </code></pre></div>
 </li>
 <li>
@@ -131,22 +131,22 @@ Query OK, 0 rows affected (0.00 sec)
 </ul>
 <h2>Using Logrotate</h2>
 <p>Instead of manual rotation, you can use a lograte config file to acheive the same effect by using logrotate: <code>/etc/logrotate.d/mysql-slow-logs</code></p>
-<div class="highlight"><pre><span></span><code><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">slow</span><span class="o">.</span><span class="n">log</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">size</span><span class="w"> </span><span class="mi">1</span><span class="n">G</span><span class="w"></span>
-<span class="w">    </span><span class="n">dateext</span><span class="w"></span>
-<span class="w">    </span><span class="n">compress</span><span class="w"></span>
-<span class="w">    </span><span class="n">missingok</span><span class="w"></span>
-<span class="w">    </span><span class="n">rotate</span><span class="w"> </span><span class="mi">20</span><span class="w"></span>
-<span class="w">    </span><span class="n">notifempty</span><span class="w"></span>
-<span class="w">    </span><span class="n">delaycompress</span><span class="w"></span>
-<span class="w">    </span><span class="n">sharedscripts</span><span class="w"></span>
-<span class="w">    </span><span class="n">nocopytruncate</span><span class="w"></span>
-<span class="w">    </span><span class="n">create</span><span class="w"> </span><span class="mi">660</span><span class="w"> </span><span class="n">mysql</span><span class="w"> </span><span class="n">mysql</span><span class="w"></span>
-<span class="w">    </span><span class="n">postrotate</span><span class="w"></span>
-<span class="w">        </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">mysql</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="s1">'select @@global.slow_query_log into @sq_log_save; set global slow_query_log=off; select sleep(5); FLUSH SLOW LOGS; select sleep(10); set global slow_query_log=@sq_log_save;'</span><span class="w"></span>
-<span class="w">    </span><span class="n">endscript</span><span class="w"></span>
-<span class="w">    </span><span class="n">rotate</span><span class="w"> </span><span class="mi">150</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">slow</span><span class="o">.</span><span class="n">log</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">size</span><span class="w"> </span><span class="mi">1</span><span class="n">G</span>
+<span class="w">    </span><span class="n">dateext</span>
+<span class="w">    </span><span class="n">compress</span>
+<span class="w">    </span><span class="n">missingok</span>
+<span class="w">    </span><span class="n">rotate</span><span class="w"> </span><span class="mi">20</span>
+<span class="w">    </span><span class="n">notifempty</span>
+<span class="w">    </span><span class="n">delaycompress</span>
+<span class="w">    </span><span class="n">sharedscripts</span>
+<span class="w">    </span><span class="n">nocopytruncate</span>
+<span class="w">    </span><span class="n">create</span><span class="w"> </span><span class="mi">660</span><span class="w"> </span><span class="n">mysql</span><span class="w"> </span><span class="n">mysql</span>
+<span class="w">    </span><span class="n">postrotate</span>
+<span class="w">        </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">mysql</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="s1">'select @@global.slow_query_log into @sq_log_save; set global slow_query_log=off; select sleep(5); FLUSH SLOW LOGS; select sleep(10); set global slow_query_log=@sq_log_save;'</span>
+<span class="w">    </span><span class="n">endscript</span>
+<span class="w">    </span><span class="n">rotate</span><span class="w"> </span><span class="mi">150</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>More info. about each config. directive:</p>
 <ul>

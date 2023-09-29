@@ -82,24 +82,24 @@
     </header>
     <div class="content">
       <p>You're on Mac OS X and you need to use PostgreSQL, but you're used to GNU/Linux where there is usually a dedicated <code>postgres</code> system user for doing database administrator tasks. This is just a quick note to people who might have installed PostgreSQL from <a href="http://brew.sh/">Homebrew</a> and find themselves scratching their head for the next step. First, initialize the database directory and start the database daemon manually:</p>
-<div class="highlight"><pre><span></span><code>$ initdb /opt/brew/var/postgres -E utf8
-$ postgres -D /opt/brew/var/postgres
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>initdb<span class="w"> </span>/opt/brew/var/postgres<span class="w"> </span>-E<span class="w"> </span>utf8
+$<span class="w"> </span>postgres<span class="w"> </span>-D<span class="w"> </span>/opt/brew/var/postgres
 </code></pre></div>
 <p><strong>Note:</strong> my Homebrew is installed in <code>/opt/brew</code>, so make sure to use the prefix relevant for your installation. Assuming all went well, you can now create the <code>postgres</code> superuser. In another shell:</p>
-<div class="highlight"><pre><span></span><code>$ createuser --superuser postgres
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>createuser<span class="w"> </span>--superuser<span class="w"> </span>postgres
 </code></pre></div>
 <p>After that you can do PostgreSQL admin things by connecting to the "postgres" database:</p>
-<div class="highlight"><pre><span></span><code>$ psql postgres
-psql <span class="o">(</span><span class="m">9</span>.3.12<span class="o">)</span>
-Type <span class="s2">"help"</span> <span class="k">for</span> help.
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>psql<span class="w"> </span>postgres
+psql<span class="w"> </span><span class="o">(</span><span class="m">9</span>.3.12<span class="o">)</span>
+Type<span class="w"> </span><span class="s2">"help"</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>help.
 
 <span class="nv">postgres</span><span class="o">=</span><span class="c1">#</span>
 </code></pre></div>
 <p>To stop the server, issue a <code>^C</code> in the shell where you started the daemon — the daemon will receive the signal and initiate a graceful shutdown.</p>
 <h2>Creating Other Users/Databases</h2>
 <p>Use the standard PostgreSQL command line tools to create extra users/databases, for example:</p>
-<div class="highlight"><pre><span></span><code>$ createuser --pwprompt aorth
-$ createdb -O aorth --encoding<span class="o">=</span>UNICODE mjanja
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>createuser<span class="w"> </span>--pwprompt<span class="w"> </span>aorth
+$<span class="w"> </span>createdb<span class="w"> </span>-O<span class="w"> </span>aorth<span class="w"> </span>--encoding<span class="o">=</span>UNICODE<span class="w"> </span>mjanja
 </code></pre></div>
 <p>Notice how you don't have to <em>become</em> the PostgreSQL system user first (ie, via <code>su - postgres</code>), you just use your normal Mac OS X user account.</p>
 <p>This was <a href="https://mjanja.ch/2016/04/using-homebrews-postgresql-mac-os-x/">originally posted</a> on my personal blog; re-posted here for posterity.</p>

@@ -85,11 +85,11 @@
 <p>I recently learned how to use <a href="https://jfrog.com/artifactory/">JFrog Artifactory</a> to cache Java build artifacts locally, speeding up my frequent Maven builds and saving network bandwidth. The same tactic could be adopted to other build systems.</p>
 <h2>Artifactory in Docker</h2>
 <p>The easiest way to get started with Artifactory is to <a href="https://www.jfrog.com/confluence/display/RTF/Installing+with+Docker">spin up an instance in Docker</a>. I recommend creating a Docker volume before running the Artifactory image so that your artifact cache persists after you remove the container, for example if JFrog publishes an updated image and you want to pull the new version — you know, for security, bug, and performance fixes.</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker pull docker.bintray.io/jfrog/artifactory-oss:latest
-<span class="gp">$ </span>docker volume create --name artifactory5_data
-<span class="gp">$ </span>docker run --name artifactory -d <span class="se">\</span>
-         -v artifactory5_data:/var/opt/jfrog/artifactory <span class="se">\</span>
-         -p <span class="m">8081</span>:8081 docker.bintray.io/jfrog/artifactory-oss:latest
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker<span class="w"> </span>pull<span class="w"> </span>docker.bintray.io/jfrog/artifactory-oss:latest
+<span class="gp">$ </span>docker<span class="w"> </span>volume<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>artifactory5_data
+<span class="gp">$ </span>docker<span class="w"> </span>run<span class="w"> </span>--name<span class="w"> </span>artifactory<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+<span class="w">         </span>-v<span class="w"> </span>artifactory5_data:/var/opt/jfrog/artifactory<span class="w"> </span><span class="se">\</span>
+<span class="w">         </span>-p<span class="w"> </span><span class="m">8081</span>:8081<span class="w"> </span>docker.bintray.io/jfrog/artifactory-oss:latest
 </code></pre></div>
 <p>Assuming the container has started up correctly you should now be able to access the Artifactory web application at <a href="http://localhost:8081">http://localhost:8081</a>. The first time you access it you will be asked to set a password for the administrator account and to create repositories appropriate for your desired build system. In this case you should at least select Maven:</p>
 <p><img alt="Repository Setup in JFrog Artifactory 5 Web Application" class="img-fluid" src="/images/cache-maven-artifacts-with-artifactory/artifactory-create-repositories-1024x571.png"/></p>
@@ -98,56 +98,56 @@
 <p>Artifactory's web interface has a neat "Set Me Up" utility that will generate a Maven settings file for you, but I find it a bit confusing because it caters for use cases like publishing artifacts to the repository. As we only need anonymous read-only access for now, it's much easier to just use the snippet below as a starting point instead.</p>
 <p>Copy this to <code>~/.m2/settings.xml</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
-<span class="nt">&lt;settings</span> <span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd"</span> <span class="na">xmlns=</span><span class="s">"http://maven.apache.org/SETTINGS/1.1.0"</span>
-    <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;servers&gt;</span>
-    <span class="nt">&lt;server&gt;</span>
-      <span class="nt">&lt;id&gt;</span>central<span class="nt">&lt;/id&gt;</span>
-    <span class="nt">&lt;/server&gt;</span>
-    <span class="nt">&lt;server&gt;</span>
-      <span class="nt">&lt;id&gt;</span>snapshots<span class="nt">&lt;/id&gt;</span>
-    <span class="nt">&lt;/server&gt;</span>
-  <span class="nt">&lt;/servers&gt;</span>
-  <span class="nt">&lt;profiles&gt;</span>
-    <span class="nt">&lt;profile&gt;</span>
-      <span class="nt">&lt;repositories&gt;</span>
-        <span class="nt">&lt;repository&gt;</span>
-          <span class="nt">&lt;snapshots&gt;</span>
-            <span class="nt">&lt;enabled&gt;</span>false<span class="nt">&lt;/enabled&gt;</span>
-          <span class="nt">&lt;/snapshots&gt;</span>
-          <span class="nt">&lt;id&gt;</span>central<span class="nt">&lt;/id&gt;</span>
-          <span class="nt">&lt;name&gt;</span>libs-release<span class="nt">&lt;/name&gt;</span>
-          <span class="nt">&lt;url&gt;</span>http://localhost:8081/artifactory/libs-release<span class="nt">&lt;/url&gt;</span>
-        <span class="nt">&lt;/repository&gt;</span>
-        <span class="nt">&lt;repository&gt;</span>
-          <span class="nt">&lt;snapshots</span> <span class="nt">/&gt;</span>
-          <span class="nt">&lt;id&gt;</span>snapshots<span class="nt">&lt;/id&gt;</span>
-          <span class="nt">&lt;name&gt;</span>libs-snapshot<span class="nt">&lt;/name&gt;</span>
-          <span class="nt">&lt;url&gt;</span>http://localhost:8081/artifactory/libs-snapshot<span class="nt">&lt;/url&gt;</span>
-        <span class="nt">&lt;/repository&gt;</span>
-      <span class="nt">&lt;/repositories&gt;</span>
-      <span class="nt">&lt;pluginRepositories&gt;</span>
-        <span class="nt">&lt;pluginRepository&gt;</span>
-          <span class="nt">&lt;snapshots&gt;</span>
-            <span class="nt">&lt;enabled&gt;</span>false<span class="nt">&lt;/enabled&gt;</span>
-          <span class="nt">&lt;/snapshots&gt;</span>
-          <span class="nt">&lt;id&gt;</span>central<span class="nt">&lt;/id&gt;</span>
-          <span class="nt">&lt;name&gt;</span>libs-release<span class="nt">&lt;/name&gt;</span>
-          <span class="nt">&lt;url&gt;</span>http://localhost:8081/artifactory/libs-release<span class="nt">&lt;/url&gt;</span>
-        <span class="nt">&lt;/pluginRepository&gt;</span>
-        <span class="nt">&lt;pluginRepository&gt;</span>
-          <span class="nt">&lt;snapshots</span> <span class="nt">/&gt;</span>
-          <span class="nt">&lt;id&gt;</span>snapshots<span class="nt">&lt;/id&gt;</span>
-          <span class="nt">&lt;name&gt;</span>libs-snapshot<span class="nt">&lt;/name&gt;</span>
-          <span class="nt">&lt;url&gt;</span>http://localhost:8081/artifactory/libs-snapshot<span class="nt">&lt;/url&gt;</span>
-        <span class="nt">&lt;/pluginRepository&gt;</span>
-      <span class="nt">&lt;/pluginRepositories&gt;</span>
-      <span class="nt">&lt;id&gt;</span>artifactory<span class="nt">&lt;/id&gt;</span>
-    <span class="nt">&lt;/profile&gt;</span>
-  <span class="nt">&lt;/profiles&gt;</span>
-  <span class="nt">&lt;activeProfiles&gt;</span>
-    <span class="nt">&lt;activeProfile&gt;</span>artifactory<span class="nt">&lt;/activeProfile&gt;</span>
-  <span class="nt">&lt;/activeProfiles&gt;</span>
+<span class="nt">&lt;settings</span><span class="w"> </span><span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd"</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">"http://maven.apache.org/SETTINGS/1.1.0"</span>
+<span class="w">    </span><span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;servers&gt;</span>
+<span class="w">    </span><span class="nt">&lt;server&gt;</span>
+<span class="w">      </span><span class="nt">&lt;id&gt;</span>central<span class="nt">&lt;/id&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/server&gt;</span>
+<span class="w">    </span><span class="nt">&lt;server&gt;</span>
+<span class="w">      </span><span class="nt">&lt;id&gt;</span>snapshots<span class="nt">&lt;/id&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/server&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/servers&gt;</span>
+<span class="w">  </span><span class="nt">&lt;profiles&gt;</span>
+<span class="w">    </span><span class="nt">&lt;profile&gt;</span>
+<span class="w">      </span><span class="nt">&lt;repositories&gt;</span>
+<span class="w">        </span><span class="nt">&lt;repository&gt;</span>
+<span class="w">          </span><span class="nt">&lt;snapshots&gt;</span>
+<span class="w">            </span><span class="nt">&lt;enabled&gt;</span>false<span class="nt">&lt;/enabled&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/snapshots&gt;</span>
+<span class="w">          </span><span class="nt">&lt;id&gt;</span>central<span class="nt">&lt;/id&gt;</span>
+<span class="w">          </span><span class="nt">&lt;name&gt;</span>libs-release<span class="nt">&lt;/name&gt;</span>
+<span class="w">          </span><span class="nt">&lt;url&gt;</span>http://localhost:8081/artifactory/libs-release<span class="nt">&lt;/url&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/repository&gt;</span>
+<span class="w">        </span><span class="nt">&lt;repository&gt;</span>
+<span class="w">          </span><span class="nt">&lt;snapshots</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">          </span><span class="nt">&lt;id&gt;</span>snapshots<span class="nt">&lt;/id&gt;</span>
+<span class="w">          </span><span class="nt">&lt;name&gt;</span>libs-snapshot<span class="nt">&lt;/name&gt;</span>
+<span class="w">          </span><span class="nt">&lt;url&gt;</span>http://localhost:8081/artifactory/libs-snapshot<span class="nt">&lt;/url&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/repository&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/repositories&gt;</span>
+<span class="w">      </span><span class="nt">&lt;pluginRepositories&gt;</span>
+<span class="w">        </span><span class="nt">&lt;pluginRepository&gt;</span>
+<span class="w">          </span><span class="nt">&lt;snapshots&gt;</span>
+<span class="w">            </span><span class="nt">&lt;enabled&gt;</span>false<span class="nt">&lt;/enabled&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/snapshots&gt;</span>
+<span class="w">          </span><span class="nt">&lt;id&gt;</span>central<span class="nt">&lt;/id&gt;</span>
+<span class="w">          </span><span class="nt">&lt;name&gt;</span>libs-release<span class="nt">&lt;/name&gt;</span>
+<span class="w">          </span><span class="nt">&lt;url&gt;</span>http://localhost:8081/artifactory/libs-release<span class="nt">&lt;/url&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/pluginRepository&gt;</span>
+<span class="w">        </span><span class="nt">&lt;pluginRepository&gt;</span>
+<span class="w">          </span><span class="nt">&lt;snapshots</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">          </span><span class="nt">&lt;id&gt;</span>snapshots<span class="nt">&lt;/id&gt;</span>
+<span class="w">          </span><span class="nt">&lt;name&gt;</span>libs-snapshot<span class="nt">&lt;/name&gt;</span>
+<span class="w">          </span><span class="nt">&lt;url&gt;</span>http://localhost:8081/artifactory/libs-snapshot<span class="nt">&lt;/url&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/pluginRepository&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/pluginRepositories&gt;</span>
+<span class="w">      </span><span class="nt">&lt;id&gt;</span>artifactory<span class="nt">&lt;/id&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/profile&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/profiles&gt;</span>
+<span class="w">  </span><span class="nt">&lt;activeProfiles&gt;</span>
+<span class="w">    </span><span class="nt">&lt;activeProfile&gt;</span>artifactory<span class="nt">&lt;/activeProfile&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/activeProfiles&gt;</span>
 <span class="nt">&lt;/settings&gt;</span>
 </code></pre></div>
 <p>Now when you run <code>mvn package</code> you should see Maven contact your local repository instead of a remote one. If Maven requests an artifact that doesn't exist in the cache yet, Artifactory will go fetch it and then send it to you. The next time Maven requests that artifact it will already be in the cache and will be retrieved much quicker.</p>
@@ -156,24 +156,24 @@
 <h2>Advanced Usage: Docker Networking</h2>
 <p>Maven builds in your normal working environment actually already populate an artifact cache located at <code>~/.m2/repository</code>, so after one or two builds you won't really benefit from the Artifactory cache at all. The real benefit to hosting your own artifact repository locally — and the driver behind this post — is using its cache in a container-based workflow. The Docker image building process is one particularly painful part of this workflow because images generally start with a clean build environment by design, and therefore any Maven packaging steps will "download the Internet" again every time you rebuild the image.</p>
 <p>To use your Artifactory cache with other Docker containers they must all be on the same <em>user-defined network</em> because <a href="https://docs.docker.com/engine/userguide/networking/">Docker's default network configuration</a> does not allow containers to talk to each other. You will have to destroy the Artifactory container you created earlier, create a new network, and then re-create the container to use this network — you <em>did</em> create a volume for your data earlier, right?</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker rm -f artifactory
-<span class="gp">$ </span>docker network create maven-build
-<span class="gp">$ </span>docker run --name artifactory -d <span class="se">\</span>
-         --network maven-build <span class="se">\</span>
-         -v artifactory5_data:/var/opt/jfrog/artifactory <span class="se">\</span>
-         -p <span class="m">8081</span>:8081 docker.bintray.io/jfrog/artifactory-oss:latest
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>artifactory
+<span class="gp">$ </span>docker<span class="w"> </span>network<span class="w"> </span>create<span class="w"> </span>maven-build
+<span class="gp">$ </span>docker<span class="w"> </span>run<span class="w"> </span>--name<span class="w"> </span>artifactory<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+<span class="w">         </span>--network<span class="w"> </span>maven-build<span class="w"> </span><span class="se">\</span>
+<span class="w">         </span>-v<span class="w"> </span>artifactory5_data:/var/opt/jfrog/artifactory<span class="w"> </span><span class="se">\</span>
+<span class="w">         </span>-p<span class="w"> </span><span class="m">8081</span>:8081<span class="w"> </span>docker.bintray.io/jfrog/artifactory-oss:latest
 </code></pre></div>
 <p>Now, any other container using this network will be able to look up the Artifactory container by name and access its repository cache. You can utilize this in the building of Docker images by replacing "localhost" with the name of your Artifactory container in <code>settings.xml</code> and copying it to your image in its <code>Dockerfile</code>. For example:</p>
-<div class="highlight"><pre><span></span><code>...
-RUN mkdir -p /root/.m2
+<div class="highlight"><pre><span></span><code><span class="o">...</span>
+<span class="nx">RUN</span><span class="w"> </span><span class="nx">mkdir</span><span class="w"> </span><span class="o">-</span><span class="nx">p</span><span class="w"> </span><span class="o">/</span><span class="nx">root</span><span class="o">/</span><span class="p">.</span><span class="nx">m2</span>
 
-COPY settings.xml /root/.m2/settings.xml
+<span class="nx">COPY</span><span class="w"> </span><span class="nx">settings</span><span class="p">.</span><span class="nx">xml</span><span class="w"> </span><span class="o">/</span><span class="nx">root</span><span class="o">/</span><span class="p">.</span><span class="nx">m2</span><span class="o">/</span><span class="nx">settings</span><span class="p">.</span><span class="nx">xml</span>
 
-RUN mvn package
-...
+<span class="nx">RUN</span><span class="w"> </span><span class="nx">mvn</span><span class="w"> </span><span class="kn">package</span>
+<span class="o">...</span>
 </code></pre></div>
 <p>When you build the container you need to specify the network you created above and then your build will take advantage of the local Artifactory cache:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker build --network maven-build -f Dockerfile -t dspace .
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker<span class="w"> </span>build<span class="w"> </span>--network<span class="w"> </span>maven-build<span class="w"> </span>-f<span class="w"> </span>Dockerfile<span class="w"> </span>-t<span class="w"> </span>dspace<span class="w"> </span>.
 </code></pre></div>
 <p>I've found that this <em>greatly</em> reduces the time and resources required to adopt a container-based workflow for Java projects, therefore making these projects almost bearable to work with again. ;)</p>
 <p>This was <a href="https://mjanja.ch/2018/02/cache-maven-artifacts-with-artifactory/">originally posted</a> on my personal blog; re-posted here for posterity.</p>

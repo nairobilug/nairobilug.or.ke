@@ -85,7 +85,7 @@
 <p>According to <a href="http://openssl.6102.n7.nabble.com/having-a-lot-of-troubles-trying-to-get-AES-NI-working-td44285.html">a post</a> on the OpenSSL Users mailing list, you can force <code>openssl</code> to avoid hardware AES instructions using the <code>OPENSSL_ia32cap</code> environment variable.</p>
 <h2>Benchmarks</h2>
 <p>First, with AES-NI enabled (the default, on hardware that supports it):</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>openssl speed -elapsed -evp aes-128-cbc
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>openssl<span class="w"> </span>speed<span class="w"> </span>-elapsed<span class="w"> </span>-evp<span class="w"> </span>aes-128-cbc
 <span class="go">You have chosen to measure elapsed time instead of user CPU time.</span>
 <span class="go">Doing aes-128-cbc for 3s on 16 size blocks: 57196857 aes-128-cbc's in 3.00s</span>
 <span class="go">Doing aes-128-cbc for 3s on 64 size blocks: 15343650 aes-128-cbc's in 3.00s</span>
@@ -101,7 +101,7 @@
 <span class="go">aes-128-cbc     305049.90k   327331.20k   332573.95k   334071.81k   333987.84k</span>
 </code></pre></div>
 <p>Then, setting the capability mask to turn off the hardware AES features:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span><span class="nv">OPENSSL_ia32cap</span><span class="o">=</span><span class="s2">"~0x200000200000000"</span> openssl speed -elapsed -evp aes-128-cbc
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span><span class="nv">OPENSSL_ia32cap</span><span class="o">=</span><span class="s2">"~0x200000200000000"</span><span class="w"> </span>openssl<span class="w"> </span>speed<span class="w"> </span>-elapsed<span class="w"> </span>-evp<span class="w"> </span>aes-128-cbc
 <span class="go">You have chosen to measure elapsed time instead of user CPU time.</span>
 <span class="go">Doing aes-128-cbc for 3s on 16 size blocks: 27883366 aes-128-cbc's in 3.00s</span>
 <span class="go">Doing aes-128-cbc for 3s on 64 size blocks: 7736907 aes-128-cbc's in 3.00s</span>

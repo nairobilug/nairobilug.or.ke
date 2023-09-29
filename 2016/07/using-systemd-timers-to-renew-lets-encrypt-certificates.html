@@ -87,40 +87,40 @@
 <h2>Check Early, Check Often</h2>
 <p>Your certificates are good for ninety days, but checking them for renewal on a daily or weekly basis allows for some margin of error in case of server downtime, network interruptions, beach holidays, etc. In the future Let's Encrypt might use even shorter lifespans so it's good to get familiar with this automation now. You will need to create both the <code>service</code> and <code>timer</code> unit files below.</p>
 <p><em>/etc/systemd/system/renew-letsencrypt.service</em> :</p>
-<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span><span class="w"></span>
-<span class="na">Description</span><span class="o">=</span><span class="s">Renew Let's Encrypt certificates</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Renew Let's Encrypt certificates</span>
 
-<span class="k">[Service]</span><span class="w"></span>
-<span class="na">Type</span><span class="o">=</span><span class="s">oneshot</span><span class="w"></span>
-<span class="c1"># check for renewal, only start/stop nginx if certs need to be renewed</span><span class="w"></span>
-<span class="na">ExecStart</span><span class="o">=</span><span class="s">/opt/certbot-auto renew --standalone --pre-hook "/bin/systemctl stop nginx" --post-hook "/bin/systemctl start nginx"</span><span class="w"></span>
+<span class="k">[Service]</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">oneshot</span>
+<span class="c1"># check for renewal, only start/stop nginx if certs need to be renewed</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/opt/certbot-auto renew --standalone --pre-hook "/bin/systemctl stop nginx" --post-hook "/bin/systemctl start nginx"</span>
 </code></pre></div>
 <p><em>/etc/systemd/system/renew-letsencrypt.timer</em> :</p>
-<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span><span class="w"></span>
-<span class="na">Description</span><span class="o">=</span><span class="s">Daily renewal of Let's Encrypt's certificates</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Daily renewal of Let's Encrypt's certificates</span>
 
-<span class="k">[Timer]</span><span class="w"></span>
-<span class="c1"># once a day, at 2AM</span><span class="w"></span>
-<span class="na">OnCalendar</span><span class="o">=</span><span class="s">*-*-* 02:00:00</span><span class="w"></span>
-<span class="c1"># Be kind to the Let's Encrypt servers: add a random delay of 0–3600 seconds</span><span class="w"></span>
-<span class="na">RandomizedDelaySec</span><span class="o">=</span><span class="s">3600</span><span class="w"></span>
-<span class="na">Persistent</span><span class="o">=</span><span class="s">true</span><span class="w"></span>
+<span class="k">[Timer]</span>
+<span class="c1"># once a day, at 2AM</span>
+<span class="na">OnCalendar</span><span class="o">=</span><span class="s">*-*-* 02:00:00</span>
+<span class="c1"># Be kind to the Let's Encrypt servers: add a random delay of 0–3600 seconds</span>
+<span class="na">RandomizedDelaySec</span><span class="o">=</span><span class="s">3600</span>
+<span class="na">Persistent</span><span class="o">=</span><span class="s">true</span>
 
-<span class="k">[Install]</span><span class="w"></span>
-<span class="na">WantedBy</span><span class="o">=</span><span class="s">timers.target</span><span class="w"></span>
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">timers.target</span>
 </code></pre></div>
 <p>This timer runs once a day at 2AM, but each execution is delayed by a random amount of time between zero and 3600 seconds using the <code>RandomizedDelaySec</code> option.</p>
 <p>Pay attention to the location of the <code>certbot-auto</code> script in the service file and adjust accordingly for your setup. Also note that I'm using the <code>standalone</code> mode of execution because the <code>nginx</code> one isn't stable yet. See the <a href="https://certbot.eff.org/docs/using.html#renewal">Certbot renewal documentation</a> for more examples.</p>
 <h2>Activate and Enable the Timer</h2>
 <p>Tell systemd to read the system's unit files again, and then start and enable the timer:</p>
-<div class="highlight"><pre><span></span><code><span class="o">$</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">daemon</span><span class="o">-</span><span class="n">reload</span><span class="w"></span>
-<span class="o">$</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="n">renew</span><span class="o">-</span><span class="n">letsencrypt</span><span class="o">.</span><span class="n">timer</span><span class="w"></span>
-<span class="o">$</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="n">renew</span><span class="o">-</span><span class="n">letsencrypt</span><span class="o">.</span><span class="n">timer</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="o">$</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+<span class="o">$</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="n">renew</span><span class="o">-</span><span class="n">letsencrypt</span><span class="o">.</span><span class="n">timer</span>
+<span class="o">$</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="n">renew</span><span class="o">-</span><span class="n">letsencrypt</span><span class="o">.</span><span class="n">timer</span>
 </code></pre></div>
 <p>Starting the timer is necessary because otherwise it wouldn't be active until the next time you rebooted (assuming it was enabled, that is). You can verify that the timer has been started, its planned execution times, service logs, etc using the following commands:</p>
-<div class="highlight"><pre><span></span><code>$ sudo systemctl list-timers
-$ sudo journalctl -u renew-letsencrypt
-$ sudo journalctl -u renew-letsencrypt --since<span class="o">=</span><span class="s2">"yesterday"</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>list-timers
+$<span class="w"> </span>sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>renew-letsencrypt
+$<span class="w"> </span>sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>renew-letsencrypt<span class="w"> </span>--since<span class="o">=</span><span class="s2">"yesterday"</span>
 </code></pre></div>
 <h2>More Information</h2>
 <p>See the following for more information:</p>

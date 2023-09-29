@@ -83,20 +83,20 @@
     <div class="content">
       <p>Sometimes you need to push commits to two remotes in a git repository — either for a cheap "backup" of sorts, or for some public / private repository scheme you may have in your organization, etc.</p>
 <p>Let's say you have a repository hosted on GitHub <em>and</em> BitBucket (hey, GitHub is king today, but you never know!). You could add a remote for each and push to them individually:</p>
-<div class="highlight"><pre><span></span><code>$ git push github
-$ git push bitbucket
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>push<span class="w"> </span>github
+$<span class="w"> </span>git<span class="w"> </span>push<span class="w"> </span>bitbucket
 </code></pre></div>
 <p>This works fine but it's a bit manual. Also, assuming you want both remotes to essentially be mirrors of each other, there's a better way.</p>
 <h3>A Better Way</h3>
 <p>If you're using any relatively modern version of git (1.9?) you can manipulate the remote to include two push URLs. Instead of adding a second remote, you simply add a second push URL to the existing remote.</p>
 <p>For example, adding a BitBucket URL to the remote called "origin":</p>
-<div class="highlight"><pre><span></span><code>$ git remote set-url origin --add git@bitbucket.org:alanorth/repo.git
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>remote<span class="w"> </span>set-url<span class="w"> </span>origin<span class="w"> </span>--add<span class="w"> </span>git@bitbucket.org:alanorth/repo.git
 </code></pre></div>
 <p>After that the remote looks like this:</p>
-<div class="highlight"><pre><span></span><code>$ git remote -v
-origin  git@github.com:alanorth/repo.git <span class="o">(</span>fetch<span class="o">)</span>
-origin  git@github.com:alanorth/repo.git <span class="o">(</span>push<span class="o">)</span>
-origin  git@bitbucket.org:alanorth/repo.git <span class="o">(</span>push<span class="o">)</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>remote<span class="w"> </span>-v
+origin<span class="w">  </span>git@github.com:alanorth/repo.git<span class="w"> </span><span class="o">(</span>fetch<span class="o">)</span>
+origin<span class="w">  </span>git@github.com:alanorth/repo.git<span class="w"> </span><span class="o">(</span>push<span class="o">)</span>
+origin<span class="w">  </span>git@bitbucket.org:alanorth/repo.git<span class="w"> </span><span class="o">(</span>push<span class="o">)</span>
 </code></pre></div>
 <p>Now there are two push URLs, so every time you push it will go to both remotes, while pull or update operations will only come from the URL labeled "fetch".</p>
 <p>You're welcome. ;)</p>

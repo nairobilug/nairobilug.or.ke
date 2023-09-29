@@ -105,7 +105,7 @@ Docker is a container platform that is similar to a Hypervisor like Virtualbox. 
 <p>Anything that uses <code>apt</code> to install software is Debian based.
 Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distributions#Debian-based">here</a></p>
 <p>To install on Ubuntu :</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo apt install docker.io
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>docker.io
 </code></pre></div>
 <hr/>
 <h2>Docker on Windows</h2>
@@ -127,55 +127,55 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 <hr/>
 <h2>Hello World</h2>
 <p>After you have installed docker, run this command as a test</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo docker run hello-world
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>hello-world
 </code></pre></div>
 <p>If it completes successfully, you can follow along</p>
 <p><img alt="Server status" class="img-fluid" src="/images/docker-pentest-lab/Server status-pana.svg"/></p>
 <h2>The Network</h2>
 <p>The network will be called <code>vulnerable</code>. It will have a 10.0.0/24 subnet</p>
 <p>Create it with this command</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo docker network create vulnerable --attachable --subnet <span class="m">10</span>.0.0.0/24
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo<span class="w"> </span>docker<span class="w"> </span>network<span class="w"> </span>create<span class="w"> </span>vulnerable<span class="w"> </span>--attachable<span class="w"> </span>--subnet<span class="w"> </span><span class="m">10</span>.0.0.0/24
 </code></pre></div>
 <h2>Attacker Container</h2>
 <p>For this, I will use Parrot OS. It's docker images are better Kali Linux Images.</p>
 <p><img alt="Cyber photo" class="img-fluid" src="/images/docker-pentest-lab/cyberr.svg"/></p>
 <p>First download the Parrot OS Docker image. This command will take a while depending on your internet connection. </p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker pull parrotsec/security:latest
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker<span class="w"> </span>pull<span class="w"> </span>parrotsec/security:latest
 </code></pre></div>
 <p>Create and run the container .</p>
-<div class="highlight"><pre><span></span><code>sudo docker run <span class="se">\</span>
-    --name parrot <span class="se">\</span>
-    -it <span class="se">\</span>
-    --hostname parrot <span class="se">\</span>
-    --network vulnerable <span class="se">\</span>
-    --ip<span class="o">=</span><span class="s2">"10.0.0.2"</span> <span class="se">\</span>
-    --env <span class="nv">DISPLAY</span><span class="o">=</span><span class="nv">$DISPLAY</span> <span class="se">\</span>
-    -v /dev/shm:/dev/shm <span class="se">\</span>
-    --device /dev/snd <span class="se">\</span>
-    --device /dev/dri <span class="se">\</span>
-    --mount <span class="nv">type</span><span class="o">=</span>bind,src<span class="o">=</span>/tmp/.X11-unix,dst<span class="o">=</span>/tmp/.X11-unix <span class="se">\</span>
-    parrotsec/security:latest <span class="se">\</span>
-    /bin/bash 
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--name<span class="w"> </span>parrot<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-it<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--hostname<span class="w"> </span>parrot<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--network<span class="w"> </span>vulnerable<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--ip<span class="o">=</span><span class="s2">"10.0.0.2"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--env<span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span><span class="nv">$DISPLAY</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span>/dev/shm:/dev/shm<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--device<span class="w"> </span>/dev/snd<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--device<span class="w"> </span>/dev/dri<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--mount<span class="w"> </span><span class="nv">type</span><span class="o">=</span>bind,src<span class="o">=</span>/tmp/.X11-unix,dst<span class="o">=</span>/tmp/.X11-unix<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>parrotsec/security:latest<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>/bin/bash<span class="w"> </span>
 </code></pre></div>
 <p>All tools available in Parrot OS are now an <code>apt-get</code> away.</p>
 <p>Use this command to restart the parrot OS container after a reboot.</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo docker start -a parrot
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo<span class="w"> </span>docker<span class="w"> </span>start<span class="w"> </span>-a<span class="w"> </span>parrot
 </code></pre></div>
 <h3>Target container:Metasploitable2</h3>
 <p><img alt="Target" class="img-fluid" src="/images/docker-pentest-lab/Target-pana.svg"/></p>
 <p>This is a very vulnerable test machine. It is what I recommend for anyone starting out.</p>
 <p>Open another terminal and pull the metasploitable image. The image is around 500MB.</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker pull tleemcjr/metasploitable2
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker<span class="w"> </span>pull<span class="w"> </span>tleemcjr/metasploitable2
 </code></pre></div>
 <p>To run a metasploitable container:</p>
-<div class="highlight"><pre><span></span><code>docker run <span class="se">\</span>
-    -it <span class="se">\</span>
-    --network vulnerable <span class="se">\</span>
-    --ip<span class="o">=</span><span class="s2">"10.0.0.3"</span> <span class="se">\</span>
-    --name metasploitable <span class="se">\</span>
-    --hostname metasploitable2 <span class="se">\</span>
-    tleemcjr/metasploitable2 <span class="se">\</span>
-    bash
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-it<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--network<span class="w"> </span>vulnerable<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--ip<span class="o">=</span><span class="s2">"10.0.0.3"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--name<span class="w"> </span>metasploitable<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--hostname<span class="w"> </span>metasploitable2<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>tleemcjr/metasploitable2<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>bash
 </code></pre></div>
 <p>You should see a terminal prompt like this</p>
 <div class="highlight"><pre><span></span><code><span class="gp">root@metasploitable2:/#</span>
@@ -186,7 +186,7 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 <p>You can now access metasploitable from <a href="http://10.0.0.3">10.0.0.3</a></p>
 <p>If you want to stop the container, close the terminal with <code>CTRL + D</code></p>
 <p>Run this command to start metasploitable again</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo docker start -a parrot
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo<span class="w"> </span>docker<span class="w"> </span>start<span class="w"> </span>-a<span class="w"> </span>parrot
 </code></pre></div>
 <p>Then start the vulnerable services. </p>
 <div class="highlight"><pre><span></span><code><span class="gp">root@metasploitable2:/# </span>services.sh
@@ -208,14 +208,14 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 <p>This container focusses on web application security.</p>
 <p><img alt="Juiceshop Logo" class="img-fluid" src="/images/docker-pentest-lab/juiceshop.svg"/></p>
 <p>To create and start the juiceshop container for the first time</p>
-<div class="highlight"><pre><span></span><code>docker run -d <span class="se">\</span>
-    --name juiceshop <span class="se">\</span>
-    --network vulnerable <span class="se">\</span>
-    --ip<span class="o">=</span><span class="s2">"10.0.0.6"</span> <span class="se">\</span>
-    bkimminich/juice-shop
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--name<span class="w"> </span>juiceshop<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--network<span class="w"> </span>vulnerable<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--ip<span class="o">=</span><span class="s2">"10.0.0.6"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>bkimminich/juice-shop
 </code></pre></div>
 <p>Check if it is running</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker ps 
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker<span class="w"> </span>ps<span class="w"> </span>
 </code></pre></div>
 <p>Access the web interface from this URL</p>
 <p><a href="http://10.0.0.6:3000/">http://10.0.0.6:3000/</a></p>
@@ -234,12 +234,12 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 <p><a href="(https://owasp.org/www-project-webgoat/)">Webgoat</a> is a ctf-style vulnerable container focused on web application security.</p>
 <p><img alt="goat-svg" class="img-fluid" src="/images/docker-pentest-lab/goat.svg"/></p>
 <p>Create and run the container for the first time</p>
-<div class="highlight"><pre><span></span><code>docker run  -d <span class="se">\</span>
-    --name webgoat <span class="se">\</span>
-    --network vulnerable <span class="se">\</span>
-    --ip<span class="o">=</span><span class="s2">"10.0.0.4"</span> <span class="se">\</span>
-    -e <span class="nv">TZ</span><span class="o">=</span><span class="k">$(</span>cat /etc/timezone<span class="k">)</span> <span class="se">\</span>
-    webgoat/goatandwolf
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w">  </span>-d<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--name<span class="w"> </span>webgoat<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--network<span class="w"> </span>vulnerable<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--ip<span class="o">=</span><span class="s2">"10.0.0.4"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="nv">TZ</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span>/etc/timezone<span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>webgoat/goatandwolf
 </code></pre></div>
 <p>Access Webgoat and Webwolf from these URLs</p>
 <p><a href="http://10.0.0.4:8080/WebGoat">10.0.0.4:8080/WebGoat</a></p>
@@ -251,7 +251,7 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 <div class="highlight"><pre><span></span><code><span class="go">docker start webgoat</span>
 </code></pre></div>
 <p>If you can't access the url, check if it is running.</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker ps -a
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker<span class="w"> </span>ps<span class="w"> </span>-a
 </code></pre></div>
 <h3>Why I use docker for a pentest lab</h3>
 <p>Two Operating systems make my computer painfully slow. Containers aren't resource-intensive and perform well. This fits my use case.</p>
@@ -261,41 +261,41 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 <p>If you want to run Windows containers from a linux host, you are out of luck. You can run linux containers on Windows though</p>
 <h3>Common Docker Commands</h3>
 <p>Stop a container:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo docker stop containerName
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo<span class="w"> </span>docker<span class="w"> </span>stop<span class="w"> </span>containerName
 </code></pre></div>
 <p>Start a container </p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo docker start containerName 
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo<span class="w"> </span>docker<span class="w"> </span>start<span class="w"> </span>containerName<span class="w"> </span>
 </code></pre></div>
 <p>List running  and stopped containers</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo docker ps -a
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo<span class="w"> </span>docker<span class="w"> </span>ps<span class="w"> </span>-a
 </code></pre></div>
 <p>Spawn a bash shell in a running container</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo docker <span class="nb">exec</span> -it containerName bash
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>containerName<span class="w"> </span>bash
 </code></pre></div>
 <p>Docker has tab completion for each of these commands.</p>
 <h3>Graphical apps inside docker</h3>
 <p>Sometimes you may want to run a GUI tool like firefox or burpsuite.</p>
 <p>The Parrot OS commands above are already set for running graphical apps. You only need to install these packages</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>apt install hicolor-icon-theme <span class="se">\</span>
-    libcanberra-gtk* libgl1-mesa-dri <span class="se">\</span>
-    libgl1-mesa-glx libpangox-1.0-0 <span class="se">\</span>
-    libpulse0 libv4l-0 fonts-symbola <span class="se">\ </span>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>apt<span class="w"> </span>install<span class="w"> </span>hicolor-icon-theme<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>libcanberra-gtk*<span class="w"> </span>libgl1-mesa-dri<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>libgl1-mesa-glx<span class="w"> </span>libpangox-1.0-0<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>libpulse0<span class="w"> </span>libv4l-0<span class="w"> </span>fonts-symbola<span class="w"> </span><span class="se">\ </span>
 </code></pre></div>
 <p>You can run a few commands to avoid some errors encountered when running GUI apps</p>
 <h4>Burpsuite</h4>
 <p>Burp Suite is a web app pentesting tool for monitoring http requests and responses.</p>
 <p><img alt="Burpsuite Logo" class="img-fluid" src="/images/docker-pentest-lab/burp.svg"/></p>
 <p>To install and run burpsuite inside the parrot os container.</p>
-<div class="highlight"><pre><span></span><code><span class="gp"># </span>sudo apt update
-<span class="gp"># </span>sudo apt install burpsuite
-<span class="gp"># </span>java -jar -Xmx2G /usr/bin/burpsuite
+<div class="highlight"><pre><span></span><code><span class="gp"># </span>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<span class="gp"># </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>burpsuite
+<span class="gp"># </span>java<span class="w"> </span>-jar<span class="w"> </span>-Xmx2G<span class="w"> </span>/usr/bin/burpsuite
 </code></pre></div>
 <p>You can then point your browser to use <code>10.0.0.2:8080</code> as the proxy and burp will intercept everything</p>
 <h4>Firefox</h4>
 <p>Firefox, is a free and open-source web browser.</p>
 <p><img alt="Firefox Logo" class="img-fluid" src="/images/docker-pentest-lab/firefox.svg"/></p>
 <p>To install and run firefox:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>apt install firefox ca-certificates 
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>apt<span class="w"> </span>install<span class="w"> </span>firefox<span class="w"> </span>ca-certificates<span class="w"> </span>
 </code></pre></div>
 <h3>Credits</h3>
 <ul>

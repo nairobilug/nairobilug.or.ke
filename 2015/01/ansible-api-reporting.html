@@ -87,9 +87,9 @@
 <p>According to the documentation, the Python API is:</p>
 <blockquote class="blockquote">[...] very powerful, and is how the ansible CLI and ansible-playbook are implemented.</blockquote>
 <p>Indeed! Using <code>ansible.runner</code> I whipped something up and extracted data from several dozen servers in just a few minutes (and I don't even know Python!):</p>
-<div class="highlight"><pre><span></span><code>$ ./ansible-runner.py
-mjanjavm10, <span class="m">2</span>, <span class="m">30</span>, Ubuntu <span class="m">14</span>.04, <span class="m">192</span>.168.7.34
-mjanjavm14, <span class="m">2</span>, <span class="m">30</span>, Ubuntu <span class="m">14</span>.04, <span class="m">192</span>.168.7.37
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>./ansible-runner.py
+mjanjavm10,<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="m">30</span>,<span class="w"> </span>Ubuntu<span class="w"> </span><span class="m">14</span>.04,<span class="w"> </span><span class="m">192</span>.168.7.34
+mjanjavm14,<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="m">30</span>,<span class="w"> </span>Ubuntu<span class="w"> </span><span class="m">14</span>.04,<span class="w"> </span><span class="m">192</span>.168.7.37
 </code></pre></div>
 <p>I had to massage the data a bit to get clean numbers for RAM and storage capacity, but other than that it was extremely straightforward (as most things with Ansible generally are).</p>
 <h2>The Code</h2>

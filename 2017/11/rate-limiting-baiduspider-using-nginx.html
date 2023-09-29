@@ -85,9 +85,9 @@
 <p>I used nginx's <a href="https://nginx.org/en/docs/http/ngx_http_map_module.html"><code>map</code></a> and <a href="https://nginx.org/en/docs/http/ngx_http_limit_req_module.html"><code>limit_req</code></a> modules to selectively apply a rate limit to Baidu's requests and now the server's resource usage has improved. Blocking these requests entirely would have been more simple, but I didn't feel comfortable completely stifling the flow of information, and this powerful, flexible technique could be useful in the future anyways.</p>
 <h2>No Respect for robots.txt</h2>
 <p>According to the Baiduspider help center <a href="http://www.baidu.com/search/robots_english.html">Baidu respects the robots exclusion protocol</a> — I even found a <a href="http://ziyuan.baidu.com/robots/">testing tool</a> that confirms my <code>robots.txt</code> file is valid. Curiously, my site's daily access log shows a client that identifies itself as "Baiduspider" making 2,500 requests to URLs that are disallowed by my <code>robots.txt</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="gp"># </span>cat /var/log/nginx/access.log <span class="p">|</span> grep -c Baiduspider
+<div class="highlight"><pre><span></span><code><span class="gp"># </span>cat<span class="w"> </span>/var/log/nginx/access.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span>Baiduspider
 <span class="go">8912</span>
-<span class="gp"># </span>cat /var/log/nginx/access.log <span class="p">|</span> grep Baiduspider <span class="p">|</span> grep -c -E <span class="s2">"GET /(browse|discover|search-filter)"</span>
+<span class="gp"># </span>cat<span class="w"> </span>/var/log/nginx/access.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Baiduspider<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span>-E<span class="w"> </span><span class="s2">"GET /(browse|discover|search-filter)"</span>
 <span class="go">2521</span>
 </code></pre></div>
 <p>Not that I need a reason, but I designate these URLs as off limits to bots on purpose: they're dynamic search pages with countless permutations of input parameters that generate equally countless pages of results. Crawling these pages adds nothing of value to Baidu's search index and wastes resources on my server in the process. If it's content they want, my <code>robots.txt</code> actually provides a nice, neat sitemap that conveniently lists all content pages in machine-readable XML. Sadly, upon looking at my access logs I see Google, Bing, and Yandex bots each requesting this sitemap several times per day, but Baidu doesn't even request it once.</p>
@@ -95,34 +95,34 @@
 <p><em>Note: it might be possible to submit your sitemap to Baidu's webmaster tools — if you can navigate their site in Chinese!</em></p>
 <h2>Mapping and Request Limiting</h2>
 <p>The nginx <code>map</code> module works similarly to an if–then–else construct, allowing you to <em>set the value of one variable depending on the value of another variable</em>. I will combine this with a clever use of the <code>limit_req</code> module to create a rate limit that only punishes Baidu. Add the following code to the global <code>http</code> block of the nginx configuration (not in a server block):</p>
-<div class="highlight"><pre><span></span><code><span class="k">map</span><span class="w"> </span><span class="nv">$http_user_agent</span><span class="w"> </span><span class="nv">$limit_bots</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kn">~Baiduspider</span><span class="w"> </span><span class="s">'baidu'</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">map</span><span class="w"> </span><span class="nv">$http_user_agent</span><span class="w"> </span><span class="nv">$limit_bots</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">~Baiduspider</span><span class="w"> </span><span class="s">'baidu'</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1"># requests with an empty key are not evaluated by limit_req</span>
 <span class="w">    </span><span class="c1"># see: http://nginx.org/en/docs/http/ngx_http_limit_req_module.html</span>
-<span class="w">    </span><span class="kn">default</span><span class="w"> </span><span class="s">''</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kn">default</span><span class="w"> </span><span class="s">''</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="k">limit_req_zone</span><span class="w"> </span><span class="nv">$limit_bots</span><span class="w"> </span><span class="s">zone=badbots:1m</span><span class="w"> </span><span class="s">rate=1r/m</span><span class="p">;</span><span class="w"></span>
+<span class="k">limit_req_zone</span><span class="w"> </span><span class="nv">$limit_bots</span><span class="w"> </span><span class="s">zone=badbots:1m</span><span class="w"> </span><span class="s">rate=1r/m</span><span class="p">;</span>
 </code></pre></div>
 <p>This mapping uses the nginx built-in variable <code>$http_user_agent</code> as the source and a new variable <code>$limit_bots</code> as the target. Depending on whether or not the request's user agent matches the regular expression, <code>$limit_bots</code> will either be set to the value "baidu" or, by default, an empty string.</p>
 <p>Next, a <code>limit_req_zone</code> called "badbots" is created with a limit of one request per minute. The clever trick here is the use of <code>$limit_bots</code> as the zone's key, because <em>requests with an empty key are not evaluated</em>, and thus not subject to rate limiting.</p>
 <p>The last step is to assign this zone to a <code>location</code> block in an nginx <code>server</code> block:</p>
-<div class="highlight"><pre><span></span><code><span class="k">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1"># rate limit for poorly behaved bots, see limit_req_zone below</span>
-<span class="w">    </span><span class="kn">limit_req</span><span class="w"> </span><span class="s">zone=badbots</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">limit_req</span><span class="w"> </span><span class="s">zone=badbots</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1"># Send requests to Tomcat</span>
-<span class="w">    </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://tomcat_http</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://tomcat_http</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>After checking the configuration syntax with <code>nginx -t</code> and reloading the daemon with <code>nginx -s reload</code> you will be ready to test the new mapping.</p>
 <h2>Test the Configuration</h2>
 <p>My favorite tool for testing HTTP requests is the Python-based command line utility <a href="https://httpie.org/">httpie</a>. I find it much easier to set and view request and response headers using httpie than a web browser's developer tools.</p>
 <p>To test the new mapping and rate limiting configuration I send two requests to the server while mimicking part of the Baidu bot's user agent:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>http --print h https://mysite.org/ User-Agent:<span class="s1">'Baiduspider'</span>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>http<span class="w"> </span>--print<span class="w"> </span>h<span class="w"> </span>https://mysite.org/<span class="w"> </span>User-Agent:<span class="s1">'Baiduspider'</span>
 <span class="go">HTTP/1.1 200 OK</span>
-<span class="gp">$ </span>http --print h https://mysite.org/ User-Agent:<span class="s1">'Baiduspider'</span>
+<span class="gp">$ </span>http<span class="w"> </span>--print<span class="w"> </span>h<span class="w"> </span>https://mysite.org/<span class="w"> </span>User-Agent:<span class="s1">'Baiduspider'</span>
 <span class="go">HTTP/1.1 503 Service Temporarily Unavailable</span>
 </code></pre></div>
 <p>Great success! The first request succeeds with an HTTP 200, and the second fails with an HTTP 503.</p>

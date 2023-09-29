@@ -86,41 +86,41 @@
 <h2>System Backups Using a Timer</h2>
 <p>As an example, I have a simple shell script — <code>system-backup.sh</code> — that uses <code>rsync</code> to back up my system to an external USB hard drive once per day. Converting this job to use systemd timers requires the creation of both a <em>timer</em> and a <em>service</em>.</p>
 <p><em>/etc/systemd/system/system-backup.timer</em>:</p>
-<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span><span class="w"></span>
-<span class="na">Description</span><span class="o">=</span><span class="s">Perform system backup</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Perform system backup</span>
 
-<span class="k">[Timer]</span><span class="w"></span>
-<span class="na">OnCalendar</span><span class="o">=</span><span class="s">daily</span><span class="w"></span>
+<span class="k">[Timer]</span>
+<span class="na">OnCalendar</span><span class="o">=</span><span class="s">daily</span>
 
-<span class="k">[Install]</span><span class="w"></span>
-<span class="na">WantedBy</span><span class="o">=</span><span class="s">timers.target</span><span class="w"></span>
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">timers.target</span>
 </code></pre></div>
 <p><em>/etc/systemd/system/system-backup.service</em>:</p>
-<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span><span class="w"></span>
-<span class="na">Description</span><span class="o">=</span><span class="s">Perform system backup</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Perform system backup</span>
 
-<span class="k">[Service]</span><span class="w"></span>
-<span class="na">Type</span><span class="o">=</span><span class="s">simple</span><span class="w"></span>
-<span class="na">Nice</span><span class="o">=</span><span class="s">19</span><span class="w"></span>
-<span class="na">IOSchedulingClass</span><span class="o">=</span><span class="s">2</span><span class="w"></span>
-<span class="na">IOSchedulingPriority</span><span class="o">=</span><span class="s">7</span><span class="w"></span>
-<span class="na">ExecStart</span><span class="o">=</span><span class="s">/root/system-backup.sh</span><span class="w"></span>
+<span class="k">[Service]</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
+<span class="na">Nice</span><span class="o">=</span><span class="s">19</span>
+<span class="na">IOSchedulingClass</span><span class="o">=</span><span class="s">2</span>
+<span class="na">IOSchedulingPriority</span><span class="o">=</span><span class="s">7</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/root/system-backup.sh</span>
 </code></pre></div>
 <p>Start and enable the timer:</p>
-<div class="highlight"><pre><span></span><code>$ sudo systemctl start system-backup.timer
-$ sudo systemctl <span class="nb">enable</span> system-backup.timer
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>system-backup.timer
+$<span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>system-backup.timer
 </code></pre></div>
 <p>Starting the timer is necessary because otherwise it wouldn't be active until the next time you rebooted (assuming it was enabled, that is). You can verify that the timer has been started using either of the following commands:</p>
-<div class="highlight"><pre><span></span><code>$ sudo systemctl status system-backup.timer
-$ sudo systemctl list-timers --all
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>system-backup.timer
+$<span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>list-timers<span class="w"> </span>--all
 </code></pre></div>
 <h2>What This Gets You</h2>
 <p>Using <code>OnCalendar=daily</code> this job will run every day at midnight, similar to cron's <code>@daily</code> keyword. If you ever want to run the job manually you can invoke its service on demand:</p>
-<div class="highlight"><pre><span></span><code>$ sudo systemctl start system-backup.service
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>system-backup.service
 </code></pre></div>
 <p>Unless you're handling stdout manually in your script (like appending to a log file), any output from will go to the systemd journal. You can see the logs just like you'd do for any other system unit file using <code>journalctl</code>.</p>
 <p>For example, to see logs from this timer since yesterday:</p>
-<div class="highlight"><pre><span></span><code>$ sudo journalctl -u system-backup --since<span class="o">=</span><span class="s2">"yesterday"</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>system-backup<span class="w"> </span>--since<span class="o">=</span><span class="s2">"yesterday"</span>
 </code></pre></div>
 <p>I find this much more elegant than appending to, looking through, and rotating log files manually. Furthermore, I like the ability to set CPU and I/O scheduling priorities in the service itself rather than relying on external <code>nice</code> and <code>ionice</code> binaries in the script. :)</p>
 <h2>More Information</h2>

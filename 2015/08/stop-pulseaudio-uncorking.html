@@ -84,12 +84,12 @@
       <p>PulseAudio has a neat feature that allows applications to "uncork" media players like Rhythmbox, Banshee, etc when certain events happen. For example: when a call comes in Skype pauses your music so you can answer without fiddling around to pause manually. Unfortunately Skype also deems the "contact coming online" and "contact going offline" events as worthy of uncorking, so your music gets interrupted for several seconds when these events fire (aka all the time).</p>
 <h2>Unload the "cork" Module</h2>
 <p>A short term solution is to unload the corking module from your user's PulseAudio session:</p>
-<div class="highlight"><pre><span></span><code><span class="o">$</span><span class="w"> </span><span class="n">pactl</span><span class="w"> </span><span class="n">unload</span><span class="o">-</span><span class="n">module</span><span class="w"> </span><span class="n">module</span><span class="o">-</span><span class="n">role</span><span class="o">-</span><span class="n">cork</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="o">$</span><span class="w"> </span><span class="n">pactl</span><span class="w"> </span><span class="n">unload</span><span class="o">-</span><span class="n">module</span><span class="w"> </span><span class="n">module</span><span class="o">-</span><span class="n">role</span><span class="o">-</span><span class="n">cork</span>
 </code></pre></div>
 <p>That will take effect immediately for the remainder of the current user's session. A more permanent solution would be to comment out the loading of the "cork" module in PulseAudio's configuration file.</p>
 <p><em>/etc/pulse/default.pa</em>:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">### Cork music/video streams when a phone stream is active</span><span class="w"></span>
-<span class="c1">#load-module module-role-cork</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">### Cork music/video streams when a phone stream is active</span>
+<span class="c1">#load-module module-role-cork</span>
 </code></pre></div>
 <h2>Other Annoyances</h2>
 <p>Now if only there were a way to address some other Skype annoyances like requiring the installation of a bunch of 32-bit libraries or how chat windows hijack the desktop environment's alt-tab ordering when there is a new message. Oh, it would also be nice if there wasn't massive, gaping <a href="http://www.theguardian.com/world/2013/jul/11/microsoft-nsa-collaboration-user-data">backdoor giving the NSA access to your chats</a>. <em>*sigh*</em></p>

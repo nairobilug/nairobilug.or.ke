@@ -94,11 +94,11 @@
 <div class="highlight"><pre><span></span><code>UUID=86fef3b2-bdc9-47fa-bbb1-4e528a89d222 /mnt/backups    ext4    defaults      0 0
 </code></pre></div>
 <p>to:</p>
-<div class="highlight"><pre><span></span><code><span class="k">[Mount]</span><span class="w"></span>
-<span class="na">What</span><span class="o">=</span><span class="s">/dev/disk/by-uuid/86fef3b2-bdc9-47fa-bbb1-4e528a89d222</span><span class="w"></span>
-<span class="na">Where</span><span class="o">=</span><span class="s">/mnt/backups</span><span class="w"></span>
-<span class="na">Type</span><span class="o">=</span><span class="s">ext4</span><span class="w"></span>
-<span class="na">Options</span><span class="o">=</span><span class="s">defaults</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">[Mount]</span>
+<span class="na">What</span><span class="o">=</span><span class="s">/dev/disk/by-uuid/86fef3b2-bdc9-47fa-bbb1-4e528a89d222</span>
+<span class="na">Where</span><span class="o">=</span><span class="s">/mnt/backups</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">ext4</span>
+<span class="na">Options</span><span class="o">=</span><span class="s">defaults</span>
 </code></pre></div>
 <p><img alt="I Got This!" class="img-fluid" src="/images/systemd-mount-partition/i-got-this.gif"/></p>
 <p>So I wrote a simple systemd mount unit file — <code>/etc/systemd/system/mnt-backups.mount</code> — which didn't work at first because I fell victim to one of the <code>systemd.mount</code> pitfalls:</p>
@@ -107,48 +107,48 @@
 </blockquote>
 <p>Huh? Yes that's right! The unit filename should match the mount point path.</p>
 <p><code>mnt-backups.mount</code> mount unit file:</p>
-<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span><span class="w"></span>
-<span class="na">Description</span><span class="o">=</span><span class="s">Mount System Backups Directory</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Mount System Backups Directory</span>
 
-<span class="k">[Mount]</span><span class="w"></span>
-<span class="na">What</span><span class="o">=</span><span class="s">/dev/disk/by-uuid/86fef3b2-bdc9-47fa-bbb1-4e528a89d222</span><span class="w"></span>
-<span class="na">Where</span><span class="o">=</span><span class="s">/mnt/backups</span><span class="w"></span>
-<span class="na">Type</span><span class="o">=</span><span class="s">ext4</span><span class="w"></span>
-<span class="na">Options</span><span class="o">=</span><span class="s">defaults</span><span class="w"></span>
+<span class="k">[Mount]</span>
+<span class="na">What</span><span class="o">=</span><span class="s">/dev/disk/by-uuid/86fef3b2-bdc9-47fa-bbb1-4e528a89d222</span>
+<span class="na">Where</span><span class="o">=</span><span class="s">/mnt/backups</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">ext4</span>
+<span class="na">Options</span><span class="o">=</span><span class="s">defaults</span>
 </code></pre></div>
 <p>Reload systemd daemon &amp; start the unit.</p>
-<div class="highlight"><pre><span></span><code>systemctl daemon-reload
-systemctl start mnt-backups.mount
+<div class="highlight"><pre><span></span><code>systemctl<span class="w"> </span>daemon-reload
+systemctl<span class="w"> </span>start<span class="w"> </span>mnt-backups.mount
 </code></pre></div>
 <p>And just like any other unit, you can view its status using <code>systemctl status mnt-backups.mount</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="n">root</span><span class="err">@</span><span class="n">vast</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="c1"># systemctl status mnt-backups.mount</span><span class="w"></span>
-<span class="err">●</span><span class="w"> </span><span class="n">mnt</span><span class="o">-</span><span class="n">backups</span><span class="o">.</span><span class="n">mount</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Mount</span><span class="w"> </span><span class="n">System</span><span class="w"> </span><span class="n">Backups</span><span class="w"> </span><span class="n">Directory</span><span class="w"></span>
-<span class="w">   </span><span class="n">Loaded</span><span class="p">:</span><span class="w"> </span><span class="n">loaded</span><span class="w"> </span><span class="p">(</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">mnt</span><span class="o">-</span><span class="n">backups</span><span class="o">.</span><span class="n">mount</span><span class="p">;</span><span class="w"> </span><span class="n">enabled</span><span class="p">;</span><span class="w"> </span><span class="n">vendor</span><span class="w"> </span><span class="n">preset</span><span class="p">:</span><span class="w"> </span><span class="n">disabled</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="n">Active</span><span class="p">:</span><span class="w"> </span><span class="n">active</span><span class="w"> </span><span class="p">(</span><span class="n">mounted</span><span class="p">)</span><span class="w"> </span><span class="n">since</span><span class="w"> </span><span class="n">Mon</span><span class="w"> </span><span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">31</span><span class="w"> </span><span class="mi">08</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">15</span><span class="w"> </span><span class="n">EAT</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">days</span><span class="w"> </span><span class="n">ago</span><span class="w"></span>
-<span class="w">    </span><span class="n">Where</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">backups</span><span class="w"></span>
-<span class="w">     </span><span class="n">What</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdc</span><span class="w"></span>
-<span class="w">  </span><span class="n">Process</span><span class="p">:</span><span class="w"> </span><span class="mi">744</span><span class="w"> </span><span class="n">ExecMount</span><span class="o">=/</span><span class="n">bin</span><span class="o">/</span><span class="n">mount</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">disk</span><span class="o">/</span><span class="n">by</span><span class="o">-</span><span class="n">uuid</span><span class="o">/</span><span class="mi">86</span><span class="n">fef3b2</span><span class="o">-</span><span class="n">bdc9</span><span class="o">-</span><span class="mi">47</span><span class="n">fa</span><span class="o">-</span><span class="n">bbb1</span><span class="o">-</span><span class="mf">4e528</span><span class="n">a89d222</span><span class="w"> </span><span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">backups</span><span class="w"> </span><span class="o">-</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="n">t</span><span class="w"> </span><span class="n">ext4</span><span class="w"> </span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="n">defaults</span><span class="w"> </span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">exited</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="o">=</span><span class="mi">0</span><span class="o">/</span><span class="n">SUCCESS</span><span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">root</span><span class="err">@</span><span class="n">vast</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="c1"># systemctl status mnt-backups.mount</span>
+<span class="err">●</span><span class="w"> </span><span class="n">mnt</span><span class="o">-</span><span class="n">backups</span><span class="o">.</span><span class="n">mount</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Mount</span><span class="w"> </span><span class="n">System</span><span class="w"> </span><span class="n">Backups</span><span class="w"> </span><span class="n">Directory</span>
+<span class="w">   </span><span class="n">Loaded</span><span class="p">:</span><span class="w"> </span><span class="n">loaded</span><span class="w"> </span><span class="p">(</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">mnt</span><span class="o">-</span><span class="n">backups</span><span class="o">.</span><span class="n">mount</span><span class="p">;</span><span class="w"> </span><span class="n">enabled</span><span class="p">;</span><span class="w"> </span><span class="n">vendor</span><span class="w"> </span><span class="n">preset</span><span class="p">:</span><span class="w"> </span><span class="n">disabled</span><span class="p">)</span>
+<span class="w">   </span><span class="n">Active</span><span class="p">:</span><span class="w"> </span><span class="n">active</span><span class="w"> </span><span class="p">(</span><span class="n">mounted</span><span class="p">)</span><span class="w"> </span><span class="n">since</span><span class="w"> </span><span class="n">Mon</span><span class="w"> </span><span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">31</span><span class="w"> </span><span class="mi">08</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">15</span><span class="w"> </span><span class="n">EAT</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">days</span><span class="w"> </span><span class="n">ago</span>
+<span class="w">    </span><span class="n">Where</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">backups</span>
+<span class="w">     </span><span class="n">What</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdc</span>
+<span class="w">  </span><span class="n">Process</span><span class="p">:</span><span class="w"> </span><span class="mi">744</span><span class="w"> </span><span class="n">ExecMount</span><span class="o">=/</span><span class="n">bin</span><span class="o">/</span><span class="n">mount</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">disk</span><span class="o">/</span><span class="n">by</span><span class="o">-</span><span class="n">uuid</span><span class="o">/</span><span class="mi">86</span><span class="n">fef3b2</span><span class="o">-</span><span class="n">bdc9</span><span class="o">-</span><span class="mi">47</span><span class="n">fa</span><span class="o">-</span><span class="n">bbb1</span><span class="o">-</span><span class="mf">4e528</span><span class="n">a89d222</span><span class="w"> </span><span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">backups</span><span class="w"> </span><span class="o">-</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="n">t</span><span class="w"> </span><span class="n">ext4</span><span class="w"> </span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="n">defaults</span><span class="w"> </span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">exited</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="o">=</span><span class="mi">0</span><span class="o">/</span><span class="n">SUCCESS</span><span class="p">)</span>
 
-<span class="n">Aug</span><span class="w"> </span><span class="mi">31</span><span class="w"> </span><span class="mi">08</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">15</span><span class="w"> </span><span class="n">vast</span><span class="w"> </span><span class="n">systemd</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="w"> </span><span class="n">Mounting</span><span class="w"> </span><span class="n">Mount</span><span class="w"> </span><span class="n">System</span><span class="w"> </span><span class="n">Backups</span><span class="w"> </span><span class="n">Directory</span><span class="o">...</span><span class="w"></span>
-<span class="n">Aug</span><span class="w"> </span><span class="mi">31</span><span class="w"> </span><span class="mi">08</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">15</span><span class="w"> </span><span class="n">vast</span><span class="w"> </span><span class="n">systemd</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="w"> </span><span class="n">Mounted</span><span class="w"> </span><span class="n">Mount</span><span class="w"> </span><span class="n">System</span><span class="w"> </span><span class="n">Backups</span><span class="w"> </span><span class="n">Directory</span><span class="o">.</span><span class="w"></span>
+<span class="n">Aug</span><span class="w"> </span><span class="mi">31</span><span class="w"> </span><span class="mi">08</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">15</span><span class="w"> </span><span class="n">vast</span><span class="w"> </span><span class="n">systemd</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="w"> </span><span class="n">Mounting</span><span class="w"> </span><span class="n">Mount</span><span class="w"> </span><span class="n">System</span><span class="w"> </span><span class="n">Backups</span><span class="w"> </span><span class="n">Directory</span><span class="o">...</span>
+<span class="n">Aug</span><span class="w"> </span><span class="mi">31</span><span class="w"> </span><span class="mi">08</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">15</span><span class="w"> </span><span class="n">vast</span><span class="w"> </span><span class="n">systemd</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="w"> </span><span class="n">Mounted</span><span class="w"> </span><span class="n">Mount</span><span class="w"> </span><span class="n">System</span><span class="w"> </span><span class="n">Backups</span><span class="w"> </span><span class="n">Directory</span><span class="o">.</span>
 </code></pre></div>
 <h2>Gotchas!!</h2>
 <p>After a reboot, I noticed the unit wasn't started &amp; as result the mount point dir. was empty. The unit file was missing an <code>[Install]</code> section which contains installation information such as unit dependencies(<code>WantedBy=, RequiredBy=</code>), aliases(<code>Alias=</code>), additional units(<code>Also=</code>), e.t.c for the specified unit. In this case, I set the unit to start in multi-user runlevel a.k.a <code>multi-user.target</code>. Oh, did you know you can change runlevel using <code>systemctl isolate $RUN_LEVEL.target</code>? <a href="https://wiki.archlinux.org/index.php/Systemd#Targets_table">Read more</a> about systemd runlevels/targets.</p>
 <p>Here's the complete <code>/etc/systemd/system/mnt-backups.mount</code> unit file with an <code>[Install]</code> section:</p>
-<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span><span class="w"></span>
-<span class="na">Description</span><span class="o">=</span><span class="s">Mount System Backups Directory</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Mount System Backups Directory</span>
 
-<span class="k">[Mount]</span><span class="w"></span>
-<span class="na">What</span><span class="o">=</span><span class="s">/dev/disk/by-uuid/86fef3b2-bdc9-47fa-bbb1-4e528a89d222</span><span class="w"></span>
-<span class="na">Where</span><span class="o">=</span><span class="s">/mnt/backups</span><span class="w"></span>
-<span class="na">Type</span><span class="o">=</span><span class="s">ext4</span><span class="w"></span>
-<span class="na">Options</span><span class="o">=</span><span class="s">defaults</span><span class="w"></span>
+<span class="k">[Mount]</span>
+<span class="na">What</span><span class="o">=</span><span class="s">/dev/disk/by-uuid/86fef3b2-bdc9-47fa-bbb1-4e528a89d222</span>
+<span class="na">Where</span><span class="o">=</span><span class="s">/mnt/backups</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">ext4</span>
+<span class="na">Options</span><span class="o">=</span><span class="s">defaults</span>
 
-<span class="k">[Install]</span><span class="w"></span>
-<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span><span class="w"></span>
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
 </code></pre></div>
 <p>As always, enable the unit to start automatically during boot.</p>
-<div class="highlight"><pre><span></span><code>systemctl <span class="nb">enable</span> mnt-backups.mount
+<div class="highlight"><pre><span></span><code>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>mnt-backups.mount
 </code></pre></div>
     </div>
   </article>
