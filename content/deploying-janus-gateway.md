@@ -25,6 +25,7 @@ video conferencing and messaging solutions.  As such it has a
 plugin architecture to
 enable easy customization and minimize resource requirements. Projects
 using Janus Gateway include:
+
 * [A Flutter Janus Client](https://github.com/flutterjanus/flutter_janus_client)
 * [A Qt Client](https://github.com/ouxianghui/janus-client)
 * [PiKVM](https://pikvm.org)
@@ -350,3 +351,5 @@ be able to try out the demos using the http transport.  To enable
 other transports, see the [documentation](https://janus.conf.meetecho.com/docs/)
 and setup appropriate firewall rules.
 
+
+*Content available under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license*
