@@ -51,7 +51,7 @@ Create a new Fedora 38 virtual machine and then install the
 build dependencies
 ```
 sudo dnf -y install wget uacme nginx lua-devel \
-  cmake doxygen duktape-devel gcc glib2-devel graphviz \
+  cmake doxygen duktape-devel gcc git glib2-devel graphviz \
   intltool jansson-devel libavcodec-free-devel \
   libavformat-free-devel libavutil-free-devel \
   libconfig-devel libcurl-devel libmicrohttpd-devel \
@@ -59,7 +59,7 @@ sudo dnf -y install wget uacme nginx lua-devel \
   libsrtp-devel libtool libwebsockets-devel lua-devel make \
   nanomsg nanomsg-devel openssl-devel opus-devel paho-c-devel \
   policycoreutils-python-utils sofia-sip-devel speexdsp-devel \
-  usrsctp-devel zlib-devel
+  usrsctp-devel which zlib-devel
 ```
 
 ### Getting and Building Janus Gateway
@@ -67,7 +67,7 @@ sudo dnf -y install wget uacme nginx lua-devel \
 Clone from GitHub directly and then build it
 ```
 git clone https://github.com/meetecho/janus-gateway
-cd janus-gateways
+cd janus-gateway
 git checkout 9f03638
 sh autogen.sh
 ./configure --prefix=/opt/janus
@@ -171,8 +171,8 @@ and [https](https://en.wikipedia.org/wiki/HTTPS) respectively.
 Enable Nginx to serve content from the demo directory
 
 ```
-sudo semange fcontext -a -t httpd_sys_content_t '/usr/share/janus/demos/(/.*)?'
-sudo restorecon -R /usr/share/janus/demos/
+sudo semanage fcontext -a -t httpd_sys_content_t '/opt/janus/share/janus/demos/(/.*)?'
+sudo restorecon -R /opt/janus/share/janus/demos/
 ```
 
 As explained by
@@ -293,7 +293,7 @@ and the lines for media contain
 Configure the http transport
 
 ```
-sudo vi /etc/janus/janus.transport.http.jcfg 
+sudo vi /opt/janus/etc/janus/janus.transport.http.jcfg 
 ```
 
 ensure that the http settings contain
