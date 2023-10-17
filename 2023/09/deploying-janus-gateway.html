@@ -122,7 +122,7 @@ Packages are already available for other distribution such as
 <p>Create a new Fedora 38 virtual machine and then install the
 build dependencies</p>
 <div class="highlight"><pre><span></span><code><span class="n">sudo</span><span class="w"> </span><span class="n">dnf</span><span class="w"> </span><span class="o">-</span><span class="n">y</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">wget</span><span class="w"> </span><span class="n">uacme</span><span class="w"> </span><span class="n">nginx</span><span class="w"> </span><span class="n">lua</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span>\
-<span class="w">  </span><span class="n">cmake</span><span class="w"> </span><span class="n">doxygen</span><span class="w"> </span><span class="n">duktape</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">gcc</span><span class="w"> </span><span class="n">glib2</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">graphviz</span><span class="w"> </span>\
+<span class="w">  </span><span class="n">cmake</span><span class="w"> </span><span class="n">doxygen</span><span class="w"> </span><span class="n">duktape</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">gcc</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="n">glib2</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">graphviz</span><span class="w"> </span>\
 <span class="w">  </span><span class="n">intltool</span><span class="w"> </span><span class="n">jansson</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">libavcodec</span><span class="o">-</span><span class="n">free</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span>\
 <span class="w">  </span><span class="n">libavformat</span><span class="o">-</span><span class="n">free</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">libavutil</span><span class="o">-</span><span class="n">free</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span>\
 <span class="w">  </span><span class="n">libconfig</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">libcurl</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">libmicrohttpd</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span>\
@@ -130,12 +130,12 @@ build dependencies</p>
 <span class="w">  </span><span class="n">libsrtp</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">libtool</span><span class="w"> </span><span class="n">libwebsockets</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">lua</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">make</span><span class="w"> </span>\
 <span class="w">  </span><span class="n">nanomsg</span><span class="w"> </span><span class="n">nanomsg</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">openssl</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">opus</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">paho</span><span class="o">-</span><span class="n">c</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span>\
 <span class="w">  </span><span class="n">policycoreutils</span><span class="o">-</span><span class="n">python</span><span class="o">-</span><span class="n">utils</span><span class="w"> </span><span class="n">sofia</span><span class="o">-</span><span class="n">sip</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">speexdsp</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span>\
-<span class="w">  </span><span class="n">usrsctp</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">zlib</span><span class="o">-</span><span class="n">devel</span>
+<span class="w">  </span><span class="n">usrsctp</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">zlib</span><span class="o">-</span><span class="n">devel</span>
 </code></pre></div>
 <h3>Getting and Building Janus Gateway</h3>
 <p>Clone from GitHub directly and then build it</p>
 <div class="highlight"><pre><span></span><code>git clone https://github.com/meetecho/janus-gateway
-cd janus-gateways
+cd janus-gateway
 git checkout 9f03638
 sh autogen.sh
 ./configure --prefix=/opt/janus
@@ -210,8 +210,8 @@ and to tcp ports 80 and 443 for <a href="https://en.wikipedia.org/wiki/HTTP">htt
 and <a href="https://en.wikipedia.org/wiki/HTTPS">https</a> respectively.</p>
 <h3>Reverse Proxy</h3>
 <p>Enable Nginx to serve content from the demo directory</p>
-<div class="highlight"><pre><span></span><code>sudo semange fcontext -a -t httpd_sys_content_t '/usr/share/janus/demos/(/.*)?'
-sudo restorecon -R /usr/share/janus/demos/
+<div class="highlight"><pre><span></span><code>sudo semanage fcontext -a -t httpd_sys_content_t '/opt/janus/share/janus/demos/(/.*)?'
+sudo restorecon -R /opt/janus/share/janus/demos/
 </code></pre></div>
 <p>As explained by
 <a href="https://facsiaginsa.com/janus/basic-janus-configuration-with-ssl">Bagus Aginsa</a>,
@@ -313,7 +313,7 @@ use network address translation</p>
 <div class="highlight"><pre><span></span><code>        rtp_port_range = "10000-20000"
 </code></pre></div>
 <p>Configure the http transport</p>
-<div class="highlight"><pre><span></span><code>sudo vi /etc/janus/janus.transport.http.jcfg 
+<div class="highlight"><pre><span></span><code>sudo vi /opt/janus/etc/janus/janus.transport.http.jcfg 
 </code></pre></div>
 <p>ensure that the http settings contain</p>
 <div class="highlight"><pre><span></span><code>        json = "indented"        # Whether the JSON messages should be indented (default),
