@@ -122,6 +122,6 @@ I love the setup so far:
 - InfluxDB isn't using a lot of disk space. The database storing HTTP status codes is 900K on the disk, one month on.
 - The graphs on Grafana look sexy. Here's a screenshot of the graphs on HTTP status codes:
 
-![Image showing HTTP status codes on Grafana]({filename}/images/heka-influxdb-and-grafana/heka-influxdb-and-grafana.png)
+![Image showing HTTP status codes on Grafana]({static}/images/heka-influxdb-and-grafana/heka-influxdb-and-grafana.png)
 
 This was [originally posted](https://jasonrogena.github.io/2016/01/02/heka-influxdb-and-grafana.html) on my personal blog; re-posting here for posterity.

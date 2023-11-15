@@ -16,7 +16,7 @@ I was pretty sure the answers lay in GraphicsMagick / ImageMagick, but with whic
 
 After a bit of Google-fu I learned that this is easier than I had originally thought. For example, take this picture of me eating a piece of halloumi cheese:
 
-![Alan eating halloumi]({filename}/images/image-compression-open-source/alan-halloumi.jpg "Alan eating halloumi")
+![Alan eating halloumi]({static}/images/image-compression-open-source/alan-halloumi.jpg "Alan eating halloumi")
 
 Straight from the fancy DSLR camera the image is _3.6 megabytes_ — much too large to share practically on the web. Amazingly, after uploading to Compressor.io the image is reduced to _1.6 megabytes_. That's an impressive feat considering the image wasn't downscaled and is visually indistinguishable from the original!
 

@@ -16,20 +16,20 @@ First Setup
 
 **Apache httpd error logs**
 
-![Error from bad requests]({filename}/images/exploring-anti-dos-tools-for-apache-httpd/badheader.png "Apache error logs")
+![Error from bad requests]({static}/images/exploring-anti-dos-tools-for-apache-httpd/badheader.png "Apache error logs")
 
 The loaded module (*mod_evasion*), can't save Apache httpd from the DOS attack, even loading the site from a browser is somehow impossible.
 
-![Apache DOSed]({filename}/images/exploring-anti-dos-tools-for-apache-httpd/apachedown.png "Can't access via Browser")
+![Apache DOSed]({static}/images/exploring-anti-dos-tools-for-apache-httpd/apachedown.png "Can't access via Browser")
 
 But this module can prevent a brute-force attack (*e.g. an automated script to guess a password field in a web-form*) in a web server (running Apache httpd).
 
-![mod_evasion can prevent Brute-force..]({filename}/images/exploring-anti-dos-tools-for-apache-httpd/bruteforce.png "mod_evasion can prevent Brute-force attack")
+![mod_evasion can prevent Brute-force..]({static}/images/exploring-anti-dos-tools-for-apache-httpd/bruteforce.png "mod_evasion can prevent Brute-force attack")
 
 Just to make an interesting comparison, I replaced Apache httpd with Nginx on the same Server (192.168.43.221) and **ta! da!..**
 
-![Nginx is not DOSed by Slowloris]({filename}/images/exploring-anti-dos-tools-for-apache-httpd/nginxup.png "Nginx is not DOSed by Slowloris") Nginx gracefully made it by ignoring the request from Slowloris. But I noticed a brute-force attack is possible while using Nginx default settings! **Nginx access logs**
-![Nginx Brute-forced]({filename}/images/exploring-anti-dos-tools-for-apache-httpd/bfnginx.png "Nginx can be Brute-forced")
+![Nginx is not DOSed by Slowloris]({static}/images/exploring-anti-dos-tools-for-apache-httpd/nginxup.png "Nginx is not DOSed by Slowloris") Nginx gracefully made it by ignoring the request from Slowloris. But I noticed a brute-force attack is possible while using Nginx default settings! **Nginx access logs**
+![Nginx Brute-forced]({static}/images/exploring-anti-dos-tools-for-apache-httpd/bfnginx.png "Nginx can be Brute-forced")
 
 Second Setup
 ------------
@@ -39,7 +39,7 @@ Second Setup
 
 *mod_antiloris* played it nice by monitoring the requests coming from the client and rejected extra connections. Accessing the web services from the browser was not interfered.
 
-![mod_antiloris logs]({filename}/images/exploring-anti-dos-tools-for-apache-httpd/antiloris.png "mod_antiloris logs")
+![mod_antiloris logs]({static}/images/exploring-anti-dos-tools-for-apache-httpd/antiloris.png "mod_antiloris logs")
 
 *mod_evasion* is cool but can't save Apache httpd from Slowloris. On the other hand, *mod_antiloris* worked fine and denied Slowloris a chance to mess up with the Apache httpd server.
 
@@ -48,7 +48,7 @@ Explanation
 
 **Putting the Lens on the Logs...** (Apache httpd access log)
 
-![Apache-httpd access log]({filename}/images/exploring-anti-dos-tools-for-apache-httpd/accesslog.png "Apache httpd access logs")
+![Apache-httpd access log]({static}/images/exploring-anti-dos-tools-for-apache-httpd/accesslog.png "Apache httpd access logs")
 
 *Why did mod_antiloris pass the test and mod_evasion fail?..* *Why did Slowloris work on Apache httpd and not on Nginx?*
 

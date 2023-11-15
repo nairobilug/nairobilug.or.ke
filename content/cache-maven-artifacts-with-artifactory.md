@@ -23,7 +23,7 @@ $ docker run --name artifactory -d \
 
 Assuming the container has started up correctly you should now be able to access the Artifactory web application at [http://localhost:8081](http://localhost:8081). The first time you access it you will be asked to set a password for the administrator account and to create repositories appropriate for your desired build system. In this case you should at least select Maven:
 
-![Repository Setup in JFrog Artifactory 5 Web Application]({filename}/images/cache-maven-artifacts-with-artifactory/artifactory-create-repositories-1024x571.png)
+![Repository Setup in JFrog Artifactory 5 Web Application]({static}/images/cache-maven-artifacts-with-artifactory/artifactory-create-repositories-1024x571.png)
 
 By default Artifactory sets up a "virtual" repository called `libs-release` that is configured to transparently proxy and cache `release` and `snapshot` artifacts from Maven central. This should probably cover most of your project's build artifacts — or at least enough to verify that it's working. Later, once you understand how Artifactory works, you can add more remote repositories and include them in the default virtual repository (check your project's `pom.xml` for other `&lt;repository&gt;` blocks). For example, I've added `restlet`, `rubygems-release`, and `sonatype-releases` as well.
 
@@ -91,7 +91,7 @@ Now when you run `mvn package` you should see Maven contact your local repositor
 
 Eventually your Artifactory will be filled with artifacts — the administration dashboard will even give you statistics!
 
-![Screenshot of JFrog Artifactory 5 Web Application Showing 4,336 Cached Artifacts]({filename}/images/cache-maven-artifacts-with-artifactory/artifactory-artifacts-1024x571.png)
+![Screenshot of JFrog Artifactory 5 Web Application Showing 4,336 Cached Artifacts]({static}/images/cache-maven-artifacts-with-artifactory/artifactory-artifacts-1024x571.png)
 
 ## Advanced Usage: Docker Networking
 Maven builds in your normal working environment actually already populate an artifact cache located at `~/.m2/repository`, so after one or two builds you won't really benefit from the Artifactory cache at all. The real benefit to hosting your own artifact repository locally — and the driver behind this post — is using its cache in a container-based workflow. The Docker image building process is one particularly painful part of this workflow because images generally start with a clean build environment by design, and therefore any Maven packaging steps will "download the Internet" again every time you rebuild the image.

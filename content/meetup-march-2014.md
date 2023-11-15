@@ -32,6 +32,6 @@ Summary: Highlights from the March, 2014 meetup.
 
 Proof that it happened:
 
-![Group shot]({filename}/images/meetup-march-2014/meetup-march-2014.jpg "Nairobi GNU/Linux Users Group members")
+![Group shot]({static}/images/meetup-march-2014/meetup-march-2014.jpg "Nairobi GNU/Linux Users Group members")
 
 See you for the next meeting (April 5th, 2014!)

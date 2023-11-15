@@ -8,7 +8,7 @@ Authors: Ian Muchina
 Summary: Lightweight penetration testing lab inside docker GUI support
 ## What is Docker?
 
-![Docker Logo]({filename}/images/docker-pentest-lab/docker.svg)
+![Docker Logo]({static}/images/docker-pentest-lab/docker.svg)
 Docker is a container platform that is similar to a Hypervisor like Virtualbox. Docker uses less storage and RAM and are portable.
 
 Docker can run on: 
@@ -51,7 +51,7 @@ $ sudo apt install docker.io
 ## Docker on Windows
 To run docker in windows, install [Docker desktop](https://docs.docker.com/docker-for-windows/install/).
 
-![Windows 10 Logo]({filename}/images/docker-pentest-lab/windows10.svg)
+![Windows 10 Logo]({static}/images/docker-pentest-lab/windows10.svg)
 
  Docker Desktop is an awesome app with a graphical interface. It can run Linux containers from windows. However, there's one major deal-breaker.
 
@@ -80,7 +80,7 @@ $ sudo docker run hello-world
 
 If it completes successfully, you can follow along
 
-![Server status]({filename}/images/docker-pentest-lab/Server status-pana.svg)
+![Server status]({static}/images/docker-pentest-lab/Server status-pana.svg)
 
 ## The Network
 
@@ -95,7 +95,7 @@ $ sudo docker network create vulnerable --attachable --subnet 10.0.0.0/24
 
 For this, I will use Parrot OS. It's docker images are better Kali Linux Images.
 
-![Cyber photo]({filename}/images/docker-pentest-lab/cyberr.svg)
+![Cyber photo]({static}/images/docker-pentest-lab/cyberr.svg)
 
 
 First download the Parrot OS Docker image. This command will take a while depending on your internet connection. 
@@ -132,7 +132,7 @@ $ sudo docker start -a parrot
 
 ### Target container:Metasploitable2
 
-![Target]({filename}/images/docker-pentest-lab/Target-pana.svg)
+![Target]({static}/images/docker-pentest-lab/Target-pana.svg)
 
 
 This is a very vulnerable test machine. It is what I recommend for anyone starting out.
@@ -187,7 +187,7 @@ root@metasploitable2:/# services.sh
 
 There are tons of free guides out there on metasploitable. 
 
-![Image of person Studying]({filename}/images/docker-pentest-lab/read.svg)
+![Image of person Studying]({static}/images/docker-pentest-lab/read.svg)
 
 1. [The Easiest Metasploit Guide You’ll Ever Read](https://www.exploit-db.com/docs/english/44040-the-easiest-metasploit-guide-you%E2%80%99ll-ever-read.pdf)
 2. [Metasploit Unleashed](https://www.offensive-security.com/metasploit-unleashed/)
@@ -198,7 +198,7 @@ If you don't know what guide to use, I recommend [this one](https://metasploit.h
 
 
 ## More vulnerable containers 🧑‍💻
-![More Cyber]({filename}/images/docker-pentest-lab/hacker.svg)
+![More Cyber]({static}/images/docker-pentest-lab/hacker.svg)
 
 You can extend the lab with any of these containers depending on your learning goal.
 
@@ -206,7 +206,7 @@ You can extend the lab with any of these containers depending on your learning g
 ### OWASP Juiceshop
 This container focusses on web application security.
 
-![Juiceshop Logo]({filename}/images/docker-pentest-lab/juiceshop.svg)
+![Juiceshop Logo]({static}/images/docker-pentest-lab/juiceshop.svg)
 
 To create and start the juiceshop container for the first time
 
@@ -246,7 +246,7 @@ docker start juiceshop
 
 [Webgoat]((https://owasp.org/www-project-webgoat/)) is a ctf-style vulnerable container focused on web application security.
 
-![goat-svg]({filename}/images/docker-pentest-lab/goat.svg)
+![goat-svg]({static}/images/docker-pentest-lab/goat.svg)
 
 Create and run the container for the first time
 
@@ -289,7 +289,7 @@ $ docker ps -a
 
 Two Operating systems make my computer painfully slow. Containers aren't resource-intensive and perform well. This fits my use case.
 
-![Lab.svg]({filename}/images/docker-pentest-lab/lab.svg)
+![Lab.svg]({static}/images/docker-pentest-lab/lab.svg)
 
 If you have RAM to spare then it's really not that much of a difference. 
 
@@ -341,7 +341,7 @@ You can run a few commands to avoid some errors encountered when running GUI app
 #### Burpsuite
 Burp Suite is a web app pentesting tool for monitoring http requests and responses.
 
-![Burpsuite Logo]({filename}/images/docker-pentest-lab/burp.svg)
+![Burpsuite Logo]({static}/images/docker-pentest-lab/burp.svg)
 
 To install and run burpsuite inside the parrot os container.
 
@@ -356,7 +356,7 @@ You can then point your browser to use `10.0.0.2:8080` as the proxy and burp wil
 
 Firefox, is a free and open-source web browser.
 
-![Firefox Logo]({filename}/images/docker-pentest-lab/firefox.svg)
+![Firefox Logo]({static}/images/docker-pentest-lab/firefox.svg)
 
 To install and run firefox:
 
