@@ -8,7 +8,7 @@ Summary: Recently, I discovered you can mount partitions using systemd.mount by 
 
 [systemd](http://www.freedesktop.org/wiki/Software/systemd) is gradually becoming the de facto init system & service manager replacing the old sysV init scripts & upstart. Recently, I discovered you can mount partitions using [systemd.mount](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) by writing your own `.mount` [systemd unit file](http://www.freedesktop.org/software/systemd/man/systemd.unit.html).
 
-![super suprised]({filename}/images/systemd-mount-partition/suprised-cat.jpg)
+![super suprised]({static}/images/systemd-mount-partition/suprised-cat.jpg)
 
 After _RTFM'ing_, I realized, under the hood, systemd just runs [mount command](http://linux.die.net/man/8/mount) to mount the specified partition with the specified mount options listed in the mount unit file. Basically, you need to specify the following options in your unit file:
 
@@ -33,7 +33,7 @@ Type=ext4
 Options=defaults
 ```
 
-![I Got This!]({filename}/images/systemd-mount-partition/i-got-this.gif)
+![I Got This!]({static}/images/systemd-mount-partition/i-got-this.gif)
 
 So I wrote a simple systemd mount unit file — `/etc/systemd/system/mnt-backups.mount` — which didn't work at first because I fell victim to one of the `systemd.mount` pitfalls:
 

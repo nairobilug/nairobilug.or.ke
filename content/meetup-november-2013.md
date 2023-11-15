@@ -28,7 +28,7 @@ If I missed anything, leave it in the comments (or send a pull request ;).
 
 Discussing all teh things...
 
-![Group shot]({filename}/images/meetup-november-2013/meetup-november-2013.jpg "Nairobi GNU/Linux Users Group members")
+![Group shot]({static}/images/meetup-november-2013/meetup-november-2013.jpg "Nairobi GNU/Linux Users Group members")
 
 ### December Meetup
 

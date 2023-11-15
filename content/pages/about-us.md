@@ -10,7 +10,7 @@ You can join our [mailing list]({filename}/pages/mailing-list.md) or [get togett
 
 **There is no level of technical expertise required to attend meetups** and we pride ourselves on being open and friendly to all. We're just as likely to be found talking about the latest film releases, music or anything else as hardcore techy topics.
 
-![March, 2014 meetup]({filename}/images/pages/about-us/meetup-march-2014.jpg "March, 2014 meetup")
+![March, 2014 meetup]({static}/images/pages/about-us/meetup-march-2014.jpg "March, 2014 meetup")
 
 Whether you're a hardened kernel hacker, or you've just used Firefox a few times and wonder what Open Source is, it's all the same to us. Come and get involved!
 
