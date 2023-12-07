@@ -16,7 +16,7 @@ They've even got some of the nuts and bolts for provisioning and managing this p
 
 ### BRCK
 
-After [last month's](https://nairobilug.or.ke/2015/05/meetup-may-2015.html) discussion of [BRCK's GPL violation](https://nairobilug.or.ke/2015/05/brck-violating-gpl.html) BRCK reached out to us and resolved things amicably. In addition to posting [source code for their BRCKv1](https://www.brck.com/open-source-compliance/) a few of their people came to the meetup to talk about OpenWRT, single-board computers, and fried chicken.
+After [last month's](https://nairobi.lug.or.ke/2015/05/meetup-may-2015.html) discussion of [BRCK's GPL violation](https://nairobi.lug.or.ke/2015/05/brck-violating-gpl.html) BRCK reached out to us and resolved things amicably. In addition to posting [source code for their BRCKv1](https://www.brck.com/open-source-compliance/) a few of their people came to the meetup to talk about OpenWRT, single-board computers, and fried chicken.
 
 Furthermore, we discussed the role that the community can play in getting the word about companies that are friendly to open-source hardware and software. Simple things like how to flash vanilla software for devices, where to get source code, how to set up a build environment, unbricking, teardowns, etc. In that light, BRCK has donated one BRCKv1 unit to the LUG so we can pass it around, hack on it, and write about it.
 

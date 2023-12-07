@@ -6,7 +6,7 @@ Slug: brck-violating-gpl
 Author: Alan Orth
 Summary: BRCK is distributing binaries derived from GPL-licensed programs and fails to comply with the copyleft obligations of the license.
 
-During a recent meeting of the Nairobi GNU/Linux Users Group we discussed [BRCK](https://www.brck.com "BRCK | Rugged, Portable WiFi Hotspot & Battery Extender"), the Kenya-based makers of a slick, "rugged", battery-powered-GSM-router thing of the same name, and their apparent violation of the GNU General Public License (GPL). The lively discussion ended up making its way to the web in the form of a [blog post](https://nairobilug.or.ke/2015/05/meetup-may-2015.html) on the group's blog.
+During a recent meeting of the Nairobi GNU/Linux Users Group we discussed [BRCK](https://www.brck.com "BRCK | Rugged, Portable WiFi Hotspot & Battery Extender"), the Kenya-based makers of a slick, "rugged", battery-powered-GSM-router thing of the same name, and their apparent violation of the GNU General Public License (GPL). The lively discussion ended up making its way to the web in the form of a [blog post](https://nairobi.lug.or.ke/2015/05/meetup-may-2015.html) on the group's blog.
 
 Their product is based on [OpenWRT](https://openwrt.org/) — the GNU/Linux distribution geared towards embedded systems — which is [licensed](http://wiki.openwrt.org/about/license) under the GPL v2. I believe this is problematic for BRCK for a number of reasons that I will enumerate below. When we reached out to BRCK they claimed that they were not in violation because they use "stock unmodified OpenWRT" source code. This claim is repeated verbatim in a [thread on their forum](http://forums.brck.com/t/where-is-the-openwrt-fork-source-at/482/8).
 

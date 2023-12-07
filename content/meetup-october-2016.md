@@ -14,7 +14,7 @@ There was a discussion on the next step that the LUG needs to take. The question
 
 Hilarity ensued!
 
-None of us, were able to indicate what exactly we do, besides 'meeting and having fun'. Sure, we discuss Open-Source Software, the current shenanigans the government, politicians, local institutions and businesses are up to. We even hustled [BRCK](https://www.brck.com/) a [while back](https://nairobilug.or.ke/2015/05/brck-violating-gpl.html) and got them to come out and explain themselves.
+None of us, were able to indicate what exactly we do, besides 'meeting and having fun'. Sure, we discuss Open-Source Software, the current shenanigans the government, politicians, local institutions and businesses are up to. We even hustled [BRCK](https://www.brck.com/) a [while back](https://nairobi.lug.or.ke/2015/05/brck-violating-gpl.html) and got them to come out and explain themselves.
 
 They also gave us one BRCK for our examination, and an agreement was reached that we would do a writeup on the same. This writeup, is non-existent to-date.
 
