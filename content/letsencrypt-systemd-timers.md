@@ -6,7 +6,7 @@ Slug: using-systemd-timers-to-renew-lets-encrypt-certificates
 Author: Alan Orth
 Summary: Automating the Let's Encrypt TLS certificate renewal process using systemd timers on GNU/Linux is easier and more flexible than using cron.
 
-This is a quick blog post to share the systemd timers that I use to automate the renewal of my [Let's Encrypt](https://letsencrypt.org) certificates. I prefer [systemd timers to cron jobs](https://nairobilug.or.ke/2015/06/cron-systemd-timers.html) for task scheduling because they are more flexible and easier to debug. I assume that you know what Let's Encrypt is and that you already have some certificates. If not, I recommend that you check out [Certbot](https://certbot.eff.org) (the official reference client) and get some.
+This is a quick blog post to share the systemd timers that I use to automate the renewal of my [Let's Encrypt](https://letsencrypt.org) certificates. I prefer [systemd timers to cron jobs](https://nairobi.lug.or.ke/2015/06/cron-systemd-timers.html) for task scheduling because they are more flexible and easier to debug. I assume that you know what Let's Encrypt is and that you already have some certificates. If not, I recommend that you check out [Certbot](https://certbot.eff.org) (the official reference client) and get some.
 
 [![Let's Encrypt logo]({static}/images/letsencrypt-systemd-timers/lets-encrypt.png)](https://letsencrypt.org/ "Let's Encrypt homepage")
 
