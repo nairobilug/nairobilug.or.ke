@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Building a Custom Arch Linux Live ISO in the Cloud | Nairobi GNU/Linux Users Group
+</title>
+  <link rel="canonical" href="/2024/03/custom-live-arch-linux-iso.html">
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#333333">
+
+  <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
+  <link rel="stylesheet" href="/theme/css/theme.css">
+
+  
+  <meta name="description" content="Build a live iso that can be booted from a USB stick">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="/">
+        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
+      <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://web.libera.chat/?channels=#nairobilug" target="_blank">IRC</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
+            <li class="list-inline-item"><a href="/pages/code-of-conduct.html">Code of Conduct</a></li>
+            <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
+            <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
+            <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
+            <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
+            <li class=" list-inline-item text-muted">|</li>
+          <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Building a Custom Arch Linux Live ISO in the Cloud
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2024-03-11T00:00:00+03:00">
+          <i class="fa fa-clock-o"></i>
+          Mon 11 March 2024
+        </li>
+        <li class="list-inline-item">
+          <i class="fa fa-folder-open-o"></i>
+          <a href="/category/linux.html">Linux</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fa fa-user-o"></i>
+              <a href="/author/benson-muite.html">Benson Muite</a>          </li>
+          <li class="list-inline-item">
+            <i class="fa fa-files-o"></i>
+              <a href="/tag/aws.html">#AWS</a>,               <a href="/tag/arch-linux.html">#Arch Linux</a>,               <a href="/tag/how-to.html">#How-to</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>Building a Custom Arch Linux Live ISO in the Cloud</h1>
+<p><a href="https://archlinux.org/">Arch Linux</a> has a number of packages that may not be available
+in other distributions, in particular <a href="https://aur.archlinux.org/packages/inkstitch">Ink/Stitch</a>.
+It can be helpful to be able to run such a program on another computer which may not have it
+installed.  A live iso can help one do this. Building a bootable live ISO image on the cloud
+can be convenient as it can be automated and allow saving on bytes needed to download build
+dependencies to a local computer.  The following steps enable building on <a href="https://aws.amazon.com">AWS</a>
+using the  <a href="https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-0ec4fc08d715411ba">Arch Linux image</a>.</p>
+<p>Log into the instance</p>
+<div class="highlight"><pre><span></span><code><span class="nx">ssh</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="nx">sshkey</span><span class="w">  </span><span class="nx">arch</span><span class="err">@</span><span class="nx">ip</span><span class="p">.</span><span class="nx">address</span>
+</code></pre></div>
+<p>After logging in, first repopulate the keys and update the system</p>
+<div class="highlight"><pre><span></span><code>sudo pacman -Scc
+sudo rm -rf /etc/pacman.d/gnupg
+sudo pacman-key --init
+sudo pacman-key --populate
+sudo pacman -Syu
+</code></pre></div>
+<p>Next install <a href="https://github.com/laurent85v/archuseriso">archuseriso</a></p>
+<div class="highlight"><pre><span></span><code><span class="n">sudo</span><span class="w"> </span><span class="n">pacman</span><span class="w"> </span><span class="o">--</span><span class="n">needed</span><span class="w"> </span><span class="o">-</span><span class="n">Sy</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="n">arch</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="n">scripts</span><span class="w"> </span><span class="n">bash</span><span class="w"> </span><span class="n">dosfstools</span><span class="w"> </span><span class="n">e2fsprogs</span><span class="w"> </span>\
+<span class="w">  </span><span class="n">erofs</span><span class="o">-</span><span class="n">utils</span><span class="w"> </span><span class="n">grub</span><span class="w"> </span><span class="n">libarchive</span><span class="w"> </span><span class="n">libisoburn</span><span class="w"> </span><span class="n">make</span><span class="w"> </span><span class="n">mtools</span><span class="w"> </span><span class="n">parted</span><span class="w"> </span><span class="n">squashfs</span><span class="o">-</span><span class="n">tools</span><span class="w"> </span><span class="n">syslinux</span>
+<span class="n">git</span><span class="w"> </span><span class="n">clone</span><span class="w"> </span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">laurent85v</span><span class="o">/</span><span class="n">archuseriso</span><span class="o">.</span><span class="n">git</span>
+<span class="n">sudo</span><span class="w"> </span><span class="n">make</span><span class="w"> </span><span class="o">-</span><span class="n">C</span><span class="w"> </span><span class="n">archuseriso</span><span class="w"> </span><span class="n">install</span>
+</code></pre></div>
+<p>Inkstitch is available in <a href="https://aur.archlinux.org/packages/inkstitch">Aur</a>, but not
+in the main Arch repositories.  To add it to the live iso image, first create a local
+repository with a locally built Ink/Stitch package.</p>
+<div class="highlight"><pre><span></span><code>sudo pacman --noconfirm -S basedevel inkscape
+git clone
+cd inkstitch
+makepkg --install
+cd ..
+mkdir inkstitchdb
+cd inkstitchdb
+repo-add inkstitch.tar.gz ../inkstitch/*.pkg.tar.zst
+cd ..
+cp inkstitch/*.zst inkstitchdb/
+</code></pre></div>
+<p>Create a profile for the image using the lxqt image as the starting point</p>
+<div class="highlight"><pre><span></span><code><span class="n">cd</span><span class="w"> </span><span class="n">archuseriso</span>
+<span class="n">cd</span><span class="w"> </span><span class="n">profiles</span>
+<span class="n">cp</span><span class="w"> </span><span class="o">-</span><span class="n">r</span><span class="w"> </span><span class="n">lxqt</span><span class="w"> </span><span class="n">inkstitch</span>
+<span class="n">cd</span><span class="w"> </span><span class="n">inkstitch</span>
+<span class="n">echo</span><span class="w"> </span><span class="n">inkscape</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">packages</span><span class="p">.</span><span class="n">x86_64</span>
+<span class="n">echo</span><span class="w"> </span><span class="n">inkstitch</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">packages</span><span class="p">.</span><span class="n">x86_64</span>
+<span class="n">sed</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="s1">'s/\#[custom]/[inkstitch]/g'</span><span class="w"> </span><span class="n">pacman</span><span class="p">.</span><span class="n">conf</span>
+<span class="n">sed</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="s1">'s/\#SigLevel = Optional TrustAll/SigLevel = Optional TrustAll/g'</span><span class="w"> </span><span class="err">\</span>
+<span class="n">pacman</span><span class="p">.</span><span class="n">conf</span>
+<span class="n">sed</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="s1">'s|\#Server = file:///home/custompkgs|Server = file:///home/arch/inkstitchdb|g'</span><span class="w"> </span><span class="err">\</span>
+<span class="n">pacman</span><span class="p">.</span><span class="n">conf</span>
+<span class="n">sed</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="s1">'s|iso_name="aui-lxqt-inkstitch"|iso_name="aui-lxqt-inkstitch"|g'</span><span class="w"> </span><span class="err">\</span>
+<span class="n">profiledef</span><span class="p">.</span><span class="n">sh</span>
+<span class="n">cd</span><span class="w"> </span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span>
+</code></pre></div>
+<p>Build the live iso image</p>
+<div class="highlight"><pre><span></span><code>sudo aui-mkiso archuseriso/profiles/inkstitch/
+</code></pre></div>
+<p>Once done, the resulting iso should be available at</p>
+<div class="highlight"><pre><span></span><code>/home/arch/out/aui-lxqt-inkstitch-linux_6_7_9-0310-x64.iso
+</code></pre></div>
+<h2>References</h2>
+<ul>
+<li>https://wiki.archlinux.org/title/Install_Arch_Linux_on_a_removable_medium</li>
+<li>https://wiki.archlinux.org/title/Archiso</li>
+<li>https://mags.zone/help/arch-usb.html</li>
+<li>https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#Custom_local_repository</li>
+</ul>
+<p><em>Available under a <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> license</em></p>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+</body>
+
+</html>
