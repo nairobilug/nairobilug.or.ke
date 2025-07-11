@@ -1,5 +1,6 @@
 Title: Building a Custom Arch Linux Live ISO in the Cloud
 Date: 2024-03-11
+Updated: 2025-07-11
 Category: Linux
 Tags: AWS, Arch Linux, How-to
 Slug: custom-live-arch-linux-iso
@@ -14,7 +15,7 @@ It can be helpful to be able to run such a program on another computer which may
 installed.  A live iso can help one do this. Building a bootable live ISO image on the cloud
 can be convenient as it can be automated and allow saving on bytes needed to download build
 dependencies to a local computer.  The following steps enable building on [AWS](https://aws.amazon.com)
-using the  [Arch Linux image](https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-0ec4fc08d715411ba).
+using the  [Arch Linux image](https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-0d5a438999cc4f126).
 
 Log into the instance
 
@@ -45,14 +46,14 @@ in the main Arch repositories.  To add it to the live iso image, first create a 
 repository with a locally built Ink/Stitch package.
 
 ```
-sudo pacman --noconfirm -S basedevel inkscape
-git clone
+sudo pacman --noconfirm -S base-devel inkscape
+git clone https://aur.archlinux.org/inkstitch.git
 cd inkstitch
 makepkg --install
 cd ..
 mkdir inkstitchdb
 cd inkstitchdb
-repo-add inkstitch.tar.gz ../inkstitch/*.pkg.tar.zst
+repo-add inkstitch.db.tar.zst ../inkstitch/*.pkg.tar.zst
 cd ..
 cp inkstitch/*.zst inkstitchdb/
 ```
@@ -65,7 +66,7 @@ cp -r lxqt inkstitch
 cd inkstitch
 echo inkscape >> packages.x86_64
 echo inkstitch >> packages.x86_64
-sed -i 's/\#[custom]/[inkstitch]/g' pacman.conf
+sed -i 's/\#\[custom\]/\[inkstitch\]/g' pacman.conf
 sed -i 's/\#SigLevel = Optional TrustAll/SigLevel = Optional TrustAll/g' \
 pacman.conf
 sed -i 's|\#Server = file:///home/custompkgs|Server = file:///home/arch/inkstitchdb|g' \
@@ -81,7 +82,7 @@ sudo aui-mkiso archuseriso/profiles/inkstitch/
 ```
 Once done, the resulting iso should be available at
 ```
-/home/arch/out/aui-lxqt-inkstitch-linux_6_7_9-0310-x64.iso
+/home/arch/out/aui-lxqt-linux_6_15_6-0711-x64.iso
 ```
 
 ## References
