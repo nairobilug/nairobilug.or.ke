@@ -96,24 +96,24 @@ mjanjavm14,<span class="w"> </span><span class="m">2</span>,<span class="w"> </s
 <p>Here's the source code for the <em>ansible-runner.py</em> script above:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python</span>
 
-<span class="kn">import</span> <span class="nn">ansible.runner</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ansible.runner</span>
 
 <span class="c1"># hosts to contact</span>
 <span class="n">hostlist</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'virtual'</span><span class="p">]</span>
 
 <span class="c1"># MiB -&gt; GiB</span>
-<span class="k">def</span> <span class="nf">mibs_to_gibs</span><span class="p">(</span><span class="n">mibs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">mibs_to_gibs</span><span class="p">(</span><span class="n">mibs</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">mibs</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1024.0</span>
 
 <span class="c1"># KiB -&gt; GiB</span>
-<span class="k">def</span> <span class="nf">kibs_to_gibs</span><span class="p">(</span><span class="n">kibs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">kibs_to_gibs</span><span class="p">(</span><span class="n">kibs</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">kibs</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1024.0</span> <span class="o">/</span> <span class="mf">1024.0</span>
 
 <span class="c1"># bytes -&gt; GiB</span>
-<span class="k">def</span> <span class="nf">bytes_to_gibs</span><span class="p">(</span><span class="n">num_bytes</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">bytes_to_gibs</span><span class="p">(</span><span class="n">num_bytes</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">num_bytes</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1024.0</span> <span class="o">/</span> <span class="mf">1024.0</span> <span class="o">/</span> <span class="mf">1024.0</span>
 
-<span class="k">def</span> <span class="nf">parse_results</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_results</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
     <span class="k">for</span> <span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s1">'contacted'</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">memory</span> <span class="o">=</span> <span class="n">mibs_to_gibs</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'ansible_facts'</span><span class="p">][</span><span class="s1">'ansible_memtotal_mb'</span><span class="p">])</span>
 

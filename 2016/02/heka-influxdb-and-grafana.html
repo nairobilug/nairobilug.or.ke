@@ -124,7 +124,7 @@ Currently, the latest versions for both Heka and InfluxDB are pre v1 (v0.10.0 fo
 <span class="na">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"lua_decoders/apache_access.lua"</span>
 <span class="w">    </span><span class="k">[Apache2LogDecoder.config]</span>
 <span class="w">    </span><span class="na">user_agent_transform</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span>
-<span class="w">    </span><span class="na">log_format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"%h %l %u %t \"%r\" %&gt;s %O \"%{Referer}i\" \"%{User-Agent}i\""</span>
+<span class="w">    </span><span class="na">log_format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"%h %l %u %t \"</span><span class="na">%r\" %&gt;s %O \"%{Referer}i\" \"%{User-Agent}i\""</span>
 </code></pre></div>
 <p>The name you give the decoder plugin has to be consistent with the one defined as the decoder in the input plugin. For the SandboxDecoder type, you also have to provide the file in which the plugin type is defined.</p>
 <p>There is a set of files that define types that come bundled with Heka in <em>/usr/share/heka</em>. I, for instance, used the <em>/usr/share/heka/lua_decoders/apache_access.lua</em> file that defines a SandboxDecoder type. Another cool thing about Heka, you can define your own plugin types and point to where you've defined them in your config files.</p>
@@ -135,7 +135,7 @@ Currently, the latest versions for both Heka and InfluxDB are pre v1 (v0.10.0 fo
 <span class="na">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"lua_filters/http_status.lua"</span>
 <span class="na">ticker_interval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">5</span>
 <span class="na">preserve_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span>
-<span class="na">message_matcher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Type == 'logfile'"</span>
+<span class="na">message_matcher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Type == '</span><span class="na">logfile'"</span>
 <span class="w">    </span><span class="k">[Apache2HTTPStatusFilter.config]</span>
 <span class="w">    </span><span class="na">sec_per_row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">60</span>
 <span class="w">    </span><span class="na">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1440</span>
@@ -158,7 +158,7 @@ I initially set the <strong>message_matcher</strong> field to "TRUE" so that non
 <p>Finally, you need to define the output plugin. I am sending the data to an InfluxDB database so I had to define a plugin for this purpose.</p>
 <div class="highlight"><pre><span></span><code><span class="k">[Apache2HTTPStatusInfluxDBOutput]</span>
 <span class="na">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"HttpOutput"</span>
-<span class="na">message_matcher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Type == 'logfile'"</span>
+<span class="na">message_matcher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Type == '</span><span class="na">logfile'"</span>
 <span class="na">address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"http://127.0.0.1:8086/write?db=a2_access_log&amp;rp=default&amp;precision=s"</span>
 <span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"root"</span>
 <span class="na">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"root"</span>
@@ -166,7 +166,7 @@ I initially set the <strong>message_matcher</strong> field to "TRUE" so that non
 </code></pre></div>
 <p>You can define more than one output plugin (you can probably also do this for some of the other steps). I wanted to log the output, during testing, so that I didn't have to query InfluxDB for the data.</p>
 <div class="highlight"><pre><span></span><code><span class="k">[LogOutput]</span>
-<span class="na">message_matcher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Type == 'logfile'"</span>
+<span class="na">message_matcher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Type == '</span><span class="na">logfile'"</span>
 <span class="na">encoder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Apache2HTTPStatusInfluxDBEncoder"</span>
 </code></pre></div>
 <h3>Conclusion</h3>

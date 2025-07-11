@@ -88,7 +88,7 @@ It can be helpful to be able to run such a program on another computer which may
 installed.  A live iso can help one do this. Building a bootable live ISO image on the cloud
 can be convenient as it can be automated and allow saving on bytes needed to download build
 dependencies to a local computer.  The following steps enable building on <a href="https://aws.amazon.com">AWS</a>
-using the  <a href="https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-0ec4fc08d715411ba">Arch Linux image</a>.</p>
+using the  <a href="https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-0d5a438999cc4f126">Arch Linux image</a>.</p>
 <p>Log into the instance</p>
 <div class="highlight"><pre><span></span><code><span class="nx">ssh</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="nx">sshkey</span><span class="w">  </span><span class="nx">arch</span><span class="err">@</span><span class="nx">ip</span><span class="p">.</span><span class="nx">address</span>
 </code></pre></div>
@@ -108,38 +108,38 @@ sudo pacman -Syu
 <p>Inkstitch is available in <a href="https://aur.archlinux.org/packages/inkstitch">Aur</a>, but not
 in the main Arch repositories.  To add it to the live iso image, first create a local
 repository with a locally built Ink/Stitch package.</p>
-<div class="highlight"><pre><span></span><code>sudo pacman --noconfirm -S basedevel inkscape
-git clone
+<div class="highlight"><pre><span></span><code>sudo pacman --noconfirm -S base-devel inkscape
+git clone https://aur.archlinux.org/inkstitch.git
 cd inkstitch
 makepkg --install
 cd ..
 mkdir inkstitchdb
 cd inkstitchdb
-repo-add inkstitch.tar.gz ../inkstitch/*.pkg.tar.zst
+repo-add inkstitch.db.tar.zst ../inkstitch/*.pkg.tar.zst
 cd ..
 cp inkstitch/*.zst inkstitchdb/
 </code></pre></div>
 <p>Create a profile for the image using the lxqt image as the starting point</p>
-<div class="highlight"><pre><span></span><code><span class="n">cd</span><span class="w"> </span><span class="n">archuseriso</span>
-<span class="n">cd</span><span class="w"> </span><span class="n">profiles</span>
-<span class="n">cp</span><span class="w"> </span><span class="o">-</span><span class="n">r</span><span class="w"> </span><span class="n">lxqt</span><span class="w"> </span><span class="n">inkstitch</span>
-<span class="n">cd</span><span class="w"> </span><span class="n">inkstitch</span>
-<span class="n">echo</span><span class="w"> </span><span class="n">inkscape</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">packages</span><span class="p">.</span><span class="n">x86_64</span>
-<span class="n">echo</span><span class="w"> </span><span class="n">inkstitch</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">packages</span><span class="p">.</span><span class="n">x86_64</span>
-<span class="n">sed</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="s1">'s/\#[custom]/[inkstitch]/g'</span><span class="w"> </span><span class="n">pacman</span><span class="p">.</span><span class="n">conf</span>
-<span class="n">sed</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="s1">'s/\#SigLevel = Optional TrustAll/SigLevel = Optional TrustAll/g'</span><span class="w"> </span><span class="err">\</span>
-<span class="n">pacman</span><span class="p">.</span><span class="n">conf</span>
-<span class="n">sed</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="s1">'s|\#Server = file:///home/custompkgs|Server = file:///home/arch/inkstitchdb|g'</span><span class="w"> </span><span class="err">\</span>
-<span class="n">pacman</span><span class="p">.</span><span class="n">conf</span>
-<span class="n">sed</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="s1">'s|iso_name="aui-lxqt-inkstitch"|iso_name="aui-lxqt-inkstitch"|g'</span><span class="w"> </span><span class="err">\</span>
-<span class="n">profiledef</span><span class="p">.</span><span class="n">sh</span>
-<span class="n">cd</span><span class="w"> </span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span>
+<div class="highlight"><pre><span></span><code><span class="nx">cd</span><span class="w"> </span><span class="nx">archuseriso</span>
+<span class="nx">cd</span><span class="w"> </span><span class="nx">profiles</span>
+<span class="nx">cp</span><span class="w"> </span><span class="o">-</span><span class="nx">r</span><span class="w"> </span><span class="nx">lxqt</span><span class="w"> </span><span class="nx">inkstitch</span>
+<span class="nx">cd</span><span class="w"> </span><span class="nx">inkstitch</span>
+<span class="nx">echo</span><span class="w"> </span><span class="nx">inkscape</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="nx">packages</span><span class="p">.</span><span class="nx">x86_64</span>
+<span class="nx">echo</span><span class="w"> </span><span class="nx">inkstitch</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="nx">packages</span><span class="p">.</span><span class="nx">x86_64</span>
+<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">'</span><span class="nx">s</span><span class="o">/</span><span class="err">\#\</span><span class="p">[</span><span class="nx">custom</span><span class="err">\</span><span class="p">]</span><span class="o">/</span><span class="err">\</span><span class="p">[</span><span class="nx">inkstitch</span><span class="err">\</span><span class="p">]</span><span class="o">/</span><span class="nx">g</span><span class="err">'</span><span class="w"> </span><span class="nx">pacman</span><span class="p">.</span><span class="nx">conf</span>
+<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">'</span><span class="nx">s</span><span class="o">/</span><span class="err">\#</span><span class="nx">SigLevel</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">Optional</span><span class="w"> </span><span class="nx">TrustAll</span><span class="o">/</span><span class="nx">SigLevel</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">Optional</span><span class="w"> </span><span class="nx">TrustAll</span><span class="o">/</span><span class="nx">g</span><span class="err">'</span><span class="w"> </span>\
+<span class="nx">pacman</span><span class="p">.</span><span class="nx">conf</span>
+<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">'</span><span class="nx">s</span><span class="o">|</span><span class="err">\#</span><span class="nx">Server</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">file</span><span class="p">:</span><span class="c1">///home/custompkgs|Server = file:///home/arch/inkstitchdb|g' \</span>
+<span class="nx">pacman</span><span class="p">.</span><span class="nx">conf</span>
+<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">'</span><span class="nx">s</span><span class="o">|</span><span class="nx">iso_name</span><span class="p">=</span><span class="s">"aui-lxqt-inkstitch"</span><span class="o">|</span><span class="nx">iso_name</span><span class="p">=</span><span class="s">"aui-lxqt-inkstitch"</span><span class="o">|</span><span class="nx">g</span><span class="err">'</span><span class="w"> </span>\
+<span class="nx">profiledef</span><span class="p">.</span><span class="nx">sh</span>
+<span class="nx">cd</span><span class="w"> </span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span>
 </code></pre></div>
 <p>Build the live iso image</p>
 <div class="highlight"><pre><span></span><code>sudo aui-mkiso archuseriso/profiles/inkstitch/
 </code></pre></div>
 <p>Once done, the resulting iso should be available at</p>
-<div class="highlight"><pre><span></span><code>/home/arch/out/aui-lxqt-inkstitch-linux_6_7_9-0310-x64.iso
+<div class="highlight"><pre><span></span><code>/home/arch/out/aui-lxqt-linux_6_15_6-0711-x64.iso
 </code></pre></div>
 <h2>References</h2>
 <ul>
