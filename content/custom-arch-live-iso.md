@@ -15,7 +15,7 @@ It can be helpful to be able to run such a program on another computer which may
 installed.  A live iso can help one do this. Building a bootable live ISO image on the cloud
 can be convenient as it can be automated and allow saving on bytes needed to download build
 dependencies to a local computer.  The following steps enable building on [AWS](https://aws.amazon.com)
-using the  [Arch Linux image](https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-0d5a438999cc4f126).
+using an [Arch Linux image](https://wiki.archlinux.org/title/Arch_Linux_AMIs_for_Amazon_Web_Services).
 
 Log into the instance
 
