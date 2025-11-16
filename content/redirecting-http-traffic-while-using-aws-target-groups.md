@@ -238,7 +238,7 @@ We started with a broken configuration that put a small subset of HTTP requests 
 [HSTS Preload List Submission]: https://hstspreload.org
 [Onadata API]: http://github.com/onaio/onadata
 [HTTPS Everywhere]: https://www.eff.org/HTTPS-Everywhere
-[Nairobi Linux Users Group]: https://nairobilug.or.ke/
+[Nairobi Linux Users Group]: https://nairobi.lug.or.ke/
 [HSTS]: https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security
 [From Wikipedia]: https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security
 [here]: https://github.com/onaio/milia/blob/580969b2b2a88a446b5d903237adca7ab4003096/src/milia/api/io.cljs#L119
