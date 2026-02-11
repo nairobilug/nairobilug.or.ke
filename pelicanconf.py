@@ -23,7 +23,8 @@ ARTICLE_SAVE_AS = ARTICLE_URL
 ARTICLE_LANG_URL = '{date:%Y}/{date:%m}/{slug}-{lang}.html'
 ARTICLE_LANG_SAVE_AS = ARTICLE_LANG_URL
 
-DEFAULT_PAGINATION = 10
+# DEFAULT_PAGINATION = 10
+DEFAULT_PAGINATION = False
 
 STATIC_PATHS = ['extras', 'images']
 EXTRA_PATH_METADATA = {
@@ -41,7 +42,8 @@ EXTRA_PATH_METADATA = {
 
 # http://docs.getpelican.com/en/stable/plugins.html#how-to-use-plugins
 PLUGIN_PATHS = ['plugins']
-PLUGINS = ['pelican-bootstrapify']
+# PLUGINS = ['pelican-bootstrapify']
+PLUGINS = []
 
 BOOTSTRAPIFY = {
     'table': ['table', 'table-striped', 'table-hover'],
@@ -52,6 +54,7 @@ BOOTSTRAPIFY = {
 # Theme settings --------------------------------------------------------------
 
 THEME = 'themes/pelican-alchemy/alchemy'
+
 
 SITESUBTITLE = 'A lively community of GNU/Linux enthusiasts'
 SITEIMAGE = '/images/profile.png'
