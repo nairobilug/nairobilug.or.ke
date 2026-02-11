@@ -23,7 +23,7 @@ ARTICLE_SAVE_AS = ARTICLE_URL
 ARTICLE_LANG_URL = '{date:%Y}/{date:%m}/{slug}-{lang}.html'
 ARTICLE_LANG_SAVE_AS = ARTICLE_LANG_URL
 
-# DEFAULT_PAGINATION = 10
+# Ensures multiple index_[n] are not generated
 DEFAULT_PAGINATION = False
 
 STATIC_PATHS = ['extras', 'images']
@@ -42,7 +42,7 @@ EXTRA_PATH_METADATA = {
 
 # http://docs.getpelican.com/en/stable/plugins.html#how-to-use-plugins
 PLUGIN_PATHS = ['plugins']
-# PLUGINS = ['pelican-bootstrapify']
+# Specifying plugin isn't necessary once plugin is in project
 PLUGINS = []
 
 BOOTSTRAPIFY = {
