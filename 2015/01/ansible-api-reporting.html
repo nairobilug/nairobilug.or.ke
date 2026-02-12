@@ -17,7 +17,7 @@
     <meta name="theme-color" content="#333333">
 
   <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/theme/css/fontawesome.min.css">
   <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
   <link rel="stylesheet" href="/theme/css/theme.css">
 
@@ -49,8 +49,8 @@
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
             <li class=" list-inline-item text-muted">|</li>
-          <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
-          <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fab fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fab fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
       </ul>
   </div>
 </div>    </div>
@@ -65,18 +65,18 @@
     <header>
       <ul class="list-inline">
         <li class="list-inline-item text-muted" title="2015-01-21T16:40:00+03:00">
-          <i class="fa fa-clock-o"></i>
+          <i class="fas fa-clock"></i>
           Wed 21 January 2015
         </li>
         <li class="list-inline-item">
-          <i class="fa fa-folder-open-o"></i>
+          <i class="fas fa-folder-open"></i>
           <a href="/category/linux.html">Linux</a>
         </li>
           <li class="list-inline-item">
-            <i class="fa fa-user-o"></i>
+            <i class="fas fa-user"></i>
               <a href="/author/alan-orth.html">Alan Orth</a>          </li>
           <li class="list-inline-item">
-            <i class="fa fa-files-o"></i>
+            <i class="fas fa-tag"></i>
               <a href="/tag/linux.html">#linux</a>,               <a href="/tag/ansible.html">#ansible</a>,               <a href="/tag/python.html">#python</a>          </li>
       </ul>
     </header>
@@ -85,12 +85,14 @@
 <p>Somehow I stumbled upon <a href="http://docs.ansible.com/developing_api.html">Ansible's Python API</a>, which solves this problem elegantly! It helped that other people are doing cool things and <a href="http://jpmens.net/2012/12/13/obtaining-remote-data-with-ansible-s-api/">writing about their experiences</a> too.</p>
 <h2>Enter ansible.runner</h2>
 <p>According to the documentation, the Python API is:</p>
-<blockquote class="blockquote">[...] very powerful, and is how the ansible CLI and ansible-playbook are implemented.</blockquote>
+<blockquote>[...] very powerful, and is how the ansible CLI and ansible-playbook are implemented.</blockquote>
+
 <p>Indeed! Using <code>ansible.runner</code> I whipped something up and extracted data from several dozen servers in just a few minutes (and I don't even know Python!):</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>./ansible-runner.py
 mjanjavm10,<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="m">30</span>,<span class="w"> </span>Ubuntu<span class="w"> </span><span class="m">14</span>.04,<span class="w"> </span><span class="m">192</span>.168.7.34
 mjanjavm14,<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="m">30</span>,<span class="w"> </span>Ubuntu<span class="w"> </span><span class="m">14</span>.04,<span class="w"> </span><span class="m">192</span>.168.7.37
 </code></pre></div>
+
 <p>I had to massage the data a bit to get clean numbers for RAM and storage capacity, but other than that it was extremely straightforward (as most things with Ansible generally are).</p>
 <h2>The Code</h2>
 <p>Here's the source code for the <em>ansible-runner.py</em> script above:</p>
@@ -99,7 +101,7 @@ mjanjavm14,<span class="w"> </span><span class="m">2</span>,<span class="w"> </s
 <span class="kn">import</span><span class="w"> </span><span class="nn">ansible.runner</span>
 
 <span class="c1"># hosts to contact</span>
-<span class="n">hostlist</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'virtual'</span><span class="p">]</span>
+<span class="n">hostlist</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;virtual&#39;</span><span class="p">]</span>
 
 <span class="c1"># MiB -&gt; GiB</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">mibs_to_gibs</span><span class="p">(</span><span class="n">mibs</span><span class="p">):</span>
@@ -114,28 +116,28 @@ mjanjavm14,<span class="w"> </span><span class="m">2</span>,<span class="w"> </s
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">num_bytes</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1024.0</span> <span class="o">/</span> <span class="mf">1024.0</span> <span class="o">/</span> <span class="mf">1024.0</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_results</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s1">'contacted'</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">memory</span> <span class="o">=</span> <span class="n">mibs_to_gibs</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'ansible_facts'</span><span class="p">][</span><span class="s1">'ansible_memtotal_mb'</span><span class="p">])</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;contacted&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">memory</span> <span class="o">=</span> <span class="n">mibs_to_gibs</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;ansible_facts&#39;</span><span class="p">][</span><span class="s1">&#39;ansible_memtotal_mb&#39;</span><span class="p">])</span>
 
         <span class="c1"># enumerate all disk devices to get total capacity</span>
         <span class="n">disk_total_capacity</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">disk_device</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s1">'ansible_facts'</span><span class="p">][</span><span class="s1">'ansible_devices'</span><span class="p">]</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">():</span>
-            <span class="n">disk_sectors</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'ansible_facts'</span><span class="p">][</span><span class="s1">'ansible_devices'</span><span class="p">][</span><span class="n">disk_device</span><span class="p">][</span><span class="s1">'sectors'</span><span class="p">])</span>
-            <span class="n">disk_sectors_size</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'ansible_facts'</span><span class="p">][</span><span class="s1">'ansible_devices'</span><span class="p">][</span><span class="n">disk_device</span><span class="p">][</span><span class="s1">'sectorsize'</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">disk_device</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;ansible_facts&#39;</span><span class="p">][</span><span class="s1">&#39;ansible_devices&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">():</span>
+            <span class="n">disk_sectors</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;ansible_facts&#39;</span><span class="p">][</span><span class="s1">&#39;ansible_devices&#39;</span><span class="p">][</span><span class="n">disk_device</span><span class="p">][</span><span class="s1">&#39;sectors&#39;</span><span class="p">])</span>
+            <span class="n">disk_sectors_size</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;ansible_facts&#39;</span><span class="p">][</span><span class="s1">&#39;ansible_devices&#39;</span><span class="p">][</span><span class="n">disk_device</span><span class="p">][</span><span class="s1">&#39;sectorsize&#39;</span><span class="p">])</span>
             <span class="n">disk_bytes</span> <span class="o">=</span> <span class="n">disk_sectors</span> <span class="o">*</span> <span class="n">disk_sectors_size</span>
 
             <span class="n">disk_total_capacity</span> <span class="o">+=</span> <span class="n">bytes_to_gibs</span><span class="p">(</span><span class="n">disk_bytes</span><span class="p">)</span>
 
-        <span class="n">os</span> <span class="o">=</span> <span class="s2">"</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'ansible_facts'</span><span class="p">][</span><span class="s1">'ansible_distribution'</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s1">'ansible_facts'</span><span class="p">][</span><span class="s1">'ansible_distribution_version'</span><span class="p">])</span>
-        <span class="n">ip</span> <span class="o">=</span> <span class="s2">"</span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'ansible_facts'</span><span class="p">][</span><span class="s1">'ansible_default_ipv4'</span><span class="p">][</span><span class="s1">'address'</span><span class="p">])</span>
+        <span class="n">os</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;ansible_facts&#39;</span><span class="p">][</span><span class="s1">&#39;ansible_distribution&#39;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;ansible_facts&#39;</span><span class="p">][</span><span class="s1">&#39;ansible_distribution_version&#39;</span><span class="p">])</span>
+        <span class="n">ip</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;ansible_facts&#39;</span><span class="p">][</span><span class="s1">&#39;ansible_default_ipv4&#39;</span><span class="p">][</span><span class="s1">&#39;address&#39;</span><span class="p">])</span>
 
-        <span class="nb">print</span> <span class="s2">"</span><span class="si">%s</span><span class="s2">, </span><span class="si">%.0f</span><span class="s2">, </span><span class="si">%2.0f</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">memory</span><span class="p">,</span> <span class="n">disk_total_capacity</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">ip</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">, </span><span class="si">%.0f</span><span class="s2">, </span><span class="si">%2.0f</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">memory</span><span class="p">,</span> <span class="n">disk_total_capacity</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">ip</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">results</span> <span class="o">=</span> <span class="n">ansible</span><span class="o">.</span><span class="n">runner</span><span class="o">.</span><span class="n">Runner</span><span class="p">(</span>
-        <span class="n">module_name</span><span class="o">=</span><span class="s1">'setup'</span><span class="p">,</span>
-        <span class="n">module_args</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span>
-        <span class="n">remote_user</span><span class="o">=</span><span class="s1">'provisioning'</span><span class="p">,</span>
+        <span class="n">module_name</span><span class="o">=</span><span class="s1">&#39;setup&#39;</span><span class="p">,</span>
+        <span class="n">module_args</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">remote_user</span><span class="o">=</span><span class="s1">&#39;provisioning&#39;</span><span class="p">,</span>
         <span class="n">sudo</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">pattern</span><span class="o">=</span><span class="n">hostlist</span><span class="p">,</span>
         <span class="n">forks</span><span class="o">=</span><span class="mi">5</span>
@@ -145,6 +147,7 @@ mjanjavm14,<span class="w"> </span><span class="m">2</span>,<span class="w"> </s
 
 <span class="c1"># vim: set sw=4 ts=4:</span>
 </code></pre></div>
+
 <p>Feel free to use, improve, and share it.</p>
 <p>This was <a href="https://mjanja.ch/2015/01/leveraging-the-ansible-python-api-for-infrastructure-reporting/">originally posted</a> on my personal blog; re-posted here for posterity.</p>
     </div>
@@ -167,6 +170,7 @@ mjanjavm14,<span class="w"> </span><span class="m">2</span>,<span class="w"> </s
   </p>
 </div>    </div>
   </footer>
+
 </body>
 
 </html>

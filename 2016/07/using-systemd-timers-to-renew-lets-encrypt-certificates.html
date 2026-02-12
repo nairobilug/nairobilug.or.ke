@@ -17,7 +17,7 @@
     <meta name="theme-color" content="#333333">
 
   <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/theme/css/fontawesome.min.css">
   <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
   <link rel="stylesheet" href="/theme/css/theme.css">
 
@@ -49,8 +49,8 @@
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
             <li class=" list-inline-item text-muted">|</li>
-          <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
-          <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fab fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fab fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
       </ul>
   </div>
 </div>    </div>
@@ -65,50 +65,52 @@
     <header>
       <ul class="list-inline">
         <li class="list-inline-item text-muted" title="2016-07-11T14:42:00+03:00">
-          <i class="fa fa-clock-o"></i>
+          <i class="fas fa-clock"></i>
           Mon 11 July 2016
         </li>
         <li class="list-inline-item">
-          <i class="fa fa-folder-open-o"></i>
+          <i class="fas fa-folder-open"></i>
           <a href="/category/linux.html">Linux</a>
         </li>
           <li class="list-inline-item">
-            <i class="fa fa-user-o"></i>
+            <i class="fas fa-user"></i>
               <a href="/author/alan-orth.html">Alan Orth</a>          </li>
           <li class="list-inline-item">
-            <i class="fa fa-files-o"></i>
+            <i class="fas fa-tag"></i>
               <a href="/tag/lets-encrypt.html">#Let's Encrypt</a>,               <a href="/tag/systemd.html">#systemd</a>,               <a href="/tag/security.html">#Security</a>          </li>
       </ul>
     </header>
     <div class="content">
       <p>This is a quick blog post to share the systemd timers that I use to automate the renewal of my <a href="https://letsencrypt.org">Let's Encrypt</a> certificates. I prefer <a href="https://nairobilug.or.ke/2015/06/cron-systemd-timers.html">systemd timers to cron jobs</a> for task scheduling because they are more flexible and easier to debug. I assume that you know what Let's Encrypt is and that you already have some certificates. If not, I recommend that you check out <a href="https://certbot.eff.org">Certbot</a> (the official reference client) and get some.</p>
-<p><a href="https://letsencrypt.org/" title="Let's Encrypt homepage"><img alt="Let's Encrypt logo" class="img-fluid" src="/images/letsencrypt-systemd-timers/lets-encrypt.png"/></a></p>
+<p><a href="https://letsencrypt.org/" title="Let's Encrypt homepage"><img alt="Let's Encrypt logo" src="/images/letsencrypt-systemd-timers/lets-encrypt.png"></a></p>
 <p>Because Let's Encrypt issues <abbr title="Transport Layer Security">TLS</abbr> certificates with much <a href="https://letsencrypt.org/2015/11/09/why-90-days.html">shorter lifetimes</a> (currently ninety days) than traditional certificate authorities, they expect you to reduce the burden of the issuance and renewal processes by performing them programmatically and automating them.</p>
 <h2>Check Early, Check Often</h2>
 <p>Your certificates are good for ninety days, but checking them for renewal on a daily or weekly basis allows for some margin of error in case of server downtime, network interruptions, beach holidays, etc. In the future Let's Encrypt might use even shorter lifespans so it's good to get familiar with this automation now. You will need to create both the <code>service</code> and <code>timer</code> unit files below.</p>
 <p><em>/etc/systemd/system/renew-letsencrypt.service</em> :</p>
 <div class="highlight"><pre><span></span><code><span class="k">[Unit]</span>
-<span class="na">Description</span><span class="o">=</span><span class="s">Renew Let's Encrypt certificates</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Renew Let&#39;s Encrypt certificates</span>
 
 <span class="k">[Service]</span>
 <span class="na">Type</span><span class="o">=</span><span class="s">oneshot</span>
 <span class="c1"># check for renewal, only start/stop nginx if certs need to be renewed</span>
-<span class="na">ExecStart</span><span class="o">=</span><span class="s">/opt/certbot-auto renew --standalone --pre-hook "/bin/systemctl stop nginx" --post-hook "/bin/systemctl start nginx"</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/opt/certbot-auto renew --standalone --pre-hook &quot;/bin/systemctl stop nginx&quot; --post-hook &quot;/bin/systemctl start nginx&quot;</span>
 </code></pre></div>
+
 <p><em>/etc/systemd/system/renew-letsencrypt.timer</em> :</p>
 <div class="highlight"><pre><span></span><code><span class="k">[Unit]</span>
-<span class="na">Description</span><span class="o">=</span><span class="s">Daily renewal of Let's Encrypt's certificates</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Daily renewal of Let&#39;s Encrypt&#39;s certificates</span>
 
 <span class="k">[Timer]</span>
 <span class="c1"># once a day, at 2AM</span>
 <span class="na">OnCalendar</span><span class="o">=</span><span class="s">*-*-* 02:00:00</span>
-<span class="c1"># Be kind to the Let's Encrypt servers: add a random delay of 0–3600 seconds</span>
+<span class="c1"># Be kind to the Let&#39;s Encrypt servers: add a random delay of 0–3600 seconds</span>
 <span class="na">RandomizedDelaySec</span><span class="o">=</span><span class="s">3600</span>
 <span class="na">Persistent</span><span class="o">=</span><span class="s">true</span>
 
 <span class="k">[Install]</span>
 <span class="na">WantedBy</span><span class="o">=</span><span class="s">timers.target</span>
 </code></pre></div>
+
 <p>This timer runs once a day at 2AM, but each execution is delayed by a random amount of time between zero and 3600 seconds using the <code>RandomizedDelaySec</code> option.</p>
 <p>Pay attention to the location of the <code>certbot-auto</code> script in the service file and adjust accordingly for your setup. Also note that I'm using the <code>standalone</code> mode of execution because the <code>nginx</code> one isn't stable yet. See the <a href="https://certbot.eff.org/docs/using.html#renewal">Certbot renewal documentation</a> for more examples.</p>
 <h2>Activate and Enable the Timer</h2>
@@ -117,11 +119,13 @@
 <span class="o">$</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="n">renew</span><span class="o">-</span><span class="n">letsencrypt</span><span class="o">.</span><span class="n">timer</span>
 <span class="o">$</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="n">renew</span><span class="o">-</span><span class="n">letsencrypt</span><span class="o">.</span><span class="n">timer</span>
 </code></pre></div>
+
 <p>Starting the timer is necessary because otherwise it wouldn't be active until the next time you rebooted (assuming it was enabled, that is). You can verify that the timer has been started, its planned execution times, service logs, etc using the following commands:</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>list-timers
 $<span class="w"> </span>sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>renew-letsencrypt
-$<span class="w"> </span>sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>renew-letsencrypt<span class="w"> </span>--since<span class="o">=</span><span class="s2">"yesterday"</span>
+$<span class="w"> </span>sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>renew-letsencrypt<span class="w"> </span>--since<span class="o">=</span><span class="s2">&quot;yesterday&quot;</span>
 </code></pre></div>
+
 <h2>More Information</h2>
 <p>See the following for more information:</p>
 <ul>
@@ -152,6 +156,7 @@ $<span class="w"> </span>sudo<span class="w"> </span>journalctl<span class="w"> 
   </p>
 </div>    </div>
   </footer>
+
 </body>
 
 </html>

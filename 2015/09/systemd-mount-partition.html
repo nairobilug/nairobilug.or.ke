@@ -17,7 +17,7 @@
     <meta name="theme-color" content="#333333">
 
   <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/theme/css/fontawesome.min.css">
   <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
   <link rel="stylesheet" href="/theme/css/theme.css">
 
@@ -49,8 +49,8 @@
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
             <li class=" list-inline-item text-muted">|</li>
-          <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
-          <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fab fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fab fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
       </ul>
   </div>
 </div>    </div>
@@ -65,24 +65,24 @@
     <header>
       <ul class="list-inline">
         <li class="list-inline-item text-muted" title="2015-09-02T11:00:00+03:00">
-          <i class="fa fa-clock-o"></i>
+          <i class="fas fa-clock"></i>
           Wed 02 September 2015
         </li>
         <li class="list-inline-item">
-          <i class="fa fa-folder-open-o"></i>
+          <i class="fas fa-folder-open"></i>
           <a href="/category/linux.html">Linux</a>
         </li>
           <li class="list-inline-item">
-            <i class="fa fa-user-o"></i>
+            <i class="fas fa-user"></i>
               <a href="/author/james-oguya.html">James Oguya</a>          </li>
           <li class="list-inline-item">
-            <i class="fa fa-files-o"></i>
+            <i class="fas fa-tag"></i>
               <a href="/tag/linux.html">#linux</a>,               <a href="/tag/systemd.html">#systemd</a>          </li>
       </ul>
     </header>
     <div class="content">
       <p><a href="http://www.freedesktop.org/wiki/Software/systemd">systemd</a> is gradually becoming the de facto init system &amp; service manager replacing the old sysV init scripts &amp; upstart. Recently, I discovered you can mount partitions using <a href="http://www.freedesktop.org/software/systemd/man/systemd.mount.html">systemd.mount</a> by writing your own <code>.mount</code> <a href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html">systemd unit file</a>.</p>
-<p><img alt="super suprised" class="img-fluid" src="/images/systemd-mount-partition/suprised-cat.jpg"/></p>
+<p><img alt="super suprised" src="/images/systemd-mount-partition/suprised-cat.jpg"></p>
 <p>After <em>RTFM'ing</em>, I realized, under the hood, systemd just runs <a href="http://linux.die.net/man/8/mount">mount command</a> to mount the specified partition with the specified mount options listed in the mount unit file. Basically, you need to specify the following options in your unit file:</p>
 <ul>
 <li><code>What=</code> a partition name, path or UUID to mount</li>
@@ -93,6 +93,7 @@
 <p>In the end, you can convert your typical fstab entry such as this:</p>
 <div class="highlight"><pre><span></span><code>UUID=86fef3b2-bdc9-47fa-bbb1-4e528a89d222 /mnt/backups    ext4    defaults      0 0
 </code></pre></div>
+
 <p>to:</p>
 <div class="highlight"><pre><span></span><code><span class="k">[Mount]</span>
 <span class="na">What</span><span class="o">=</span><span class="s">/dev/disk/by-uuid/86fef3b2-bdc9-47fa-bbb1-4e528a89d222</span>
@@ -100,9 +101,10 @@
 <span class="na">Type</span><span class="o">=</span><span class="s">ext4</span>
 <span class="na">Options</span><span class="o">=</span><span class="s">defaults</span>
 </code></pre></div>
-<p><img alt="I Got This!" class="img-fluid" src="/images/systemd-mount-partition/i-got-this.gif"/></p>
+
+<p><img alt="I Got This!" src="/images/systemd-mount-partition/i-got-this.gif"></p>
 <p>So I wrote a simple systemd mount unit file — <code>/etc/systemd/system/mnt-backups.mount</code> — which didn't work at first because I fell victim to one of the <code>systemd.mount</code> pitfalls:</p>
-<blockquote class="blockquote">
+<blockquote>
 <p>Mount units must be named after the mount point directories they control. Example: the mount point /home/lennart must be configured in a unit file home-lennart.mount.</p>
 </blockquote>
 <p>Huh? Yes that's right! The unit filename should match the mount point path.</p>
@@ -116,10 +118,12 @@
 <span class="na">Type</span><span class="o">=</span><span class="s">ext4</span>
 <span class="na">Options</span><span class="o">=</span><span class="s">defaults</span>
 </code></pre></div>
+
 <p>Reload systemd daemon &amp; start the unit.</p>
 <div class="highlight"><pre><span></span><code>systemctl<span class="w"> </span>daemon-reload
 systemctl<span class="w"> </span>start<span class="w"> </span>mnt-backups.mount
 </code></pre></div>
+
 <p>And just like any other unit, you can view its status using <code>systemctl status mnt-backups.mount</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="n">root</span><span class="err">@</span><span class="n">vast</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="c1"># systemctl status mnt-backups.mount</span>
 <span class="err">●</span><span class="w"> </span><span class="n">mnt</span><span class="o">-</span><span class="n">backups</span><span class="o">.</span><span class="n">mount</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Mount</span><span class="w"> </span><span class="n">System</span><span class="w"> </span><span class="n">Backups</span><span class="w"> </span><span class="n">Directory</span>
@@ -132,6 +136,7 @@ systemctl<span class="w"> </span>start<span class="w"> </span>mnt-backups.mount
 <span class="n">Aug</span><span class="w"> </span><span class="mi">31</span><span class="w"> </span><span class="mi">08</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">15</span><span class="w"> </span><span class="n">vast</span><span class="w"> </span><span class="n">systemd</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="w"> </span><span class="n">Mounting</span><span class="w"> </span><span class="n">Mount</span><span class="w"> </span><span class="n">System</span><span class="w"> </span><span class="n">Backups</span><span class="w"> </span><span class="n">Directory</span><span class="o">...</span>
 <span class="n">Aug</span><span class="w"> </span><span class="mi">31</span><span class="w"> </span><span class="mi">08</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">15</span><span class="w"> </span><span class="n">vast</span><span class="w"> </span><span class="n">systemd</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="w"> </span><span class="n">Mounted</span><span class="w"> </span><span class="n">Mount</span><span class="w"> </span><span class="n">System</span><span class="w"> </span><span class="n">Backups</span><span class="w"> </span><span class="n">Directory</span><span class="o">.</span>
 </code></pre></div>
+
 <h2>Gotchas!!</h2>
 <p>After a reboot, I noticed the unit wasn't started &amp; as result the mount point dir. was empty. The unit file was missing an <code>[Install]</code> section which contains installation information such as unit dependencies(<code>WantedBy=, RequiredBy=</code>), aliases(<code>Alias=</code>), additional units(<code>Also=</code>), e.t.c for the specified unit. In this case, I set the unit to start in multi-user runlevel a.k.a <code>multi-user.target</code>. Oh, did you know you can change runlevel using <code>systemctl isolate $RUN_LEVEL.target</code>? <a href="https://wiki.archlinux.org/index.php/Systemd#Targets_table">Read more</a> about systemd runlevels/targets.</p>
 <p>Here's the complete <code>/etc/systemd/system/mnt-backups.mount</code> unit file with an <code>[Install]</code> section:</p>
@@ -147,6 +152,7 @@ systemctl<span class="w"> </span>start<span class="w"> </span>mnt-backups.mount
 <span class="k">[Install]</span>
 <span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
 </code></pre></div>
+
 <p>As always, enable the unit to start automatically during boot.</p>
 <div class="highlight"><pre><span></span><code>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>mnt-backups.mount
 </code></pre></div>
@@ -170,6 +176,7 @@ systemctl<span class="w"> </span>start<span class="w"> </span>mnt-backups.mount
   </p>
 </div>    </div>
   </footer>
+
 </body>
 
 </html>

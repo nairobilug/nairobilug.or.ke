@@ -17,7 +17,7 @@
     <meta name="theme-color" content="#333333">
 
   <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/theme/css/fontawesome.min.css">
   <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
   <link rel="stylesheet" href="/theme/css/theme.css">
 
@@ -49,8 +49,8 @@
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
             <li class=" list-inline-item text-muted">|</li>
-          <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
-          <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fab fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fab fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
       </ul>
   </div>
 </div>    </div>
@@ -65,18 +65,18 @@
     <header>
       <ul class="list-inline">
         <li class="list-inline-item text-muted" title="2018-02-04T14:36:00+03:00">
-          <i class="fa fa-clock-o"></i>
+          <i class="fas fa-clock"></i>
           Sun 04 February 2018
         </li>
         <li class="list-inline-item">
-          <i class="fa fa-folder-open-o"></i>
+          <i class="fas fa-folder-open"></i>
           <a href="/category/linux.html">Linux</a>
         </li>
           <li class="list-inline-item">
-            <i class="fa fa-user-o"></i>
+            <i class="fas fa-user"></i>
               <a href="/author/alan-orth.html">Alan Orth</a>          </li>
           <li class="list-inline-item">
-            <i class="fa fa-files-o"></i>
+            <i class="fas fa-tag"></i>
               <a href="/tag/java.html">#Java</a>,               <a href="/tag/maven.html">#Maven</a>,               <a href="/tag/artifactory.html">#Artifactory</a>,               <a href="/tag/docker.html">#Docker</a>          </li>
       </ul>
     </header>
@@ -91,15 +91,16 @@
 <span class="w">         </span>-v<span class="w"> </span>artifactory5_data:/var/opt/jfrog/artifactory<span class="w"> </span><span class="se">\</span>
 <span class="w">         </span>-p<span class="w"> </span><span class="m">8081</span>:8081<span class="w"> </span>docker.bintray.io/jfrog/artifactory-oss:latest
 </code></pre></div>
+
 <p>Assuming the container has started up correctly you should now be able to access the Artifactory web application at <a href="http://localhost:8081">http://localhost:8081</a>. The first time you access it you will be asked to set a password for the administrator account and to create repositories appropriate for your desired build system. In this case you should at least select Maven:</p>
-<p><img alt="Repository Setup in JFrog Artifactory 5 Web Application" class="img-fluid" src="/images/cache-maven-artifacts-with-artifactory/artifactory-create-repositories-1024x571.png"/></p>
+<p><img alt="Repository Setup in JFrog Artifactory 5 Web Application" src="/images/cache-maven-artifacts-with-artifactory/artifactory-create-repositories-1024x571.png"></p>
 <p>By default Artifactory sets up a "virtual" repository called <code>libs-release</code> that is configured to transparently proxy and cache <code>release</code> and <code>snapshot</code> artifacts from Maven central. This should probably cover most of your project's build artifacts — or at least enough to verify that it's working. Later, once you understand how Artifactory works, you can add more remote repositories and include them in the default virtual repository (check your project's <code>pom.xml</code> for other <code>&amp;lt;repository&amp;gt;</code> blocks). For example, I've added <code>restlet</code>, <code>rubygems-release</code>, and <code>sonatype-releases</code> as well.</p>
 <h2>Configure Maven Settings</h2>
 <p>Artifactory's web interface has a neat "Set Me Up" utility that will generate a Maven settings file for you, but I find it a bit confusing because it caters for use cases like publishing artifacts to the repository. As we only need anonymous read-only access for now, it's much easier to just use the snippet below as a starting point instead.</p>
 <p>Copy this to <code>~/.m2/settings.xml</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
-<span class="nt">&lt;settings</span><span class="w"> </span><span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd"</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">"http://maven.apache.org/SETTINGS/1.1.0"</span>
-<span class="w">    </span><span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;settings</span><span class="w"> </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd&quot;</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/SETTINGS/1.1.0&quot;</span>
+<span class="w">    </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="nt">&gt;</span>
 <span class="w">  </span><span class="nt">&lt;servers&gt;</span>
 <span class="w">    </span><span class="nt">&lt;server&gt;</span>
 <span class="w">      </span><span class="nt">&lt;id&gt;</span>central<span class="nt">&lt;/id&gt;</span>
@@ -150,9 +151,10 @@
 <span class="w">  </span><span class="nt">&lt;/activeProfiles&gt;</span>
 <span class="nt">&lt;/settings&gt;</span>
 </code></pre></div>
+
 <p>Now when you run <code>mvn package</code> you should see Maven contact your local repository instead of a remote one. If Maven requests an artifact that doesn't exist in the cache yet, Artifactory will go fetch it and then send it to you. The next time Maven requests that artifact it will already be in the cache and will be retrieved much quicker.</p>
 <p>Eventually your Artifactory will be filled with artifacts — the administration dashboard will even give you statistics!</p>
-<p><img alt="Screenshot of JFrog Artifactory 5 Web Application Showing 4,336 Cached Artifacts" class="img-fluid" src="/images/cache-maven-artifacts-with-artifactory/artifactory-artifacts-1024x571.png"/></p>
+<p><img alt="Screenshot of JFrog Artifactory 5 Web Application Showing 4,336 Cached Artifacts" src="/images/cache-maven-artifacts-with-artifactory/artifactory-artifacts-1024x571.png"></p>
 <h2>Advanced Usage: Docker Networking</h2>
 <p>Maven builds in your normal working environment actually already populate an artifact cache located at <code>~/.m2/repository</code>, so after one or two builds you won't really benefit from the Artifactory cache at all. The real benefit to hosting your own artifact repository locally — and the driver behind this post — is using its cache in a container-based workflow. The Docker image building process is one particularly painful part of this workflow because images generally start with a clean build environment by design, and therefore any Maven packaging steps will "download the Internet" again every time you rebuild the image.</p>
 <p>To use your Artifactory cache with other Docker containers they must all be on the same <em>user-defined network</em> because <a href="https://docs.docker.com/engine/userguide/networking/">Docker's default network configuration</a> does not allow containers to talk to each other. You will have to destroy the Artifactory container you created earlier, create a new network, and then re-create the container to use this network — you <em>did</em> create a volume for your data earlier, right?</p>
@@ -163,6 +165,7 @@
 <span class="w">         </span>-v<span class="w"> </span>artifactory5_data:/var/opt/jfrog/artifactory<span class="w"> </span><span class="se">\</span>
 <span class="w">         </span>-p<span class="w"> </span><span class="m">8081</span>:8081<span class="w"> </span>docker.bintray.io/jfrog/artifactory-oss:latest
 </code></pre></div>
+
 <p>Now, any other container using this network will be able to look up the Artifactory container by name and access its repository cache. You can utilize this in the building of Docker images by replacing "localhost" with the name of your Artifactory container in <code>settings.xml</code> and copying it to your image in its <code>Dockerfile</code>. For example:</p>
 <div class="highlight"><pre><span></span><code><span class="o">...</span>
 <span class="nx">RUN</span><span class="w"> </span><span class="nx">mkdir</span><span class="w"> </span><span class="o">-</span><span class="nx">p</span><span class="w"> </span><span class="o">/</span><span class="nx">root</span><span class="o">/</span><span class="p">.</span><span class="nx">m2</span>
@@ -172,9 +175,11 @@
 <span class="nx">RUN</span><span class="w"> </span><span class="nx">mvn</span><span class="w"> </span><span class="kn">package</span>
 <span class="o">...</span>
 </code></pre></div>
+
 <p>When you build the container you need to specify the network you created above and then your build will take advantage of the local Artifactory cache:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker<span class="w"> </span>build<span class="w"> </span>--network<span class="w"> </span>maven-build<span class="w"> </span>-f<span class="w"> </span>Dockerfile<span class="w"> </span>-t<span class="w"> </span>dspace<span class="w"> </span>.
 </code></pre></div>
+
 <p>I've found that this <em>greatly</em> reduces the time and resources required to adopt a container-based workflow for Java projects, therefore making these projects almost bearable to work with again. ;)</p>
 <p>This was <a href="https://mjanja.ch/2018/02/cache-maven-artifacts-with-artifactory/">originally posted</a> on my personal blog; re-posted here for posterity.</p>
     </div>
@@ -197,6 +202,7 @@
   </p>
 </div>    </div>
   </footer>
+
 </body>
 
 </html>

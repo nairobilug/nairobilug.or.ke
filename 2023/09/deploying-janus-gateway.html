@@ -17,7 +17,7 @@
     <meta name="theme-color" content="#333333">
 
   <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/theme/css/fontawesome.min.css">
   <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
   <link rel="stylesheet" href="/theme/css/theme.css">
 
@@ -49,8 +49,8 @@
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
             <li class=" list-inline-item text-muted">|</li>
-          <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
-          <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fab fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fab fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
       </ul>
   </div>
 </div>    </div>
@@ -65,18 +65,18 @@
     <header>
       <ul class="list-inline">
         <li class="list-inline-item text-muted" title="2023-09-21T12:45:00+03:00">
-          <i class="fa fa-clock-o"></i>
+          <i class="fas fa-clock"></i>
           Thu 21 September 2023
         </li>
         <li class="list-inline-item">
-          <i class="fa fa-folder-open-o"></i>
+          <i class="fas fa-folder-open"></i>
           <a href="/category/video.html">Video</a>
         </li>
           <li class="list-inline-item">
-            <i class="fa fa-user-o"></i>
+            <i class="fas fa-user"></i>
               <a href="/author/benson-muite.html">Benson Muite</a>          </li>
           <li class="list-inline-item">
-            <i class="fa fa-files-o"></i>
+            <i class="fas fa-tag"></i>
               <a href="/tag/streaming.html">#streaming</a>,               <a href="/tag/video-conferencing.html">#video conferencing</a>          </li>
       </ul>
     </header>
@@ -132,6 +132,7 @@ build dependencies</p>
 <span class="w">  </span><span class="n">policycoreutils</span><span class="o">-</span><span class="n">python</span><span class="o">-</span><span class="n">utils</span><span class="w"> </span><span class="n">sofia</span><span class="o">-</span><span class="n">sip</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">speexdsp</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span>\
 <span class="w">  </span><span class="n">usrsctp</span><span class="o">-</span><span class="n">devel</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">zlib</span><span class="o">-</span><span class="n">devel</span>
 </code></pre></div>
+
 <h3>Getting and Building Janus Gateway</h3>
 <p>Clone from GitHub directly and then build it</p>
 <div class="highlight"><pre><span></span><code>git clone https://github.com/meetecho/janus-gateway
@@ -143,15 +144,18 @@ make
 sudo make install
 sudo make configs
 </code></pre></div>
+
 <p>Note that Janus is by default installed in <code>/opt/janus</code>
 you may wish to change this to more standard locations for
 Fedora such as <code>/usr/bin</code>.</p>
 <p>Create a Janus user</p>
 <div class="highlight"><pre><span></span><code>sudo useradd -r janus
 </code></pre></div>
+
 <p>then create a Janus service file</p>
 <div class="highlight"><pre><span></span><code>sudo vi /etc/systemd/system/janus.service
 </code></pre></div>
+
 <p>with the following content</p>
 <div class="highlight"><pre><span></span><code><span class="k">[Unit]</span>
 <span class="na">Description</span><span class="o">=</span><span class="s">Janus WebRTC Server</span>
@@ -169,6 +173,7 @@ Fedora such as <code>/usr/bin</code>.</p>
 <span class="k">[Install]</span>
 <span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
 </code></pre></div>
+
 <h3>Setting up an SSL certificate</h3>
 <p>Use <a href="https://github.com/ndilieto/uacme">uacme</a> to issue an SSL
 certificate from <a href="https://letsencrypt.org/">Let's Encrypt</a>
@@ -176,20 +181,24 @@ by first starting Ngnix</p>
 <div class="highlight"><pre><span></span><code>sudo systemctl enable nginx
 sudo systemctl start nginx
 </code></pre></div>
+
 <p>The start the verification process</p>
 <div class="highlight"><pre><span></span><code>sudo mkdir /etc/ssl/private/
 sudo mkdir -p /usr/share/nginx/html/.well-known/acme-challenge
 sudo uacme -v -c /etc/ssl new
 sudo uacme -v -c /etc/ssl issue my.domain.name
 </code></pre></div>
+
 <p>You will be asked to create the challenge file, do this using a separate
 login</p>
 <div class="highlight"><pre><span></span><code>sudo vi /usr/share/nginx/html/.well-known/acme-challenge/long-token-sequence
 </code></pre></div>
+
 <p>and enter the key authorization as a plain text string. Check that the
 authorization completes in the first terminal and then remove the challenge file.</p>
 <div class="highlight"><pre><span></span><code>sudo rm /usr/share/nginx/html/.well-known/acme-challenge/long-token-sequence
 </code></pre></div>
+
 <p>You can now log out of the second terminal. If you expect to
 run Janus for a long time, you may wish to create a cron job
 to automatically renew the SSL certificate.</p>
@@ -204,21 +213,24 @@ sudo semanage port -a -t http_port_t -p tcp 8088
 sudo semanage port -a -t http_port_t -p udp 10000-20000
 sudo semanage port -a -t http_port_t -p tcp 10000-20000
 </code></pre></div>
+
 <p>You also need to enable your firewall to allow connections to
 tcp and udp ports 10000-20000 for <a href="https://en.wikipedia.org/wiki/STUN">STUN</a>
 and to tcp ports 80 and 443 for <a href="https://en.wikipedia.org/wiki/HTTP">http</a>
 and <a href="https://en.wikipedia.org/wiki/HTTPS">https</a> respectively.</p>
 <h3>Reverse Proxy</h3>
 <p>Enable Nginx to serve content from the demo directory</p>
-<div class="highlight"><pre><span></span><code>sudo semanage fcontext -a -t httpd_sys_content_t '/opt/janus/share/janus/demos/(/.*)?'
+<div class="highlight"><pre><span></span><code>sudo semanage fcontext -a -t httpd_sys_content_t &#39;/opt/janus/share/janus/demos/(/.*)?&#39;
 sudo restorecon -R /opt/janus/share/janus/demos/
 </code></pre></div>
+
 <p>As explained by
 <a href="https://facsiaginsa.com/janus/basic-janus-configuration-with-ssl">Bagus Aginsa</a>,
 edit the Nginx configuration file to route all http traffic to https
 and to act as a reverse proxy for Janus</p>
 <div class="highlight"><pre><span></span><code>sudo vi /etc/nginx/nginx.conf
 </code></pre></div>
+
 <p>and enter the following content</p>
 <div class="highlight"><pre><span></span><code><span class="nx">user</span><span class="w"> </span><span class="nx">nginx</span><span class="p">;</span>
 <span class="nx">worker_processes</span><span class="w"> </span><span class="kt">auto</span><span class="p">;</span>
@@ -233,9 +245,9 @@ and to act as a reverse proxy for Janus</p>
 <span class="p">}</span>
 
 <span class="nx">http</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">log_format</span><span class="w">  </span><span class="nx">main</span><span class="w">  </span><span class="err">'$</span><span class="nx">remote_addr</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="err">$</span><span class="nx">remote_user</span><span class="w"> </span><span class="p">[</span><span class="err">$</span><span class="nx">time_local</span><span class="p">]</span><span class="w"> </span><span class="s">"$request"</span><span class="w"> </span><span class="err">'</span>
-<span class="w">                      </span><span class="err">'$</span><span class="nx">status</span><span class="w"> </span><span class="err">$</span><span class="nx">body_bytes_sent</span><span class="w"> </span><span class="s">"$http_referer"</span><span class="w"> </span><span class="err">'</span>
-<span class="w">                      </span><span class="err">'</span><span class="s">"$http_user_agent"</span><span class="w"> </span><span class="s">"$http_x_forwarded_for"</span><span class="err">'</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">log_format</span><span class="w">  </span><span class="nx">main</span><span class="w">  </span><span class="err">&#39;$</span><span class="nx">remote_addr</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="err">$</span><span class="nx">remote_user</span><span class="w"> </span><span class="p">[</span><span class="err">$</span><span class="nx">time_local</span><span class="p">]</span><span class="w"> </span><span class="s">&quot;$request&quot;</span><span class="w"> </span><span class="err">&#39;</span>
+<span class="w">                      </span><span class="err">&#39;$</span><span class="nx">status</span><span class="w"> </span><span class="err">$</span><span class="nx">body_bytes_sent</span><span class="w"> </span><span class="s">&quot;$http_referer&quot;</span><span class="w"> </span><span class="err">&#39;</span>
+<span class="w">                      </span><span class="err">&#39;</span><span class="s">&quot;$http_user_agent&quot;</span><span class="w"> </span><span class="s">&quot;$http_x_forwarded_for&quot;</span><span class="err">&#39;</span><span class="p">;</span>
 
 <span class="w">    </span><span class="nx">access_log</span><span class="w">  </span><span class="o">/</span><span class="kd">var</span><span class="o">/</span><span class="nx">log</span><span class="o">/</span><span class="nx">nginx</span><span class="o">/</span><span class="nx">access</span><span class="p">.</span><span class="nx">log</span><span class="w">  </span><span class="nx">main</span><span class="p">;</span>
 
@@ -268,8 +280,8 @@ and to act as a reverse proxy for Janus</p>
 <span class="w">        </span><span class="nx">server_name</span><span class="w">  </span><span class="nx">my</span><span class="p">.</span><span class="nx">domain</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
 <span class="w">        </span><span class="nx">root</span><span class="w">         </span><span class="o">/</span><span class="nx">opt</span><span class="o">/</span><span class="nx">janus</span><span class="o">/</span><span class="nx">share</span><span class="o">/</span><span class="nx">janus</span><span class="o">/</span><span class="nx">demos</span><span class="o">/</span><span class="p">;</span>
 
-<span class="w">        </span><span class="nx">ssl_certificate</span><span class="w"> </span><span class="s">"/etc/ssl/my.domain.name/cert.pem"</span><span class="p">;</span>
-<span class="w">        </span><span class="nx">ssl_certificate_key</span><span class="w"> </span><span class="s">"/etc/ssl/private/my.domain.name/key.pem"</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">ssl_certificate</span><span class="w"> </span><span class="s">&quot;/etc/ssl/my.domain.name/cert.pem&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">ssl_certificate_key</span><span class="w"> </span><span class="s">&quot;/etc/ssl/private/my.domain.name/key.pem&quot;</span><span class="p">;</span>
 <span class="w">        </span><span class="nx">ssl_session_cache</span><span class="w"> </span><span class="nx">shared</span><span class="p">:</span><span class="nx">SSL</span><span class="p">:</span><span class="mi">1</span><span class="nx">m</span><span class="p">;</span>
 <span class="w">        </span><span class="nx">ssl_session_timeout</span><span class="w">  </span><span class="mi">10</span><span class="nx">m</span><span class="p">;</span>
 <span class="w">        </span><span class="nx">ssl_ciphers</span><span class="w"> </span><span class="nx">PROFILE</span><span class="p">=</span><span class="nx">SYSTEM</span><span class="p">;</span>
@@ -278,7 +290,7 @@ and to act as a reverse proxy for Janus</p>
 <span class="w">        </span><span class="nx">location</span><span class="w">  </span><span class="o">/</span><span class="nx">janus</span><span class="o">/</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                </span><span class="nx">proxy_pass</span><span class="w"> </span><span class="nx">http</span><span class="p">:</span><span class="c1">//127.0.0.1:8088/janus/;</span>
 <span class="w">                </span><span class="nx">proxy_set_header</span><span class="w"> </span><span class="nx">Upgrade</span><span class="w"> </span><span class="err">$</span><span class="nx">http_upgrade</span><span class="p">;</span>
-<span class="w">                </span><span class="nx">proxy_set_header</span><span class="w"> </span><span class="nx">Connection</span><span class="w"> </span><span class="s">"upgrade"</span><span class="p">;</span>
+<span class="w">                </span><span class="nx">proxy_set_header</span><span class="w"> </span><span class="nx">Connection</span><span class="w"> </span><span class="s">&quot;upgrade&quot;</span><span class="p">;</span>
 <span class="w">        </span><span class="p">}</span>
 
 <span class="w">        </span><span class="err">#</span><span class="w"> </span><span class="nx">Load</span><span class="w"> </span><span class="nx">configuration</span><span class="w"> </span><span class="nx">files</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="nx">block</span><span class="p">.</span>
@@ -295,6 +307,7 @@ and to act as a reverse proxy for Janus</p>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+
 <h3>Janus configuration</h3>
 <p>As explained by
 <a href="https://facsiaginsa.com/janus/configure-janus-behind-nat">Bagus Aginsa</a>
@@ -303,47 +316,57 @@ virtual machines offered by cloud providers will
 use network address translation</p>
 <div class="highlight"><pre><span></span><code>sudo vi /opt/janus/etc/janus/janus.jcfg
 </code></pre></div>
+
 <p>and ensure the lines for STUN configuration contain</p>
-<div class="highlight"><pre><span></span><code>        stun_server = "stun.l.google.com"
+<div class="highlight"><pre><span></span><code>        stun_server = &quot;stun.l.google.com&quot;
         stun_port = 19302
         nice_debug = false
         full_trickle = true
 </code></pre></div>
+
 <p>and the lines for media contain</p>
-<div class="highlight"><pre><span></span><code>        rtp_port_range = "10000-20000"
+<div class="highlight"><pre><span></span><code>        rtp_port_range = &quot;10000-20000&quot;
 </code></pre></div>
+
 <p>Configure the http transport</p>
 <div class="highlight"><pre><span></span><code>sudo vi /opt/janus/etc/janus/janus.transport.http.jcfg 
 </code></pre></div>
+
 <p>ensure that the http settings contain</p>
-<div class="highlight"><pre><span></span><code>        json = "indented"        # Whether the JSON messages should be indented (default),
+<div class="highlight"><pre><span></span><code>        json = &quot;indented&quot;        # Whether the JSON messages should be indented (default),
                                  # plain (no indentation) or compact (no indentation and no spaces)
-        base_path = "/janus"     # Base path to bind to in the web server (plain HTTP only)
+        base_path = &quot;/janus&quot;     # Base path to bind to in the web server (plain HTTP only)
         http = true              # Whether to enable the plain HTTP interface
         port = 8088              # Web server HTTP port
 </code></pre></div>
+
 <p>Then edit the client side javascript settings to enable connection to the server</p>
 <div class="highlight"><pre><span></span><code>sudo vi /opt/janus/share/janus/demos/settings.js
 </code></pre></div>
+
 <p>Ensure they contain</p>
 <div class="highlight"><pre><span></span><code><span class="o">//</span><span class="k">var</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">/</span><span class="n">janus</span><span class="o">/</span><span class="p">;</span>
-<span class="k">if</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">protocol</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">'http:'</span><span class="p">)</span>
-<span class="w">        </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"http://"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">window</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">hostname</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">"/janus/"</span><span class="p">;</span>
+<span class="k">if</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">protocol</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;http:&#39;</span><span class="p">)</span>
+<span class="w">        </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;http://&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">window</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">hostname</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;/janus/&quot;</span><span class="p">;</span>
 <span class="k">else</span>
-<span class="w">        </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"https://"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">window</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">hostname</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">"/janus/"</span><span class="p">;</span>
+<span class="w">        </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">window</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">hostname</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;/janus/&quot;</span><span class="p">;</span>
 </code></pre></div>
+
 <h2>Testing</h2>
 <p>Restart Nginx and start Janus</p>
 <div class="highlight"><pre><span></span><code>sudo systemctl enable janus
 sudo systemctl start janus
 sudo systemctl restart nginx
 </code></pre></div>
+
 <p>You can check the server configuration by using</p>
 <div class="highlight"><pre><span></span><code>curl localhost:8088/janus/info
 </code></pre></div>
+
 <p>on the server running Janus, and</p>
 <div class="highlight"><pre><span></span><code>curl https://my.domain.name/janus/info
 </code></pre></div>
+
 <p>on another machine.</p>
 <p>If you now go to <code>https://my.domain.name/demos.html</code> you should
 be able to try out the demos using the http transport.  To enable
@@ -370,6 +393,7 @@ and setup appropriate firewall rules.</p>
   </p>
 </div>    </div>
   </footer>
+
 </body>
 
 </html>

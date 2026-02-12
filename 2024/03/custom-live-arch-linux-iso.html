@@ -17,7 +17,7 @@
     <meta name="theme-color" content="#333333">
 
   <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/theme/css/fontawesome.min.css">
   <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
   <link rel="stylesheet" href="/theme/css/theme.css">
 
@@ -49,8 +49,8 @@
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
             <li class=" list-inline-item text-muted">|</li>
-          <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
-          <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fab fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fab fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
       </ul>
   </div>
 </div>    </div>
@@ -65,18 +65,18 @@
     <header>
       <ul class="list-inline">
         <li class="list-inline-item text-muted" title="2024-03-11T00:00:00+03:00">
-          <i class="fa fa-clock-o"></i>
+          <i class="fas fa-clock"></i>
           Mon 11 March 2024
         </li>
         <li class="list-inline-item">
-          <i class="fa fa-folder-open-o"></i>
+          <i class="fas fa-folder-open"></i>
           <a href="/category/linux.html">Linux</a>
         </li>
           <li class="list-inline-item">
-            <i class="fa fa-user-o"></i>
+            <i class="fas fa-user"></i>
               <a href="/author/benson-muite.html">Benson Muite</a>          </li>
           <li class="list-inline-item">
-            <i class="fa fa-files-o"></i>
+            <i class="fas fa-tag"></i>
               <a href="/tag/aws.html">#AWS</a>,               <a href="/tag/arch-linux.html">#Arch Linux</a>,               <a href="/tag/how-to.html">#How-to</a>          </li>
       </ul>
     </header>
@@ -92,6 +92,7 @@ using an <a href="https://wiki.archlinux.org/title/Arch_Linux_AMIs_for_Amazon_We
 <p>Log into the instance</p>
 <div class="highlight"><pre><span></span><code><span class="nx">ssh</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="nx">sshkey</span><span class="w">  </span><span class="nx">arch</span><span class="err">@</span><span class="nx">ip</span><span class="p">.</span><span class="nx">address</span>
 </code></pre></div>
+
 <p>After logging in, first repopulate the keys and update the system</p>
 <div class="highlight"><pre><span></span><code>sudo pacman -Scc
 sudo rm -rf /etc/pacman.d/gnupg
@@ -99,12 +100,14 @@ sudo pacman-key --init
 sudo pacman-key --populate
 sudo pacman -Syu
 </code></pre></div>
+
 <p>Next install <a href="https://github.com/laurent85v/archuseriso">archuseriso</a></p>
 <div class="highlight"><pre><span></span><code><span class="n">sudo</span><span class="w"> </span><span class="n">pacman</span><span class="w"> </span><span class="o">--</span><span class="n">needed</span><span class="w"> </span><span class="o">-</span><span class="n">Sy</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="n">arch</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="n">scripts</span><span class="w"> </span><span class="n">bash</span><span class="w"> </span><span class="n">dosfstools</span><span class="w"> </span><span class="n">e2fsprogs</span><span class="w"> </span>\
 <span class="w">  </span><span class="n">erofs</span><span class="o">-</span><span class="n">utils</span><span class="w"> </span><span class="n">grub</span><span class="w"> </span><span class="n">libarchive</span><span class="w"> </span><span class="n">libisoburn</span><span class="w"> </span><span class="n">make</span><span class="w"> </span><span class="n">mtools</span><span class="w"> </span><span class="n">parted</span><span class="w"> </span><span class="n">squashfs</span><span class="o">-</span><span class="n">tools</span><span class="w"> </span><span class="n">syslinux</span>
 <span class="n">git</span><span class="w"> </span><span class="n">clone</span><span class="w"> </span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">laurent85v</span><span class="o">/</span><span class="n">archuseriso</span><span class="o">.</span><span class="n">git</span>
 <span class="n">sudo</span><span class="w"> </span><span class="n">make</span><span class="w"> </span><span class="o">-</span><span class="n">C</span><span class="w"> </span><span class="n">archuseriso</span><span class="w"> </span><span class="n">install</span>
 </code></pre></div>
+
 <p>Inkstitch is available in <a href="https://aur.archlinux.org/packages/inkstitch">Aur</a>, but not
 in the main Arch repositories.  To add it to the live iso image, first create a local
 repository with a locally built Ink/Stitch package.</p>
@@ -119,6 +122,7 @@ repo-add inkstitch.db.tar.zst ../inkstitch/*.pkg.tar.zst
 cd ..
 cp inkstitch/*.zst inkstitchdb/
 </code></pre></div>
+
 <p>Create a profile for the image using the lxqt image as the starting point</p>
 <div class="highlight"><pre><span></span><code><span class="nx">cd</span><span class="w"> </span><span class="nx">archuseriso</span>
 <span class="nx">cd</span><span class="w"> </span><span class="nx">profiles</span>
@@ -126,21 +130,24 @@ cp inkstitch/*.zst inkstitchdb/
 <span class="nx">cd</span><span class="w"> </span><span class="nx">inkstitch</span>
 <span class="nx">echo</span><span class="w"> </span><span class="nx">inkscape</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="nx">packages</span><span class="p">.</span><span class="nx">x86_64</span>
 <span class="nx">echo</span><span class="w"> </span><span class="nx">inkstitch</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="nx">packages</span><span class="p">.</span><span class="nx">x86_64</span>
-<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">'</span><span class="nx">s</span><span class="o">/</span><span class="err">\#\</span><span class="p">[</span><span class="nx">custom</span><span class="err">\</span><span class="p">]</span><span class="o">/</span><span class="err">\</span><span class="p">[</span><span class="nx">inkstitch</span><span class="err">\</span><span class="p">]</span><span class="o">/</span><span class="nx">g</span><span class="err">'</span><span class="w"> </span><span class="nx">pacman</span><span class="p">.</span><span class="nx">conf</span>
-<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">'</span><span class="nx">s</span><span class="o">/</span><span class="err">\#</span><span class="nx">SigLevel</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">Optional</span><span class="w"> </span><span class="nx">TrustAll</span><span class="o">/</span><span class="nx">SigLevel</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">Optional</span><span class="w"> </span><span class="nx">TrustAll</span><span class="o">/</span><span class="nx">g</span><span class="err">'</span><span class="w"> </span>\
+<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">s</span><span class="o">/</span><span class="err">\#\</span><span class="p">[</span><span class="nx">custom</span><span class="err">\</span><span class="p">]</span><span class="o">/</span><span class="err">\</span><span class="p">[</span><span class="nx">inkstitch</span><span class="err">\</span><span class="p">]</span><span class="o">/</span><span class="nx">g</span><span class="err">&#39;</span><span class="w"> </span><span class="nx">pacman</span><span class="p">.</span><span class="nx">conf</span>
+<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">s</span><span class="o">/</span><span class="err">\#</span><span class="nx">SigLevel</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">Optional</span><span class="w"> </span><span class="nx">TrustAll</span><span class="o">/</span><span class="nx">SigLevel</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">Optional</span><span class="w"> </span><span class="nx">TrustAll</span><span class="o">/</span><span class="nx">g</span><span class="err">&#39;</span><span class="w"> </span>\
 <span class="nx">pacman</span><span class="p">.</span><span class="nx">conf</span>
-<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">'</span><span class="nx">s</span><span class="o">|</span><span class="err">\#</span><span class="nx">Server</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">file</span><span class="p">:</span><span class="c1">///home/custompkgs|Server = file:///home/arch/inkstitchdb|g' \</span>
+<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">s</span><span class="o">|</span><span class="err">\#</span><span class="nx">Server</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">file</span><span class="p">:</span><span class="c1">///home/custompkgs|Server = file:///home/arch/inkstitchdb|g&#39; \</span>
 <span class="nx">pacman</span><span class="p">.</span><span class="nx">conf</span>
-<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">'</span><span class="nx">s</span><span class="o">|</span><span class="nx">iso_name</span><span class="p">=</span><span class="s">"aui-lxqt"</span><span class="o">|</span><span class="nx">iso_name</span><span class="p">=</span><span class="s">"aui-lxqt-inkstitch"</span><span class="o">|</span><span class="nx">g</span><span class="err">'</span><span class="w"> </span>\
+<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">s</span><span class="o">|</span><span class="nx">iso_name</span><span class="p">=</span><span class="s">&quot;aui-lxqt&quot;</span><span class="o">|</span><span class="nx">iso_name</span><span class="p">=</span><span class="s">&quot;aui-lxqt-inkstitch&quot;</span><span class="o">|</span><span class="nx">g</span><span class="err">&#39;</span><span class="w"> </span>\
 <span class="nx">profiledef</span><span class="p">.</span><span class="nx">sh</span>
 <span class="nx">cd</span><span class="w"> </span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span>
 </code></pre></div>
+
 <p>Build the live iso image</p>
 <div class="highlight"><pre><span></span><code>sudo aui-mkiso archuseriso/profiles/inkstitch/
 </code></pre></div>
+
 <p>Once done, the resulting iso should be available at</p>
 <div class="highlight"><pre><span></span><code>/home/arch/out/aui-lxqt-linux_6_15_6-0711-x64.iso
 </code></pre></div>
+
 <h2>References</h2>
 <ul>
 <li>https://wiki.archlinux.org/title/Install_Arch_Linux_on_a_removable_medium</li>
@@ -169,6 +176,7 @@ cp inkstitch/*.zst inkstitchdb/
   </p>
 </div>    </div>
   </footer>
+
 </body>
 
 </html>

@@ -17,7 +17,7 @@
     <meta name="theme-color" content="#333333">
 
   <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/theme/css/fontawesome.min.css">
   <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
   <link rel="stylesheet" href="/theme/css/theme.css">
 
@@ -49,8 +49,8 @@
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
             <li class=" list-inline-item text-muted">|</li>
-          <li class="list-inline-item"><a class="fa fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
-          <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fab fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fab fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
       </ul>
   </div>
 </div>    </div>
@@ -65,18 +65,18 @@
     <header>
       <ul class="list-inline">
         <li class="list-inline-item text-muted" title="2016-07-21T17:42:00+03:00">
-          <i class="fa fa-clock-o"></i>
+          <i class="fas fa-clock"></i>
           Thu 21 July 2016
         </li>
         <li class="list-inline-item">
-          <i class="fa fa-folder-open-o"></i>
+          <i class="fas fa-folder-open"></i>
           <a href="/category/video.html">Video</a>
         </li>
           <li class="list-inline-item">
-            <i class="fa fa-user-o"></i>
+            <i class="fas fa-user"></i>
               <a href="/author/alan-orth.html">Alan Orth</a>          </li>
           <li class="list-inline-item">
-            <i class="fa fa-files-o"></i>
+            <i class="fas fa-tag"></i>
               <a href="/tag/ffmpeg.html">#ffmpeg</a>,               <a href="/tag/h264.html">#H.264</a>,               <a href="/tag/vp8.html">#VP8</a>,               <a href="/tag/vp9.html">#VP9</a>          </li>
       </ul>
     </header>
@@ -88,6 +88,7 @@
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>ffmpeg<span class="w"> </span>-i<span class="w"> </span>input.mp4<span class="w"> </span>-c:v<span class="w"> </span>libvpx-vp9<span class="w"> </span>-pass<span class="w"> </span><span class="m">1</span><span class="w"> </span>-b:v<span class="w"> </span>1400K<span class="w"> </span>-crf<span class="w"> </span><span class="m">23</span><span class="w"> </span>-threads<span class="w"> </span><span class="m">2</span><span class="w"> </span>-speed<span class="w"> </span><span class="m">4</span><span class="w"> </span>-tile-columns<span class="w"> </span><span class="m">6</span><span class="w"> </span>-frame-parallel<span class="w"> </span><span class="m">1</span><span class="w"> </span>-an<span class="w"> </span>-f<span class="w"> </span>webm<span class="w"> </span>/dev/null
 $<span class="w"> </span>ffmpeg<span class="w"> </span>-i<span class="w"> </span>input.mp4<span class="w"> </span>-c:v<span class="w"> </span>libvpx-vp9<span class="w"> </span>-pass<span class="w"> </span><span class="m">2</span><span class="w"> </span>-b:v<span class="w"> </span>1400K<span class="w"> </span>-crf<span class="w"> </span><span class="m">23</span><span class="w"> </span>-threads<span class="w"> </span><span class="m">2</span><span class="w"> </span>-speed<span class="w"> </span><span class="m">2</span><span class="w"> </span>-tile-columns<span class="w"> </span><span class="m">6</span><span class="w"> </span>-frame-parallel<span class="w"> </span><span class="m">1</span><span class="w"> </span>-auto-alt-ref<span class="w"> </span><span class="m">1</span><span class="w"> </span>-lag-in-frames<span class="w"> </span><span class="m">25</span><span class="w"> </span>-c:a<span class="w"> </span>libvorbis<span class="w"> </span>-f<span class="w"> </span>webm<span class="w"> </span>output.webm
 </code></pre></div>
+
 <p>The constrained quality mode gives you more control over the target bitrate. If you want higher quality, bump up the bitrate or reduce the CRF value a bit. Pay attention to the <code>threads</code> option and adjust for how many CPU cores your computer has. Also note that I'm encoding the audio with the older <code>vorbis</code> codec because <a href="http://caniuse.com/#feat=opus"><code>opus</code> isn't well supported yet</a>. You can read more about the other options on the <a href="https://trac.ffmpeg.org/wiki/Encode/VP9">ffmpeg VP9 encoding guide</a>.</p>
 <p>For reference, these two passes took 224 and 1763 seconds to complete respectively, and the file size of the resulting video was 2.7 megabytes. The VP9 encoder seems to be able to use multiple CPU cores, but I only noticed them being used in the second pass.</p>
 <h2>H.264</h2>
@@ -95,6 +96,7 @@ $<span class="w"> </span>ffmpeg<span class="w"> </span>-i<span class="w"> </span
 <p>In any case, the following will produce a video with decent quality that is playable on basically any device on the planet right now:</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>ffmpeg<span class="w"> </span>-i<span class="w"> </span>input.mp4<span class="w"> </span>-movflags<span class="w"> </span>+faststart<span class="w"> </span>-c:a<span class="w"> </span>aac<span class="w"> </span>-c:v<span class="w"> </span>libx264<span class="w"> </span>-preset<span class="w"> </span>veryslow<span class="w"> </span>-b:v<span class="w"> </span>2000k<span class="w"> </span>-profile:v<span class="w"> </span>baseline<span class="w"> </span>-level<span class="w"> </span><span class="m">3</span>.0<span class="w"> </span>output.mp4
 </code></pre></div>
+
 <p>Note the adherence to the baseline profile at level 3.0, which the <a href="https://developer.android.com/guide/appendix/media-formats.html#recommendations">Android developer docs</a> recommend for compatibility with current Android devices. If you only need to support Apple devices then you can target a higher profile, which will allow the encoder to use more of H.264's advanced features — read about that and more on the <a href="https://trac.ffmpeg.org/wiki/Encode/H.264">ffmpeg H.264 encoding guide</a>.</p>
 <p>Software patents and licensing issues aside, H.264 is actually very impressive. The encoder is fast on multi-core CPUs, video quality is great, and file sizes are low for the standards we had five to ten years ago. For reference, this encode took 132 seconds and the resulting file size was 4.5 megabytes.</p>
 <h2>VP8</h2>
@@ -102,6 +104,7 @@ $<span class="w"> </span>ffmpeg<span class="w"> </span>-i<span class="w"> </span
 <p>If you find yourself needing to target older Android or something where VP9 isn't supported, then this one-liner from the <a href="https://trac.ffmpeg.org/wiki/Encode/VP8">ffmpeg VP8 encoding guide</a> will do the trick:</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>ffmpeg<span class="w"> </span>-i<span class="w"> </span>input.mp4<span class="w"> </span>-c:v<span class="w"> </span>libvpx<span class="w"> </span>-qmin<span class="w"> </span><span class="m">0</span><span class="w"> </span>-qmax<span class="w"> </span><span class="m">50</span><span class="w"> </span>-crf<span class="w"> </span><span class="m">5</span><span class="w"> </span>-b:v<span class="w"> </span>2000k<span class="w"> </span>-c:a<span class="w"> </span>libvorbis<span class="w"> </span>output.webm
 </code></pre></div>
+
 <p>In this example it's worth noting that 2000 kilobits/sec is the "target bitrate," but the effective bitrate ended up being about 3000k because I enabled "constant quality" mode by specifying the crf, qmin, and qmax options. Also, VP8 apparently supports multi-threaded encoding, but in my tests it was actually <em>slower</em> and produced a larger file! This single-threaded encode took 691 seconds and the resulting file size was 5.1 megabytes.</p>
 <h2>For the Love of the Open Web: Use VP9</h2>
 <p>Ten years ago you didn't really have much of a choice for video codec providing both very high quality and low file sizes. H.264 came on the scene and set the bar very high with a fast encoder, amazing video quality, and fantastic hardware and software support. VP8 was an honest attempt to bring an open royalty-free and high-quality video codec to the market but it never really stood a chance.</p>
@@ -130,6 +133,7 @@ $<span class="w"> </span>ffmpeg<span class="w"> </span>-i<span class="w"> </span
   </p>
 </div>    </div>
   </footer>
+
 </body>
 
 </html>
