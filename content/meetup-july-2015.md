@@ -25,7 +25,7 @@ Someone also pointed out that one of the Universities is still teaching HTML 2.0
 
 ### Hackathons, Conferences, etc
 
-There was a slight segway into talks about various conferences, and how in Kenya, there seems to be a dearth of information on things like venues and times. Someone suggested that the organisers might be afraid that the NairobiLUG might criticise them [as it did BRCK](https://nairobilug.or.ke/2015/05/brck-violating-gpl.html).
+There was a slight segway into talks about various conferences, and how in Kenya, there seems to be a dearth of information on things like venues and times. Someone suggested that the organisers might be afraid that the NairobiLUG might criticise them [as it did BRCK](https://nairobilug.org/2015/05/brck-violating-gpl.html).
 
 We laughed that off as unlikely and quickly moved on.
 
