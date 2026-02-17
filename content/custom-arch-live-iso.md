@@ -71,7 +71,7 @@ sed -i 's/\#SigLevel = Optional TrustAll/SigLevel = Optional TrustAll/g' \
 pacman.conf
 sed -i 's|\#Server = file:///home/custompkgs|Server = file:///home/arch/inkstitchdb|g' \
 pacman.conf
-sed -i 's|iso_name="aui-lxqt"|iso_name="aui-lxqt-inkstitch"|g' \
+sed -i 's|iso_name="aui-lxqt-inkstitch"|iso_name="aui-lxqt-inkstitch"|g' \
 profiledef.sh
 cd ../../..
 ```

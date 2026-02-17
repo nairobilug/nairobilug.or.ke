@@ -1,6 +1,6 @@
 # Nairobi GNU/Linux Users Group Website
 
-This repository hosts the code for the [Nairobi GNU/Linux Users Group](https://nairobilug.or.ke) website. We wanted a fun, nerdy and democratic way to give our community an online presence, so here we are.
+This repository hosts the code for the [Nairobi GNU/Linux Users Group](https://nairobilug.org) website. We wanted a fun, nerdy and democratic way to give our community an online presence, so here we are.
 
 ![Screenshot](screenshot.jpg "Screenshot")
 
