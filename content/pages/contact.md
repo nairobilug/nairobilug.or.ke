@@ -11,6 +11,14 @@ The LUG has an IRC channel which everyone (especially members) is welcome to joi
 - Network: [libera.chat](https://libera.chat)
 - Channel: [#nairobilug](irc://libera.chat/#nairobilug)
 
+## Telegram
+
+The LUG has a Telegram channel that is bridged to IRC. Anyone is welcome to join. [Telegram](https://telegram.me/joinchat/DB08UUD-SgWrieO1ecqCcg)
+
+## Discord
+
+The LUG has a Discord channel that is bridged to IRC. Anyone is welcome to join. [Discord](https://discordapp.com/invite/pxbFbdC)
+
 ## Social Media
 
 Find us around the web in the following places: [Twitter](https://twitter.com/nairobilug)
