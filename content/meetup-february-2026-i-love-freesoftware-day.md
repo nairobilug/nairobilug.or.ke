@@ -3,7 +3,7 @@ Date: 2026-02-14 16:00
 Category: meetups
 Tags: meetups, meetup, ilovefreesoftwareday, kfc
 Slug: meetup-february-2026
-Authors: Paul Mayero, Cornelius Emase
+Authors: Paul Mayero
 Summary: Highlights from a blind date with people who answered to an invite posted on the internet. Yay to living dangerously!
 
 We had our first meetup  of the year on the 14th of February 2026 at KFC Kimathi Street. The place was full. After all, it was <del>Valentine's day</del> [I love Free Software day](https://fsfe.org/activities/ilovefs/index.en.html) and people were definitely celebrating it.
