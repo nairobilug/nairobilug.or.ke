@@ -43,7 +43,7 @@ Once the meetup was over, the attendees got some merch. See pics below. :)
 One of the members of the LUG - ekiara - shared this video with us. Enjoy it.
 [Interview with 'Just use a VPS bro' (Openclaw edition)]( https://www.youtube.com/watch?v=40SnEd1RWUU)
 
-Join our chat and share a video you think we might find funny and we might have it in the monthly meetup blog. :)
+Join our chat and share a video that you think is funny. We might have it featured in our next blog. :)
 
 ### March Meetup
 
