@@ -47,6 +47,14 @@ Join our chat and share a video that you think is funny. We might have it featur
 
 ### March Meetup
 
-Remember, we meet the first Saturday of the month. See you on the 7th of March at 1600 EAT.
+Remember, we meet on the first Saturday of the month. See you on the 7th of March at 1500 EAT.
+
+We'll be meeting at <mark>Marble Arch Hotel on Lagos Rd, Off Tom Mboya Street from 3 to 6 pm</mark>.
 
 See you there!
+
+Check out the cool posters that Cornelius made for the next meetup below.
+
+![Agenda]({static}/images/meetup-february-2026/agenda.jpg "Agenda for the next meetup")
+
+![Cool Linux Poster]({static}/images/meetup-february-2026/cool-poster.jpg "Cool Linux poster for the next meetup")
