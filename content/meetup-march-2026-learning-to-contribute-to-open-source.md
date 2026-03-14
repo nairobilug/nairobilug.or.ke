@@ -14,14 +14,16 @@ We had initially planned to have two sessions, '**Self-hosting series: How to ho
 
 ## My journey into Open Source
 
-Engaging with the audience with the example ought to be a good approach, and I started by sharing my journey into open source. Even though I had already contributed to small open projects within and got the idea how things work, also joining big communities was somehow kind of a smooth transition a little. But of course, this was very easy for me, I joined the **Fedora Project** through an Open Source program, [**Outreachy**](https://www.outreachy.org/).
+Engaging the audience with a personal example felt like a good approach, so I started by sharing my journey into open source. Even though I had already contributed to small open projects and had an idea of how things work, joining bigger communities was a somewhat smoother transition for me. In my case, I joined the **Fedora Project** through an Open Source program, [**Outreachy**](https://www.outreachy.org/), which can be quite competitive.
 
 I also mentioned other programs that help people get into open source such as:
 
 * [Google Summer of Code (GSoC)](https://summerofcode.withgoogle.com/)
-* [LFX](mentorship.lfx.linuxfoundation.org/)
+* [LFX](https://mentorship.lfx.linuxfoundation.org/)
+* [MLH Fellowship](https://fellowship.mlh.io/)
 * [Igalia](https://www.igalia.com/coding-experience/)
 * [Season of KDE](https://mentorship.kde.org/sok/)
+* [FSF Internships](https://fsf.org/volunteer/internships)
 * and other mentorship and community programs
 
 These programs help new contributors learn the workflow and gain experience while working with real projects.
@@ -37,7 +39,11 @@ One of the simplest ways to start is surprisingly straightforward. You open a br
 
 > **"How to contribute to (project name)"** For example: how to contribute to Mozilla/Fedora/Gentoo etc.
 
-Most large open source organizations have detailed documentation explaining how to get started. Before doing that though, it is important to know **why you want to contribute**.
+Most large open source organizations have detailed documentation explaining how to get started. That said, documentation quality can vary a lot from one project to another. Some communities invest heavily in newcomer guides (for example, [Kernel Newbies](https://kernelnewbies.org/)), while others expect you to learn more by interacting with maintainers and existing contributors.
+
+It is also worth looking at organization culture when choosing where and how to contribute. Smaller organizations can be a good place to start too, since core developers may have more time to work with new contributors, even if they do not always have a structured onboarding program.
+
+Before doing that though, it is important to know **why you want to contribute**.
 
 Your motivation might be:
 
@@ -110,7 +116,7 @@ AI also came up during the conversation. Different open source communities have 
 
 Some communities allow it under specific rules. Others discourage or restrict it.
 
-Projects like **Fedora** and **Mozilla** allow contributors to use AI tools, but contributors must follow their policies and ensure that the submitted work meets the project’s standards.
+Projects like **Fedora** and **Firefox (Mozilla)** allow contributors to use AI tools under policy guidelines, while **Gentoo** does not allow AI-generated contributions.
 
 - [Fedora AI-Assisted Contributions Policy](https://docs.fedoraproject.org/en-US/council/policy/ai-contribution-policy/)
 - [Firefox AI Coding Policy](https://firefox-source-docs.mozilla.org/contributing/ai-coding.html)
