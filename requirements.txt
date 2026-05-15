@@ -3,3 +3,5 @@ Markdown
 pelican==4.8.0
 bs4 # pelican-bootstrapify
 Jinja2==3.1.2
+pelican-image-process==3.3.0
+pelican-oembed==1.0.4

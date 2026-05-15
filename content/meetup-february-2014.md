@@ -30,8 +30,8 @@ I noted that there wasn't much talk/argument on distros. I always like those.
 
 Here are some cool pics from the event that was.
 
-![Group shot0]({static}/images/meetup-february-2014/meetup-february-2014-0.jpg "Nairobi GNU/Linux Users Group members")
+![Group shot0]({static}/images/meetup-february-2014/meetup-february-2014-0.jpg "Nairobi GNU/Linux Users Group members"){: .image-process-large-photo}
 
-![Group shot1]({static}/images/meetup-february-2014/meetup-february-2014-1.jpg "Nairobi GNU/Linux Users Group members")
+![Group shot1]({static}/images/meetup-february-2014/meetup-february-2014-1.jpg "Nairobi GNU/Linux Users Group members"){: .image-process-large-photo}
 
 Guys had a great time. See you at KFC Kimathi Street on March 1st, 2014. Happy hacking!!
