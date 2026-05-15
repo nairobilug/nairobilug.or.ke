@@ -1,28 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
   <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 
   <title>  Update Hosts via Ansible to Mitigate Bash "Shellshock" Vulnerability | Nairobi GNU/Linux Users Group
 </title>
-  <link rel="canonical" href="/2014/09/ansible-shellshock.html">
+  <link href="/2014/09/ansible-shellshock.html" rel="canonical"/>
 
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#333333">
+    <link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+    <link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+    <link href="/manifest.json" rel="manifest"/>
+    <meta content="#333333" name="theme-color"/>
 
-  <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/theme/css/fontawesome.min.css">
-  <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
-  <link rel="stylesheet" href="/theme/css/theme.css">
+  <link href="/theme/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="/theme/css/fontawesome.min.css" rel="stylesheet"/>
+  <link href="/theme/css/pygments/monokai.min.css" rel="stylesheet"/>
+  <link href="/theme/css/theme.css" rel="stylesheet"/>
 
   
-  <meta name="description" content="Patching your systems is painlessly easy if you manage your server infrastructure with something like Ansible.">
+  <meta content="Patching your systems is painlessly easy if you manage your server infrastructure with something like Ansible." name="description"/>
 
 
 </head>
@@ -33,7 +34,7 @@
 <div class="row">
     <div class="col-sm-4">
       <a href="/">
-        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+        <img alt="Nairobi GNU/Linux Users Group" class="img-fluid rounded" src="/images/profile.png"/>
       </a>
     </div>
   <div class="col-sm-8">
@@ -48,7 +49,7 @@
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
-            <li class=" list-inline-item text-muted">|</li>
+            <li class="list-inline-item text-muted">|</li>
           <li class="list-inline-item"><a class="fab fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
           <li class="list-inline-item"><a class="fab fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
       </ul>
@@ -60,7 +61,7 @@
     <div class="container">
       <h1>  Update Hosts via Ansible to Mitigate Bash "Shellshock" Vulnerability
 </h1>
-      <hr>
+      <hr/>
   <article class="article">
     <header>
       <ul class="list-inline">
@@ -85,7 +86,7 @@
 <p>Anyways, I'll leave the infosec community to <a href="https://www.dfranke.us/posts/2014-09-27-shell-shock-exploitation-vectors.html" title="Shell Shock Exploitation Vectors">expound on attack vectors</a>. The point of this post is really to illustrate that you should be using an infrastructure orchestration tool like <a href="http://www.ansible.com/home" title="Ansible homepage">Ansible</a> to manage your servers.</p>
 <h3>Painless Patching With Ansible</h3>
 <p>Patching your systems is painlessly easy if you manage your server infrastructure with something like Ansible. Using a one-off command you can easily update all "web" servers, for example:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ansible<span class="w"> </span>web<span class="w"> </span>-m<span class="w"> </span>apt<span class="w"> </span>-a<span class="w"> </span><span class="s2">&quot;name=bash state=latest update_cache=yes&quot;</span><span class="w"> </span>-K<span class="w"> </span>-s
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ansible<span class="w"> </span>web<span class="w"> </span>-m<span class="w"> </span>apt<span class="w"> </span>-a<span class="w"> </span><span class="s2">"name=bash state=latest update_cache=yes"</span><span class="w"> </span>-K<span class="w"> </span>-s
 </code></pre></div>
 
 <p>That's great, but what if you have both Ubuntu and CentOS hosts in the "web" group? CentOS doesn't use <code>apt</code> for package management, so this has effectively only updated hosts running Debian-family GNU/Linux distros.</p>
@@ -94,7 +95,7 @@
 <p>Here's a simple playbook I wrote which takes into account the different OS families in our infrastructure and updates the <code>bash</code> package on each host.</p>
 <p><em>shellshock.yml</em>:</p>
 <div class="highlight"><pre><span></span><code><span class="nn">---</span>
-<span class="c1"># To update hosts for &quot;Shellshock&quot; bash vulnerability</span>
+<span class="c1"># To update hosts for "Shellshock" bash vulnerability</span>
 <span class="c1"># See: https://en.wikipedia.org/wiki/Shellshock_(software_bug)</span>
 
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span>
@@ -102,11 +103,11 @@
 <span class="w">  </span><span class="nt">tasks</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Update on Debian-based distros</span>
 <span class="w">      </span><span class="nt">apt</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=bash state=latest update_cache=yes</span>
-<span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ansible_os_family == &quot;Debian&quot;</span>
+<span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ansible_os_family == "Debian"</span>
 
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Update on RedHat-based distros</span>
 <span class="w">      </span><span class="nt">yum</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=bash state=latest</span>
-<span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ansible_os_family == &quot;RedHat&quot;</span>
+<span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ansible_os_family == "RedHat"</span>
 
 <span class="c1"># vim: set sw=2 ts=2:</span>
 </code></pre></div>
@@ -136,7 +137,7 @@
   </ul>
   <p class="col-sm-6 text-sm-right text-muted">
     Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
-    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">✨</a>
   </p>
 </div>    </div>
   </footer>

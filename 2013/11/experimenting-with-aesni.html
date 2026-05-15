@@ -1,28 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
   <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 
   <title>  Experimenting With AES-NI | Nairobi GNU/Linux Users Group
 </title>
-  <link rel="canonical" href="/2013/11/experimenting-with-aesni.html">
+  <link href="/2013/11/experimenting-with-aesni.html" rel="canonical"/>
 
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#333333">
+    <link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+    <link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+    <link href="/manifest.json" rel="manifest"/>
+    <meta content="#333333" name="theme-color"/>
 
-  <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/theme/css/fontawesome.min.css">
-  <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
-  <link rel="stylesheet" href="/theme/css/theme.css">
+  <link href="/theme/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="/theme/css/fontawesome.min.css" rel="stylesheet"/>
+  <link href="/theme/css/pygments/monokai.min.css" rel="stylesheet"/>
+  <link href="/theme/css/theme.css" rel="stylesheet"/>
 
   
-  <meta name="description" content="Experimenting with hardware-accelerated AES on Sandy Bridge+ chipsets.">
+  <meta content="Experimenting with hardware-accelerated AES on Sandy Bridge+ chipsets." name="description"/>
 
 
 </head>
@@ -33,7 +34,7 @@
 <div class="row">
     <div class="col-sm-4">
       <a href="/">
-        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+        <img alt="Nairobi GNU/Linux Users Group" class="img-fluid rounded" src="/images/profile.png"/>
       </a>
     </div>
   <div class="col-sm-8">
@@ -48,7 +49,7 @@
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
-            <li class=" list-inline-item text-muted">|</li>
+            <li class="list-inline-item text-muted">|</li>
           <li class="list-inline-item"><a class="fab fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
           <li class="list-inline-item"><a class="fab fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
       </ul>
@@ -60,7 +61,7 @@
     <div class="container">
       <h1>  Experimenting With AES-NI
 </h1>
-      <hr>
+      <hr/>
   <article class="article">
     <header>
       <ul class="list-inline">
@@ -87,33 +88,33 @@
 <p>First, with AES-NI enabled (the default, on hardware that supports it):</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>openssl<span class="w"> </span>speed<span class="w"> </span>-elapsed<span class="w"> </span>-evp<span class="w"> </span>aes-128-cbc
 <span class="go">You have chosen to measure elapsed time instead of user CPU time.</span>
-<span class="go">Doing aes-128-cbc for 3s on 16 size blocks: 57196857 aes-128-cbc&#39;s in 3.00s</span>
-<span class="go">Doing aes-128-cbc for 3s on 64 size blocks: 15343650 aes-128-cbc&#39;s in 3.00s</span>
-<span class="go">Doing aes-128-cbc for 3s on 256 size blocks: 3897351 aes-128-cbc&#39;s in 3.00s</span>
-<span class="go">Doing aes-128-cbc for 3s on 1024 size blocks: 978726 aes-128-cbc&#39;s in 3.00s</span>
-<span class="go">Doing aes-128-cbc for 3s on 8192 size blocks: 122310 aes-128-cbc&#39;s in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 16 size blocks: 57196857 aes-128-cbc's in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 64 size blocks: 15343650 aes-128-cbc's in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 256 size blocks: 3897351 aes-128-cbc's in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 1024 size blocks: 978726 aes-128-cbc's in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 8192 size blocks: 122310 aes-128-cbc's in 3.00s</span>
 <span class="go">OpenSSL 1.0.1e 11 Feb 2013</span>
 <span class="go">built on: Sun Oct 20 14:49:13 CEST 2013</span>
 <span class="go">options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx)</span>
 <span class="go">compiler: gcc -fPIC -DOPENSSL_PIC -DZLIB -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -Wa,--noexecstack -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -m64 -DL_ENDIAN -DTERMIO -O3 -Wall -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM</span>
-<span class="go">The &#39;numbers&#39; are in 1000s of bytes per second processed.</span>
+<span class="go">The 'numbers' are in 1000s of bytes per second processed.</span>
 <span class="go">type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes</span>
 <span class="go">aes-128-cbc     305049.90k   327331.20k   332573.95k   334071.81k   333987.84k</span>
 </code></pre></div>
 
 <p>Then, setting the capability mask to turn off the hardware AES features:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span><span class="nv">OPENSSL_ia32cap</span><span class="o">=</span><span class="s2">&quot;~0x200000200000000&quot;</span><span class="w"> </span>openssl<span class="w"> </span>speed<span class="w"> </span>-elapsed<span class="w"> </span>-evp<span class="w"> </span>aes-128-cbc
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span><span class="nv">OPENSSL_ia32cap</span><span class="o">=</span><span class="s2">"~0x200000200000000"</span><span class="w"> </span>openssl<span class="w"> </span>speed<span class="w"> </span>-elapsed<span class="w"> </span>-evp<span class="w"> </span>aes-128-cbc
 <span class="go">You have chosen to measure elapsed time instead of user CPU time.</span>
-<span class="go">Doing aes-128-cbc for 3s on 16 size blocks: 27883366 aes-128-cbc&#39;s in 3.00s</span>
-<span class="go">Doing aes-128-cbc for 3s on 64 size blocks: 7736907 aes-128-cbc&#39;s in 3.00s</span>
-<span class="go">Doing aes-128-cbc for 3s on 256 size blocks: 1949328 aes-128-cbc&#39;s in 3.00s</span>
-<span class="go">Doing aes-128-cbc for 3s on 1024 size blocks: 498847 aes-128-cbc&#39;s in 3.00s</span>
-<span class="go">Doing aes-128-cbc for 3s on 8192 size blocks: 62446 aes-128-cbc&#39;s in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 16 size blocks: 27883366 aes-128-cbc's in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 64 size blocks: 7736907 aes-128-cbc's in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 256 size blocks: 1949328 aes-128-cbc's in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 1024 size blocks: 498847 aes-128-cbc's in 3.00s</span>
+<span class="go">Doing aes-128-cbc for 3s on 8192 size blocks: 62446 aes-128-cbc's in 3.00s</span>
 <span class="go">OpenSSL 1.0.1e 11 Feb 2013</span>
 <span class="go">built on: Sun Oct 20 14:49:13 CEST 2013</span>
 <span class="go">options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx)</span>
 <span class="go">compiler: gcc -fPIC -DOPENSSL_PIC -DZLIB -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -Wa,--noexecstack -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -m64 -DL_ENDIAN -DTERMIO -O3 -Wall -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM</span>
-<span class="go">The &#39;numbers&#39; are in 1000s of bytes per second processed.</span>
+<span class="go">The 'numbers' are in 1000s of bytes per second processed.</span>
 <span class="go">type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes</span>
 <span class="go">aes-128-cbc     148711.29k   165054.02k   166342.66k   170273.11k   170519.21k</span>
 </code></pre></div>
@@ -137,7 +138,7 @@
   </ul>
   <p class="col-sm-6 text-sm-right text-muted">
     Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
-    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">✨</a>
   </p>
 </div>    </div>
   </footer>

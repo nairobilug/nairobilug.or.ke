@@ -1,28 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
   <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 
   <title>  Building a Pentest Lab With Docker | Nairobi GNU/Linux Users Group
 </title>
-  <link rel="canonical" href="/2020/06/Lightweight lab entirely in Docker without Vmware or VirtualBox.html">
+  <link href="/2020/06/Lightweight lab entirely in Docker without Vmware or VirtualBox.html" rel="canonical"/>
 
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#333333">
+    <link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+    <link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+    <link href="/manifest.json" rel="manifest"/>
+    <meta content="#333333" name="theme-color"/>
 
-  <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/theme/css/fontawesome.min.css">
-  <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
-  <link rel="stylesheet" href="/theme/css/theme.css">
+  <link href="/theme/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="/theme/css/fontawesome.min.css" rel="stylesheet"/>
+  <link href="/theme/css/pygments/monokai.min.css" rel="stylesheet"/>
+  <link href="/theme/css/theme.css" rel="stylesheet"/>
 
   
-  <meta name="description" content="Lightweight penetration testing lab inside docker GUI support">
+  <meta content="Lightweight penetration testing lab inside docker GUI support" name="description"/>
 
 
 </head>
@@ -33,7 +34,7 @@
 <div class="row">
     <div class="col-sm-4">
       <a href="/">
-        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+        <img alt="Nairobi GNU/Linux Users Group" class="img-fluid rounded" src="/images/profile.png"/>
       </a>
     </div>
   <div class="col-sm-8">
@@ -48,7 +49,7 @@
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
-            <li class=" list-inline-item text-muted">|</li>
+            <li class="list-inline-item text-muted">|</li>
           <li class="list-inline-item"><a class="fab fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
           <li class="list-inline-item"><a class="fab fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
       </ul>
@@ -60,7 +61,7 @@
     <div class="container">
       <h1>  Building a Pentest Lab With Docker
 </h1>
-      <hr>
+      <hr/>
   <article class="article">
     <header>
       <ul class="list-inline">
@@ -82,7 +83,7 @@
     </header>
     <div class="content">
       <h2>What is Docker?</h2>
-<p><img alt="Docker Logo" src="/images/docker-pentest-lab/docker.svg">
+<p><img alt="Docker Logo" src="/images/docker-pentest-lab/docker.svg"/>
 Docker is a container platform that is similar to a Hypervisor like Virtualbox. Docker uses less storage and RAM and are portable.</p>
 <p>Docker can run on: 
 - Linux
@@ -109,10 +110,10 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>docker.io
 </code></pre></div>
 
-<hr>
+<hr/>
 <h2>Docker on Windows</h2>
 <p>To run docker in windows, install <a href="https://docs.docker.com/docker-for-windows/install/">Docker desktop</a>.</p>
-<p><img alt="Windows 10 Logo" src="/images/docker-pentest-lab/windows10.svg"></p>
+<p><img alt="Windows 10 Logo" src="/images/docker-pentest-lab/windows10.svg"/></p>
 <p>Docker Desktop is an awesome app with a graphical interface. It can run Linux containers from windows. However, there's one major deal-breaker.</p>
 <p>Docker Desktop cannot co-exist with VirtualBox or VMware, because it requires Hyper-V to run Linux containers😤<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>.</p>
 <blockquote>
@@ -126,14 +127,14 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 <p>This is also the same reason <a href="https://blogs.windows.com/windowsdeveloper/2016/07/22/fun-with-the-windows-subsystem-for-linux/">WSL</a> cannot co-exist with VMware/Virtualbox.</p>
 </blockquote>
 <p>Now I'm starting to see why people hate Microsoft. They lock users to their ecosystem.</p>
-<hr>
+<hr/>
 <h2>Hello World</h2>
 <p>After you have installed docker, run this command as a test</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>hello-world
 </code></pre></div>
 
 <p>If it completes successfully, you can follow along</p>
-<p><img alt="Server status" src="/images/docker-pentest-lab/Server status-pana.svg"></p>
+<p><img alt="Server status" src="/images/docker-pentest-lab/Server status-pana.svg"/></p>
 <h2>The Network</h2>
 <p>The network will be called <code>vulnerable</code>. It will have a 10.0.0/24 subnet</p>
 <p>Create it with this command</p>
@@ -142,7 +143,7 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 
 <h2>Attacker Container</h2>
 <p>For this, I will use Parrot OS. It's docker images are better Kali Linux Images.</p>
-<p><img alt="Cyber photo" src="/images/docker-pentest-lab/cyberr.svg"></p>
+<p><img alt="Cyber photo" src="/images/docker-pentest-lab/cyberr.svg"/></p>
 <p>First download the Parrot OS Docker image. This command will take a while depending on your internet connection. </p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker<span class="w"> </span>pull<span class="w"> </span>parrotsec/security:latest
 </code></pre></div>
@@ -153,7 +154,7 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 <span class="w">    </span>-it<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--hostname<span class="w"> </span>parrot<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--network<span class="w"> </span>vulnerable<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--ip<span class="o">=</span><span class="s2">&quot;10.0.0.2&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--ip<span class="o">=</span><span class="s2">"10.0.0.2"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--env<span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span><span class="nv">$DISPLAY</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-v<span class="w"> </span>/dev/shm:/dev/shm<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--device<span class="w"> </span>/dev/snd<span class="w"> </span><span class="se">\</span>
@@ -169,7 +170,7 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 </code></pre></div>
 
 <h3>Target container:Metasploitable2</h3>
-<p><img alt="Target" src="/images/docker-pentest-lab/Target-pana.svg"></p>
+<p><img alt="Target" src="/images/docker-pentest-lab/Target-pana.svg"/></p>
 <p>This is a very vulnerable test machine. It is what I recommend for anyone starting out.</p>
 <p>Open another terminal and pull the metasploitable image. The image is around 500MB.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>docker<span class="w"> </span>pull<span class="w"> </span>tleemcjr/metasploitable2
@@ -179,7 +180,7 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-it<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--network<span class="w"> </span>vulnerable<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--ip<span class="o">=</span><span class="s2">&quot;10.0.0.3&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--ip<span class="o">=</span><span class="s2">"10.0.0.3"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--name<span class="w"> </span>metasploitable<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--hostname<span class="w"> </span>metasploitable2<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>tleemcjr/metasploitable2<span class="w"> </span><span class="se">\</span>
@@ -206,7 +207,7 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 
 <h4>Guides &amp; Tutorials</h4>
 <p>There are tons of free guides out there on metasploitable. </p>
-<p><img alt="Image of person Studying" src="/images/docker-pentest-lab/read.svg"></p>
+<p><img alt="Image of person Studying" src="/images/docker-pentest-lab/read.svg"/></p>
 <ol>
 <li><a href="https://www.exploit-db.com/docs/english/44040-the-easiest-metasploit-guide-you%E2%80%99ll-ever-read.pdf">The Easiest Metasploit Guide You’ll Ever Read</a></li>
 <li><a href="https://www.offensive-security.com/metasploit-unleashed/">Metasploit Unleashed</a></li>
@@ -215,16 +216,16 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 </ol>
 <p>If you don't know what guide to use, I recommend <a href="https://metasploit.help.rapid7.com/docs/metasploitable-2-exploitability-guide">this one</a>.</p>
 <h2>More vulnerable containers 🧑‍💻</h2>
-<p><img alt="More Cyber" src="/images/docker-pentest-lab/hacker.svg"></p>
+<p><img alt="More Cyber" src="/images/docker-pentest-lab/hacker.svg"/></p>
 <p>You can extend the lab with any of these containers depending on your learning goal.</p>
 <h3>OWASP Juiceshop</h3>
 <p>This container focusses on web application security.</p>
-<p><img alt="Juiceshop Logo" src="/images/docker-pentest-lab/juiceshop.svg"></p>
+<p><img alt="Juiceshop Logo" src="/images/docker-pentest-lab/juiceshop.svg"/></p>
 <p>To create and start the juiceshop container for the first time</p>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--name<span class="w"> </span>juiceshop<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--network<span class="w"> </span>vulnerable<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--ip<span class="o">=</span><span class="s2">&quot;10.0.0.6&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--ip<span class="o">=</span><span class="s2">"10.0.0.6"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>bkimminich/juice-shop
 </code></pre></div>
 
@@ -249,12 +250,12 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 </ul>
 <h4>OWASP Webgoat 🐐</h4>
 <p><a href="(https://owasp.org/www-project-webgoat/)">Webgoat</a> is a ctf-style vulnerable container focused on web application security.</p>
-<p><img alt="goat-svg" src="/images/docker-pentest-lab/goat.svg"></p>
+<p><img alt="goat-svg" src="/images/docker-pentest-lab/goat.svg"/></p>
 <p>Create and run the container for the first time</p>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w">  </span>-d<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--name<span class="w"> </span>webgoat<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--network<span class="w"> </span>vulnerable<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--ip<span class="o">=</span><span class="s2">&quot;10.0.0.4&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--ip<span class="o">=</span><span class="s2">"10.0.0.4"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-e<span class="w"> </span><span class="nv">TZ</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span>/etc/timezone<span class="k">)</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>webgoat/goatandwolf
 </code></pre></div>
@@ -276,7 +277,7 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 
 <h3>Why I use docker for a pentest lab</h3>
 <p>Two Operating systems make my computer painfully slow. Containers aren't resource-intensive and perform well. This fits my use case.</p>
-<p><img alt="Lab.svg" src="/images/docker-pentest-lab/lab.svg"></p>
+<p><img alt="Lab.svg" src="/images/docker-pentest-lab/lab.svg"/></p>
 <p>If you have RAM to spare then it's really not that much of a difference. </p>
 <h2>When not to use Docker</h2>
 <p>If you want to run Windows containers from a linux host, you are out of luck. You can run linux containers on Windows though</p>
@@ -310,7 +311,7 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 <p>You can run a few commands to avoid some errors encountered when running GUI apps</p>
 <h4>Burpsuite</h4>
 <p>Burp Suite is a web app pentesting tool for monitoring http requests and responses.</p>
-<p><img alt="Burpsuite Logo" src="/images/docker-pentest-lab/burp.svg"></p>
+<p><img alt="Burpsuite Logo" src="/images/docker-pentest-lab/burp.svg"/></p>
 <p>To install and run burpsuite inside the parrot os container.</p>
 <div class="highlight"><pre><span></span><code><span class="gp"># </span>sudo<span class="w"> </span>apt<span class="w"> </span>update
 <span class="gp"># </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>burpsuite
@@ -320,7 +321,7 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 <p>You can then point your browser to use <code>10.0.0.2:8080</code> as the proxy and burp will intercept everything</p>
 <h4>Firefox</h4>
 <p>Firefox, is a free and open-source web browser.</p>
-<p><img alt="Firefox Logo" src="/images/docker-pentest-lab/firefox.svg"></p>
+<p><img alt="Firefox Logo" src="/images/docker-pentest-lab/firefox.svg"/></p>
 <p>To install and run firefox:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>apt<span class="w"> </span>install<span class="w"> </span>firefox<span class="w"> </span>ca-certificates<span class="w"> </span>
 </code></pre></div>
@@ -329,16 +330,16 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
 <ul>
 <li>Illustrations from <a href="https://stories.freepik.com/">Freepik</a></li>
 </ul>
-<p><img alt="Stories by freepik" src="https://ianmuchina.com/assets/img/posts/freepik.svg"></p>
+<p><img alt="Stories by freepik" src="https://ianmuchina.com/assets/img/posts/freepik.svg"/></p>
 <p>This was originaly posted on my blog at <a href="https://ianmuchina.com/">ianmuchina.com</a></p>
 <h3>Further reading/research</h3>
 <p>Jess Frazelle has written an awesome <a href="https://blog.jessfraz.com/post/docker-containers-on-the-desktop/">blog post</a> with details on running graphical apps inside Docker containers. She's also given this awesome <a href="https://youtu.be/cYsVvV1aVss">Talk/Demo</a> on running various applications and retro games inside docker containers.</p>
 <h2>Footnotes</h2>
 <div class="footnote">
-<hr>
+<hr/>
 <ol>
 <li id="fn:1">
-<p>Docker requires a Linux kernel to run Linux containers on Windows. Docker accomplishes this by running a Linux Virtual Machine inside Hyper-V. This is still more resource-efficient than full VM's. Plus there's the added benefit of running both Windows and Linux containers. This is not possible on Linux&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p>Docker requires a Linux kernel to run Linux containers on Windows. Docker accomplishes this by running a Linux Virtual Machine inside Hyper-V. This is still more resource-efficient than full VM's. Plus there's the added benefit of running both Windows and Linux containers. This is not possible on Linux <a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">↩</a></p>
 </li>
 </ol>
 </div>
@@ -358,7 +359,7 @@ Find a complete list <a href="https://en.wikipedia.org/wiki/List_of_Linux_distri
   </ul>
   <p class="col-sm-6 text-sm-right text-muted">
     Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
-    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">✨</a>
   </p>
 </div>    </div>
   </footer>

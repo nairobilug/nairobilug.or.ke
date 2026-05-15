@@ -1,28 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
   <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 
   <title>  Building a Custom Arch Linux Live ISO in the Cloud | Nairobi GNU/Linux Users Group
 </title>
-  <link rel="canonical" href="/2024/03/custom-live-arch-linux-iso.html">
+  <link href="/2024/03/custom-live-arch-linux-iso.html" rel="canonical"/>
 
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#333333">
+    <link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+    <link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+    <link href="/manifest.json" rel="manifest"/>
+    <meta content="#333333" name="theme-color"/>
 
-  <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/theme/css/fontawesome.min.css">
-  <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
-  <link rel="stylesheet" href="/theme/css/theme.css">
+  <link href="/theme/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="/theme/css/fontawesome.min.css" rel="stylesheet"/>
+  <link href="/theme/css/pygments/monokai.min.css" rel="stylesheet"/>
+  <link href="/theme/css/theme.css" rel="stylesheet"/>
 
   
-  <meta name="description" content="Build a live iso that can be booted from a USB stick">
+  <meta content="Build a live iso that can be booted from a USB stick" name="description"/>
 
 
 </head>
@@ -33,7 +34,7 @@
 <div class="row">
     <div class="col-sm-4">
       <a href="/">
-        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+        <img alt="Nairobi GNU/Linux Users Group" class="img-fluid rounded" src="/images/profile.png"/>
       </a>
     </div>
   <div class="col-sm-8">
@@ -48,7 +49,7 @@
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
-            <li class=" list-inline-item text-muted">|</li>
+            <li class="list-inline-item text-muted">|</li>
           <li class="list-inline-item"><a class="fab fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
           <li class="list-inline-item"><a class="fab fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
       </ul>
@@ -60,7 +61,7 @@
     <div class="container">
       <h1>  Building a Custom Arch Linux Live ISO in the Cloud
 </h1>
-      <hr>
+      <hr/>
   <article class="article">
     <header>
       <ul class="list-inline">
@@ -130,12 +131,12 @@ cp inkstitch/*.zst inkstitchdb/
 <span class="nx">cd</span><span class="w"> </span><span class="nx">inkstitch</span>
 <span class="nx">echo</span><span class="w"> </span><span class="nx">inkscape</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="nx">packages</span><span class="p">.</span><span class="nx">x86_64</span>
 <span class="nx">echo</span><span class="w"> </span><span class="nx">inkstitch</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="nx">packages</span><span class="p">.</span><span class="nx">x86_64</span>
-<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">s</span><span class="o">/</span><span class="err">\#\</span><span class="p">[</span><span class="nx">custom</span><span class="err">\</span><span class="p">]</span><span class="o">/</span><span class="err">\</span><span class="p">[</span><span class="nx">inkstitch</span><span class="err">\</span><span class="p">]</span><span class="o">/</span><span class="nx">g</span><span class="err">&#39;</span><span class="w"> </span><span class="nx">pacman</span><span class="p">.</span><span class="nx">conf</span>
-<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">s</span><span class="o">/</span><span class="err">\#</span><span class="nx">SigLevel</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">Optional</span><span class="w"> </span><span class="nx">TrustAll</span><span class="o">/</span><span class="nx">SigLevel</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">Optional</span><span class="w"> </span><span class="nx">TrustAll</span><span class="o">/</span><span class="nx">g</span><span class="err">&#39;</span><span class="w"> </span>\
+<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">'</span><span class="nx">s</span><span class="o">/</span><span class="err">\#\</span><span class="p">[</span><span class="nx">custom</span><span class="err">\</span><span class="p">]</span><span class="o">/</span><span class="err">\</span><span class="p">[</span><span class="nx">inkstitch</span><span class="err">\</span><span class="p">]</span><span class="o">/</span><span class="nx">g</span><span class="err">'</span><span class="w"> </span><span class="nx">pacman</span><span class="p">.</span><span class="nx">conf</span>
+<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">'</span><span class="nx">s</span><span class="o">/</span><span class="err">\#</span><span class="nx">SigLevel</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">Optional</span><span class="w"> </span><span class="nx">TrustAll</span><span class="o">/</span><span class="nx">SigLevel</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">Optional</span><span class="w"> </span><span class="nx">TrustAll</span><span class="o">/</span><span class="nx">g</span><span class="err">'</span><span class="w"> </span>\
 <span class="nx">pacman</span><span class="p">.</span><span class="nx">conf</span>
-<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">s</span><span class="o">|</span><span class="err">\#</span><span class="nx">Server</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">file</span><span class="p">:</span><span class="c1">///home/custompkgs|Server = file:///home/arch/inkstitchdb|g&#39; \</span>
+<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">'</span><span class="nx">s</span><span class="o">|</span><span class="err">\#</span><span class="nx">Server</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">file</span><span class="p">:</span><span class="c1">///home/custompkgs|Server = file:///home/arch/inkstitchdb|g' \</span>
 <span class="nx">pacman</span><span class="p">.</span><span class="nx">conf</span>
-<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">s</span><span class="o">|</span><span class="nx">iso_name</span><span class="p">=</span><span class="s">&quot;aui-lxqt&quot;</span><span class="o">|</span><span class="nx">iso_name</span><span class="p">=</span><span class="s">&quot;aui-lxqt-inkstitch&quot;</span><span class="o">|</span><span class="nx">g</span><span class="err">&#39;</span><span class="w"> </span>\
+<span class="nx">sed</span><span class="w"> </span><span class="o">-</span><span class="nx">i</span><span class="w"> </span><span class="err">'</span><span class="nx">s</span><span class="o">|</span><span class="nx">iso_name</span><span class="p">=</span><span class="s">"aui-lxqt"</span><span class="o">|</span><span class="nx">iso_name</span><span class="p">=</span><span class="s">"aui-lxqt-inkstitch"</span><span class="o">|</span><span class="nx">g</span><span class="err">'</span><span class="w"> </span>\
 <span class="nx">profiledef</span><span class="p">.</span><span class="nx">sh</span>
 <span class="nx">cd</span><span class="w"> </span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span>
 </code></pre></div>
@@ -172,7 +173,7 @@ cp inkstitch/*.zst inkstitchdb/
   </ul>
   <p class="col-sm-6 text-sm-right text-muted">
     Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
-    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">✨</a>
   </p>
 </div>    </div>
   </footer>

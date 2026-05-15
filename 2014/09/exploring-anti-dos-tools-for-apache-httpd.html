@@ -1,28 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
   <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 
   <title>  Exploring Anti-DOS Tools for Apache Httpd | Nairobi GNU/Linux Users Group
 </title>
-  <link rel="canonical" href="/2014/09/exploring-anti-dos-tools-for-apache-httpd.html">
+  <link href="/2014/09/exploring-anti-dos-tools-for-apache-httpd.html" rel="canonical"/>
 
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#333333">
+    <link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+    <link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+    <link href="/manifest.json" rel="manifest"/>
+    <meta content="#333333" name="theme-color"/>
 
-  <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/theme/css/fontawesome.min.css">
-  <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
-  <link rel="stylesheet" href="/theme/css/theme.css">
+  <link href="/theme/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="/theme/css/fontawesome.min.css" rel="stylesheet"/>
+  <link href="/theme/css/pygments/monokai.min.css" rel="stylesheet"/>
+  <link href="/theme/css/theme.css" rel="stylesheet"/>
 
   
-  <meta name="description" content="Analyzing how Apache can be crippled by a DOS tool like Slowloris and a side note on Nginx...">
+  <meta content="Analyzing how Apache can be crippled by a DOS tool like Slowloris and a side note on Nginx..." name="description"/>
 
 
 </head>
@@ -33,7 +34,7 @@
 <div class="row">
     <div class="col-sm-4">
       <a href="/">
-        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+        <img alt="Nairobi GNU/Linux Users Group" class="img-fluid rounded" src="/images/profile.png"/>
       </a>
     </div>
   <div class="col-sm-8">
@@ -48,7 +49,7 @@
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
-            <li class=" list-inline-item text-muted">|</li>
+            <li class="list-inline-item text-muted">|</li>
           <li class="list-inline-item"><a class="fab fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
           <li class="list-inline-item"><a class="fab fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
       </ul>
@@ -60,7 +61,7 @@
     <div class="container">
       <h1>  Exploring Anti-DOS Tools for Apache Httpd
 </h1>
-      <hr>
+      <hr/>
   <article class="article">
     <header>
       <ul class="list-inline">
@@ -88,25 +89,25 @@
 <li>Attacking Machine: 192.168.43.39 (Slowloris "DOSing" the server)</li>
 </ul>
 <p><strong>Apache httpd error logs</strong></p>
-<p><img alt="Error from bad requests" src="/images/exploring-anti-dos-tools-for-apache-httpd/badheader.png" title="Apache error logs"></p>
+<p><img alt="Error from bad requests" src="/images/exploring-anti-dos-tools-for-apache-httpd/badheader.png" title="Apache error logs"/></p>
 <p>The loaded module (<em>mod_evasion</em>), can't save Apache httpd from the DOS attack, even loading the site from a browser is somehow impossible.</p>
-<p><img alt="Apache DOSed" src="/images/exploring-anti-dos-tools-for-apache-httpd/apachedown.png" title="Can't access via Browser"></p>
+<p><img alt="Apache DOSed" src="/images/exploring-anti-dos-tools-for-apache-httpd/apachedown.png" title="Can't access via Browser"/></p>
 <p>But this module can prevent a brute-force attack (<em>e.g. an automated script to guess a password field in a web-form</em>) in a web server (running Apache httpd).</p>
-<p><img alt="mod_evasion can prevent Brute-force.." src="/images/exploring-anti-dos-tools-for-apache-httpd/bruteforce.png" title="mod_evasion can prevent Brute-force attack"></p>
+<p><img alt="mod_evasion can prevent Brute-force.." src="/images/exploring-anti-dos-tools-for-apache-httpd/bruteforce.png" title="mod_evasion can prevent Brute-force attack"/></p>
 <p>Just to make an interesting comparison, I replaced Apache httpd with Nginx on the same Server (192.168.43.221) and <strong>ta! da!..</strong></p>
-<p><img alt="Nginx is not DOSed by Slowloris" src="/images/exploring-anti-dos-tools-for-apache-httpd/nginxup.png" title="Nginx is not DOSed by Slowloris"> Nginx gracefully made it by ignoring the request from Slowloris. But I noticed a brute-force attack is possible while using Nginx default settings! <strong>Nginx access logs</strong>
-<img alt="Nginx Brute-forced" src="/images/exploring-anti-dos-tools-for-apache-httpd/bfnginx.png" title="Nginx can be Brute-forced"></p>
+<p><img alt="Nginx is not DOSed by Slowloris" src="/images/exploring-anti-dos-tools-for-apache-httpd/nginxup.png" title="Nginx is not DOSed by Slowloris"/> Nginx gracefully made it by ignoring the request from Slowloris. But I noticed a brute-force attack is possible while using Nginx default settings! <strong>Nginx access logs</strong>
+<img alt="Nginx Brute-forced" src="/images/exploring-anti-dos-tools-for-apache-httpd/bfnginx.png" title="Nginx can be Brute-forced"/></p>
 <h2>Second Setup</h2>
 <ul>
 <li>Server: 192.168.43.221 (running Apache httpd with mod_antiloris loaded)</li>
 <li>Attacking Machine: 192.168.43.39 (Sowloris "DOSing" the server)</li>
 </ul>
 <p><em>mod_antiloris</em> played it nice by monitoring the requests coming from the client and rejected extra connections. Accessing the web services from the browser was not interfered.</p>
-<p><img alt="mod_antiloris logs" src="/images/exploring-anti-dos-tools-for-apache-httpd/antiloris.png" title="mod_antiloris logs"></p>
+<p><img alt="mod_antiloris logs" src="/images/exploring-anti-dos-tools-for-apache-httpd/antiloris.png" title="mod_antiloris logs"/></p>
 <p><em>mod_evasion</em> is cool but can't save Apache httpd from Slowloris. On the other hand, <em>mod_antiloris</em> worked fine and denied Slowloris a chance to mess up with the Apache httpd server.</p>
 <h2>Explanation</h2>
 <p><strong>Putting the Lens on the Logs...</strong> (Apache httpd access log)</p>
-<p><img alt="Apache-httpd access log" src="/images/exploring-anti-dos-tools-for-apache-httpd/accesslog.png" title="Apache httpd access logs"></p>
+<p><img alt="Apache-httpd access log" src="/images/exploring-anti-dos-tools-for-apache-httpd/accesslog.png" title="Apache httpd access logs"/></p>
 <p><em>Why did mod_antiloris pass the test and mod_evasion fail?..</em> <em>Why did Slowloris work on Apache httpd and not on Nginx?</em></p>
 <p>Apache httpd waits for a <strong>complete HTTP request header</strong> to be received, this makes it good to serve web-content even in slow connections. So, by default, the timeout value is 300 seconds and it's reset each time the client sends more packets. Slowloris takes advantage by sending incomplete HTTP request headers and maintains the connection by sending more incomplete request headers resetting the time-out counter.</p>
 <p>Slowloris is written in Perl, it simply plays around with <strong>CR (Carriage Return)</strong> and <strong>LF (Line Feed)</strong> at the end of every incomplete HTTP request header. A blank line after the request header is used to represent the completion of the header in HTTP. Since the request is incomplete and the timeout is 300 seconds, Apache httpd will keep the connection alive waiting for the remaining data, while Slowloris keeps on sending the incomplete HTTP requests resetting the timeout counter.</p>
@@ -133,7 +134,7 @@
   </ul>
   <p class="col-sm-6 text-sm-right text-muted">
     Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
-    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">✨</a>
   </p>
 </div>    </div>
   </footer>

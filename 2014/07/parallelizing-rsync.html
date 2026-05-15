@@ -1,28 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
   <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 
   <title>  Parallelizing Rsync | Nairobi GNU/Linux Users Group
 </title>
-  <link rel="canonical" href="/2014/07/parallelizing-rsync.html">
+  <link href="/2014/07/parallelizing-rsync.html" rel="canonical"/>
 
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#333333">
+    <link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+    <link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+    <link href="/manifest.json" rel="manifest"/>
+    <meta content="#333333" name="theme-color"/>
 
-  <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/theme/css/fontawesome.min.css">
-  <link rel="stylesheet" href="/theme/css/pygments/monokai.min.css">
-  <link rel="stylesheet" href="/theme/css/theme.css">
+  <link href="/theme/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="/theme/css/fontawesome.min.css" rel="stylesheet"/>
+  <link href="/theme/css/pygments/monokai.min.css" rel="stylesheet"/>
+  <link href="/theme/css/theme.css" rel="stylesheet"/>
 
   
-  <meta name="description" content="Using find and xargs to parallelize rsync and speed up transfers of large directory hierarchies">
+  <meta content="Using find and xargs to parallelize rsync and speed up transfers of large directory hierarchies" name="description"/>
 
 
 </head>
@@ -33,7 +34,7 @@
 <div class="row">
     <div class="col-sm-4">
       <a href="/">
-        <img class="img-fluid rounded" src=/images/profile.png alt="Nairobi GNU/Linux Users Group">
+        <img alt="Nairobi GNU/Linux Users Group" class="img-fluid rounded" src="/images/profile.png"/>
       </a>
     </div>
   <div class="col-sm-8">
@@ -48,7 +49,7 @@
             <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
             <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
             <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
-            <li class=" list-inline-item text-muted">|</li>
+            <li class="list-inline-item text-muted">|</li>
           <li class="list-inline-item"><a class="fab fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
           <li class="list-inline-item"><a class="fab fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
       </ul>
@@ -60,7 +61,7 @@
     <div class="container">
       <h1>  Parallelizing Rsync
 </h1>
-      <hr>
+      <hr/>
   <article class="article">
     <header>
       <ul class="list-inline">
@@ -111,9 +112,9 @@
 
 <span class="c1"># RSYNC SETUP</span>
 <span class="nv">RSYNC_PROG</span><span class="o">=</span>/usr/bin/rsync
-<span class="c1"># note the important use of --relative to use relative paths so we don&#39;t have to specify the exact path on dest</span>
-<span class="nv">RSYNC_OPTS</span><span class="o">=</span><span class="s2">&quot;-aAXv --numeric-ids --progress --human-readable --delete --exclude=.glusterfs --relative&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">RSYNC_RSH</span><span class="o">=</span><span class="s2">&quot;ssh -T -c arcfour -o Compression=no -x&quot;</span>
+<span class="c1"># note the important use of --relative to use relative paths so we don't have to specify the exact path on dest</span>
+<span class="nv">RSYNC_OPTS</span><span class="o">=</span><span class="s2">"-aAXv --numeric-ids --progress --human-readable --delete --exclude=.glusterfs --relative"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">RSYNC_RSH</span><span class="o">=</span><span class="s2">"ssh -T -c arcfour -o Compression=no -x"</span>
 
 <span class="c1"># ENV SETUP</span>
 <span class="nv">SRCDIR</span><span class="o">=</span>/path/to/good/brick
@@ -128,7 +129,7 @@
 <span class="c1"># note the combination of -print0 and -0!</span>
 find<span class="w"> </span><span class="o">{</span>a..z<span class="o">}</span>*<span class="w"> </span><span class="o">{</span>A..Z<span class="o">}</span>*<span class="w"> </span><span class="o">{</span><span class="m">0</span>..9<span class="o">}</span>*<span class="w"> </span>-mindepth<span class="w"> </span><span class="m">1</span><span class="w"> </span>-maxdepth<span class="w"> </span><span class="m">1</span><span class="w"> </span>-print0<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>xargs<span class="w"> </span>-0<span class="w"> </span>-n1<span class="w"> </span>-P<span class="nv">$THREADS</span><span class="w"> </span>-I%<span class="w"> </span><span class="se">\</span>
-<span class="w">        </span><span class="nv">$RSYNC_PROG</span><span class="w"> </span><span class="nv">$RSYNC_OPTS</span><span class="w"> </span><span class="s2">&quot;%&quot;</span><span class="w"> </span><span class="nv">$BAD_NODE</span>:<span class="nv">$DESTDIR</span>
+<span class="w">        </span><span class="nv">$RSYNC_PROG</span><span class="w"> </span><span class="nv">$RSYNC_OPTS</span><span class="w"> </span><span class="s2">"%"</span><span class="w"> </span><span class="nv">$BAD_NODE</span>:<span class="nv">$DESTDIR</span>
 </code></pre></div>
 
 <p>Pay attention to the source/destination paths, the number of <code>THREADS</code>, and the <code>BAD_NODE</code> name, then you should be ready to roll.</p>
@@ -160,7 +161,7 @@ find<span class="w"> </span><span class="o">{</span>a..z<span class="o">}</span>
   </ul>
   <p class="col-sm-6 text-sm-right text-muted">
     Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
-    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">✨</a>
   </p>
 </div>    </div>
   </footer>
