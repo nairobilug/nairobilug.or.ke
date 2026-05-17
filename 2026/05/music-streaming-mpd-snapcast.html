@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+
+  <title>  Local Music Streaming with MPD and Snapcast | Nairobi GNU/Linux Users Group
+</title>
+  <link href="/2026/05/music-streaming-mpd-snapcast.html" rel="canonical"/>
+
+    <link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+    <link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+    <link href="/manifest.json" rel="manifest"/>
+    <meta content="#333333" name="theme-color"/>
+
+  <link href="/theme/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="/theme/css/fontawesome.min.css" rel="stylesheet"/>
+  <link href="/theme/css/pygments/monokai.min.css" rel="stylesheet"/>
+  <link href="/theme/css/theme.css" rel="stylesheet"/>
+
+  
+  <meta content="Set up music player daemon and Snapcast on Parabola GNU/Linux" name="description"/>
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="/">
+        <img alt="Nairobi GNU/Linux Users Group" class="img-fluid rounded" src="/images/profile.png"/>
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="/">Nairobi GNU/Linux Users Group</a></h1>
+      <p class="text-muted">A lively community of GNU/Linux enthusiasts</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://web.libera.chat/?channels=#nairobilug" target="_blank">IRC</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="/pages/about-us.html">About Us</a></li>
+            <li class="list-inline-item"><a href="/pages/code-of-conduct.html">Code of Conduct</a></li>
+            <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
+            <li class="list-inline-item"><a href="/pages/mailing-list.html">Mailing List</a></li>
+            <li class="list-inline-item"><a href="/pages/meetups.html">Meetups</a></li>
+            <li class="list-inline-item"><a href="/pages/software.html">Software</a></li>
+            <li class="list-inline-item text-muted">|</li>
+          <li class="list-inline-item"><a class="fab fa-github" href="https://github.com/nairobilug" target="_blank"></a></li>
+          <li class="list-inline-item"><a class="fab fa-twitter" href="https://twitter.com/nairobilug" target="_blank"></a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Local Music Streaming with MPD and Snapcast
+</h1>
+      <hr/>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2026-05-10T00:00:00+03:00">
+          <i class="fas fa-clock"></i>
+          Sun 10 May 2026
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="/category/intranet.html">Intranet</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="/author/benson-muite.html">Benson Muite</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="/tag/music.html">#Music</a>,               <a href="/tag/parabola-linux.html">#Parabola linux</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>These notes describe the setup used in the demo at the meetup on 2 May 2026,
+with additional information about the web interface which was not discussed.</p>
+<h1>Local Music Streaming with MPD and Snapcast</h1>
+<p><a href="https://www.musicpd.org/">Media Player Daemon (MPD)</a> is a
+<a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html">GPL 2.0 or later</a>
+license software that allows one to manage a music collection.  It uses a server
+and client architecture, so needs to be used with another peice of software to
+be able to control playing of music.  It can be installed on a variety of
+operating systems, including many GNU/Linux distributions through their
+<a href="https://repology.org/project/mpd/packages">package managers</a> and has an
+experimental Android port available through
+<a href="https://f-droid.org/packages/org.musicpd/">F-Droid</a>.  The
+<a href="https://mpd.readthedocs.io/en/stable/user.html">user manual</a> also describes
+how to compile it from source should you wish to use it on an operating
+system for which there is no ready package or should you want to build it
+with specific options enabled.</p>
+<p>MPD has a clear and stable specification for how clients should connect to
+it and control the music that is played.  There are many choices of clients
+to use, both for computers and for mobile devices.  Some are listed on the
+<a href="https://www.musicpd.org/clients/">MPD webpage</a>. This guide will not
+go into any detail on using many of these, and will focus on
+<a href="https://gitlab.xfce.org/apps/xfmpc">xfmpc</a>.  If you wish to use your Android
+phone as a client, <a href="https://f-droid.org/packages/org.gateshipone.malp/">M.A.L.P.</a>
+is an option.</p>
+<p><a href="https://github.com/snapcast/snapcast">Snapcast</a> enables one to stream an
+audio source to many outlets.  It is particularly suited to streaming audio
+to speakers in different rooms in the same building as it ensures that the
+sound remains synchronized as one moves from one room to another.  The audio
+is streamed over the local internet, so mobile devices can also be used to
+play the audio.  Snapcast is available under the
+<a href="https://www.gnu.org/licenses/gpl-3.0.html">GPL 3.0 or later license</a>.</p>
+<h2>Installation</h2>
+<p>MPD and xfmpc are available in the
+<a href="https://www.parabola.nu/packages/extra/x86_64/mpd/">Parabola GNU/Linux</a>,
+for MPD see
+<a href="https://www.parabola.nu/packages/extra/x86_64/mpd/">https://www.parabola.nu/packages/extra/x86_64/mpd/</a>
+and for xfmpc see
+<a href="https://www.parabola.nu/packages/extra/x86_64/xfmpc/">https://www.parabola.nu/packages/extra/x86_64/xfmpc/</a>.
+To install them, open a terminal and type</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>pacman<span class="w"> </span>-Syu<span class="w"> </span>mpd<span class="w"> </span>xfmpc
+</code></pre></div>
+
+<p>Snapcast is not yet packaged for Parabola GNU/Linux, but there is a package available
+on the <a href="https://aur.archlinux.org/packages/snapcast">Arch User Repository</a>,
+the <a href="https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=snapcast">PKGBUILD</a>
+can be used to install Snapcast on Parabola GNU/Linux.  Within a terminal, run the
+following commands</p>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>snapcast
+<span class="nb">cd</span><span class="w"> </span>snapcast
+curl<span class="w"> </span>https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h<span class="o">=</span>snapcast<span class="w"> </span>-o<span class="w"> </span>PKGBUILD
+curl<span class="w"> </span>https://aur.archlinux.org/cgit/aur.git/plain/snapcast.install?h<span class="o">=</span>snapcast<span class="w"> </span>-o<span class="w"> </span>snapcast.install
+curl<span class="w"> </span>https://aur.archlinux.org/cgit/aur.git/plain/snapcast.sysusers?h<span class="o">=</span>snapcast<span class="w"> </span>-o<span class="w"> </span>snapcast.sysusers
+curl<span class="w"> </span>https://aur.archlinux.org/cgit/aur.git/plain/snapcast.tmpfiles?h<span class="o">=</span>snapcast<span class="w"> </span>-o<span class="w"> </span>snapcast.tmpfiles
+</code></pre></div>
+
+<p>These command gets the necessary files to build the package.  Then install
+the dependencies for the package</p>
+<p>``bash
+sudo pacman -Syu alsa-lib alsa-utils avahi cmake expat flac libnotify libpipewire libpulse
+sudo pacman -Syu libsoxr libvorbis openssl python-dbus python-mpd2 python-musicbrainzngs
+sudo pacman -Syu python-requests python-websocket-client</p>
+<div class="highlight"><pre><span></span><code><span class="nx">To</span><span class="w"> </span><span class="nx">build</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="kn">package</span><span class="w"> </span><span class="k">type</span>
+<span class="err">```</span><span class="nx">bash</span>
+<span class="nx">makepkg</span><span class="w"> </span><span class="nx">si</span>
+</code></pre></div>
+
+<p>Finally install the package using</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>pacman<span class="w"> </span>-U<span class="w"> </span>snapcast*.zst
+</code></pre></div>
+
+<h2>Configuring MPD and Snapcast</h2>
+<p>The software has been installed, however to use it, some configuration is required.
+For simplicity, we will create and use a local user configuration. If you
+expect to run MPD continuously, a system configuration that will start and run
+MPD whenever the computer is restarted may be useful - as this will be run
+attended, you will need to secure it appropriately.</p>
+<h3>Configuring MPD</h3>
+<p>Create a directory for the configuration file, then copy the example configuration
+file to it:</p>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>~/.config/mpd
+cp<span class="w"> </span>/usr/share/doc/mpd/mpdconf.example<span class="w"> </span>~/.config/mpd/mpd.conf
+</code></pre></div>
+
+<p>Before changing the configuration, check your ip address</p>
+<div class="highlight"><pre><span></span><code>ip config
+</code></pre></div>
+
+<p>Note down the local ipV4 address, which will be similar to</p>
+<div class="highlight"><pre><span></span><code>inet 192.168.100.78/24
+</code></pre></div>
+
+<p>Edit the configuration file, for example if you are using
+<a href="https://en.wikipedia.org/wiki/GNU_nano">nano</a>, open the file using</p>
+<div class="highlight"><pre><span></span><code>nano ~/.config/mpd/mpd.conf
+</code></pre></div>
+
+<p>feel free to use other editors such as
+<a href="https://www.gnu.org/software/emacs/">Emacs</a>
+or <a href="https://www.vim.org">vim</a>.</p>
+<p>Next, indicate where your music files are located
+by changing line 14 from</p>
+<div class="highlight"><pre><span></span><code><span class="gh">#</span>music_directory            "~/music"
+</code></pre></div>
+
+<p>to</p>
+<div class="highlight"><pre><span></span><code>music_directory             "~/Music"
+</code></pre></div>
+
+<p>or another directory that contains your music files.</p>
+<p>Indicate the location for MPD to create a temporary database file by
+uncommenting line 30 from</p>
+<div class="highlight"><pre><span></span><code><span class="gh">#</span>db_file                     "$XDG_CACHE_HOME/mpd/database"
+</code></pre></div>
+
+<p>to</p>
+<div class="highlight"><pre><span></span><code>db_file                     "$XDG_CACHE_HOME/mpd/database"
+</code></pre></div>
+
+<p>Indicate the location to create a temporary log file by uncommenting line 41
+from</p>
+<div class="highlight"><pre><span></span><code><span class="gh">#</span>log_file                    "$XDG_CACHE_HOME/mpd/log"
+``
+to
+</code></pre></div>
+
+<p>log_file                    "$XDG_CACHE_HOME/mpd/log"</p>
+<div class="highlight"><pre><span></span><code>Allow MPD to create a file to store the process id by uncommenting line 51
+from
+</code></pre></div>
+
+<h1>pid_file                  "~/.mpd/mpd.pid"</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>pid_file                  "~/.mpd/mpd.pid"</p>
+<div class="highlight"><pre><span></span><code><span class="nv">this</span><span class="w"> </span><span class="nv">will</span><span class="w"> </span><span class="nv">allow</span><span class="w"> </span><span class="nv">you</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">stop</span><span class="w"> </span><span class="nv">MPD</span><span class="w"> </span><span class="nv">by</span><span class="w"> </span><span class="nv">using</span><span class="w"> </span>`<span class="nv">mpd</span><span class="w"> </span><span class="o">--</span><span class="nv">kill</span>`<span class="w"> </span><span class="nv">when</span><span class="w"> </span><span class="nv">you</span><span class="w"> </span><span class="nv">want</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">shut</span>
+<span class="nv">it</span><span class="w"> </span><span class="nv">down</span>.
+
+<span class="nv">To</span><span class="w"> </span><span class="nv">enable</span><span class="w"> </span><span class="nv">MPD</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">manage</span><span class="w"> </span><span class="nv">information</span><span class="w"> </span><span class="nv">related</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">songs</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">use</span>,<span class="w"> </span><span class="nv">uncomment</span>
+<span class="nv">line</span><span class="w"> </span><span class="mi">64</span><span class="w"> </span><span class="nv">from</span>
+</code></pre></div>
+
+<h1>sticker_file                "$XDG_CACHE_HOME/sticker.sql"</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>sticker_file                "$XDG_CACHE_HOME/sticker.sql"</p>
+<div class="highlight"><pre><span></span><code>To enable MPD to be connected to on your local network, uncomment line 85 from
+</code></pre></div>
+
+<h1>bind_to_address             "any"</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>bind_to_address             "192.168.100.78"</p>
+<div class="highlight"><pre><span></span><code><span class="k">where</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">ip</span><span class="w"> </span><span class="nx">address</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">one</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">noted</span><span class="w"> </span><span class="nx">down</span><span class="w"> </span><span class="nx">earlier</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">should</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">changed</span>
+<span class="nx">appropriately</span><span class="p">.</span>
+
+<span class="nx">Specify</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">port</span><span class="w"> </span><span class="nx">that</span><span class="w"> </span><span class="nx">MPD</span><span class="w"> </span><span class="nx">should</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">connected</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">uncommenting</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">change</span>
+<span class="nx">line</span><span class="w"> </span><span class="mi">94</span><span class="w"> </span><span class="nx">from</span>
+</code></pre></div>
+
+<h1>port          "6600"</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>port           "7897"</p>
+<div class="highlight"><pre><span></span><code><span class="n">Check</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">assigned</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">using</span>
+</code></pre></div>
+
+<p>cat /etc/services | grep 7897</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="n">show</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">assigned</span><span class="p">,</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">another</span><span class="w"> </span><span class="n">port</span><span class="p">.</span>
+
+<span class="n">Enable</span><span class="w"> </span><span class="n">MPD</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">update</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">music</span><span class="w"> </span><span class="n">directory</span><span class="w"> </span><span class="n">automatically</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">they</span>
+<span class="n">are</span><span class="w"> </span><span class="n">changed</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="n">MPD</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">running</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">uncommenting</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="mh">124</span><span class="w"> </span><span class="n">from</span>
+</code></pre></div>
+
+<h1>auto_update      "yes"</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>auto_update      "yes"</p>
+<div class="highlight"><pre><span></span><code>To enable clients to have minimal permissions to play songs, uncomment and
+change line 173 from
+</code></pre></div>
+
+<h1>default_permissions       "read,add,control,admin"</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>default_permissions       "read,add,player"</p>
+<div class="highlight"><pre><span></span><code><span class="nv">Finally</span>,<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">Snapcast</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">be</span><span class="w"> </span><span class="nv">able</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">read</span><span class="w"> </span><span class="nv">output</span><span class="w"> </span><span class="nv">from</span><span class="w"> </span><span class="nv">MPD</span>,<span class="w"> </span><span class="nv">at</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span>
+<span class="nv">file</span>,<span class="w"> </span><span class="nv">add</span>
+</code></pre></div>
+
+<p>audio_output {
+      type         "fifo"
+      name         "snapcast output"
+      path         "/tmp/snapfifo"
+      format       "48000:16:2"
+      mixer_type   "software"
+}</p>
+<div class="highlight"><pre><span></span><code><span class="nv">This</span><span class="w"> </span><span class="nv">will</span><span class="w"> </span><span class="nv">create</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">stereo</span><span class="w"> </span><span class="mi">16</span><span class="w"> </span><span class="nv">bit</span><span class="w"> </span><span class="nv">output</span><span class="w"> </span><span class="nv">stream</span><span class="w"> </span><span class="nv">at</span><span class="w"> </span><span class="mi">48</span><span class="nv">KHz</span>.
+
+<span class="k">Exit</span><span class="w"> </span><span class="nv">your</span><span class="w"> </span><span class="nv">editor</span>.
+
+<span class="nv">Create</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">folder</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">temporary</span><span class="w"> </span><span class="nv">pid</span><span class="w"> </span><span class="nv">file</span>
+</code></pre></div>
+
+<p>mkdir ~/.mpd</p>
+<div class="highlight"><pre><span></span><code><span class="k">If</span><span class="w"> </span><span class="nv">you</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">have</span><span class="w"> </span><span class="nv">any</span><span class="w"> </span><span class="nv">music</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span>`<span class="o">~/</span><span class="nv">Music</span>`,<span class="w"> </span><span class="nv">put</span><span class="w"> </span><span class="nv">some</span><span class="w"> </span><span class="nv">music</span><span class="w"> </span><span class="nv">files</span><span class="w"> </span><span class="nv">there</span>,
+<span class="k">for</span><span class="w"> </span><span class="nv">example</span><span class="w"> </span><span class="nv">using</span>
+</code></pre></div>
+
+<p>cd ~/Music
+curl https://ia803204.us.archive.org/zip_dir.php?path=/0/items/Soul_Africa-6615.zip -o Soul_Africa-6615.zip
+unzip Soul_Africa-6615.zip
+cd $HOME</p>
+<div class="highlight"><pre><span></span><code><span class="n">which</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">download</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">album</span>
+<span class="p">[</span><span class="n">Soul</span><span class="w"> </span><span class="n">Africa</span><span class="p">](</span><span class="n">https</span><span class="o">:</span><span class="c1">//archive.org/details/Soul_Africa-6615)</span>
+<span class="n">by</span><span class="w"> </span><span class="p">[</span><span class="n">Juanitos</span><span class="p">](</span><span class="n">https</span><span class="o">:</span><span class="c1">//mrjuan.fr/juanitos/), feel free to choose something more</span>
+<span class="n">to</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">liking</span><span class="p">.</span>
+
+<span class="cp">### Configuring Snapserver</span>
+
+<span class="n">Now</span><span class="w"> </span><span class="n">configure</span><span class="w"> </span><span class="n">Snapcasts</span><span class="err">'</span><span class="w"> </span><span class="n">Snapserver</span><span class="p">.</span><span class="w"> </span><span class="n">To</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="n">control</span><span class="w"> </span><span class="n">over</span><span class="w"> </span><span class="n">http</span><span class="p">,</span><span class="w"> </span><span class="n">change</span><span class="w"> </span><span class="n">line</span>
+<span class="mi">81</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="err">`</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">snapserver</span><span class="p">.</span><span class="n">conf</span><span class="err">`</span><span class="w"> </span><span class="n">from</span>
+</code></pre></div>
+
+<h1>enabled = true</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>enabled = true</p>
+<div class="highlight"><pre><span></span><code><span class="n">You</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">need</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">edit</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">root</span><span class="w"> </span><span class="nf">permissions</span><span class="p">,</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">launch</span><span class="w"> </span><span class="n">your</span>
+<span class="n">editor</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">sudo</span><span class="p">,</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">example</span><span class="w"> </span><span class="err">`</span><span class="n">sudo</span><span class="w"> </span><span class="n">nano</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">snapserver</span><span class="p">.</span><span class="n">conf</span><span class="err">`</span><span class="p">,</span><span class="w"> </span><span class="k">where</span>
+<span class="o">[</span><span class="n">nano</span><span class="o">]</span><span class="p">(</span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">nano</span><span class="o">-</span><span class="n">editor</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="p">)</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">editor</span><span class="w"> </span><span class="n">being</span><span class="w"> </span><span class="n">used</span><span class="p">,</span><span class="w"> </span><span class="n">though</span><span class="w">  </span><span class="n">feel</span>
+<span class="k">free</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="n">editors</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="o">[</span><span class="n">Emacs</span><span class="o">]</span><span class="p">(</span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">gnu</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">software</span><span class="o">/</span><span class="n">emacs</span><span class="o">/</span><span class="p">)</span>
+<span class="ow">or</span><span class="w"> </span><span class="o">[</span><span class="n">vim</span><span class="o">]</span><span class="p">(</span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">vim</span><span class="p">.</span><span class="n">org</span><span class="p">).</span>
+
+<span class="n">Indicate</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">listen</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">changing</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="mi">88</span><span class="w"> </span><span class="k">from</span>
+</code></pre></div>
+
+<h1>bind_to_address = ::</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>bind_to_address = 192.168.100.78</p>
+<div class="highlight"><pre><span></span><code><span class="k">where</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">ip</span><span class="w"> </span><span class="nx">address</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">one</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">noted</span><span class="w"> </span><span class="nx">down</span><span class="w"> </span><span class="nx">earlier</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">should</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">changed</span>
+<span class="nx">appropriately</span><span class="p">.</span>
+
+
+<span class="nx">Indicate</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">port</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="nx">should</span><span class="w"> </span><span class="nx">listen</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">uncommenting</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="mi">91</span><span class="w"> </span><span class="nx">from</span>
+</code></pre></div>
+
+<h1>port = 1780</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>port = 1780</p>
+<div class="highlight"><pre><span></span><code>Indicate that the server should publish http content by uncommenting line 94
+from
+</code></pre></div>
+
+<h1>publish_http = true</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>publish_http = true</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="nx">simplicity</span><span class="p">,</span><span class="w"> </span><span class="nx">we</span><span class="w"> </span><span class="nx">will</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">encrypt</span><span class="w"> </span><span class="nx">locally</span><span class="w"> </span><span class="nx">served</span><span class="w"> </span><span class="nx">traffic</span><span class="p">.</span>
+
+<span class="nx">Enable</span><span class="w"> </span><span class="nx">control</span><span class="w"> </span><span class="nx">through</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">web</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">uncommenting</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="mi">128</span><span class="w"> </span><span class="nx">from</span>
+</code></pre></div>
+
+<h1>enabled = true</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>enabled = true</p>
+<div class="highlight"><pre><span></span><code><span class="nx">Indicate</span><span class="w"> </span><span class="nx">that</span><span class="w"> </span><span class="nx">address</span><span class="w"> </span><span class="nx">through</span><span class="w"> </span><span class="nx">which</span><span class="w"> </span><span class="nx">control</span><span class="w"> </span><span class="nx">information</span><span class="w"> </span><span class="nx">should</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">sent</span><span class="w"> </span><span class="nx">by</span>
+<span class="nx">changing</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="mi">135</span><span class="w"> </span><span class="nx">from</span>
+</code></pre></div>
+
+<h1>bind_to_address = ::</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>bind_to_address = 192.168.100.78</p>
+<div class="highlight"><pre><span></span><code><span class="k">where</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">ip</span><span class="w"> </span><span class="nx">address</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">one</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">noted</span><span class="w"> </span><span class="nx">down</span><span class="w"> </span><span class="nx">earlier</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">should</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">changed</span>
+<span class="nx">appropriately</span><span class="p">.</span>
+
+<span class="nx">Indicate</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">port</span><span class="w"> </span><span class="nx">through</span><span class="w"> </span><span class="nx">which</span><span class="w"> </span><span class="nx">control</span><span class="w"> </span><span class="nx">information</span><span class="w"> </span><span class="nx">should</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">sent</span><span class="w"> </span><span class="nx">by</span>
+<span class="nx">uncommenting</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="mi">138</span>
+</code></pre></div>
+
+<h1>port = 1705</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>port = 1705</p>
+<div class="highlight"><pre><span></span><code>Publish the tcp control service over mDNS by uncommenting line 141
+</code></pre></div>
+
+<h1>publish = true</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>publish = true</p>
+<div class="highlight"><pre><span></span><code>Enable streaming over tcp by uncommenting line 145
+</code></pre></div>
+
+<h1>enabled = true</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>enabled = true</p>
+<div class="highlight"><pre><span></span><code><span class="nx">Uncomment</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">indicate</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">ip</span><span class="w"> </span><span class="nx">address</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">listen</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">changing</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="mi">152</span><span class="w"> </span><span class="nx">from</span>
+</code></pre></div>
+
+<h1>bind_to_address = ::</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>bind_to_address = 192.168.100.78</p>
+<div class="highlight"><pre><span></span><code><span class="k">where</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">ip</span><span class="w"> </span><span class="nx">address</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">one</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">noted</span><span class="w"> </span><span class="nx">down</span><span class="w"> </span><span class="nx">earlier</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">should</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">changed</span>
+<span class="nx">appropriately</span><span class="p">.</span>
+
+<span class="nx">Uncomment</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">indicate</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">port</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">listen</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">changing</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="mi">155</span><span class="w"> </span><span class="nx">from</span>
+</code></pre></div>
+
+<h1>port = 1704</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>port = 1704</p>
+<div class="highlight"><pre><span></span><code>Publish the streaming service over mDNS by uncommenting line 158 from
+</code></pre></div>
+
+<h1>publish = true</h1>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>publish = true</p>
+<div class="highlight"><pre><span></span><code><span class="nx">Indicate</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">streaming</span><span class="w"> </span><span class="nx">source</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">changing</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="mi">190</span><span class="w"> </span><span class="nx">from</span>
+</code></pre></div>
+
+<p>source = pipe:///tmp/snapfifo?name=default</p>
+<div class="highlight"><pre><span></span><code>to
+</code></pre></div>
+
+<p>source = pipe:///tmp/snapfifo?name=mpd&amp;sampleformat=4800:16:2</p>
+<div class="highlight"><pre><span></span><code><span class="err">##</span><span class="w"> </span><span class="n">Opening</span><span class="w"> </span><span class="n">ports</span>
+
+<span class="n">Parabola</span><span class="w"> </span><span class="n">GNU</span><span class="o">/</span><span class="n">Linux</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">configured</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">allow</span><span class="w"> </span><span class="n">access</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="ow">all</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="n">ports</span><span class="p">.</span><span class="w">  </span><span class="n">The</span>
+<span class="n">ports</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">MPD</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">Snapcast</span><span class="w"> </span><span class="n">need</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">enabled</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">allow</span><span class="w"> </span><span class="n">access</span>
+<span class="k">from</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="n">devices</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">local</span><span class="w"> </span><span class="n">network</span><span class="p">.</span><span class="w">  </span><span class="n">Parabola</span><span class="w"> </span><span class="n">GNU</span><span class="o">/</span><span class="n">Linux</span><span class="w"> </span><span class="n">uses</span>
+<span class="o">[</span><span class="n">iptables</span><span class="o">]</span><span class="p">(</span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">en</span><span class="p">.</span><span class="n">wikipedia</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">wiki</span><span class="o">/</span><span class="n">Iptables</span><span class="p">)</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">manage</span><span class="w"> </span><span class="n">access</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">network</span>
+<span class="n">ports</span><span class="p">.</span><span class="w">  </span><span class="k">Open</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">ports</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="k">using</span>
+</code></pre></div>
+
+<p>sudo iptables -A INPUT -p tcp --dport 7897 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 1780 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 1705 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 1704 -j ACCEPT</p>
+<div class="highlight"><pre><span></span><code>## Running MPD and Snapcast
+
+
+Start MPD and Snapcast by using
+</code></pre></div>
+
+<p>mpd
+snapserver</p>
+<div class="highlight"><pre><span></span><code><span class="n">MPD</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="k">start</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">background</span><span class="w"> </span><span class="k">mode</span><span class="p">.</span><span class="w">  </span><span class="n">Snapserver</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">run</span>
+<span class="k">in</span><span class="w"> </span><span class="n">foreground</span><span class="w"> </span><span class="k">mode</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">terminal</span><span class="p">.</span>
+
+<span class="k">Start</span><span class="w"> </span><span class="n">xfmpc</span><span class="w"> </span><span class="n">either</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">another</span><span class="w"> </span><span class="n">terminal</span><span class="w"> </span><span class="k">window</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">launcher</span><span class="p">,</span>
+<span class="n">Snapserver</span><span class="w"> </span><span class="n">needs</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">continue</span><span class="w"> </span><span class="n">running</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">enable</span><span class="w"> </span><span class="n">sharing</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">stream</span><span class="p">.</span>
+
+<span class="n">Within</span><span class="w"> </span><span class="n">xfmpc</span><span class="p">,</span><span class="w"> </span><span class="k">open</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n n-Quoted">`Context Menu`</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">choose</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">preferences</span><span class="w"> </span><span class="k">option</span><span class="p">.</span>
+<span class="o">!</span><span class="err">[</span><span class="k">Context</span><span class="w"> </span><span class="n">Menu</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">xfmpc</span><span class="err">]</span><span class="p">(</span><span class="err">{</span><span class="n">static</span><span class="err">}</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">music</span><span class="o">-</span><span class="n">streaming</span><span class="o">-</span><span class="n">mpd</span><span class="o">-</span><span class="n">snapcast</span><span class="o">/</span><span class="n">xfmpc</span><span class="o">-</span><span class="k">context</span><span class="o">-</span><span class="n">menu</span><span class="p">.</span><span class="n">jpg</span><span class="p">)</span><span class="err">{</span><span class="o">:</span><span class="w"> </span><span class="p">.</span><span class="n">image</span><span class="o">-</span><span class="k">process</span><span class="o">-</span><span class="n">large</span><span class="o">-</span><span class="n">photo</span><span class="err">}</span>
+
+<span class="n">Once</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">dialog</span><span class="w"> </span><span class="n">opens</span><span class="p">,</span><span class="w"> </span><span class="n">inter</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">ip</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">machine</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">MPD</span><span class="w"> </span><span class="k">is</span>
+<span class="n">running</span><span class="p">,</span><span class="w"> </span><span class="n">here</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="mf">192.168.100.78</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">enter</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">port</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">connect</span>
+<span class="k">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">MPD</span><span class="w"> </span><span class="k">server</span><span class="w"> </span><span class="mf">7897.</span><span class="w">  </span><span class="n">Click</span><span class="w"> </span><span class="n n-Quoted">`Apply`</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="n n-Quoted">`Close`</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">preferences</span><span class="w"> </span><span class="n">dialog</span><span class="p">.</span>
+<span class="o">!</span><span class="err">[</span><span class="n">Preferences</span><span class="w"> </span><span class="n">dialog</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">xfmpc</span><span class="err">]</span><span class="p">(</span><span class="err">{</span><span class="n">static</span><span class="err">}</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">music</span><span class="o">-</span><span class="n">streaming</span><span class="o">-</span><span class="n">mpd</span><span class="o">-</span><span class="n">snapcast</span><span class="o">/</span><span class="n">xfmpc</span><span class="o">-</span><span class="n">preferences</span><span class="o">-</span><span class="n">dialog</span><span class="p">.</span><span class="n">jpg</span><span class="p">)</span><span class="err">{</span><span class="o">:</span><span class="w"> </span><span class="p">.</span><span class="n">image</span><span class="o">-</span><span class="k">process</span><span class="o">-</span><span class="n">large</span><span class="o">-</span><span class="n">photo</span><span class="err">}</span>
+
+<span class="n">Once</span><span class="w"> </span><span class="n">xfmpc</span><span class="w"> </span><span class="n">connects</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">MPD</span><span class="w"> </span><span class="k">server</span><span class="p">,</span><span class="w"> </span><span class="n">click</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n n-Quoted">`Browse Database`</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="k">select</span>
+<span class="n">the</span><span class="w"> </span><span class="n">songs</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">added</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">playlist</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">clicking</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">song</span><span class="w"> </span><span class="k">and</span>
+<span class="n">choosing</span><span class="w"> </span><span class="k">add</span><span class="p">.</span>
+<span class="o">!</span><span class="err">[</span><span class="n">Playlist</span><span class="w"> </span><span class="n">creation</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">xfmpc</span><span class="err">]</span><span class="p">(</span><span class="err">{</span><span class="n">static</span><span class="err">}</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">music</span><span class="o">-</span><span class="n">streaming</span><span class="o">-</span><span class="n">mpd</span><span class="o">-</span><span class="n">snapcast</span><span class="o">/</span><span class="n">xfmpc</span><span class="o">-</span><span class="n">playlist</span><span class="o">-</span><span class="n">creation</span><span class="p">.</span><span class="n">jpg</span><span class="p">)</span><span class="err">{</span><span class="o">:</span><span class="w"> </span><span class="p">.</span><span class="n">image</span><span class="o">-</span><span class="k">process</span><span class="o">-</span><span class="n">large</span><span class="o">-</span><span class="n">photo</span><span class="err">}</span>
+
+<span class="k">After</span><span class="w"> </span><span class="n">selecting</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">songs</span><span class="p">,</span><span class="w"> </span><span class="k">change</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n n-Quoted">`Browse database`</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n n-Quoted">`Current playlist`</span>
+<span class="k">and</span><span class="w"> </span><span class="n">press</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">play</span><span class="w"> </span><span class="n">symbol</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">play</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">playlist</span><span class="p">.</span>
+<span class="o">!</span><span class="err">[</span><span class="n">Playing</span><span class="w"> </span><span class="n">music</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">xfmpc</span><span class="err">]</span><span class="p">(</span><span class="err">{</span><span class="n">static</span><span class="err">}</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">music</span><span class="o">-</span><span class="n">streaming</span><span class="o">-</span><span class="n">mpd</span><span class="o">-</span><span class="n">snapcast</span><span class="o">/</span><span class="n">xfmpc</span><span class="o">-</span><span class="n">playing</span><span class="o">-</span><span class="n">music</span><span class="p">.</span><span class="n">jpg</span><span class="p">)</span><span class="err">{</span><span class="o">:</span><span class="w"> </span><span class="p">.</span><span class="n">image</span><span class="o">-</span><span class="k">process</span><span class="o">-</span><span class="n">large</span><span class="o">-</span><span class="n">photo</span><span class="err">}</span>
+
+<span class="k">As</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">audio</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">streamed</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">web</span><span class="w"> </span><span class="k">client</span><span class="p">,</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">hear</span><span class="w"> </span><span class="n">anything</span><span class="p">.</span><span class="w">  </span><span class="k">Open</span><span class="w"> </span><span class="n">a</span>
+<span class="n">web</span><span class="w"> </span><span class="n">browser</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="k">local</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="kt">point</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="k">to</span>
+</code></pre></div>
+
+<p>http://192.168.100.78:1780/
+<code>``
+where the ip address is the one you noted down earlier and should be changed
+appropriately.  You can connect multiple devices on the local network to listen
+to the music.  It is possible to rename the devices by clicking on the three
+vertical dots to open the</code>details` menu.
+<img alt="Details menu in Snapcast web interface" class="image-process-large-photo" sizes="(min-width: 1200px) 800px, (min-width: 992px) 650px, (min-width: 768px) 718px, 100vw" src="/images/music-streaming-mpd-snapcast/derivatives/large-photo/800w/snapcast-web-details-menu.jpg" srcset="/images/music-streaming-mpd-snapcast/derivatives/large-photo/600w/snapcast-web-details-menu.jpg 600w, /images/music-streaming-mpd-snapcast/derivatives/large-photo/800w/snapcast-web-details-menu.jpg 800w, /images/music-streaming-mpd-snapcast/derivatives/large-photo/1600w/snapcast-web-details-menu.jpg 1600w"/></p>
+<p>Then change the name of the device.
+<img alt="Device identification in Snapcast" class="image-process-large-photo" sizes="(min-width: 1200px) 800px, (min-width: 992px) 650px, (min-width: 768px) 718px, 100vw" src="/images/music-streaming-mpd-snapcast/derivatives/large-photo/800w/snapcast-web-device-identification.jpg" srcset="/images/music-streaming-mpd-snapcast/derivatives/large-photo/600w/snapcast-web-device-identification.jpg 600w, /images/music-streaming-mpd-snapcast/derivatives/large-photo/800w/snapcast-web-device-identification.jpg 800w, /images/music-streaming-mpd-snapcast/derivatives/large-photo/1600w/snapcast-web-device-identification.jpg 1600w"/></p>
+<p>When playing your music, you should be able to see the different output devices
+and control their volume from the web interface.
+<img alt="Playing music from the Snapcast web interface" class="image-process-large-photo" sizes="(min-width: 1200px) 800px, (min-width: 992px) 650px, (min-width: 768px) 718px, 100vw" src="/images/music-streaming-mpd-snapcast/derivatives/large-photo/800w/snapcast-web-play-music.jpg" srcset="/images/music-streaming-mpd-snapcast/derivatives/large-photo/600w/snapcast-web-play-music.jpg 600w, /images/music-streaming-mpd-snapcast/derivatives/large-photo/800w/snapcast-web-play-music.jpg 800w, /images/music-streaming-mpd-snapcast/derivatives/large-photo/1600w/snapcast-web-play-music.jpg 1600w"/></p>
+<p>To control MPD, you may want clients with more features, a prettier GUI or a
+command line interface.  Try an internet search, or install some of the options
+listed on the <a href="https://www.musicpd.org/clients/">MPD website</a>.</p>
+<p>Content available under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></p>
+<h2>References</h2>
+<p>There are many online resources for setting up MPD and Snapcast.  The following
+have been used in preparing this guide:
+* <a href="https://wiki.archlinux.org/title/Music_Player_Daemon">Music Player Daemon Guide</a> on Arch Wiki
+* <a href="http://blog.firedrake.org/archive/2022/11/Home_audio_with_mpd_and_snapcast.html">Home Audio with MPD and Snapcast</a>
+by Roger Bell_West
+* <a href="https://blog.desdelinux.net/en/music-player-daemon-simple-configuration-and-some-extra-uses/">Music Player Daemon: Simple Setup</a> on DesdeLinux
+* <a href="https://ardeguire.com/blog/2024-02-25-setting-up-snapcast/">Setting up Snapcast</a> by Adam De Guire</p>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">✨</a>
+  </p>
+</div>    </div>
+  </footer>
+
+</body>
+
+</html>
