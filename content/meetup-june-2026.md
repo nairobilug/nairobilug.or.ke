@@ -63,7 +63,7 @@ These concepts were covered through the explanation of kubernetes objects like d
 - Horizontal and vertial scaling
 
 
-###Networking, sharing and engagement.
+### Networking, sharing and engagement.
 We finished the talks and started the networking session over juice, biscuits and snacks. The room was full of energy, people networking and socializing. As i was standing in the room enjoying the moment, something crossed my mind...
 
 > *If you want something to happen, make it happen*
@@ -72,7 +72,7 @@ You know what, I challenge you, if you can, give back to your community or anywh
 
 It was a cool meet up, i hope to see you guys on the next one. _Cheers!!_
 
-###Acknowledgements
+### Acknowledgements
 First, I thank the MKU faternity for allowing us and provideing the space to host Nailug, some refreshments and the warm reception. I also thank Mr.Paul, he's been encouraging me to do talks and pushing me to the limit. Faith and Cornelius for their encouragement and warm welcome in the comminity and Benson for his guidance as well. 
 
 I also thank you, the NaiLug community, for always showing up, supporting, and growing the community, because if you guys aren't there, then theres no NaiLug. 
