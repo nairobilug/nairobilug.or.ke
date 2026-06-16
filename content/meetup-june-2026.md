@@ -9,17 +9,31 @@ Summary: Highlights from the June, 2026 meetup.
 
 
 ### Introduction 
-
 Hello, I hope you're okay. 
+
+You know, NaiLug has always felt like home. The community is full of kind and awesome guys. From the first meet up this year, which was on the 14<sup>th</sup> of February 2026 at KFC till date. After all, it was <del>Valentine's day</del> I love Free Software day, You check out how it went [here](https://nairobilug.org/2026/02/meetup-february-2026.html).   
+
+But this time, I wanted to give back, something to show my appreciation. Not in a big way, but in a way i could help the community grow and keep the meet ups going. Well, since i was a student, i wanted to give something other than talks.* I had done one during a previous meet, it was about bash scripting, you can find the video [here](https://youtu.be/8XLRnMF_wY8)*. I wanted to do more, I gathered enough courage and volunteered to host the next meet up, i had a small plan in mind and that would be to host the next event in Mounk Kenya University, Nairobi campus. This would help the comminity and at the same time introduce my peers to open source and the amazing community. 
+
+At first i was a bit skeptikal, regardless I took the initiative and engaged our school coordinator and asked if we could host the meetup in MKU. She agreed and we got to planning. I was happy, and remembered what my big bro, Mr.Weekends always tells me.. 
+
+> *If you do not ask, the answer will always be no!*
+
 
 This blog will be about Nailug meetup that happened on the 6<sup>th</sup> of june 2026.
 NaiLug is full of amazing people.
 
 ### What went down
+Saturday afternoon, 15:00hrs, seats arranged, projector ready and mics tested. A simple set up for the nailug event. 
+The first person came in, my heart was pumping full of exitement and anxiety at the same time, I didn't know what to expect as it was my first time organizing and hosting an event at our school. But all the chaos subsided when I saw my friends and members of the community come in "ah, finally some familiar faces, phew." i said to my self. 
 
-The event was held at Mount Kenya University, Nairobi Campus. We had a line up of wonderful talks and presentations. The main ones were
+I also had the privilege of being both host and speaker of the event, the event was facilitated by Cornelius Emase, our MC.
+
+We had a line up of awesome talks and presentations. The main ones were
+
 - Building HTTP from scratch using rust by Daniel
 - Kubernetes Talk by Steve Nyasimi
+
 
 Both were very engaging sessions with alot of knowledge being passed around, honestly this is one of the reasons i love this community. People get together, share ideas and knowledge and network. The love that's there, unmatched!
 
@@ -49,8 +63,21 @@ These concepts were covered through the explanation of kubernetes objects like d
 - Horizontal and vertial scaling
 
 
-### After sessions
+###Networking, sharing and engagement.
+We finished the talks and started the networking session over juice, biscuits and snacks. The room was full of energy, people networking and socializing. As i was standing in the room enjoying the moment, something crossed my mind...
 
-We finished the talks and started the networking session over juice, biscuits and snacks. The room was full of energy, people networking and socializing.  
+> *If you want something to happen, make it happen*
+
+You know what, I challenge you, if you can, give back to your community or anywhere you feel that you should.
+
 It was a cool meet up, i hope to see you guys on the next one. _Cheers!!_
+
+###Acknowledgements
+First, I thank the MKU faternity for allowing us and provideing the space to host Nailug, some refreshments and the warm reception. I also thank Mr.Paul, he's been encouraging me to do talks and pushing me to the limit. Faith and Cornelius for their encouragement and warm welcome in the comminity and Benson for his guidance as well. 
+
+I also thank you, the NaiLug community, for always showing up, supporting, and growing the community, because if you guys aren't there, then theres no NaiLug. 
+
+### July Meet up
+
+According to tradition, we usually meet on the first saturday of every month. Venue will be communicated in due time. I cannot wait to see you all.
 
