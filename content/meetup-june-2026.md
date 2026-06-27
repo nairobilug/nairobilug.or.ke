@@ -81,11 +81,7 @@ You know what, I challenge you, if you can, give back to your community or anywh
 
 It was a cool meet up, i hope to see you guys on the next one. _Cheers!!_
 
-<figure>
-
-	<img src="https://drive.google.com/file/d/1WkynwTSBeU1jKKed30GeFSH4I3aVX3gK/view?usp=drive_link" alt="Nailug group photo" />
-	<figcaption>NaiLug Group session photo</figcaption>\
-</figure>
+<img src="https://drive.google.com/file/d/1WkynwTSBeU1jKKed30GeFSH4I3aVX3gK/view?usp=drive_link" alt="Nailug group photo" />
 
 ### Acknowledgements
 First, I thank the MKU faternity for allowing us and provideing the space to host Nailug, some refreshments and the warm reception. I also thank Mr.Paul, he's been encouraging me to do talks and pushing me to the limit. Faith and Cornelius for their encouragement and warm welcome in the comminity and Benson for his guidance as well. 
