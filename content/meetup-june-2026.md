@@ -1,10 +1,9 @@
-
-Title: June 2026 Meetup.
+Title: June 2026 Meetup
 Date: 2026-06-6 15:00
 Category: Meetups
 Tags: TCP, opensource, Kuernetes, mku-techinnovation meetup
 Slug: meetup-june-2026
-Author: Steve Nyasimi 
+Author: Steve Nyasimi
 Summary: Highlights from the June, 2026 meetup.
 
 
@@ -39,7 +38,7 @@ Both were intended to be very engaging sessions with a lot of knowledge being pa
 #### Talk 1: Building HTTP from sctatch by Daniel Muringe
 
 
-<iframe title="Building HTTP from scratch using Rust" width="560" height="315" src="https://www.youtube.com/embed/cQoA3-6KjXo?si=Vqwdj9obwcPwZgK4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe title="Building HTTP from scratch using Rust" width="560" height="315" src="https://www.youtube.com/embed/XAdsvjruz_o?si=RFqYkDgz52gS9mTi" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 Daniel Muringe opened the event with his presentation on how you can implement HTTP from scratch. This was cool as _" There's no better way to learn how something works other than building it"_, Daniel. 
 
@@ -81,8 +80,7 @@ You know what, I challenge you, if you can, give back to your community or anywh
 
 It was a cool meet up, I hope to see you guys on the next one. _Cheers!!_
 
-![Nailug group photo]("https://drive.google.com/file/d/1WkynwTSBeU1jKKed30GeFSH4I3aVX3gK/view?usp=drive_link")
-* NaiLug Group session photo
+![Nailug group photo]({static}/images/meetup-june-2026/june-meetup.jpg "Nailug June Meetup")
 
 ### Acknowledgements
 First, I thank the MKU faternity for allowing us and provideing the space to host Nailug, some refreshments and the warm reception. I also thank Mr.Paul, he's been encouraging me to do talks and pushing me to the limit. Faith and Cornelius for their encouragement and warm welcome in the comminity and Benson for his guidance as well. 
@@ -93,3 +91,5 @@ I also thank you, the NaiLug community, for always showing up, supporting, and g
 
 According to tradition, we usually meet on the first Saturday of every month. The venue will be Mount Kenya University, Nairobi Campus . I'm looking forward to seeing you  all on the 4th of July 2026.
 
+Here is a cool poster to get you pumped
+![Nailug Poster for July]({static}/images/meetup-june-2026/Nailug-july-meetup.png "Nailug July Poster")
