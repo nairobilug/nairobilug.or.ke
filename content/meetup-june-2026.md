@@ -79,7 +79,7 @@ We finished the talks and started the networking session over juice, biscuits an
 
 You know what, I challenge you, if you can, give back to your community or anywhere you feel that you should.
 
-It was a cool meet up, i hope to see you guys on the next one. _Cheers!!_
+It was a cool meet up, I hope to see you guys on the next one. _Cheers!!_
 
 ![Nailug group photo]("https://drive.google.com/file/d/1WkynwTSBeU1jKKed30GeFSH4I3aVX3gK/view?usp=drive_link")
 * NaiLug Group session photo
