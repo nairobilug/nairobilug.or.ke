@@ -11,7 +11,7 @@ Summary: Highlights from the June, 2026 meetup.
 ### Introduction 
 Hello, I hope you're okay. 
 
-You know, NaiLug has always felt like home. The community is full of kind and awesome guys. From the first meet up this year, which was on the 14<sup>th</sup> of February 2026 at KFC till date. After all, it was <del>Valentine's day</del> I love Free Software day, You check out how it went [here](https://nairobilug.org/2026/02/meetup-february-2026.html).   
+NaiLug has always felt like home. The community is full of kind and awesome guys. From the first meet up this year, which was on the 14<sup>th</sup> of February 2026 at KFC till date. After all, it was <del>Valentine's day</del> I love Free Software day, You check out how it went [here](https://nairobilug.org/2026/02/meetup-february-2026.html).   
 
 But this time, I wanted to give back, something to show my appreciation. Not in a big way, but in a way i could help the community grow and keep the meet ups going. Well, since i was a student, i wanted to give something other than talks.* I had done one during a previous meet, it was about bash scripting, you can find the video [here](https://youtu.be/8XLRnMF_wY8)*. I wanted to do more, I gathered enough courage and volunteered to host the next meet up, i had a small plan in mind and that would be to host the next event in Mounk Kenya University, Nairobi campus. This would help the comminity and at the same time introduce my peers to open source and the amazing community. 
 
