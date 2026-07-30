@@ -30,7 +30,7 @@ You're invited to test [Nextdeploy](https://github.com/aynaash/NextDeploy), push
 
 Let's rally behind one of our own and support the incredible work that has gone into making Nextdeploy a valuable resource for the developer community.
 
-### Opensource Alternatives to Vercel and Heroku with Anthony Nyagah
+### Opensource Alternatives to Vercel and Heroku with Antony Nyagah
 
 It only seemed fitting that our next speaker would take us through the world of deployment tools.
 
@@ -42,6 +42,7 @@ To top it off, Anthony gave a live demo, walking the audience through how to set
 
 It was a practical session that showed there are powerful, community-driven alternatives for developers who want more control over their infrastructure without breaking the bank.
 
+Anthony has documented his journey into self-hosting in his blogpost [Self-Hosting Is Easier Than You Think: A Guide to Open Source PaaS](https://dev.to/nyagah/self-hosting-is-easier-than-you-think-a-guide-to-open-source-paas-1pl4), making it a great next read for anyone interested in exploring open-source deployment tools.
 
 ### Kernel and Defensive Ghosts with Danfold Mosongo
 
@@ -51,6 +52,8 @@ You could feel the curiosity in the room as attendees followed along very eager 
 Most of the audience loved the idea of surfing the internet without an address to ping to...simply being the Invisibles.
 
 Looking back, the day's talks almost felt thematic. We started by building applications, learned how to deploy them and then rounded things off by exploring how to secure them. It was a fitting progression that reflected the full lifecycle of modern software development.
+
+If the session sparked your curiosity, be sure to check out  [Project Kernelling](https://gitlab.com/DRACULAR/kernelling), where Danfold has shared the scripts and resources from the talk for anyone who wants to explore further. 
 
 A great reminder that building great software is only part of the journey—keeping it secure is just as important.
 
