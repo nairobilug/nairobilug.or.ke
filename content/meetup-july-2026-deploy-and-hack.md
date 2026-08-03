@@ -4,11 +4,11 @@ Category: meetups
 Tags: meetups, meetup, ethicalhacking, deployment
 Slug: meetup-July-2026
 Authors: @Afterthesegfault
-Summary: 
+Summary: Half year mark and a lifetime to go!
 
 ## Six months of Us!!
 
-February to July doesn't sound like much until you count it properly. Six freaking months. Half a year of meetups, of talks, networking, conversations, question and moments that reminded us why we revived NAILUG in the first place. Every session has been memorable. The numbers have been consistent, the networks that have turned into friendships and collaborations.
+February to July doesn't sound like much until you count it properly. Six amazing months. Half a year of meetups, of talks, networking, conversations, question and moments that reminded us why we revived NAILUG in the first place. Every session has been memorable. The numbers have been consistent, the networks that have turned into friendships and collaborations.
 
 We started on [I love free software day](https://nairobilug.org/2026/02/meetup-february-2026.html) (14<sup>th</sup> February 2026.) at KFC and now an amazing collaboration with Mount Kenya University. 
 
@@ -36,7 +36,7 @@ It only seemed fitting that our next speaker would take us through the world of 
 
 Anthony Nyagah took to the stage to share his journey of finding free and open-source solutions for deploying applications. As a developer looking to avoid recurring hosting costs, he set out to explore alternatives to platforms like Vercel and Heroku that offered greater flexibility without the price tag.
 
-His search led him to a range of self-hostable deployment tools, with **Dokploy** taking center stage.
+His search led him to a range of self-hostable deployment tools, with [**Dokploy**](https://dokploy.com/) taking center stage.
 
 To top it off, Anthony gave a live demo, walking the audience through how to set up and deploy applications with Dokploy, making it easy to see why it's becoming a popular choice among developers looking for open-source deployment solutions.
 
