@@ -34,9 +34,9 @@ With regards to open-source software, AI has a good case in helping out with con
 
 Once the meetup was over, the attendees got some merch. See pics below. :)
 
-![Sticker collection]({static}/images/meetup-february-2026/output.jpg "Amazing Sticker collection")
+![Sticker collection]({static}/images/meetup-february-2026/output.jpg "Amazing Sticker collection"){: .image-process-large-photo}
 
-![T-Shirt collection]({static}/images/meetup-february-2026/t-shirts.jpg "Amazing NaiLUG t-shirts")
+![T-Shirt collection]({static}/images/meetup-february-2026/t-shirts.jpg "Amazing NaiLUG t-shirts"){: .image-process-large-photo}
 
 ### Cool video we have on how to install OpenClaw on Linux
 
@@ -55,6 +55,6 @@ See you there!
 
 Check out the cool posters that Cornelius made for the next meetup below.
 
-![Agenda]({static}/images/meetup-february-2026/agenda.jpg "Agenda for the next meetup")
+![Agenda]({static}/images/meetup-february-2026/agenda.jpg "Agenda for the next meetup"){: .image-process-large-photo}
 
-![Cool Linux Poster]({static}/images/meetup-february-2026/cool-poster.jpg "Cool Linux poster for the next meetup")
+![Cool Linux Poster]({static}/images/meetup-february-2026/cool-poster.jpg "Cool Linux poster for the next meetup"){: .image-process-large-photo}
