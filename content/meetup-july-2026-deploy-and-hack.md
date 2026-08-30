@@ -25,21 +25,24 @@ how far we've come. They're also reminders that the best journeys rarely feel
 extraordinary while they're happening. They become extraordinary because we
 chose, again and again, to continue.
 
-![July-meetup-poster](image.png){: .image-process-large-photo}
+![July-meetup-poster]({static}/images/meetup-june-2026/Nailug-july-meetup.png "Nailug July Poster"){: .image-process-large-photo}
 
 ### NextDeploy  with Yussuf Hersi
 
-Hersi took us through the journey of building NextDeploy from the ground up—a
-deployment platform purpose-built for Next.js applications. He shared how the
-project evolved from a simple JSON-based configuration system and a React
-interface into a full-fledged deployment engine powered by Go. He talked about
-the tidious journey that is tackling the challenges of developer experience,
-automation, scalability and self-hosted deployments along the way.
+[Yusuf Hersi](https://www.hersitech.com/) took us through the journey of building
+[NextDeploy](https://nextdeploy.org/) from the ground up—a deployment platform
+purpose-built for Next.js applications. He shared how the project evolved from a
+simple JSON-based configuration system and a React interface into a full-fledged
+deployment engine powered by Go. He talked about the tidious journey that is
+tackling the challenges of developer experience, automation, scalability and self-hosted
+deployments along the way.
 
 It was a great look into the realities of building and evolving an open-source
 developer tool.
 
-[![Watch the video](https://i9.ytimg.com/vi_webp/DwIpTuw-AXE/mqdefault.webp?v=6a4cee2f&sqp=CIyerNMG&rs=AOn4CLBmQfJTZjQ5aAKLwUqiMzGKRM10Rg)](https://www.youtube.com/watch?v=DwIpTuw-AXE)
+Watch Hersi's presentation below
+
+https://www.youtube.com/watch?v=DwIpTuw-AXE
 
 Now it's the community's turn.
 
@@ -56,10 +59,11 @@ into making Nextdeploy a valuable resource for the developer community.
 It only seemed fitting that our next speaker would take us through the world of
 deployment tools.
 
-Anthony Nyagah took to the stage to share his journey of finding free and
-open-source solutions for deploying applications. As a developer looking to
-avoid recurring hosting costs, he set out to explore alternatives to platforms
-like Vercel and Heroku that offered greater flexibility without the price tag.
+[Anthony Nyagah](https://www.linkedin.com/in/antony-nyagah/) took to the stage
+to share his journey of finding free and open-source solutions for deploying
+applications. As a developer looking to avoid recurring hosting costs, he set
+out to explore alternatives to platforms like Vercel and Heroku that offered
+greater flexibility without the price tag.
 
 His search led him to a range of self-hostable deployment tools, with
 [**Dokploy**](https://dokploy.com/) taking center stage.
@@ -79,7 +83,8 @@ deployment tools.
 
 ### Kernel and Defensive Ghosts with Danfold Mosongo
 
-Danfold Mosongo took the stage with a session on Kernel and Defensive Ghosts,
+[Danfold Mosongo](https://www.linkedin.com/in/danfold-mosongo/) took the stage
+with a session on Kernel and Defensive Ghosts,
 diving into concepts that immediately captured the audience's attention. From
 low-level system security to defensive techniques.The talk offered a small yet
 amusing glimpse into how systems can be understood, protected and hardened
@@ -103,7 +108,7 @@ wants to explore further.
 A great reminder that building great software is only part of the journey—keeping
 it secure is just as important.
 
-[![Watch the video](https://i9.ytimg.com/vi/XGLMlMi5cUY/mqdefault.jpg?v=6a4f8895&sqp=CLSZrNMG&rs=AOn4CLCe3K2xylQlvKWFGKOEaEbGztLLog)](https://www.youtube.com/watch?v=XGLMlMi5cUY)
+https://www.youtube.com/watch?v=XGLMlMi5cUY
 
 ## Promoting Networking with refreshment
 
@@ -117,7 +122,7 @@ My friend likes to say show me a pic or else it did not happen! So a group photo
 is always taken so that we may always look back to how great we have been growing
 and look forward with hopes that we keep inspiring more folks and contributors.
 
-![July-group-photo](image-1.png)
+![July-group-photo]({static}/images/meetup-july-2026/july-meetup-2026.jpg "July meetup group photo"){: .image-process-large-photo}
 
 ### August Meetup
 
