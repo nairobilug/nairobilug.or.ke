@@ -37,8 +37,7 @@ We had a line up of awesome talks and presentations. The main ones were:
 Both were intended to be very engaging sessions with a lot of knowledge being passed around. Honestly this is one of the reasons I love this community. People get together, share ideas and knowledge and network. The love that's there, unmatched!
 #### Talk 1: Building HTTP from sctatch by Daniel Muringe
 
-
-<iframe title="Building HTTP from scratch using Rust" width="560" height="315" src="https://www.youtube.com/embed/XAdsvjruz_o?si=RFqYkDgz52gS9mTi" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+https://youtu.be/XAdsvjruz_o
 
 Daniel Muringe opened the event with his presentation on how you can implement HTTP from scratch. This was cool as _" There's no better way to learn how something works other than building it"_, Daniel. 
 
@@ -53,9 +52,8 @@ He ended his talk with a short fun session of Q and A where the audience got to 
 - Rust's memory safety features can help you with memory bugs.
 
 #### Talk 2: An introduction to kubernetes
- 
- <iframe title="an introduction to kubernetes" width="560" height="315" src="https://www.youtube.com/embed/cQoA3-6KjXo?si=Vqwdj9obwcPwZgK4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
+https://youtu.be/cQoA3-6KjXo
 
 I was the next speaker. In my  Kubernetes talk, I gave an introduction to what Kubernetes is, its  architecture and a brief history about it. I described the smallest unit in Kubernetes - the pod - , how Kubernetes handles traffic and how it can be used to ensure high availability of apps though horizontal scaling.
 
