@@ -1,7 +1,7 @@
 Title: Our first online meet-up
 Date: 2026-08-1 15:00
 Category: meetups
-Tags: meetups, meetup, deployment, nextdeploy, developertools, open-source,pyconke, pyconafrica, softwarecarpentry
+Tags: meetups, meetup, deployment, nextdeploy, developer-tools, open-source,pyconke, pyconafrica, softwarecarpentry
 Slug: nairobi-linux-user-group-goes-online
 Authors: Paul Mayero
 Summary: From physical meetups to our very first online meetup!
@@ -52,7 +52,7 @@ deployment when using NextDeploy.
 
 # Online meet-ups Vs. Physical meet-ups
 
-During the meet-up, attendess mentioned that they would prefer to have some of the
+During the meet-up, attendees mentioned that they would prefer to have some of the
 meetings to take place online. Some said that they don't make it to the physical
 meet-ups because they are based outside the Nairobi area. This makes it
 impossible for them to attend the meet-ups. I agree! Online meet-ups makes it
@@ -69,7 +69,13 @@ TO-DO
 
 # Community updates
 
-Benson Muite shares invites you to an Online Software Carpentry workshop.
+Benson Muite invites you to the [29th XMPP Summit](https://xmpp.org/2026/05/xmpp-summit-29/)
+that is take place fully online. It will be held from the 4th to the 5th of September
+2026. The event will run from 13:00 - 16:00 UTC. If you are interested
+in the development of XMPP technologies, show up and discuss all things
+XMPP remotely!
+
+Benson Muite invites you to an Online Software Carpentry workshop.
 It is scheduled for the 7th and the 8th Of September 2026 from 9 Am to 5 Pm SAST
 (UTC+2). It is online and it won't be recorded. Seats are limited therefore do
 register early. For more information, check out his [email on the mailing list
@@ -77,9 +83,10 @@ for more information](https://groups.google.com/g/nairobi-gnu/c/SkwKtt-L82c).
 
 [OpenInfra Days Kenya](https://www.meetup.com/openinfra-user-group-kenya/events/315616588/)
 invites you to respond to their [CFP](https://cfp.openinfra-ke.org/openinfra-days-kenya-2026/)
-for their 2026 conference.Talks will be on on cloud infrastructure, open-source,
-platform engineering and digital sovereignity. First time speakers are welcomed
-to apply. The deadline is 21st September 2026.
+for the [OpenInfra Day Kenya Conference](https://openinfra.org/days).Talks will
+be focused on cloud infrastructure, open-source, platform engineering and digital
+sovereignty. First time  and experienced speakers are welcomed to apply. The
+deadline is 21st September 2026.
 [Check out their Linkedin post for more information](https://www.linkedin.com/posts/openinfra-user-group-kenya_openinfra-opensource-kenya-activity-7496492655745540098-vF-9).
 
 [Pycon Kenya 2026](https://www.pycon.ke/) is scheduled for the 2nd to the 3rd
