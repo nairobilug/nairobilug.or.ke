@@ -77,7 +77,7 @@ Zephyr and embedded systems development.
 Developer's toolkit with a focus on AI and agent orchestration.
 - [Danfold Mosongo](https://www.linkedin.com/in/danfold-mosongo/) is back with
 Hacking INTO ANDROID: No USB? No Problem. This talk focuses on how wireless ADB
-can be used by unauthenticated attackers to access root coutesy of CVE-2026-0073
+can be used by unauthenticated attackers to access root courtesy of CVE-2026-0073
 , a critical zero-click authentication bypass in Android's wireless ADB
 
 Speakers will have 25 minutes to themselves and the audience will have 10 minutes
@@ -129,7 +129,7 @@ Nairobi. His talk is titled "Write-Ahead Logging in Go: The Subtle Bugs That Cor
 Databases". Check out his [speaker profile](https://gophercon.africa/speakers?speaker=bala-grivine-ochieng)
 on the conference website! All the best Grivine, we are rooting for you!
 
-[Cornelius Emase](https://lochipi.org/) invtes you to participate in
+[Cornelius Emase](https://lochipi.org/) invites you to participate in
 [Fedora's Week of Diversity](https://forge.fedoraproject.org/dei/tickets/issues/63).
 It is scheduled for October and is expected to be a 3 hour event with 10-20 minutes
 of talks as the primary format. Anyone and everyone is welcome to join and participate.
@@ -138,8 +138,8 @@ If you have any news you'd like to share with the community, share it with
 us on the [mailing list](https://groups.google.com/g/nairobi-gnu) or in any of our
 [channels]({static}/pages/contact.html).
 
-Would you like to have your blog appear on thos website? The check out our
-[Github](https://github.com/nairobilug/nairobilug.or.ke), fork it, add your content
+Would you like to have your blog appear on this website? The check out our
+[GitHub](https://github.com/nairobilug/nairobilug.or.ke), fork it, add your content
 and then make a merge request. You should have it here in no time.
 
 Thanks, looking forward to seeing you in the next meetup.
