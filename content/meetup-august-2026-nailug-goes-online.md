@@ -81,7 +81,8 @@ can be used by unauthenticated attackers to access root coutesy of CVE-2026-0073
 , a critical zero-click authentication bypass in Android's wireless ADB
 
 Speakers will have 25 minutes to themselves and the audience will have 10 minutes
-to ask questions. The event will start at 3pm and end at 6pm EAT.
+to ask questions. The event will start at 3pm and end at 6pm EAT. Check out our
+[event page on Luma](https://luma.com/uhedhclg).
 
 # Community updates
 
@@ -104,6 +105,8 @@ be focused on cloud infrastructure, open-source, platform engineering and digita
 sovreignty. First time  and experienced speakers are invited to apply. The
 deadline is 21st September 2026.
 [Check out their Linkedin post for more information](https://www.linkedin.com/posts/openinfra-user-group-kenya_openinfra-opensource-kenya-activity-7496492655745540098-vF-9).
+Cool fact, they have invited us to be community partners. We are coming up in the
+world indeed.
 
 [Pycon Kenya 2026](https://www.pycon.ke/) is scheduled for the 2nd to the 3rd
 of October 2026. Show up and support the local Python developer ecosystem.
@@ -133,7 +136,7 @@ of talks as the primary format. Anyone and everyone is welcome to join and parti
 
 If you have any news you'd like to share with the community, share it with
 us on the [mailing list](https://groups.google.com/g/nairobi-gnu) or in any of our
-[channels](https://nairobilug.org/pages/contact.html).
+[channels]({static}/pages/contact.html).
 
 Would you like to have your blog appear on thos website? The check out our
 [Github](https://github.com/nairobilug/nairobilug.or.ke), fork it, add your content
