@@ -71,8 +71,8 @@ They are:
 will be on 2 community halls in Nairobi and American Spaces at Maktaba Kuu.
 - [Dorcas Litunya](https://www.linkedin.com/in/dorcaslitunya/) will speak on
 her experience of contributing to the Linux Kernel.
-- [Chrispine Tinega](https://www.linkedin.com/in/tinegachris/) will speak on
-Zephyr and embedded systems development.
+- [Chrispine Tinega](https://www.linkedin.com/in/tinegachris/) will take us through
+connecting Zephyr and Rust on a multi-core system-on-chips.
 - [Norman Bii](https://norman-bii.vercel.app/) will speak on The modern Linux
 Developer's toolkit with a focus on AI and agent orchestration.
 - [Danfold Mosongo](https://www.linkedin.com/in/danfold-mosongo/) is back with
