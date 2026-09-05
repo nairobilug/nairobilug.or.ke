@@ -58,26 +58,33 @@ meet-ups because they are based outside the Nairobi area. This makes it
 impossible for them to attend the meet-ups. I agree! Online meet-ups makes it
 easy for a lot of people to attend. However, nothing
 beats the interaction that one experiences during in-person meet-ups.
-The power of actual human interaction. For this reason, the October 3rd meet-up
-will be held online. Details of that meet-up will be shared on the mailing list
-and blog.
+The power of actual human interaction.
 
-# September meet-up
+# September 5th meet-up
 
-The September meet-up will be held online. We have 5 featured speakers lined up.
+A new month is here already.
+
+![september-meetup.png]({static}/images/meetup-august-2026/September-2026-meetup.png
+"September 2026 meetup"){: .image-process-large-photo}
+
+The September meet-up will be held online. We have 5 speakers lined up.
 They are:
 
 - Benson Muite will kick us off with a talk on possible meeting locations. The focus
-will be on 2 community halls in Nairobi and American Spaces at Maktaba Kuu.
+will be on 2 community halls in Nairobi and American Spaces at Maktaba Kuu. Show
+up and suggest cool places we can meet! We need you!
 - [Dorcas Litunya](https://www.linkedin.com/in/dorcaslitunya/) will speak on
-her experience of contributing to the Linux Kernel.
-- [Chrispine Tinega](https://www.linkedin.com/in/tinegachris/) will take us through
-connecting Zephyr and Rust on a multi-core system-on-chips.
+her experience of contributing to the Linux Kernel. Invite anyone who is interested
+in contributing to the Kernel to attend her talk.
+- [Chrispine Tinega](https://www.linkedin.com/in/tinegachris/) talk is titled
+**Hello, IPC - connecting Rust with Zephyr** . Check out the cool poster below
+![Hello-IPC.jpg]({static}/images/meetup-august-2026/chris-tinega.jpg
+"Chris Tinega Talk"){: .image-process-large-photo}
 - [Norman Bii](https://norman-bii.vercel.app/) will speak on The modern Linux
 Developer's toolkit with a focus on AI and agent orchestration.
 - [Danfold Mosongo](https://www.linkedin.com/in/danfold-mosongo/) is back with
-Hacking INTO ANDROID: No USB? No Problem. This talk focuses on how wireless ADB
-can be used by unauthenticated attackers to access root courtesy of CVE-2026-0073
+**Hacking INTO ANDROID: No USB? No Problem**. This talk focuses on how wireless
+ADB can be used by unauthenticated attackers to access root courtesy of CVE-2026-0073
 , a critical zero-click authentication bypass in Android's wireless ADB
 
 Speakers will have 25 minutes to themselves and the audience will have 10 minutes
@@ -95,14 +102,13 @@ XMPP remotely!
 Benson Muite invites you to an Online Software Carpentry workshop.
 It is scheduled for the 7th and the 8th Of September 2026 from 9 Am to 5 Pm SAST
 (UTC+2). It is online and it won't be recorded. Seats are limited therefore do
-register early. For more information, check out his [email on the mailing list
-for more information](https://groups.google.com/g/nairobi-gnu/c/SkwKtt-L82c).
+register early. For more information, check out his [email on the mailing list](https://groups.google.com/g/nairobi-gnu/c/SkwKtt-L82c).
 
 [OpenInfra User Group Kenya](https://www.meetup.com/openinfra-user-group-kenya/events/315616588/)
 invites you to respond to their [CFP](https://cfp.openinfra-ke.org/openinfra-days-kenya-2026/)
 for the [OpenInfra Day Kenya Conference](https://openinfra.org/days).Talks will
 be focused on cloud infrastructure, open-source, platform engineering and digital
-sovreignty. First time  and experienced speakers are invited to apply. The
+sovereignty. First time  and experienced speakers are invited to apply. The
 deadline is 21st September 2026.
 [Check out their Linkedin post for more information](https://www.linkedin.com/posts/openinfra-user-group-kenya_openinfra-opensource-kenya-activity-7496492655745540098-vF-9).
 Cool fact, they have invited us to be community partners. We are coming up in the
@@ -125,8 +131,8 @@ the closing keynote speaker. [Check out this Linkedin post for more information]
 [Grivine Bala](https://www.linkedin.com/in/bala-grivine-627472365/) will be speaking
 at [GopherCon Africa 2026](https://gophercon.africa/). This conference will be happening
 from the 15th to the 17th of October at PrideInn Azure Hotel, Lantana Road, Westlands,
-Nairobi. His talk is titled "Write-Ahead Logging in Go: The Subtle Bugs That Corrupt
-Databases". Check out his [speaker profile](https://gophercon.africa/speakers?speaker=bala-grivine-ochieng)
+Nairobi. His talk is titled **Write-Ahead Logging in Go: The Subtle Bugs That Corrupt
+Databases**. Check out his [speaker profile](https://gophercon.africa/speakers?speaker=bala-grivine-ochieng)
 on the conference website! All the best Grivine, we are rooting for you!
 
 [Cornelius Emase](https://lochipi.org/) invites you to participate in
@@ -138,8 +144,8 @@ If you have any news you'd like to share with the community, share it with
 us on the [mailing list](https://groups.google.com/g/nairobi-gnu) or in any of our
 [channels]({static}/pages/contact.html).
 
-Would you like to have your blog appear on this website? The check out our
+Would you like to have your blog appear on this website? Check out our
 [GitHub](https://github.com/nairobilug/nairobilug.or.ke), fork it, add your content
-and then make a merge request. You should have it here in no time.
+and then make a merge request. You should have it here up in no time.
 
 Thanks, looking forward to seeing you in the next meetup.
