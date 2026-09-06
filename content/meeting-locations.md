@@ -45,3 +45,38 @@ Summary: Locations that can host Nairobi LUG Meetings
 * YMCA Shauri Moyo [Google Maps](https://maps.app.goo.gl/oDo9v3CDXR8gkcQQ6) [OpenStreet Map]()
 * Mathare Youth Sports Association [Google Maps](https://maps.app.goo.gl/tZgmeRSEX5wmXAXu7) [OpenStreet Map]()
 
+## Sample letter
+
+Dear ,
+
+The Nairobi Linux User Group (https://nairobilug.org) requests a partnership
+with American Spaces to host 4 meetings, approximately once every three months
+from November 2027.  The meetings will allow participants to share knowledge on
+free and open source software.  We hope to build partnerships between people in
+Nairobi, Kenya and those in the USA, allowing projects in the USA to benefit
+from new energitic contributors and people in Kenya to learn new skills.  We
+would like to partner with the following projects from the USA:
+- [The Free Software Foundation](https://fsf.org) - LibreLocal workshop introducing the GNU project, invited online speaker
+- [The Parabola GNU/Linux Project](https://www.parabola.nu/) - Building and maintaining a GNU/Linux distribution, invited online speaker
+- [The Carpentries](https://carpentries.org/) - Library carpentry workshop and invited online speaker
+- [CodeLV](https://www.codelv.com) - Vinyl Sticker workshop and invited online speaker
+
+For each meeting, it would be helpful to use the space on the first Saturday of
+a month from 9:00am to 12:00noon.
+
+For the vinyl cutter workshop, we would like to build an open source vinyl cutter
+and leave this is a demonstration instrument for visitors to use to see how
+collaboration can lead to innovation.
+
+For the Library carpentry workshop, it would be helpful to have an additional 5
+sessions of upto 4 hours each to go over the core curriculum lessons:
+https://librarycarpentry.org/lessons/
+with interested librarians.  These could be done on weekdays following the
+session, and could also be done in a hybrid online-in person format.
+
+Kindly let us know if our proposal is of interest and if any modifications
+are needed.
+
+Sincerely,
+...
+
