@@ -75,8 +75,24 @@ with interested librarians.  These could be done on weekdays following the
 session, and could also be done in a hybrid online-in person format.
 
 Kindly let us know if our proposal is of interest and if any modifications
-are needed.
+are needed.  We have also attached a sample survey.  The survey questions
+will be posted online, we would appreciate being able to advertise these
+to possible community members to gauge interest in each of the activities.
 
 Sincerely,
-...
 
+
+## Sample Interest Survey
+
+- Are you available to attend a meeting on the first Saturday of December
+  between 9:00am and 12:00noon?
+- Please tick all that apply:
+  - I have used a smart phone application to send a message to someone
+  - I have browsed the internet
+  - I am comfortable using English
+  - I am comfortable using Kiswahili
+  - I can send an email
+  - I can write a programming script
+  - I can compile a program
+  - I am interested in learning more about programming
+  - I am interested in learning more about digital creative arts
