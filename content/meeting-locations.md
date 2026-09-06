@@ -24,3 +24,24 @@ Summary: Locations that can host Nairobi LUG Meetings
 * Kangemi – Westlands [Google Maps](https://maps.app.goo.gl/EGTmJppSZgYHAHSb7) [OpenStreet Map]()
 * Uhuru – Embakasi West [Google Maps](https://maps.app.goo.gl/k64d4DHh4cmgBPDn7) [OpenStreet Map]()
 
+## Educational Institutions
+
+* Kenya School of Governance [Google Maps](https://maps.app.goo.gl/xfL8iuoVN9EAg1Qn6) [OpenStreet Map]()
+* National Industrial Training Authority [Google Maps](https://maps.app.goo.gl/biDwuwFvbrJc7uYv5) [OpenStreet Map]()
+
+## Cultural Institutions
+
+* Goethe Institute Nairobi [Google Maps](https://maps.app.goo.gl/kcUMmCiAkUndUoMa9) [OpenStreet Map]()
+* Alliance Française [Google Maps](https://maps.app.goo.gl/pDozo6M99sDdQQ2E7) [OpenStreet Map]()
+* Confucious Institute, University of Nairobi [Google Maps](https://maps.app.goo.gl/BjG2xnF225Acnxdx7) [OpenStreet Map]()
+* Apa Pant Auditorium [Google Maps](https://maps.app.goo.gl/wvcVmPcWHZd7529WA) [OpenStreet Map]()
+* Pumwani Riyadha Mosque [Google Maps](https://maps.app.goo.gl/U5BgUSKuS1id7FWK6) [OpenStreet Map]()
+
+## Youth Institutions
+
+* YWCA Kenya Headquarters [Google Maps](https://maps.app.goo.gl/UHPcMDSDKQJiDgXg9) [OpenStreet Map]()
+* YMCA Central [Google Maps](https://maps.app.goo.gl/Jenwy9QgW6bLUsgcA) [OpenStreet Map]()
+* YMCA South C [Google Maps](https://maps.app.goo.gl/LmMrfm97xiMpJxLT7) [OpenStreet Map]()
+* YMCA Shauri Moyo [Google Maps](https://maps.app.goo.gl/oDo9v3CDXR8gkcQQ6) [OpenStreet Map]()
+* Mathare Youth Sports Association [Google Maps](https://maps.app.goo.gl/tZgmeRSEX5wmXAXu7) [OpenStreet Map]()
+
