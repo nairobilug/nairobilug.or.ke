@@ -28,6 +28,8 @@ Summary: Locations that can host Nairobi LUG Meetings
 
 * Kenya School of Governance [Google Maps](https://maps.app.goo.gl/xfL8iuoVN9EAg1Qn6) [OpenStreet Map]()
 * National Industrial Training Authority [Google Maps](https://maps.app.goo.gl/biDwuwFvbrJc7uYv5) [OpenStreet Map]()
+* Afralti [Google Maps](https://maps.app.goo.gl/f9fuwG54Sbev2LwB6) [OpenStreet Map]()
+* Afralti Town Campus [Google Maps](https://maps.app.goo.gl/NoacSi2L2UcftLDF9) [OpenStreet Map]()
 
 ## Cultural Institutions
 
