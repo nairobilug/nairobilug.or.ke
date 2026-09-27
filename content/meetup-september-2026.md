@@ -13,7 +13,7 @@ Yes, pretty neat tricks for a developer who wants to maximize resource utilizati
 
 Well then, I guess you might be curious on what happen during the Nailug Sept meet up.
 
-Part two of our online series, we had amazing speakers talking about interesting topics, topics that left you.......... . The line up was   with one standing out #Dorcas our first female speaker. 
+Part two of our online series, we had amazing speakers talking about interesting topics, topics that left you flipping bits. The lineup was packed with interesting topics, with one standing out #Dorcas, our first female speaker. Line up;
 
 - Benson Muite Meet up locations
 - Chrispine Tinega Hello IPC
@@ -42,7 +42,7 @@ To view the full demonstration, kindly visit this link
 
 ### How did it start?
 
-2 lines of code, that's all, it doesnt matter how small your contribution is what matters is that you have contributed something, and for the benefit of everyone. Even if its a type, just contribute. *One simple fix*
+2 lines of code, that's all, it doesn't matter how small your contribution is what matters is that you have made a contribution, for the benefit of everyone. Even if it's a typo, just contribute. *One simple fix* goes a long way.
 
 Chrispine's contribution journey started by fixing compiler warnings by moving ownership, from this small contribution he is now a core maintainer of the AM62X_M4_BL350 board which he added upstream to the zephyr repository and he is currently maintainig it, this goes to show that you do not need to be aseasoned expert to contribute to the open source community. A typo? fix it.  
 Perharps he will also need collaborators on maintaining the board.
