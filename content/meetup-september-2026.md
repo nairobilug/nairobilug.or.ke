@@ -26,8 +26,8 @@ In part two of our online series, we had amazing speakers talking about interest
 
 ## Hello IPC
 
-Chrispine Tinega,who's an embedded developer for energy applications and a zephyr contributor/maintainer. Took us through on how to make two processes running on different platforms and cores within the same board communicate through Interprocess communication using shared memory.  
-To understand why we need this, we need to see which problem this will solve, [zephyr]() a Real time operating system and [Linux]() a general purpose OS fails at performing tasks that require a degree of determinism that only an RTOS can solve, and an RTOS can be lacking some functionality that a general purpose OS offers, for instance a nework stack. To get the best of both worlds in an embedded device, you can have one core running your linux and another core running RTOS like zephyr and have applications running in these cores communicate using a form of IPC such as shared memory.  
+Chrispine Tinega,who's an embedded developer for energy applications and a zephyr contributor/maintainer, took us through on how to make two processes running on different platforms and cores within the same board communicate through Interprocess communication using shared memory.  
+To understand why we need this, we need to see which problem this will solve, [zephyr](https://docs.zephyrproject.org/latest/introduction/index.html) a Real time operating system and [Linux](https://en.wikipedia.org/wiki/Linux) a general purpose OS fails at performing tasks that require a degree of determinism that only an RTOS can solve, and an RTOS can be lacking some functionality that a general purpose OS offers, for instance a nework stack. To get the best of both worlds in an embedded device, you can have one core running your linux and another core running RTOS like zephyr and have applications running in these cores communicate using a form of IPC such as shared memory.  
 
 To demonstrate this Chrispine made use of the AM62X_M4_BL350 board which supports
 
@@ -39,9 +39,9 @@ You can read more on [AM62X_M4_BL350 board](https://docs.zephyrproject.org/lates
 
 ![AM62X M4 BL350 board](./images/meetup-september-2026/am62x_m4_bl350.webp "AM62X M4 BL350 board" )
 
-Also an intersting fact, Chrispine is the mainteriner of this board
+Also an intersting fact, Chrispine is the maintainer of this board.
 
-To view the full demonstration, kindly visit this link
+To view the full demonstration, kindly visit this link.
 [link hereYT]()
 
 ### How did it start?
