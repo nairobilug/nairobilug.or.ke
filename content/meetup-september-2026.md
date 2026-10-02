@@ -11,7 +11,7 @@ Summary: Meetup locations, Interprocess communication on same board, from linux 
 
 Yes, pretty neat tricks for a developer who wants to maximize resource utilization on an embedded device, patching the linux kernel? boost productivity on your laravel developmet ENV? or breaking into an android phone? No problemo, I've got you. 
 
-Nairobi linux user group, that's the secret sauce.. Who are we? *avengers, cough cough*. We are a lively community of FOSS enjoyers, from OS' to software tools and anything cool or fascinating. We usually meet on the first Saturday of every month. Let me give you a brief on what went down on the previous meet-up.
+Nairobi linux user group, that's the secret sauce.. Who are we? *avengers, cough cough*. We are a lively community of FOSS enjoyers, from OS' to software tools and anything cool or fascinating. We usually meet on the first Saturday of every month. Let me brief you on what went down on the previous meet-up.
 > *scene*
 In part two of our online series, we had amazing speakers talking about interesting topics, topics that left you flipping bits. The lineup was packed with interesting topics, with one standing out: Dorcas, our first female speaker. The line up;
 
