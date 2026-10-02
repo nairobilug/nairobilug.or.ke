@@ -9,10 +9,10 @@ Summary: Meetup locations, Interprocess communication on same board, from linux 
 
 # Hey, You there, I've got tricks
 
-Yes, pretty neat tricks for a developer who wants to maximize resource utilization on an embedded device, patching the linux kernel? boost productivity on your laravel developmet ENV? or breaking into an android phone?  
+Yes, pretty neat tricks for a developer who wants to maximize resource utilization on an embedded device, patching the linux kernel? boost productivity on your laravel developmet ENV? or breaking into an android phone? No problemo, I've got you. 
 
-Well then, I guess you might be curious on what happened during the Nailug September meet up.
-
+Nairobi linux user group, that's the secret sauce.. Who are we? *avengers, cough cough*. We are a lively community of FOSS enjoyers, from OS' to software tools and anything cool or fascinating. We usually meet on the first Saturday of every month. Let me give you a brief on what went down on the previous meet-up.
+> *scene*
 In part two of our online series, we had amazing speakers talking about interesting topics, topics that left you flipping bits. The lineup was packed with interesting topics, with one standing out: Dorcas, our first female speaker. The line up;
 
 - "[Meet up locations](#meet-up-locations)" By Benson Muite
@@ -22,6 +22,14 @@ In part two of our online series, we had amazing speakers talking about interest
 - "[Hacking android](#hacking-android)" by Danfold Mosongo 
 
 ## Meet up locations
+
+Without you, there's no NaiLUG, To make physical meet ups a success, Nailug has had some awesome contributors who help with securing venues and making the event happen. We appreciate you :heart: . We also thank you; community members attendies, visitors and fresh souls who have joined us. For always showing up for the events.
+
+> *Without you guys, there's no NaiLUG*
+
+Benson Muite, who was our first speaker. Has really helped us find a venue. He also researched on cool places where the Nailug community can and will be able to host meet-ups. Since we are a community, hosting these events at these locations, will help the community to give back and grow the community. Benson has been able to scout and visit the different places, He's been able to curate a list of possible locations that we can host the events and he has shared with us. You can check them them out in this [pull request](https://github.com/nairobilug/nairobilug.or.ke/pull/239/changes). Feel free to add on the list or leave a comment. 
+
+Thank you Benson, we appreciate the efforts, God bless you. :heart: .
 
 
 ## Hello IPC
@@ -80,6 +88,25 @@ One of the points she highlighted was, *you learn by reading code and writing co
 
 ## Optimizing developer productivity with AI-agents and Omarchy
 
+Norman Bii, took us through a session on how we can optimize our workflow with AI, OS and key-maps in the linux environment without ever leaving the terminal, or touching the mousepad. Yes, I know you're worried about your tokens, here's the best part, you can be able to run these tools without breaking your wallet, or you company's wallet :). Just imagine opening up to your AI in the terminal, what a time to be alive. 
+
+This is made possible by various tools like;
+
+- Herdr
+- Opencode
+- Tmux
+- Omarchy
+
+Herdr is a terminal workspace manager, kind of like [tmux](https://tmux.app/). Tmux allows you to multiplex your terminal, allowing you to open windows, tabs, panes and allows you to split these windows to as many subsections your screen will allow. Herdr upgrades this by allowing you to run multiple agents in different panes, gives you a workspace which contains tabs and panes, which allow you  to view agent sessions that you have started. Now imagine combining this with voice models, you can delete the /boot dir with just a voice command *hehe*.
+
+I'm sure you're wondering where you'll get an agent to do that for you. This is where [openCode](https://opencode.ai/v2/docs) comes in. OpenCode is an opensource AI coding agent that's available for the CLI-interface, desktop and web. To fine-tune your agent, you make use of a file called SKILLS.md. This file can be used in projects to give the AI context and assist you without hallucinating.
+
+Combining this with an agentic-OS like [Omarchy](https://omarchy.org/manual/), you'll be moving around in your workspace like a ninja. *Look guys, no hands! exclaimed the terminal ninja* 
+
+But with great power? yes, there are somethings that you shouldn't let you AI  have access to or view. these include ENV vars, secrets and the database password :). To help with this, Norman shared a cool tool called [infisical](https://infisical.com/docs), an all-in-one open-source security platform that helps you manage your secrets. It's Agent vault allows you to only share credentials that your agent needs while running, nothing more.
+
+To see how Norman intergrates these tools, watch the [youtube video]().
+
 
 ## Hacking Android
 
@@ -104,3 +131,15 @@ Danfold also took us through some recently discovered vulnerabilities, these inc
 	* Dolby-out-of-bounds [CVE-2025-54957](https://project-zero.issues.chromium.org/issues/428075495) - an out of bounds write
 
 This goes to show that security starts with the developer, at all times we should enforce secure coding practices.
+
+
+
+## Our next meet up
+
+Our next meet up will be held in [Kariokor community hall](https://maps.app.goo.gl/5RAWWySDQRNa4VmN8) on the 3^rd^ of October 2026 from 3:00-6:00 pm EAT(UTC+3). We will also be celebrating Software freedom day, read about [software freedom day](https://en.wikipedia.org/wiki/Software_Freedom_Day). We will be having an interesting talk about [Golly](https://golly.sourceforge.io/), a talk by Brian Muhia. 
+
+Uhuru, uhuru, uhuru.
+
+Tell a friend to tell a friend, can't wait to see you again.
+
+![October meet up flyer](./images/meetup-september-2026/SFD2026-NairobiLUG.svg)	
