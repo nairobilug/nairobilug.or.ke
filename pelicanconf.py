@@ -108,3 +108,5 @@ RFG_FAVICONS = True
 # Default value is ['index', 'tags', 'categories', 'authors', 'archives']
 DIRECT_TEMPLATES = ['index', 'tags', 'categories', 'authors', 'archives', 'sitemap']
 SITEMAP_SAVE_AS = 'sitemap.xml'
+THEME_TEMPLATES_OVERRIDES = ['templates']
+THREADMAIL_URL = 'https://threadmail-969271255293.europe-southwest1.run.app'
