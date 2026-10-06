@@ -62,12 +62,13 @@ possibility of making an open source smartwatch running ZephyrOS, such as
 [ZSWatch](https://github.com/ZSWatch/ZSWatch) which features watch faces
 created by Kenyan developer [Felix Biego](https://fbiego.com/).
 
-A short introduction to TuxPaint, TuxMath and GCompris followed, both TuxPaint and
-GCompris have efforts to make them available in Kiswahili.  GCompris was
-translated by people from [Bakita]() in Tanzania as it is used in schools in Tanzania.
-TuxMath resembles the game [Space Invaders](),
-players enter calculations to shoot down projectiles raining on the surface
-of the earth.
+A short introduction to TuxPaint, TuxMath and GCompris followed, both TuxPaint
+and GCompris have efforts to make them available in Kiswahili.  GCompris was
+translated by people from
+[BAKITA](https://sw.wikipedia.org/wiki/Baraza_la_Kiswahili_la_Taifa) in
+Tanzania as it is used in schools in Tanzania.  TuxMath resembles the game
+[Space Invaders](https://en.wikipedia.org/wiki/Space_Invaders), players enter
+calculations to shoot down projectiles raining on the surface of a planet.
 
 ![Screenshot of TuxPaint on Artix GNU/Linux]({static}/images/meetup-october-2026/tuxpaint.png "TuxPaint in Kiswahili"){: .image-process-large-photo}
 
