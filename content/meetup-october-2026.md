@@ -28,7 +28,7 @@ computer running [Artix Linux](https://artixlinux.org/), with the
 [TuxMath](http://www.tux4kids.com/tuxmath.html) and
 [GCompris](https://www.gcompris.net/).  We setup a rotundity projector, but the
 brightness (200 ANSI lumens) was not sufficient to enable viewing in the well
-light room and the DVI to HDMI cable connecting the computer to the projector
+lite room and the DVI to HDMI cable connecting the computer to the projector
 had a loose connection preventing stable display.  In future, if a high lumens
 projector is not available, we could request a darkened room to enable use of a
 low lumens mini projector, and/or use software tools such as
@@ -39,6 +39,8 @@ sharing from one to many devices on a local network more effective and
 efficient.
 
 ### Golly
+
+![Screenshot of Golly running on Artix Linux]({static}/images/meetup-october-2026/golly.png "Screenshot of Golly showing a cellular automaton"){: .image-process-large-photo}
 
 [Brian Muhia](https://github.com/poppingtonic) gave an overview of
 [Golly](https://golly.sourceforge.io/), a free and open source program that
@@ -58,10 +60,22 @@ projection was not sufficiently visible to enable this to be done effectively.
 discussed [Hardware Freedom Day](https://digitalfreedoms.org/en/hfd) and the
 possibility of making an open source smartwatch running ZephyrOS, such as
 [ZSWatch](https://github.com/ZSWatch/ZSWatch) which features watch faces
-created by a Kenyan developer [Felix Biego](https://fbiego.com/).  A short
-introduction to TuxPaint, TuxMath and GCompris followed, both TuxPaint and
-GCompris have efforts to make them available in Kiswahili.  Next was a live
-demonstration showing some of the capabilities of
+created by Kenyan developer [Felix Biego](https://fbiego.com/).
+
+A short introduction to TuxPaint, TuxMath and GCompris followed, both TuxPaint and
+GCompris have efforts to make them available in Kiswahili.  GCompris was
+translated by people from [Bakita]() in Tanzania as it is used in schools in Tanzania.
+TuxMath resembles the game [Space Invaders](),
+players enter calculations to shoot down projectiles raining on the surface
+of the earth.
+
+![Screenshot of TuxPaint on Artix GNU/Linux]({static}/images/meetup-october-2026/tuxpaint.png "TuxPaint in Kiswahili"){: .image-process-large-photo}
+
+![Screenshot of TuxMath on Artix GNU/Linux]({static}/images/meetup-october-2026/tuxmath.png "A game in progress in TuxMath"){: .image-process-large-photo}
+
+![Screenshot of GCompris on Artix GNU/Linux]({static}/images/meetup-october-2026/gcompris.png "Welcome screen of GCompris in Kiswahili"){: .image-process-large-photo}
+
+Next was a live demonstration showing some of the capabilities of
 [Turtle](https://github.com/amrdeveloper/Turtle), an Android program that
 allows one to practice programming on CPU and GPU. Attendees tried to use
 GCompris on the GNU/Linux desktop, but the projection was not sufficiently
@@ -69,5 +83,7 @@ visible to enable this to be done effectively.
 
 ### Next Meetup
 
-The next meetup will be held in conjunction with OpenInfra Days Nairobi on
-the 6 of November.
+The next meetup will be held on 13th November as community members are invited
+to attend OpenInfra Days Kenya on the 6th and 7th of November.  Tickets for
+OpenInfra Days Kenya are available
+[online](https://zenlipa.co.ke/events/GErIfp).
