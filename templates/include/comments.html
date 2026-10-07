@@ -1,0 +1,12 @@
+<style>
+  .comments-frame { display: grid; min-height: 600px;
+    background: linear-gradient(90deg, #eee 25%, #ddd 37%, #eee 63%);
+    background-size: 400% 100%; animation: comments-pulse 1.4s ease infinite; }
+  .comments-frame > * { grid-area: 1 / 1; }
+  @keyframes comments-pulse { from { background-position: 100% 50%; } to { background-position: 0 50%; } }
+</style>
+<div class="comments-frame">
+  <span aria-hidden="true">Loading comments&hellip;</span>
+  <iframe src="{{ THREADMAIL_URL }}/thread/{{ article.url }}" title="Comments"
+    height="600" loading="lazy" style="width: 100%; border: none;"></iframe>
+</div>
