@@ -272,7 +272,17 @@ Location:<span class="w"> </span>https://ona.io/login
 <p>We started with a broken configuration that put a small subset of HTTP requests into a redirect loop. The users behind these requests likely ended up going to our HTTPS URL and incidentally fixing the HTTP problem, then never following up with us. After digging in, we found that we had misconfigured both our AWS Elastic Load Balancer Target Groups and our reverse proxy rules. This was a problem for our users and for our HSTS configuration. By correcting these configuration problems we have removed the redirect loop and fixed our HSTS configuration.</p>
     </div>
   </article>
-    </div>
+<style>
+  .comments-frame { display: grid; min-height: 600px;
+    background: linear-gradient(90deg, #eee 25%, #ddd 37%, #eee 63%);
+    background-size: 400% 100%; animation: comments-pulse 1.4s ease infinite; }
+  .comments-frame > * { grid-area: 1 / 1; }
+  @keyframes comments-pulse { from { background-position: 100% 50%; } to { background-position: 0 50%; } }
+</style>
+<div class="comments-frame">
+  <span aria-hidden="true">Loading comments…</span>
+  <iframe height="600" loading="lazy" src="https://threadmail-969271255293.europe-southwest1.run.app/thread/2017/10/redirecting-HTTP-traffic-while-using-AWS-Target-Groups.html" style="width: 100%; border: none;" title="Comments"></iframe>
+</div>    </div>
   </div>
 
   <footer class="footer">

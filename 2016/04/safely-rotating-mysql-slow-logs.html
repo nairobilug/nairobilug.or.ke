@@ -179,7 +179,17 @@ Query OK, 0 rows affected (0.00 sec)
 <p>This post is also available on my <a href="https://oguya.ch/posts/2016-04-13-safely-rotating-mysql-slow-logs/">personal blog</a>.</p>
     </div>
   </article>
-    </div>
+<style>
+  .comments-frame { display: grid; min-height: 600px;
+    background: linear-gradient(90deg, #eee 25%, #ddd 37%, #eee 63%);
+    background-size: 400% 100%; animation: comments-pulse 1.4s ease infinite; }
+  .comments-frame > * { grid-area: 1 / 1; }
+  @keyframes comments-pulse { from { background-position: 100% 50%; } to { background-position: 0 50%; } }
+</style>
+<div class="comments-frame">
+  <span aria-hidden="true">Loading comments…</span>
+  <iframe height="600" loading="lazy" src="https://threadmail-969271255293.europe-southwest1.run.app/thread/2016/04/safely-rotating-mysql-slow-logs.html" style="width: 100%; border: none;" title="Comments"></iframe>
+</div>    </div>
   </div>
 
   <footer class="footer">
