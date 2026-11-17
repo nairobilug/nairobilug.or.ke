@@ -1,0 +1,27 @@
+name: Deploy site with rclone after merge
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Python3
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.14
+      - name: Install python dependencies
+        run: pip install -r requirements.txt
+      - name: install rclone
+        run: |
+          curl https://rclone.org/install.sh | sudo bash
+      - name: configure rclone
+        run: |
+          mkdir -p ~/.config/rclone
+          echo "${{ secrets.RCLONE_CONFIG }}" | base64 -d > ~/.config/rclone/rclone.conf
+      - name: Deploy to bucket
+        run: make s3_upload
