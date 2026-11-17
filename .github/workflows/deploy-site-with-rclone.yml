@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true # Gets all submodules
+          fetch-depth: 0 # get entire git history
       - name: Install Python3
         uses: actions/setup-python@v5
         with:
